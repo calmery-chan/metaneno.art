@@ -1,6 +1,7 @@
-import Head from 'next/head'
+import React from "react";
+import Head from "next/head";
 
-export default function Home() {
+export default function Home(): JSX.Element {
   return (
     <div className="container">
       <Head>
@@ -54,7 +55,7 @@ export default function Home() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Powered by{' '}
+          Powered by{" "}
           <img src="/vercel.svg" alt="Vercel Logo" className="logo" />
         </a>
       </footer>
@@ -205,5 +206,5 @@ export default function Home() {
         }
       `}</style>
     </div>
-  )
+  );
 }
