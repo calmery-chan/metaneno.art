@@ -2,6 +2,7 @@ module.exports = {
   env: {
     browser: true,
     es2020: true,
+    node: true,
   },
   extends: [
     "eslint:recommended",
@@ -19,4 +20,9 @@ module.exports = {
   },
   plugins: ["react", "@typescript-eslint"],
   rules: {},
+  settings: {
+    react: {
+      version: "detect",
+    },
+  },
 };
