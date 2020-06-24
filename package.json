@@ -39,8 +39,7 @@
   "private": true,
   "scripts": {
     "build": "next build",
-    "dev": "next dev",
-    "start": "next start"
+    "start": "next dev"
   },
   "version": "0.1.0"
 }
