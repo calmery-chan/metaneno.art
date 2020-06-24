@@ -10,6 +10,7 @@ jobs:
     env:
       VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
       VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
     strategy:
       matrix:
         node-version: [12.18.1]
@@ -25,4 +26,4 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - run: npm i npm@${{ matrix.npm-version }} -g
       - run: npm ci
-      - run: npx vercel --prod
+      - run: npx vercel --prod --token=$VERCEL_TOKEN
