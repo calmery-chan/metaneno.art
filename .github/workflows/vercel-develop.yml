@@ -1,9 +1,9 @@
-name: Vercel
+name: Vercel (Develop)
 
 on:
   push:
     branches:
-      - master
+      - develop
 
 jobs:
   deploy:
@@ -26,4 +26,4 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - run: npm i npm@${{ matrix.npm-version }} -g
       - run: npm ci
-      - run: npx vercel --prod --token $VERCEL_TOKEN
+      - run: npx vercel --token $VERCEL_TOKEN
