@@ -26,6 +26,10 @@ export default async (
     const { sys } = error as contentful.ContentType;
     response.statusCode = 429;
 
+    if (sys.id === "AccessTokenInvalid") {
+      response.statusCode = 500;
+    }
+
     if (sys.id === "NotFound") {
       response.statusCode = 404;
     }
