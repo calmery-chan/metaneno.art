@@ -1,5 +1,5 @@
 import React from "react";
-import { withBasicAuth } from "../helpers/with-basic-auth";
+import { withBasicAuth } from "../utils/with-basic-auth";
 
 const Preview = () => <div>{process.env.NODE_ENV}</div>;
 
