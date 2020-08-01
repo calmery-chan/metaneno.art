@@ -2,7 +2,7 @@ import {
   WorkCollection,
   ContentfulErrorResponse,
   ContentfulResponse,
-} from "../types/contentful";
+} from "~/types/contentful";
 
 const isContentfulErrorResponse = (
   response: Record<string, unknown>

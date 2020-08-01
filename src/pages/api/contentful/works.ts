@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { getWorkCollection } from "../../../utils/contentful";
-import * as Sentry from "../../../utils/sentry";
+import { getWorkCollection } from "~/utils/contentful";
+import * as Sentry from "~/utils/sentry";
 
 export default async (_: NextApiRequest, response: NextApiResponse) => {
   try {
