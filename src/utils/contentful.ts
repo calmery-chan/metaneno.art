@@ -1,7 +1,7 @@
 import {
-  WorkCollection,
   ContentfulErrorResponse,
   ContentfulResponse,
+  WorksCollection,
 } from "~/types/contentful";
 
 const isContentfulErrorResponse = (
@@ -45,5 +45,40 @@ const getByQuery = async (query: string) => {
   return response;
 };
 
-export const getWorkCollection = (): Promise<WorkCollection> =>
-  getByQuery(`{ worksCollection { total } }`);
+// Works Collection
+
+const worksCollectionQuery = `{
+  worksCollection {
+    items {
+      title
+      description {
+        json
+      }
+      thumbnailsCollection {
+        items {
+          url
+          width
+          height
+        }
+      }
+      model {
+        file {
+          url
+          size
+        }
+        positionX
+        positionY
+        positionZ
+        rotateX
+        rotateY
+        rotateZ
+        scaleX
+        scaleY
+        scaleZ
+      }
+    }
+  }
+}`;
+
+export const getWorksCollection = (): Promise<WorksCollection> =>
+  getByQuery(worksCollectionQuery);

@@ -1,10 +1,10 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { getWorkCollection } from "~/utils/contentful";
+import { getWorksCollection } from "~/utils/contentful";
 import * as Sentry from "~/utils/sentry";
 
 export default async (_: NextApiRequest, response: NextApiResponse) => {
   try {
-    const result = await getWorkCollection();
+    const result = await getWorksCollection();
 
     response.statusCode = 200;
     response.json(result);

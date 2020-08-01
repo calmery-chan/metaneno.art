@@ -1,3 +1,5 @@
+import { Document } from "@contentful/rich-text-types";
+
 export type ContentfulResponse<T> = {
   data: T;
 };
@@ -14,8 +16,35 @@ export type ContentfulErrorResponse = {
   };
 };
 
-export type WorkCollection = ContentfulResponse<{
+export type WorksCollection = ContentfulResponse<{
   worksCollection: {
-    total: number;
+    items: {
+      title: string;
+      description: {
+        json: Document;
+      };
+      thumbnailsCollection: {
+        items: {
+          url: string;
+          width: number;
+          height: number;
+        }[];
+      };
+      model: {
+        file: {
+          url: string;
+          size: number;
+        };
+        positionX: number;
+        positionY: number;
+        positionZ: number;
+        rotateX: number;
+        rotateY: number;
+        rotateZ: number;
+        scaleX: number;
+        scaleY: number;
+        scaleZ: number;
+      };
+    }[];
   };
 }>;
