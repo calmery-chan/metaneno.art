@@ -1,6 +1,8 @@
 import * as THREE from "three";
 import { OrbitControls } from "three-orbitcontrols-ts";
+import GLTFLoader from "three-gltf-loader";
 import { WorksCollection } from "~/types/contentful";
+import { Box3, Vector3, sRGBEncoding, AnimationMixer } from "three";
 
 // Shader
 
@@ -38,6 +40,7 @@ const animation = (
   camera: THREE.PerspectiveCamera
 ) => {
   requestAnimationFrame(() => animation(renderer, scene, camera));
+  renderer.outputEncoding = THREE.GammaEncoding;
   renderer.render(scene, camera);
 };
 
@@ -129,7 +132,7 @@ const getRenderer = () => {
   return renderer;
 };
 
-export const application = (
+export const application = async (
   element: HTMLDivElement,
   works: WorksCollection
 ) => {
@@ -144,12 +147,99 @@ export const application = (
   scene.add(getFloor());
   scene.add(getGridHelper());
 
-  // Main
+  // const light = new THREE.AmbientLight(0xFFFFFF, 0.3);
+  // scene.add(light);
+
+  const light = new THREE.DirectionalLight(0xffffff);
+  light.position.set(10, 0, 10);
+  light.castShadow = true;
+
+  scene.add(light);
 
   animation(renderer, scene, getCamera(element));
   element.appendChild(renderer.domElement);
 
-  return () => {
-    element.removeChild(renderer.domElement);
-  };
+  return await Promise.all<{
+    title: string;
+    model: {
+      position: {
+        x: number;
+        y: number;
+        z: number;
+      };
+      rotate: {
+        x: number;
+        y: number;
+        z: number;
+      };
+      scale: {
+        x: number;
+        y: number;
+        z: number;
+      };
+      size: {
+        x: number;
+        y: number;
+        z: number;
+      };
+    };
+  }>(
+    works.data.worksCollection.items.map(({ title, model }) => {
+      return new Promise((resolve, reject) => {
+        const loader = new GLTFLoader();
+        loader.setCrossOrigin("anonymous");
+
+        loader.load(model.file.url, (gltf) => {
+          const s = gltf.scene || gltf.scenes[0];
+          const clips = gltf.animations || [];
+
+          s.rotateX(model.rotateX);
+          s.rotateY(model.rotateY);
+          s.rotateZ(model.rotateZ);
+          s.scale.x = model.scaleX;
+          s.scale.y = model.scaleY;
+          s.scale.z = model.scaleZ;
+
+          const box = new Box3().setFromObject(s);
+          const size = box.getSize(new Vector3());
+          const center = box.getCenter(new Vector3());
+
+          s.position.x = model.positionX;
+          s.position.y = model.positionY;
+          s.position.z = model.positionZ;
+
+          s.position.x -= center.x;
+          s.position.y -= center.y;
+          s.position.z -= center.z;
+
+          // オブジェクトは中心が 0 に合うので半分上にズラす
+          s.position.y += size.y / 2;
+
+          // Animation
+
+          const animationMixer = new AnimationMixer(s);
+
+          clips.forEach((clip) => {
+            animationMixer.clipAction(clip).reset().play();
+          });
+
+          scene.add(s);
+
+          resolve({
+            title,
+            model: {
+              position: s.position,
+              rotate: {
+                x: model.rotateX,
+                y: model.rotateY,
+                z: model.rotateZ,
+              },
+              scale: s.scale,
+              size,
+            },
+          });
+        });
+      });
+    })
+  );
 };
