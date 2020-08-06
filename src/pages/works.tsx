@@ -46,7 +46,7 @@ const path = "/api/contentful/works";
 const fetcher = (): Promise<WorksCollection> =>
   fetch(path).then((r) => r.json());
 
-const Preview: NextPage = () => {
+const Works: NextPage = () => {
   const { data, error } = useSWR<WorksCollection>(path, fetcher);
 
   if (error) {
@@ -114,5 +114,5 @@ const Preview: NextPage = () => {
   );
 };
 
-export default Preview;
+export default Works;
 export const getServerSideProps = withBasicAuth();
