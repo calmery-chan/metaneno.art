@@ -10,7 +10,8 @@
     "swr": "0.3.0",
     "three": "0.119.1",
     "three-gltf-loader": "1.111.0",
-    "three-orbitcontrols-ts": "0.1.2"
+    "three-orbitcontrols-ts": "0.1.2",
+    "uuid": "8.3.0"
   },
   "devDependencies": {
     "@contentful/rich-text-types": "14.1.1",
@@ -19,6 +20,7 @@
     "@types/react": "16.9.44",
     "@types/styled-components": "5.1.2",
     "@types/three": "0.103.2",
+    "@types/uuid": "8.0.1",
     "@typescript-eslint/eslint-plugin": "3.7.1",
     "@typescript-eslint/parser": "3.7.1",
     "eslint": "7.6.0",
