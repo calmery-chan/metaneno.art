@@ -33,17 +33,17 @@ const setupCanvas = (
   // Events
 
   const handleOnKeydown = ({ keyCode }: KeyboardEvent) => {
-    if (keyCode === 87) keys.w = true;
-    if (keyCode === 65) keys.a = true;
-    if (keyCode === 83) keys.s = true;
-    if (keyCode === 68) keys.d = true;
+    if (keyCode === 87 || keyCode === 38) keys.w = true;
+    if (keyCode === 65 || keyCode === 37) keys.a = true;
+    if (keyCode === 83 || keyCode === 40) keys.s = true;
+    if (keyCode === 68 || keyCode === 39) keys.d = true;
   };
 
   const handleOnKeyup = ({ keyCode }: KeyboardEvent) => {
-    if (keyCode === 87) keys.w = false;
-    if (keyCode === 65) keys.a = false;
-    if (keyCode === 83) keys.s = false;
-    if (keyCode === 68) keys.d = false;
+    if (keyCode === 87 || keyCode === 38) keys.w = false;
+    if (keyCode === 65 || keyCode === 37) keys.a = false;
+    if (keyCode === 83 || keyCode === 40) keys.s = false;
+    if (keyCode === 68 || keyCode === 39) keys.d = false;
   };
 
   addEventListener("keydown", handleOnKeydown, false);
