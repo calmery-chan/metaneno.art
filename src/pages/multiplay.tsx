@@ -4,6 +4,21 @@ import { OrbitControls } from "three-orbitcontrols-ts";
 import * as uuid from "uuid";
 import { withBasicAuth } from "~/utils/with-basic-auth";
 
+type PlayerPositionActions =
+  | {
+      type: "subscribed" | "unsubscribed";
+      payload: { id: string };
+    }
+  | {
+      type: "update";
+      payload: {
+        id: string;
+        x: number;
+        y: number;
+        z: number;
+      };
+    };
+
 // Constants
 
 const WIDTH = 700;
@@ -112,7 +127,18 @@ const setupCanvas = (
 
   element.appendChild(renderer.domElement);
 
-  return ({ id, x, y, z }: PlayerPosition) => {
+  const subscribed = (id: string) => {
+    const geometry = new THREE.SphereGeometry(0.075);
+    const material = new THREE.MeshNormalMaterial();
+    spheres[id] = new THREE.Mesh(geometry, material);
+    spheres[id].position.x = 0;
+    spheres[id].position.y = 0;
+    spheres[id].position.z = 0;
+    scene.add(spheres[id]);
+    updatePlayerPosition(cube.position.x, cube.position.y, cube.position.z);
+  };
+
+  const update = ({ id, x, y, z }: PlayerPosition) => {
     if (!spheres[id]) {
       const geometry = new THREE.SphereGeometry(0.075);
       const material = new THREE.MeshNormalMaterial();
@@ -124,6 +150,12 @@ const setupCanvas = (
     spheres[id].position.y = y;
     spheres[id].position.z = z;
   };
+
+  const unsubscribed = (id: string) => {
+    scene.remove(spheres[id]);
+  };
+
+  return [subscribed, update, unsubscribed] as const;
 };
 
 const Multiplayer: React.FC = () => {
@@ -141,24 +173,45 @@ const Multiplayer: React.FC = () => {
           : "http://localhost:5000/cable"
       );
 
-      let updatePlayerPositions:
-        | ((playerLocation: PlayerPosition) => void)
-        | undefined;
+      let subscribed: ((id: string) => void) | undefined;
 
-      const channel = consumer.subscriptions.create("PlayerPositionChannel", {
-        connected() {
-          updatePlayerPositions = setupCanvas(ref.current!, (x, y, z) =>
-            channel.send({ id, x, y, z })
-          );
-        },
-        received(data: PlayerPosition) {
-          if (data.id === id) {
-            return;
-          }
+      let update: ((playerLocation: PlayerPosition) => void) | undefined;
 
-          updatePlayerPositions && updatePlayerPositions(data);
+      let unsubscribed: ((id: string) => void) | undefined;
+
+      const channel = consumer.subscriptions.create(
+        {
+          channel: "PlayerPositionChannel",
+          id,
         },
-      });
+        {
+          connected() {
+            [subscribed, update, unsubscribed] = setupCanvas(
+              ref.current!,
+              (x, y, z) => channel.send({ id, x, y, z })
+            );
+          },
+          received(data: PlayerPositionActions) {
+            if (data.payload.id === id) {
+              return;
+            }
+
+            switch (data.type) {
+              case "subscribed":
+                subscribed?.(data.payload.id);
+                break;
+
+              case "update":
+                update?.(data.payload);
+                break;
+
+              case "unsubscribed":
+                unsubscribed?.(data.payload.id);
+                break;
+            }
+          },
+        }
+      );
     })();
   }, []);
 
