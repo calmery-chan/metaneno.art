@@ -1,3 +1,4 @@
+import { format } from "date-fns";
 import React, { useState, useEffect } from "react";
 import { Header } from "~/components/Header";
 import { Page } from "~/components/Page";
@@ -49,10 +50,10 @@ const SerialCodes: React.FC = () => {
         <Table>
           <Thead>
             <Tr>
-              <Th>Serial Code</Th>
-              <Th>State</Th>
-              <Th>Created At</Th>
-              <Th>Updated At</Th>
+              <Th>シリアルコード</Th>
+              <Th>公開状態</Th>
+              <Th>作成日時</Th>
+              <Th>最終更新日時</Th>
             </Tr>
           </Thead>
           <Tbody>
@@ -84,12 +85,18 @@ const SerialCodes: React.FC = () => {
                 </Td>
                 <Td>
                   <p className="text-gray-900 whitespace-no-wrap">
-                    Jan 10, 2020
+                    {format(
+                      new Date(serialCode.created_at),
+                      "yyyy/MM/dd hh:mm"
+                    )}
                   </p>
                 </Td>
                 <Td>
                   <p className="text-gray-900 whitespace-no-wrap">
-                    Jan 10, 2020
+                    {format(
+                      new Date(serialCode.updated_at),
+                      "yyyy/MM/dd hh:mm"
+                    )}
                   </p>
                 </Td>
               </Tr>
