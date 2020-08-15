@@ -322,19 +322,25 @@ const SerialCodes: React.FC = () => {
                 </Td>
                 <Td>
                   <span
-                    className={`relative inline-block px-3 py-1 font-semibold text-${
-                      { created: "blue", allowed: "green", denied: "orange" }[
-                        serialCode.state
-                      ]
-                    }-900 leading-tight`}
+                    className={classnames(
+                      "relative inline-block px-3 py-1 font-semibold leading-tight",
+                      {
+                        "text-blue-900": serialCode.state === "created",
+                        "text-green-900": serialCode.state === "allowed",
+                        "text-orange-900": serialCode.state === "denied",
+                      }
+                    )}
                   >
                     <span
                       aria-hidden
-                      className={`absolute inset-0 bg-${
-                        { created: "blue", allowed: "green", denied: "orange" }[
-                          serialCode.state
-                        ]
-                      }-200 opacity-50 rounded-full`}
+                      className={classnames(
+                        "absolute inset-0 opacity-50 rounded-full",
+                        {
+                          "bg-blue-200": serialCode.state === "created",
+                          "bg-green-200": serialCode.state === "allowed",
+                          "bg-orange-200": serialCode.state === "denied",
+                        }
+                      )}
                     ></span>
                     <span className="capitalize relative">
                       {serialCode.state}
