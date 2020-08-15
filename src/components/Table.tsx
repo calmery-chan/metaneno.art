@@ -6,10 +6,16 @@ export const Table: React.FC = ({ children }) => (
 
 export const Tbody: React.FC = ({ children }) => <tbody>{children}</tbody>;
 
-export const Td: React.FC = ({ children }) => (
-  <td className="px-4 py-4 border-b border-gray-200 bg-white text-sm">
-    {children}
-  </td>
+export const Td: React.FC<React.DetailedHTMLProps<
+  React.TdHTMLAttributes<HTMLTableDataCellElement>,
+  HTMLTableDataCellElement
+>> = (props) => (
+  <td
+    {...props}
+    className={`px-4 py-4 border-b border-gray-200 bg-white text-sm ${
+      props.className || ""
+    }`}
+  />
 );
 
 export const Th: React.FC = ({ children }) => (
