@@ -4,6 +4,10 @@ import { createGlobalStyle } from "styled-components";
 import "~/styles/index.css";
 
 const GlobalStyle = createGlobalStyle`
+  html, body, #__next {
+    height: 100%;
+  }
+
   body {
     margin: 0;
     padding: 0;
