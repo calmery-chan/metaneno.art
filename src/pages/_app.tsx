@@ -1,6 +1,7 @@
 import NextApp from "next/app";
 import React from "react";
 import { createGlobalStyle } from "styled-components";
+import "~/styles/index.css";
 
 const GlobalStyle = createGlobalStyle`
   body {
