@@ -8,61 +8,45 @@ import { withBasicAuth } from "~/utils/with-basic-auth";
 
 // Helper Functions
 
+// ToDo: リリース前に変更する
+const ADMIN_AUTHORIZATION_TOKEN = "secret";
+
 const ADMIN_API_URL =
   process.env.NODE_ENV === "production"
     ? "https://metaneno.herokuapp.com/admin"
     : "http://localhost:5000/admin";
 
-const getSerialCodes = (): Promise<{ data: SerialCode[] }> => {
-  const headers = {
-    Authorization: "Bearer secret",
-    "Content-Type": "application/json",
-  };
-
-  return fetch(`${ADMIN_API_URL}/serial_codes`, {
-    headers,
-  }).then((r) => r.json());
+const headers = {
+  Authorization: `Bearer ${ADMIN_AUTHORIZATION_TOKEN}`,
+  "Content-Type": "application/json",
 };
 
-const createSerialCode = (): Promise<{ data: SerialCode }> => {
-  const headers = {
-    Authorization: "Bearer secret",
-    "Content-Type": "application/json",
-  };
+const getSerialCodes = (): Promise<{ data: SerialCode[] }> =>
+  fetch(`${ADMIN_API_URL}/serial_codes`, {
+    headers,
+  }).then((r) => r.json());
 
-  return fetch(`${ADMIN_API_URL}/serial_codes`, {
+const createSerialCode = (): Promise<{ data: SerialCode }> =>
+  fetch(`${ADMIN_API_URL}/serial_codes`, {
     headers,
     method: "POST",
   }).then((r) => r.json());
-};
 
 const updateSerialCode = (
   id: number,
   state: SerialCode["state"]
-): Promise<{ data: SerialCode }> => {
-  const headers = {
-    Authorization: "Bearer secret",
-    "Content-Type": "application/json",
-  };
-
-  return fetch(`${ADMIN_API_URL}/serial_codes/${id}`, {
+): Promise<{ data: SerialCode }> =>
+  fetch(`${ADMIN_API_URL}/serial_codes/${id}`, {
     body: JSON.stringify({ state }),
     headers,
     method: "PUT",
   }).then((r) => r.json());
-};
 
-const removeSerialCode = (id: number): Promise<{ data: SerialCode }> => {
-  const headers = {
-    Authorization: "Bearer secret",
-    "Content-Type": "application/json",
-  };
-
-  return fetch(`${ADMIN_API_URL}/serial_codes/${id}`, {
+const removeSerialCode = (id: number): Promise<{ data: SerialCode }> =>
+  fetch(`${ADMIN_API_URL}/serial_codes/${id}`, {
     headers,
     method: "DELETE",
   }).then((r) => r.json());
-};
 
 const formatSerialCode = (serialCode: string) => {
   if (serialCode.length !== 16) {
