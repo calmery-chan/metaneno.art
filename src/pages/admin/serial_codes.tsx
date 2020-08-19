@@ -4,49 +4,35 @@ import React, { useState, useEffect, useCallback } from "react";
 import { Header } from "~/components/Header";
 import { Page } from "~/components/Page";
 import { Table, Tbody, Td, Th, Thead, Tr } from "~/components/Table";
-import { withBasicAuth } from "~/utils/with-basic-auth";
+import axios from "~/utils/axios";
+import { withAdmin } from "~/utils/with-admin";
+
+console.log(axios);
 
 // Helper Functions
 
-// ToDo: リリース前に変更する
-const ADMIN_AUTHORIZATION_TOKEN = "secret";
+const getSerialCodes = () =>
+  axios
+    .get<{ data: SerialCode[] }>("/admin/serial_codes")
+    .then(({ data }) => data);
 
-const ADMIN_API_URL =
-  process.env.NODE_ENV === "production"
-    ? "https://metaneno.herokuapp.com/admin"
-    : "http://localhost:5000/admin";
-
-const headers = {
-  Authorization: `Bearer ${ADMIN_AUTHORIZATION_TOKEN}`,
-  "Content-Type": "application/json",
-};
-
-const getSerialCodes = (): Promise<{ data: SerialCode[] }> =>
-  fetch(`${ADMIN_API_URL}/serial_codes`, {
-    headers,
-  }).then((r) => r.json());
-
-const createSerialCode = (): Promise<{ data: SerialCode }> =>
-  fetch(`${ADMIN_API_URL}/serial_codes`, {
-    headers,
-    method: "POST",
-  }).then((r) => r.json());
+const createSerialCode = () =>
+  axios
+    .post<{ data: SerialCode }>("/admin/serial_codes")
+    .then(({ data }) => data);
 
 const updateSerialCode = (
   id: number,
   state: SerialCode["state"]
 ): Promise<{ data: SerialCode }> =>
-  fetch(`${ADMIN_API_URL}/serial_codes/${id}`, {
-    body: JSON.stringify({ state }),
-    headers,
-    method: "PUT",
-  }).then((r) => r.json());
+  axios
+    .put<{ data: SerialCode }>(`/admin/serial_codes/${id}`, { state })
+    .then(({ data }) => data);
 
-const removeSerialCode = (id: number): Promise<{ data: SerialCode }> =>
-  fetch(`${ADMIN_API_URL}/serial_codes/${id}`, {
-    headers,
-    method: "DELETE",
-  }).then((r) => r.json());
+const removeSerialCode = (id: number) =>
+  axios
+    .delete<{ data: SerialCode }>(`/admin/serial_codes/${id}`)
+    .then(({ data }) => data);
 
 const formatSerialCode = (serialCode: string) => {
   if (serialCode.length !== 16) {
@@ -426,5 +412,4 @@ const SerialCodes: React.FC = () => {
   );
 };
 
-export default SerialCodes;
-export const getServerSideProps = withBasicAuth();
+export default withAdmin(SerialCodes);

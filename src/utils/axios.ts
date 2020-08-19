@@ -6,7 +6,7 @@ export default axios.create({
       ? "https://metaneno.vercel.app/"
       : "http://localhost:5000/",
   headers: {
-    "Content-Type": "application/json",
+    Accept: "application/json",
   },
   withCredentials: true,
 });
