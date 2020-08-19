@@ -7,8 +7,6 @@ import { Table, Tbody, Td, Th, Thead, Tr } from "~/components/Table";
 import axios from "~/utils/axios";
 import { withAdmin } from "~/utils/with-admin";
 
-console.log(axios);
-
 // Helper Functions
 
 const getSerialCodes = () =>
