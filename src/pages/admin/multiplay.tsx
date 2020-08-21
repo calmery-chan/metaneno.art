@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import { OrbitControls } from "three-orbitcontrols-ts";
 import * as uuid from "uuid";
-import { withBasicAuth } from "~/utils/with-basic-auth";
+import { withAdmin } from "~/utils/with-admin";
 
 type PlayerPositionActions =
   | {
@@ -218,5 +218,4 @@ const Multiplayer: React.FC = () => {
   return <div ref={ref} />;
 };
 
-export default Multiplayer;
-export const getServerSideProps = withBasicAuth();
+export default withAdmin(Multiplayer);

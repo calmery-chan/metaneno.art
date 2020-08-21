@@ -1,11 +1,11 @@
+import { NextPage } from "next";
 import React from "react";
 import styled from "styled-components";
 import useSWR from "swr";
 import { documentToHtmlString } from "@contentful/rich-text-html-renderer";
-import { withBasicAuth } from "~/utils/with-basic-auth";
 import { Works } from "~/types/contentful";
-import { NextPage } from "next";
 import { getWorks } from "~/utils/contentful";
+import { withAdmin } from "~/utils/with-admin";
 
 const Work = styled.div`
   background: rgba(245, 245, 245, 1);
@@ -109,5 +109,4 @@ const WorkList: NextPage = () => {
   );
 };
 
-export default WorkList;
-export const getServerSideProps = withBasicAuth();
+export default withAdmin(WorkList);
