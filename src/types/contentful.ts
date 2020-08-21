@@ -4,47 +4,28 @@ export type ContentfulResponse<T> = {
   data: T;
 };
 
-export type ContentfulErrorResponse = {
-  errors: {
-    extensions: {
-      contentful: {
-        code: string;
-        requestId: string;
-      };
-    };
-    message: string;
-  };
-};
-
-export type WorksCollection = ContentfulResponse<{
-  worksCollection: {
-    items: {
-      title: string;
-      description: {
-        json: Document;
-      };
-      thumbnailsCollection: {
-        items: {
-          url: string;
-          width: number;
-          height: number;
-        }[];
-      };
-      model: {
-        file: {
-          url: string;
-          size: number;
-        };
-        positionX: number;
-        positionY: number;
-        positionZ: number;
-        rotateX: number;
-        rotateY: number;
-        rotateZ: number;
-        scaleX: number;
-        scaleY: number;
-        scaleZ: number;
-      };
+export type Works = ContentfulResponse<{
+  works: {
+    title: string;
+    description: Document;
+    thumbnails: {
+      url: string;
+      width: number;
+      height: number;
     }[];
-  };
+    model: {
+      url: string;
+      file_size: number;
+      content_type: string;
+      position_x: number;
+      position_y: number;
+      position_z: number;
+      rotate_x: number;
+      rotate_y: number;
+      rotate_z: number;
+      scale_x: number;
+      scale_y: number;
+      scale_z: number;
+    };
+  }[];
 }>;

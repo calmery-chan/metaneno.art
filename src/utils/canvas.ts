@@ -1,8 +1,8 @@
 import * as THREE from "three";
 import { OrbitControls } from "three-orbitcontrols-ts";
 import GLTFLoader from "three-gltf-loader";
-import { WorksCollection } from "~/types/contentful";
-import { Box3, Vector3, sRGBEncoding, AnimationMixer } from "three";
+import { Works } from "~/types/contentful";
+import { Box3, Vector3, AnimationMixer } from "three";
 
 // Shader
 
@@ -132,10 +132,7 @@ const getRenderer = () => {
   return renderer;
 };
 
-export const application = async (
-  element: HTMLDivElement,
-  works: WorksCollection
-) => {
+export const application = async (element: HTMLDivElement, works: Works) => {
   const renderer = getRenderer();
 
   // Scene
@@ -184,29 +181,29 @@ export const application = async (
       };
     };
   }>(
-    works.data.worksCollection.items.map(({ title, model }) => {
+    works.data.works.map(({ title, model }) => {
       return new Promise((resolve, reject) => {
         const loader = new GLTFLoader();
         loader.setCrossOrigin("anonymous");
 
-        loader.load(model.file.url, (gltf) => {
+        loader.load(model.url, (gltf) => {
           const s = gltf.scene || gltf.scenes[0];
           const clips = gltf.animations || [];
 
-          s.rotateX(model.rotateX);
-          s.rotateY(model.rotateY);
-          s.rotateZ(model.rotateZ);
-          s.scale.x = model.scaleX;
-          s.scale.y = model.scaleY;
-          s.scale.z = model.scaleZ;
+          s.rotateX(model.rotate_x);
+          s.rotateY(model.rotate_y);
+          s.rotateZ(model.rotate_z);
+          s.scale.x = model.scale_x;
+          s.scale.y = model.scale_y;
+          s.scale.z = model.scale_z;
 
           const box = new Box3().setFromObject(s);
           const size = box.getSize(new Vector3());
           const center = box.getCenter(new Vector3());
 
-          s.position.x = model.positionX;
-          s.position.y = model.positionY;
-          s.position.z = model.positionZ;
+          s.position.x = model.position_x;
+          s.position.y = model.position_y;
+          s.position.z = model.position_z;
 
           s.position.x -= center.x;
           s.position.y -= center.y;
@@ -230,9 +227,9 @@ export const application = async (
             model: {
               position: s.position,
               rotate: {
-                x: model.rotateX,
-                y: model.rotateY,
-                z: model.rotateZ,
+                x: model.rotate_x,
+                y: model.rotate_y,
+                z: model.rotate_z,
               },
               scale: s.scale,
               size,

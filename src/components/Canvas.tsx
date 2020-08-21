@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled, { css } from "styled-components";
-import { WorksCollection } from "~/types/contentful";
+import { Works } from "~/types/contentful";
 import { application } from "~/utils/canvas";
 
 const Axes = styled.div`
@@ -46,7 +46,7 @@ const ModelInformation = styled.div`
   background: rgba(235, 235, 235, 1);
 `;
 
-export const Canvas: React.FC<WorksCollection> = (props) => {
+export const Canvas: React.FC<Works> = (props) => {
   const ref = useRef<HTMLDivElement>(null);
   const [modelInformation, setModelInformation] = useState<
     {
@@ -83,8 +83,6 @@ export const Canvas: React.FC<WorksCollection> = (props) => {
       setModelInformation(modelInformation);
     })();
   }, []);
-
-  console.log(modelInformation);
 
   return (
     <div>
