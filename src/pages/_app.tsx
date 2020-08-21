@@ -1,3 +1,4 @@
+import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 import NextApp from "next/app";
 import React from "react";
 import { createGlobalStyle } from "styled-components";
@@ -19,10 +20,10 @@ class App extends NextApp {
     const { Component, pageProps } = this.props;
 
     return (
-      <>
+      <GoogleReCaptchaProvider reCaptchaKey={process.env.RECAPTCHA_SITE_KEY}>
         <Component {...pageProps} />
         <GlobalStyle />
-      </>
+      </GoogleReCaptchaProvider>
     );
   };
 }

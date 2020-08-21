@@ -3,12 +3,14 @@ import React, { useCallback, useEffect, useState } from "react";
 import axios from "~/utils/axios";
 import { AxiosError } from "axios";
 import { Page } from "~/components/Page";
+import { GoogleReCaptcha } from "react-google-recaptcha-v3";
 
 const SignIn: React.FC = () => {
   const router = useRouter();
   const [errorMessage, setErrorMessage] = useState<string>();
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
+  const [recaptchaResponse, setRecaptchaResponse] = useState("");
 
   const handleOnChangeName = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) =>
@@ -24,12 +26,16 @@ const SignIn: React.FC = () => {
 
   const handleOnClickSignInButton = useCallback(async () => {
     try {
-      await axios.post<null>("/admin", { name, password });
+      await axios.post<null>("/admin", {
+        name,
+        password,
+        "g-recaptcha-response": recaptchaResponse,
+      });
       router.back();
     } catch (error) {
       setErrorMessage((error as AxiosError).message);
     }
-  }, [name, password]);
+  }, [name, password, recaptchaResponse]);
 
   useEffect(() => {
     (async () => {
@@ -42,6 +48,7 @@ const SignIn: React.FC = () => {
 
   return (
     <Page>
+      <GoogleReCaptcha onVerify={setRecaptchaResponse} />
       <div className="flex justify-center">
         <div>
           <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
