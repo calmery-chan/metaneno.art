@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import { useRouter } from "next/router";
 import React, { useCallback, useEffect, useState } from "react";
 import axios from "~/utils/axios";
@@ -7,6 +8,7 @@ import { GoogleReCaptcha } from "react-google-recaptcha-v3";
 
 const SignIn: React.FC = () => {
   const router = useRouter();
+  const [disabled, setDisabled] = useState(true);
   const [errorMessage, setErrorMessage] = useState<string>();
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
@@ -24,8 +26,14 @@ const SignIn: React.FC = () => {
     []
   );
 
+  const handleOnChangeRecaptchaResponse = useCallback((recaptchaResponse) => {
+    setRecaptchaResponse(recaptchaResponse);
+    setDisabled(false);
+  }, []);
+
   const handleOnClickSignInButton = useCallback(async () => {
     try {
+      setDisabled(true);
       await axios.post<null>("/admin", {
         name,
         password,
@@ -34,6 +42,8 @@ const SignIn: React.FC = () => {
       router.back();
     } catch (error) {
       setErrorMessage((error as AxiosError).message);
+    } finally {
+      setDisabled(false);
     }
   }, [name, password, recaptchaResponse]);
 
@@ -48,7 +58,7 @@ const SignIn: React.FC = () => {
 
   return (
     <Page>
-      <GoogleReCaptcha onVerify={setRecaptchaResponse} />
+      <GoogleReCaptcha onVerify={handleOnChangeRecaptchaResponse} />
       <div className="flex justify-center">
         <div>
           <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
@@ -77,7 +87,13 @@ const SignIn: React.FC = () => {
             <div className="flex items-center justify-between">
               <button
                 onClick={handleOnClickSignInButton}
-                className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                className={classNames(
+                  "w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline",
+                  {
+                    "opacity-50 cursor-not-allowed": disabled,
+                  }
+                )}
+                disabled={disabled}
                 type="button"
               >
                 Sign In
