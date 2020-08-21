@@ -4,7 +4,22 @@ import React from "react";
 import { withAdmin } from "~/utils/with-admin";
 
 const Admin: NextPage = () => {
-  return <Link href="/admin/serial_codes">Serial Codes</Link>;
+  return (
+    <>
+      <div>
+        <Link href="/admin/serial_codes">Serial Codes</Link>
+      </div>
+      <div>
+        <Link href="/admin/canvas">Canvas</Link>
+      </div>
+      <div>
+        <Link href="/admin/works">Works</Link>
+      </div>
+      <div>
+        <Link href="/admin/multiplay">Multiplay</Link>
+      </div>
+    </>
+  );
 };
 
 export default withAdmin(Admin);
