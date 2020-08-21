@@ -60,7 +60,7 @@ const SignIn: React.FC = () => {
     <Page>
       <GoogleReCaptcha onVerify={handleOnChangeRecaptchaResponse} />
       <div className="flex justify-center">
-        <div>
+        <div className="max-w-sm">
           <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
             <div className="mb-4">
               <label className="block text-gray-700 text-sm font-bold mb-2">
@@ -84,7 +84,7 @@ const SignIn: React.FC = () => {
                 onChange={handleOnChangePassword}
               />
             </div>
-            <div className="flex items-center justify-between">
+            <div className="mb-6 flex items-center justify-between">
               <button
                 onClick={handleOnClickSignInButton}
                 className={classNames(
@@ -98,6 +98,23 @@ const SignIn: React.FC = () => {
               >
                 Sign In
               </button>
+            </div>
+            <div className="text-xs text-gray-500">
+              This site is protected by reCAPTCHA and the Google{" "}
+              <a
+                href="https://policies.google.com/privacy"
+                className="text-blue-500"
+              >
+                Privacy Policy
+              </a>{" "}
+              and{" "}
+              <a
+                href="https://policies.google.com/terms"
+                className="text-blue-500"
+              >
+                Terms of Service
+              </a>{" "}
+              apply.
             </div>
           </form>
           {errorMessage && (

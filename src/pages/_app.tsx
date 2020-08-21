@@ -13,6 +13,10 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
     padding: 0;
   }
+
+  .grecaptcha-badge {
+    visibility: hidden;
+  }
 `;
 
 class App extends NextApp {
