@@ -1,5 +1,6 @@
 import React from "react";
 import * as ReactThreeFiber from "react-three-fiber";
+import { Floor } from "~/components/Canvas/Floor";
 import { Helpers } from "~/components/Canvas/Helpers";
 import { Lights } from "~/components/Canvas/Lights";
 import { OtherPlayers } from "~/components/Canvas/OtherPlayers";
@@ -19,6 +20,7 @@ const Canvas: React.FC = () => {
 
   return (
     <ReactThreeFiber.Canvas>
+      <Floor />
       <Helpers />
       <Lights />
       <OtherPlayers players={players} />
