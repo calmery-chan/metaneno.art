@@ -4,10 +4,10 @@ import { ReactThreeFiber } from "react-three-fiber/three-types";
 import { Mesh, Geometry, BufferGeometry, Material, Vector3 } from "three";
 
 type PlayerProps = {
-  onChangePosition: (position: Vector3) => void;
+  onMove: (x: number, y: number, z: number) => void;
 };
 
-export const Player: React.FC<PlayerProps> = ({ onChangePosition }) => {
+export const Player: React.FC<PlayerProps> = ({ onMove }) => {
   const ref = useRef<
     ReactThreeFiber.Object3DNode<
       Mesh<Geometry | BufferGeometry, Material | Material[]>,
@@ -44,7 +44,7 @@ export const Player: React.FC<PlayerProps> = ({ onChangePosition }) => {
     };
   }, []);
 
-  useFrame(() => {
+  useFrame((state) => {
     const position = ref.current!.position as Vector3;
 
     let nextX = 0;
@@ -69,7 +69,15 @@ export const Player: React.FC<PlayerProps> = ({ onChangePosition }) => {
     position.x += nextX;
     position.z += nextZ;
 
-    onChangePosition(position);
+    state.camera.position.x = position.x - 2;
+    state.camera.position.y = position.y + 4;
+    state.camera.position.z = position.z - 2;
+    state.camera.lookAt(position);
+    state.camera.updateProjectionMatrix();
+
+    if (nextX || nextZ) {
+      onMove(position.x, position.y, position.z);
+    }
   });
 
   return (
