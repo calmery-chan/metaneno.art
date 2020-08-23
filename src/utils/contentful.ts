@@ -1,5 +1,5 @@
 import axios from "./axios";
-import { Works } from "~/types/contentful";
+import { WorksResponse } from "~/types/contentful";
 
-export const getWorks = (): Promise<Works> =>
+export const getWorks = (): Promise<WorksResponse> =>
   axios.get("/admin/contentful/works").then(({ data }) => data);

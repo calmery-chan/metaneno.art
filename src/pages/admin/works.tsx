@@ -3,7 +3,7 @@ import React from "react";
 import styled from "styled-components";
 import useSWR from "swr";
 import { documentToHtmlString } from "@contentful/rich-text-html-renderer";
-import { Works } from "~/types/contentful";
+import { WorksResponse } from "~/types/contentful";
 import { getWorks } from "~/utils/contentful";
 import { withAdmin } from "~/utils/with-admin";
 
@@ -44,7 +44,10 @@ const WorkDescription = styled.div`
 `;
 
 const WorkList: NextPage = () => {
-  const { data, error } = useSWR<Works>("/admin/contentful/works", getWorks);
+  const { data, error } = useSWR<WorksResponse>(
+    "/admin/contentful/works",
+    getWorks
+  );
 
   if (error) {
     return <div>Error</div>;
