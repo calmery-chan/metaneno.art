@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Vector3, Box3, Scene } from "three";
-import { Work as WorkType } from "~/types/contentful";
 import GLTFLoader from "three-gltf-loader";
+import { useWorks } from "~/utils/use-works";
+import { Work as WorkType } from "~/types/contentful";
 
-export const Work: React.FC<WorkType> = ({ model }) => {
+const Work: React.FC<WorkType> = ({ model }) => {
   const [scene, setScene] = useState<Scene>();
 
   useEffect(() => {
@@ -36,4 +37,20 @@ export const Work: React.FC<WorkType> = ({ model }) => {
   }
 
   return <primitive object={scene} />;
+};
+
+export const Works: React.FC = () => {
+  const { works } = useWorks();
+
+  if (!works) {
+    return null;
+  }
+
+  return (
+    <>
+      {works.map((work, key) => (
+        <Work key={key} {...work} />
+      ))}
+    </>
+  );
 };
