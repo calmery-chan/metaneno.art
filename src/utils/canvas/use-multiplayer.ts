@@ -81,7 +81,7 @@ export const useMultiplayer = () => {
       const actioncable = await import("actioncable");
       const consumer = actioncable.createConsumer(
         process.env.NODE_ENV === "production"
-          ? "https://metaneno.herokuapp.com/cable"
+          ? "https://creamsoda.in/cable"
           : "http://localhost:5000/cable"
       );
 
