@@ -15,9 +15,6 @@ const Admin: NextPage = () => {
       <div>
         <Link href="/admin/works">Works</Link>
       </div>
-      <div>
-        <Link href="/admin/multiplay">Multiplay</Link>
-      </div>
     </>
   );
 };
