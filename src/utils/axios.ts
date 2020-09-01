@@ -3,8 +3,8 @@ import axios from "axios";
 export default axios.create({
   baseURL:
     process.env.NODE_ENV === "production"
-      ? "https://creamsoda.in/"
-      : "http://localhost:5000/",
+      ? "https://creamsoda.in/a/dream/"
+      : "http://localhost:5000/a/dream/",
   headers: {
     Accept: "application/json",
   },
