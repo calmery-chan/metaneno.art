@@ -1,4 +1,4 @@
-import { Webhooks } from "@octokit/webhooks";
+import { EventPayloads } from "@octokit/webhooks";
 import * as Sentry from "@sentry/node";
 import axios from "axios";
 import { NowRequest, NowResponse } from "@vercel/node";
@@ -21,7 +21,7 @@ export default async (
     deployment,
     deployment_status: deploymentStatus,
     repository,
-  }: Webhooks.WebhookPayloadDeploymentStatus = request.body;
+  }: EventPayloads.WebhookPayloadDeploymentStatus = request.body;
 
   if (
     deploymentStatus.state === "pending" ||
