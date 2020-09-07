@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import axios from "./axios";
 
+// eslint-disable-next-line react/display-name
 export const withAdmin = (Component: NextPage) => (
   context: NextPageContext
 ) => {
