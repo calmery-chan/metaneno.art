@@ -1,15 +1,14 @@
 import classNames from "classnames";
 import { useRouter } from "next/router";
 import React, { useCallback, useEffect, useState } from "react";
-import axios from "~/utils/axios";
-import { AxiosError } from "axios";
+import { ping, signIn } from "~/utils/admin";
 import { Page } from "~/components/Page";
 import { GoogleReCaptcha } from "react-google-recaptcha-v3";
 
 const SignIn: React.FC = () => {
   const router = useRouter();
   const [disabled, setDisabled] = useState(true);
-  const [errorMessage, setErrorMessage] = useState<string>();
+  const [error, setError] = useState(false);
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [recaptchaResponse, setRecaptchaResponse] = useState("");
@@ -32,27 +31,27 @@ const SignIn: React.FC = () => {
   }, []);
 
   const handleOnClickSignInButton = useCallback(async () => {
-    try {
-      setDisabled(true);
-      await axios.post<null>("/admin", {
+    setDisabled(true);
+
+    if (
+      await signIn({
         name,
         password,
         "g-recaptcha-response": recaptchaResponse,
-      });
+      })
+    ) {
       router.back();
-    } catch (error) {
-      setErrorMessage((error as AxiosError).message);
-    } finally {
-      setDisabled(false);
     }
+
+    setError(true);
+    setDisabled(false);
   }, [name, password, recaptchaResponse]);
 
   useEffect(() => {
     (async () => {
-      try {
-        await axios.get("/admin");
+      if (await ping()) {
         router.back();
-      } catch (_) {} // eslint-disable-line no-empty
+      }
     })();
   }, []);
 
@@ -117,9 +116,9 @@ const SignIn: React.FC = () => {
               apply.
             </div>
           </form>
-          {errorMessage && (
+          {error && (
             <p className="text-red-500 text-xs text-center mt-4 italic">
-              {errorMessage}
+              ログインに失敗しました
             </p>
           )}
         </div>
