@@ -1,0 +1,36 @@
+name: Contentful
+
+on: [workflow_dispatch]
+
+jobs:
+  update:
+    env:
+      CONTENTFUL_CONTENT_DELIVERY_API_ACCESS_TOKEN: ${{ secrets.CONTENTFUL_CONTENT_DELIVERY_API_ACCESS_TOKEN }}
+      CONTENTFUL_ENVIRONMENT: ${{ secrets.CONTENTFUL_ENVIRONMENT }}
+      CONTENTFUL_SPACE_ID: ${{ secrets.CONTENTFUL_SPACE_ID }}
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: |
+          npm i npm@${{ matrix.npm-version }} -g
+          npm ci
+          node scripts/contentful.js
+      - run: |
+          git config user.name "calmery-chan"
+          git config user.email "59396199+calmery-chan@users.noreply.github.com"
+          git add contents
+          git commit -m "Update contents"
+          git push origin master
+
+    strategy:
+      matrix:
+        node-version: [12.18.3]
+        npm-version: [6.14.7]
+        os: [ubuntu-latest]
