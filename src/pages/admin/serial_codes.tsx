@@ -4,33 +4,27 @@ import React, { useState, useEffect, useCallback } from "react";
 import { Header } from "~/components/Header";
 import { Page } from "~/components/Page";
 import { Table, Tbody, Td, Th, Thead, Tr } from "~/components/Table";
-import axios from "~/utils/axios";
+import { delete_, get, post, put } from "~/utils/fetch";
 import { withAdmin } from "~/utils/with-admin";
 
 // Helper Functions
 
-const getSerialCodes = () =>
-  axios
-    .get<{ data: SerialCode[] }>("/admin/serial_codes")
-    .then(({ data }) => data);
+const getSerialCodes = (): Promise<{ data: SerialCode[] }> =>
+  get("/admin/serial_codes").then((response) => response.json());
 
-const createSerialCode = () =>
-  axios
-    .post<{ data: SerialCode }>("/admin/serial_codes")
-    .then(({ data }) => data);
+const createSerialCode = (): Promise<{ data: SerialCode }> =>
+  post("/admin/serial_codes").then((response) => response.json());
 
 const updateSerialCode = (
   id: number,
   state: SerialCode["state"]
 ): Promise<{ data: SerialCode }> =>
-  axios
-    .put<{ data: SerialCode }>(`/admin/serial_codes/${id}`, { state })
-    .then(({ data }) => data);
+  put(`/admin/serial_codes/${id}`, { state }).then((response) =>
+    response.json()
+  );
 
-const removeSerialCode = (id: number) =>
-  axios
-    .delete<{ data: SerialCode }>(`/admin/serial_codes/${id}`)
-    .then(({ data }) => data);
+const removeSerialCode = (id: number): Promise<{ data: SerialCode }> =>
+  delete_(`/admin/serial_codes/${id}`).then((response) => response.json());
 
 const formatSerialCode = (serialCode: string) => {
   if (serialCode.length !== 16) {

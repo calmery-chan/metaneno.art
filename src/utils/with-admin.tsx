@@ -1,7 +1,7 @@
 import { NextPage, NextPageContext } from "next";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
-import axios from "./axios";
+import { ping } from "./admin";
 
 // eslint-disable-next-line react/display-name
 export const withAdmin = (Component: NextPage) => (
@@ -12,12 +12,12 @@ export const withAdmin = (Component: NextPage) => (
 
   useEffect(() => {
     (async () => {
-      try {
-        await axios.get("/admin");
+      if (await ping()) {
         setProps((await Component.getInitialProps?.(context)) || {});
-      } catch (_) {
-        router.push("/admin/signin");
+        return;
       }
+
+      router.push("/admin/signin");
     })();
   }, []);
 
