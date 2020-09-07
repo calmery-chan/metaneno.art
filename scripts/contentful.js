@@ -2,7 +2,7 @@ const contentful = require("contentful");
 const fs = require("fs");
 const path = require("path");
 
-require('dotenv').config()
+require("dotenv").config();
 
 const client = contentful.createClient({
   accessToken: process.env.CONTENTFUL_CONTENT_DELIVERY_API_ACCESS_TOKEN,

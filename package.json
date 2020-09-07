@@ -54,7 +54,7 @@
     "**/*.svg": [
       "svgo"
     ],
-    "**/*.{json,md}": [
+    "**/*.{js,json,md}": [
       "prettier --write"
     ],
     "**/*.{ts,tsx}": [
