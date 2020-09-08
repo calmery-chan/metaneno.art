@@ -10,6 +10,7 @@ import { Works } from "~/components/Canvas/Works";
 import { useMultiplayer } from "~/utils/canvas/use-multiplayer";
 import { useWorks } from "~/utils/use-works";
 import { withAdmin } from "~/utils/with-admin";
+import { Vector3, Vector } from "three";
 
 // Styles
 
@@ -42,8 +43,9 @@ const ControllerDebug = styled.div`
 const Controller: React.FC<{
   startPosition: { x: number; y: number };
   position: { x: number; y: number };
+  vecPosition: Vector3;
   isMove: boolean;
-}> = ({ isMove, startPosition, position }) => {
+}> = ({ isMove, startPosition, position, vecPosition }) => {
   return (
     <ControllerContainer>
       <svg
@@ -70,6 +72,10 @@ const Controller: React.FC<{
         <div>
           Position: X={position.x} Y={position.y}
         </div>
+        <div>
+          Destination: X={vecPosition.x.toFixed(2)} Y={vecPosition.y.toFixed(2)}{" "}
+          Z={vecPosition.z.toFixed(2)}
+        </div>
         <div>{isMove ? "Move" : "Stop"}</div>
       </ControllerDebug>
     </ControllerContainer>
@@ -82,6 +88,7 @@ const Canvas: React.FC = () => {
   const [isMove, setMove] = useState(false);
   const [startPosition, setStartPosition] = useState({ x: 0, y: 0 });
   const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [vecPosition, setVecPosition] = useState<Vector3>(new Vector3(0, 0, 0));
 
   // Events
 
@@ -94,12 +101,24 @@ const Canvas: React.FC = () => {
     setMove(true);
   }, []);
 
-  const handleOnMouseMove = useCallback((event: React.MouseEvent) => {
-    const x = event.clientX;
-    const y = event.clientY;
+  const handleOnMouseMove = useCallback(
+    (event: React.MouseEvent) => {
+      if (!isMove) {
+        return;
+      }
 
-    setPosition({ x, y });
-  }, []);
+      const x = event.clientX;
+      const y = event.clientY;
+
+      const vector3 = new Vector3(x - startPosition.x, 0, y - startPosition.y);
+
+      vector3.normalize();
+
+      setPosition({ x, y });
+      setVecPosition(vector3);
+    },
+    [startPosition, isMove]
+  );
 
   const handleOnMouseUp = useCallback(() => {
     setMove(false);
@@ -128,6 +147,7 @@ const Canvas: React.FC = () => {
       <Controller
         startPosition={startPosition}
         position={position}
+        vecPosition={vecPosition}
         isMove={isMove}
       />
     </Container>
