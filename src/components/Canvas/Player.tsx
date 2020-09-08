@@ -5,10 +5,15 @@ import { Mesh, Geometry, BufferGeometry, Material, Vector3 } from "three";
 
 type PlayerProps = {
   onMove: (x: number, y: number, z: number) => void;
+  position: Vector3;
   destination: Vector3;
 };
 
-export const Player: React.FC<PlayerProps> = ({ onMove, destination }) => {
+export const Player: React.FC<PlayerProps> = ({
+  onMove,
+  position,
+  destination,
+}) => {
   const ref = useRef<
     ReactThreeFiber.Object3DNode<
       Mesh<Geometry | BufferGeometry, Material | Material[]>,
@@ -52,6 +57,15 @@ export const Player: React.FC<PlayerProps> = ({ onMove, destination }) => {
     position.z += destination.z * 0.05;
     onMove(position.x, position.y, position.z);
   }, [destination.x, destination.y, destination.z]);
+
+  useEffect(() => {
+    console.log(position);
+    const p = ref.current!.position as Vector3;
+    p.x = position.x;
+    p.y = position.y;
+    p.z = position.z;
+    onMove(position.x, position.y, position.z);
+  }, [position.x, position.y, position.z]);
 
   useFrame((state) => {
     const position = ref.current!.position as Vector3;

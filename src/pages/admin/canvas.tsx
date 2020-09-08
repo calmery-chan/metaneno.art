@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useRef } from "react";
 import * as ReactThreeFiber from "react-three-fiber";
 import styled from "styled-components";
 import { Floor } from "~/components/Canvas/Floor";
@@ -10,7 +10,15 @@ import { Works } from "~/components/Canvas/Works";
 import { useMultiplayer } from "~/utils/canvas/use-multiplayer";
 import { useWorks } from "~/utils/use-works";
 import { withAdmin } from "~/utils/with-admin";
-import { Vector3, Vector } from "three";
+import { Vector3, Vector, Vector2, Raycaster } from "three";
+import { useFrame } from "react-three-fiber";
+
+const Plane = () => (
+  <mesh>
+    <planeBufferGeometry attach="geometry" args={[100, 100]} />
+    <meshStandardMaterial attach="material" color="orange" />
+  </mesh>
+);
 
 // Styles
 
@@ -89,6 +97,8 @@ const Canvas: React.FC = () => {
   const [startPosition, setStartPosition] = useState({ x: 0, y: 0 });
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [vecPosition, setVecPosition] = useState<Vector3>(new Vector3(0, 0, 0));
+  const [mouseVector2, setMouseVector2] = useState<Vector2>(new Vector2(0, 0));
+  const [vector3, setVector3] = useState<Vector3>(new Vector3(0, 0, 0));
 
   // Events
 
@@ -133,17 +143,27 @@ const Canvas: React.FC = () => {
 
   return (
     <Container
-      onMouseDown={handleOnMouseDown}
-      onMouseMove={handleOnMouseMove}
-      onMouseUp={handleOnMouseUp}
+      // onMouseDown={handleOnMouseDown}
+      // onMouseMove={handleOnMouseMove}
+      // onMouseUp={handleOnMouseUp}
+      onClick={(event) => {
+        const x = event.clientX;
+        const y = event.clientY;
+
+        const vector2 = new Vector2(
+          (x / innerWidth) * 2 - 1,
+          -(y / innerHeight) * 2 + 1
+        );
+        setMouseVector2(vector2);
+      }}
     >
       <ReactThreeFiber.Canvas>
-        <Floor />
+        <Floor mouse={mouseVector2} onIntersect={setVector3} />
         <Helpers />
         <Lights />
-        <OtherPlayers players={players} />
-        <Player destination={vecPosition} onMove={move} />
-        <Works works={works} />
+        {/* <OtherPlayers players={players} /> */}
+        <Player destination={vecPosition} position={vector3} onMove={move} />
+        {/* <Works works={works} /> */}
       </ReactThreeFiber.Canvas>
       <Controller
         startPosition={startPosition}

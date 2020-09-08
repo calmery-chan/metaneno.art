@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import * as THREE from "three";
+import { Vector2, Vector3, Raycaster } from "three";
+import { useFrame } from "react-three-fiber";
 
 const fragmentShader = `
 uniform sampler2D tBackground;
@@ -20,11 +22,15 @@ void main() {
 }
 `;
 
-export const Floor: React.FC = () => {
+export const Floor: React.FC<{
+  mouse: Vector2;
+  onIntersect: (v: Vector3) => void;
+}> = ({ mouse, onIntersect }) => {
   const topLeft = new THREE.Color("#f5883c");
   const topRight = new THREE.Color("#ff9043");
   const bottomRight = new THREE.Color("#fccf92");
   const bottomLeft = new THREE.Color("#f5aa58");
+  const [ready, setReady] = useState(true);
 
   const data = new Uint8Array([
     Math.round(bottomLeft.r * 255),
@@ -40,6 +46,29 @@ export const Floor: React.FC = () => {
     Math.round(topRight.g * 255),
     Math.round(topRight.b * 255),
   ]);
+
+  useEffect(() => {
+    setReady(true);
+  }, [mouse.x, mouse.y]);
+
+  useFrame(({ camera, scene }) => {
+    if (!ready) {
+      return;
+    }
+
+    const raycaster = new Raycaster();
+    raycaster.setFromCamera(mouse, camera);
+    const intersects = raycaster.intersectObjects(scene.children);
+
+    const grid = intersects.find((i) => i.object.type === "GridHelper");
+
+    if (!grid) {
+      return;
+    }
+
+    setReady(false);
+    onIntersect(grid.point);
+  });
 
   const backgroundTexture = new THREE.DataTexture(data, 2, 2, THREE.RGBFormat);
   backgroundTexture.magFilter = THREE.LinearFilter;
