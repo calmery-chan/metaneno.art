@@ -110,9 +110,10 @@ const Canvas: React.FC = () => {
       const x = event.clientX;
       const y = event.clientY;
 
-      const vector3 = new Vector3(x - startPosition.x, 0, y - startPosition.y);
+      const vector3 = new Vector3(startPosition.x - x, 0, startPosition.y - y);
 
       vector3.normalize();
+      vector3.applyAxisAngle(new Vector3(0, 1, 0), 45 * (Math.PI / 180));
 
       setPosition({ x, y });
       setVecPosition(vector3);
@@ -141,7 +142,7 @@ const Canvas: React.FC = () => {
         <Helpers />
         <Lights />
         <OtherPlayers players={players} />
-        <Player onMove={move} />
+        <Player destination={vecPosition} onMove={move} />
         <Works works={works} />
       </ReactThreeFiber.Canvas>
       <Controller
