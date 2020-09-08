@@ -50,7 +50,8 @@ export const Player: React.FC<PlayerProps> = ({ onMove, destination }) => {
     position.x += destination.x * 0.05;
     position.y += destination.y * 0.05;
     position.z += destination.z * 0.05;
-  }, [destination]);
+    onMove(position.x, position.y, position.z);
+  }, [destination.x, destination.y, destination.z]);
 
   useFrame((state) => {
     const position = ref.current!.position as Vector3;
