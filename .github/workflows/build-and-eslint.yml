@@ -1,0 +1,43 @@
+name: Build And ESLint
+
+on:
+  push:
+    branches-ignore:
+      - master
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        node-version: [12.18.4]
+        npm-version: [6.14.8]
+        os: [ubuntu-latest]
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: npm i npm@${{ matrix.npm-version }} -g
+      - run: npm ci
+      - run: npx next build
+
+  eslint:
+    strategy:
+      matrix:
+        node-version: [12.18.4]
+        npm-version: [6.14.8]
+        os: [ubuntu-latest]
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: npm i npm@${{ matrix.npm-version }} -g
+      - run: npm ci
+      - run: npx eslint --ext .js,.ts,.tsx --ignore-path .gitignore .
