@@ -3,7 +3,7 @@ import Head from "next/head";
 
 export default function Home(): JSX.Element {
   return (
-    <div className="container">
+    <div className="container mx-auto">
       <Head>
         <title>Create Next App</title>
         <link rel="icon" href="/favicon.ico" />
