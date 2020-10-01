@@ -1,15 +1,20 @@
 {
-  "name": "metaneno",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start"
-  },
   "dependencies": {
     "next": "9.5.3",
     "react": "16.13.1",
     "react-dom": "16.13.1"
-  }
+  },
+  "devDependencies": {
+    "@types/node": "14.11.2",
+    "@types/react": "16.9.49",
+    "typescript": "4.0.3"
+  },
+  "name": "metaneno",
+  "private": true,
+  "scripts": {
+    "build": "next build",
+    "dev": "next dev",
+    "start": "next start"
+  },
+  "version": "0.1.0"
 }
