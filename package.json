@@ -38,7 +38,7 @@
   "name": "metaneno",
   "private": true,
   "scripts": {
-    "fix": "run-s fix:eslint fix:prettier fix:stylelint fix:svgo",
+    "fix": "run-s fix:eslint fix:stylelint fix:svgo fix:prettier",
     "fix:eslint": "eslint --ext .js,.ts,.tsx --fix --ignore-path .gitignore .",
     "fix:prettier": "prettier --ignore-path .gitignore --write .",
     "fix:stylelint": "stylelint --fix --ignore-path .gitignore **/*.scss",
