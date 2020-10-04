@@ -66,6 +66,9 @@
       "@typescript-eslint",
       "react"
     ],
+    "rules": {
+      "react/prop-types": "off"
+    },
     "settings": {
       "react": {
         "version": "detect"
