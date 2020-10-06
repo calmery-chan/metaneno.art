@@ -1,10 +1,10 @@
 import React from "react";
-import { Renderer } from "~/components/renderer";
+import { Canvas } from "~/components/canvas";
 
 const Preview: React.FC = () => {
   return (
     <div className="w-full h-full">
-      <Renderer />
+      <Canvas />
     </div>
   );
 };
