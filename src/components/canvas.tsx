@@ -1,11 +1,11 @@
 import React from "react";
 import * as ReactThreeFiber from "react-three-fiber";
-import { Player } from "~/components/canvas/player";
+import { Controller } from "~/components/canvas/controller";
 
 export const Canvas: React.FC = () => {
   return (
     <ReactThreeFiber.Canvas>
-      <Player />
+      <Controller />
     </ReactThreeFiber.Canvas>
   );
 };
