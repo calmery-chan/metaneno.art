@@ -1,1 +1,3 @@
-export default {};
+import { DefaultSeoProps } from "next-seo";
+
+export default {} as DefaultSeoProps;
