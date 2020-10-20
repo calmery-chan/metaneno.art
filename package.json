@@ -65,7 +65,7 @@
     ],
     "rules": {
       "react/prop-types": "off",
-      "sort-imports": "error"
+      "sort-imports": "warn"
     },
     "settings": {
       "react": {
