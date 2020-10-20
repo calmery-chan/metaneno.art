@@ -1,5 +1,5 @@
-import { NextPage } from "next";
 import Head from "next/head";
+import { NextPage } from "next";
 import React from "react";
 import styles from "../styles/Home.module.scss";
 
