@@ -29,67 +29,7 @@
     "typescript": "4.0.3",
     "vercel": "20.1.2"
   },
-  "eslintConfig": {
-    "env": {
-      "browser": true,
-      "es2021": true,
-      "node": true
-    },
-    "extends": [
-      "eslint:recommended",
-      "plugin:@typescript-eslint/recommended",
-      "plugin:react/recommended",
-      "prettier"
-    ],
-    "overrides": [
-      {
-        "files": [
-          "*.js"
-        ],
-        "rules": {
-          "@typescript-eslint/no-var-requires": "off"
-        }
-      }
-    ],
-    "parser": "@typescript-eslint/parser",
-    "parserOptions": {
-      "ecmaFeatures": {
-        "jsx": true
-      },
-      "ecmaVersion": 12,
-      "sourceType": "module"
-    },
-    "plugins": [
-      "@typescript-eslint",
-      "react"
-    ],
-    "rules": {
-      "react/prop-types": "off",
-      "sort-imports": "warn"
-    },
-    "settings": {
-      "react": {
-        "version": "detect"
-      }
-    }
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged -c lint-staged.config.js"
-    }
-  },
-  "lint-staged": {
-    "**/*": [
-      "npm run fix"
-    ]
-  },
   "name": "metaneno",
-  "postcss": {
-    "plugins": {
-      "autoprefixer": {},
-      "tailwindcss": {}
-    }
-  },
   "private": true,
   "scripts": {
     "fix": "run-s fix:eslint fix:prettier fix:stylelint fix:svgo",
@@ -98,25 +38,6 @@
     "fix:stylelint": "stylelint --fix --ignore-path .gitignore **/*.scss",
     "fix:svgo": "svgo **/*.svg",
     "start": "vercel dev"
-  },
-  "stylelint": {
-    "extends": [
-      "stylelint-config-recommended-scss",
-      "stylelint-prettier/recommended"
-    ],
-    "plugin": [
-      "stylelint-scss"
-    ],
-    "rules": {
-      "scss/at-rule-no-unknown": [
-        true,
-        {
-          "ignoreAtRules": [
-            "tailwind"
-          ]
-        }
-      ]
-    }
   },
   "version": "0.1.0"
 }
