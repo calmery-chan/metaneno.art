@@ -3,6 +3,6 @@ import * as path from "path";
 
 export default new NextI18Next({
   defaultLanguage: "ja",
-  localePath: path.resolve("./public/locales"),
+  localePath: path.resolve("./locales"),
   otherLanguages: ["en"],
 });
