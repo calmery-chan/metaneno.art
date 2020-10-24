@@ -2,7 +2,7 @@ import NextI18Next from "next-i18next";
 import * as path from "path";
 import json from "~/locales/ja/common.json";
 
-// Types
+// Template String Types
 // Reference: https://stackoverflow.com/questions/58434389/typescript-deep-keyof-of-a-nested-object
 
 type Join<K, P> = K extends string | number ?

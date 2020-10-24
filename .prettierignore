@@ -2,5 +2,5 @@
 .vercel/
 node_modules/
 
-# TypeScript 4.1.0-dev.20201024
+# TypeScript 4.1.0 の Template String Types を使用しているため実行に失敗する
 src/utils/i18n.ts
