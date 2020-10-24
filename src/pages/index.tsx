@@ -1,13 +1,12 @@
 import Head from "next/head";
-import { NextPage } from "next";
 import React from "react";
 import styles from "../styles/Home.module.scss";
-import { TFunction } from "next-i18next";
-import nextI18Next from "../utils/next-i18next";
+import { NextPage } from "next";
+import { changeLanguage, useI18n } from "~/utils/i18n";
 
-const { withTranslation } = nextI18Next;
+const Home: NextPage = () => {
+  const { t, language } = useI18n();
 
-const Home: NextPage<{ readonly t: TFunction }> = ({ t }) => {
   return (
     <div className={styles.container}>
       <Head>
@@ -20,7 +19,12 @@ const Home: NextPage<{ readonly t: TFunction }> = ({ t }) => {
           Welcome to <a href="https://nextjs.org">Next.js!</a>
         </h1>
 
-        <p className={styles.description}>{t("message")}</p>
+        <p
+          className={styles.description}
+          onClick={() => changeLanguage(language === "ja" ? "en" : "ja")}
+        >
+          {t("message")} {language}
+        </p>
 
         <p className={styles.description}>
           Get started by editing{" "}
@@ -72,4 +76,4 @@ const Home: NextPage<{ readonly t: TFunction }> = ({ t }) => {
   );
 };
 
-export default withTranslation("common")(Home);
+export default Home;

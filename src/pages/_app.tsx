@@ -2,7 +2,7 @@ import "~/styles/globals.scss";
 import { AppProps } from "next/app";
 import { DefaultSeo } from "next-seo";
 import React from "react";
-import nextI18Next from "../utils/next-i18next";
+import { withI18n } from "../utils/i18n";
 
 const App = ({ Component, pageProps }: AppProps): JSX.Element => (
   <>
@@ -11,4 +11,4 @@ const App = ({ Component, pageProps }: AppProps): JSX.Element => (
   </>
 );
 
-export default nextI18Next.appWithTranslation(App);
+export default withI18n(App);
