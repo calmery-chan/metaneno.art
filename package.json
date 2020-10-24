@@ -36,7 +36,7 @@
   "scripts": {
     "fix": "run-s fix:eslint fix:prettier fix:stylelint fix:svgo",
     "fix:eslint": "eslint --ext .js,.ts,.tsx --fix --ignore-path .gitignore .",
-    "fix:prettier": "prettier --ignore-path .gitignore --write .",
+    "fix:prettier": "prettier --write .",
     "fix:stylelint": "stylelint --fix --ignore-path .gitignore **/*.scss",
     "fix:svgo": "svgo **/*.svg",
     "start": "next dev"

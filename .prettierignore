@@ -1,0 +1,6 @@
+.next/
+.vercel/
+node_modules/
+
+# TypeScript 4.1.0-dev.20201024
+src/utils/i18n.ts
