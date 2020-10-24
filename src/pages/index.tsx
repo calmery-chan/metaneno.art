@@ -7,7 +7,7 @@ import nextI18Next from "../utils/next-i18next";
 
 const { withTranslation } = nextI18Next;
 
-const Home = ({ t }: { readonly t: TFunction }) => {
+const Home: NextPage<{ readonly t: TFunction }> = ({ t }) => {
   return (
     <div className={styles.container}>
       <Head>
