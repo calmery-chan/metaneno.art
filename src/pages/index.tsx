@@ -5,7 +5,7 @@ import { NextPage } from "next";
 import { changeLanguage, useI18n } from "~/utils/i18n";
 
 const Home: NextPage = () => {
-  const { keys, t, language } = useI18n();
+  const { t, language } = useI18n();
 
   return (
     <div className={styles.container}>
@@ -23,7 +23,7 @@ const Home: NextPage = () => {
           className={styles.description}
           onClick={() => changeLanguage(language === "ja" ? "en" : "ja")}
         >
-          {t(keys.message)} {language}
+          {t("message")} {language}
         </p>
 
         <p className={styles.description}>
