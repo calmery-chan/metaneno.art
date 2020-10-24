@@ -2,8 +2,12 @@ import Head from "next/head";
 import { NextPage } from "next";
 import React from "react";
 import styles from "../styles/Home.module.scss";
+import { TFunction } from "next-i18next";
+import nextI18Next from "../utils/next-i18next";
 
-const Home: NextPage = () => {
+const { withTranslation } = nextI18Next;
+
+const Home = ({ t }: { readonly t: TFunction }) => {
   return (
     <div className={styles.container}>
       <Head>
@@ -15,6 +19,8 @@ const Home: NextPage = () => {
         <h1 className={styles.title}>
           Welcome to <a href="https://nextjs.org">Next.js!</a>
         </h1>
+
+        <p className={styles.description}>{t("message")}</p>
 
         <p className={styles.description}>
           Get started by editing{" "}
@@ -66,4 +72,4 @@ const Home: NextPage = () => {
   );
 };
 
-export default Home;
+export default withTranslation("common")(Home);
