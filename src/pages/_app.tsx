@@ -1,6 +1,6 @@
 import "~/styles/globals.scss";
-import { AppProps } from "next/app";
 import { DefaultSeo } from "next-seo";
+import { AppProps } from "next/app";
 import React from "react";
 import { withI18n } from "../utils/i18n";
 
