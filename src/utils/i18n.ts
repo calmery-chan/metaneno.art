@@ -1,5 +1,6 @@
 import NextI18Next from "next-i18next";
 import * as path from "path";
+import * as nextConfig from 'next/config'
 import json from "../../public/locales/ja/common.json";
 
 // Template String Types
@@ -25,14 +26,14 @@ type I18nLanguage = "en" | "ja";
 const { appWithTranslation, useTranslation, i18n } = new NextI18Next({
   defaultLanguage: "ja",
   localePath: path.resolve("./public/locales"),
+  localeSubpaths: nextConfig.default().publicRuntimeConfig.localSubpaths,
   otherLanguages: ["en"],
 });
 
 // Exports
 
-export const changeLanguage = (language: I18nLanguage) => {
+export const changeLanguage = (language: I18nLanguage) =>
   i18n.changeLanguage(language);
-};
 
 export const useI18n = () => {
   const { i18n, t } = useTranslation();
