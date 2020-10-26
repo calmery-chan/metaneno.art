@@ -1,6 +1,6 @@
 const path = require("path");
 const nextBundleAnaluzer = require("@next/bundle-analyzer");
-const withSourceMaps = require("@zeit/next-source-maps");
+const nextSourceMaps = require("@zeit/next-source-maps");
 const { nextI18NextRewrites } = require("next-i18next/rewrites");
 
 const localSubpaths = {
@@ -10,6 +10,10 @@ const localSubpaths = {
 
 const withBundleAnalyzer = nextBundleAnaluzer({
   enabled: !!process.env.ANALYZE,
+});
+
+const withSourceMaps = nextSourceMaps({
+  devtool: "hidden-source-map",
 });
 
 module.exports = withBundleAnalyzer(
