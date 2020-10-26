@@ -2,13 +2,11 @@ import { RewriteFrames } from "@sentry/integrations";
 import * as Sentry from "@sentry/node";
 import getConfig from "next/config";
 
-const { NEXT_PUBLIC_SENTRY_DSN, NODE_ENV } = process.env;
-
-if (NEXT_PUBLIC_SENTRY_DSN) {
+if (process.env.NEXT_PUBLIC_SENTRY_DSN) {
   const { serverRuntimeConfig } = getConfig();
 
   Sentry.init({
-    enabled: NODE_ENV === "production",
+    enabled: process.env.NODE_ENV === "production",
     integrations: [
       new RewriteFrames({
         iteratee: (frame) => {
@@ -20,7 +18,7 @@ if (NEXT_PUBLIC_SENTRY_DSN) {
         },
       }),
     ],
-    dsn: NEXT_PUBLIC_SENTRY_DSN,
+    dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
   });
 }
 
