@@ -13,7 +13,7 @@
     "@typescript-eslint/eslint-plugin": "4.5.0",
     "@typescript-eslint/parser": "4.5.0",
     "@vercel/node": "1.8.4",
-    "@zeit/next-source-maps": "0.0.3",
+    "@zeit/next-source-maps": "0.0.4-canary.1",
     "eslint": "7.12.0",
     "eslint-config-prettier": "6.14.0",
     "eslint-import-resolver-custom-alias": "1.2.0",
