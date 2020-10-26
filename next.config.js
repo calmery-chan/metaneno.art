@@ -39,6 +39,7 @@ module.exports = withBundleAnalyzer(
     poweredByHeader: false,
     publicRuntimeConfig: { localSubpaths },
     rewrites: async () => nextI18NextRewrites(localSubpaths),
+    serverRuntimeConfig: { rootDir: __dirname },
     webpack: (config, options) => {
       config.resolve.alias["~"] = path.resolve(__dirname, "src");
 

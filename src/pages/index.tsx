@@ -28,11 +28,7 @@ const Home: NextPage = () => {
         </p>
 
         <button
-          onClick={() =>
-            Sentry.captureException(
-              new Error("Hello World ! (Removed @sentry/integrations)")
-            )
-          }
+          onClick={() => Sentry.captureException(new Error("Hello World !"))}
         >
           Error !
         </button>
