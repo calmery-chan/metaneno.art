@@ -25,9 +25,9 @@ const withBundleAnalyzer = nextBundleAnalyzer({
   enabled: !!process.env.ANALYZE,
 });
 
-const withSourceMaps = nextSourceMaps(/* {
+const withSourceMaps = nextSourceMaps({
   devtool: "hidden-source-map",
-} */);
+});
 
 const localSubpaths = {
   en: "en",
