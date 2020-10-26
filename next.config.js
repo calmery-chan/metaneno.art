@@ -1,5 +1,5 @@
 const path = require("path");
-const nextBundleAnaluzer = require("@next/bundle-analyzer");
+const nextBundleAnalyzer = require("@next/bundle-analyzer");
 const nextSourceMaps = require("@zeit/next-source-maps");
 const { nextI18NextRewrites } = require("next-i18next/rewrites");
 
@@ -8,7 +8,7 @@ const localSubpaths = {
   ja: "ja",
 };
 
-const withBundleAnalyzer = nextBundleAnaluzer({
+const withBundleAnalyzer = nextBundleAnalyzer({
   enabled: !!process.env.ANALYZE,
 });
 
