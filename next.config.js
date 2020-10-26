@@ -8,10 +8,12 @@ const { nextI18NextRewrites } = require("next-i18next/rewrites");
 
 const {
   NEXT_PUBLIC_SENTRY_DSN: SENTRY_DSN,
+  NODE_ENV,
+  SENTRY_AUTH_TOKEN,
   SENTRY_ORG,
   SENTRY_PROJECT,
-  SENTRY_AUTH_TOKEN,
-  NODE_ENV,
+  VERCEL_GITHUB_COMMIT_ORG,
+  VERCEL_GITHUB_COMMIT_REPO,
   VERCEL_GITHUB_COMMIT_SHA,
 } = process.env;
 
@@ -45,19 +47,25 @@ module.exports = withBundleAnalyzer(
 
       if (
         NODE_ENV === "production" &&
+        SENTRY_AUTH_TOKEN &&
         SENTRY_DSN &&
         SENTRY_ORG &&
         SENTRY_PROJECT &&
-        SENTRY_AUTH_TOKEN &&
+        VERCEL_GITHUB_COMMIT_ORG &&
+        VERCEL_GITHUB_COMMIT_REPO &&
         VERCEL_GITHUB_COMMIT_SHA
       ) {
         config.plugins.push(
           new SentryWebpackPlugin({
-            include: ".next",
             ignore: ["node_modules"],
+            include: ".next",
+            release: VERCEL_GITHUB_COMMIT_SHA,
+            setCommits: {
+              commit: VERCEL_GITHUB_COMMIT_SHA,
+              repo: `${VERCEL_GITHUB_COMMIT_ORG}/${VERCEL_GITHUB_COMMIT_REPO}`,
+            },
             stripPrefix: ["webpack://_N_E/"],
             urlPrefix: `~/_next`,
-            release: VERCEL_GITHUB_COMMIT_SHA,
           })
         );
       }
