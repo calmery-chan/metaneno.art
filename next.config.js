@@ -17,6 +17,8 @@ const {
   VERCEL_GITHUB_COMMIT_SHA,
 } = process.env;
 
+process.env.SENTRY_DSN = SENTRY_DSN;
+
 //
 
 const withBundleAnalyzer = nextBundleAnalyzer({
