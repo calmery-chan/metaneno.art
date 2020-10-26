@@ -7452,10 +7452,10 @@ typescript@3.9.3:
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.9.3.tgz#d3ac8883a97c26139e42df5e93eeece33d610b8a"
   integrity sha512-D/wqnB2xzNFIcoBG9FG8cXRDjiqSTbG2wd8DMZeQyJlP1vfTkIxH4GKveWaEBYySKIg+USu+E+EDIR47SqnaMQ==
 
-typescript@4.1.0-dev.20201024:
-  version "4.1.0-dev.20201024"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.1.0-dev.20201024.tgz#03ebc594361ae5047828606ec8b1de5535dc0eda"
-  integrity sha512-HKsmWNtG4b+LfwAtA+7d7QBylNzX+F6p8CnhSzOQn5wbD0OElSX1RM7QyxA56nQcTgDaiXPhFDu2PQZw0eRlog==
+typescript@4.1.0-dev.20201026:
+  version "4.1.0-dev.20201026"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.1.0-dev.20201026.tgz#81ebe09a926688ba69dcb26e987b34993bcea145"
+  integrity sha512-eeu0PiTyVU+obXKWYUAOVkPjKFzQOdLYGbGvd5TbcQ/CH7c5N7Q3VBuVdO8/rUhau8vw7Mc3EWzCnw7WUG0Img==
 
 unherit@^1.0.4:
   version "1.1.3"
