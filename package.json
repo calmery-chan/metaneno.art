@@ -27,7 +27,7 @@
     "stylelint-scss": "3.18.0",
     "svgo": "1.3.2",
     "tailwindcss": "1.9.6",
-    "typescript": "4.1.0-dev.20201024"
+    "typescript": "4.1.0-dev.20201026"
   },
   "name": "metaneno",
   "private": true,
