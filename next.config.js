@@ -12,6 +12,7 @@ const withBundleAnalyzer = nextBundleAnaluzer({
 });
 
 module.exports = withBundleAnalyzer({
+  poweredByHeader: false,
   publicRuntimeConfig: { localSubpaths },
   rewrites: async () => nextI18NextRewrites(localSubpaths),
   webpack: (config) => {
