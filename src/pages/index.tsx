@@ -3,6 +3,7 @@ import Head from "next/head";
 import React from "react";
 import styles from "../styles/Home.module.scss";
 import { changeLanguage, useI18n } from "~/utils/i18n";
+import { Sentry } from "~/utils/sentry";
 
 const Home: NextPage = () => {
   const { t, language } = useI18n();
@@ -25,6 +26,12 @@ const Home: NextPage = () => {
         >
           {t("message")} {language}
         </p>
+
+        <button
+          onClick={() => Sentry.captureException(new Error("Hello World"))}
+        >
+          Error !
+        </button>
 
         <p className={styles.description}>
           Get started by editing{" "}
