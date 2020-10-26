@@ -7,23 +7,23 @@ if (process.env.NEXT_PUBLIC_SENTRY_DSN) {
 
   Sentry.init({
     enabled: process.env.NODE_ENV === "production",
-    integrations: [
-      new RewriteFrames({
-        iteratee: (frame) => {
-          console.log(frame);
+    // integrations: [
+    //   new RewriteFrames({
+    //     iteratee: (frame) => {
+    //       console.log(frame);
 
-          if (!frame.filename) {
-            return frame;
-          }
+    //       if (!frame.filename) {
+    //         return frame;
+    //       }
 
-          frame.filename = frame.filename?.replace(
-            `${serverRuntimeConfig.rootDir}/.next`,
-            "app:///_next"
-          );
-          return frame;
-        },
-      }),
-    ],
+    //       frame.filename = frame.filename?.replace(
+    //         `${serverRuntimeConfig.rootDir}/.next`,
+    //         "app:///_next"
+    //       );
+    //       return frame;
+    //     },
+    //   }),
+    // ],
     dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
   });
 }
