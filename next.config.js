@@ -1,4 +1,5 @@
 const path = require("path");
+const nextBundleAnaluzer = require("@next/bundle-analyzer");
 const { nextI18NextRewrites } = require("next-i18next/rewrites");
 
 const localSubpaths = {
@@ -6,11 +7,15 @@ const localSubpaths = {
   ja: "ja",
 };
 
-module.exports = {
+const withBundleAnalyzer = nextBundleAnaluzer({
+  enabled: !!process.env.ANALYZE,
+});
+
+module.exports = withBundleAnalyzer({
   publicRuntimeConfig: { localSubpaths },
   rewrites: async () => nextI18NextRewrites(localSubpaths),
   webpack: (config) => {
     config.resolve.alias["~"] = path.resolve(__dirname, "src");
     return config;
   },
-};
+});
