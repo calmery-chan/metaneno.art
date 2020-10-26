@@ -10,6 +10,8 @@ if (process.env.NEXT_PUBLIC_SENTRY_DSN) {
     integrations: [
       new RewriteFrames({
         iteratee: (frame) => {
+          console.log(frame);
+
           if (!frame.filename) {
             return frame;
           }
