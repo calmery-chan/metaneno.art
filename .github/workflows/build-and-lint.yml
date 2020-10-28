@@ -9,7 +9,7 @@ jobs:
   build:
     strategy:
       matrix:
-        node-version: [12.19.0]
+        node-version: [14.15.0]
         os: [ubuntu-latest]
 
     runs-on: ${{ matrix.os }}
@@ -25,7 +25,7 @@ jobs:
   lint:
     strategy:
       matrix:
-        node-version: [12.19.0]
+        node-version: [14.15.0]
         os: [ubuntu-latest]
 
     runs-on: ${{ matrix.os }}
