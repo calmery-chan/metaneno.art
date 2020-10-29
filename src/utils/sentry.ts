@@ -1,8 +1,8 @@
 import * as Sentry from "@sentry/node";
 
-if (process.env.NEXT_PUBLIC_SENTRY_DSN) {
+if (process.env.NEXT_PUBLIC_SENTRY_DSN && process.env.NEXT_PUBLIC_VERCEL_ENV) {
   Sentry.init({
-    enabled: process.env.NODE_ENV === "production",
+    environment: process.env.NEXT_PUBLIC_VERCEL_ENV,
     dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
   });
 }
