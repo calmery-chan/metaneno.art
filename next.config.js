@@ -2,7 +2,6 @@ const path = require("path");
 const nextBundleAnalyzer = require("@next/bundle-analyzer");
 const SentryWebpackPlugin = require("@sentry/webpack-plugin");
 const nextSourceMaps = require("@zeit/next-source-maps");
-const { nextI18NextRewrites } = require("next-i18next/rewrites");
 
 // Environment Variables
 
@@ -29,16 +28,9 @@ const withSourceMaps = nextSourceMaps({
   devtool: "hidden-source-map",
 });
 
-const localSubpaths = {
-  en: "en",
-  ja: "ja",
-};
-
 module.exports = withBundleAnalyzer(
   withSourceMaps({
     poweredByHeader: false,
-    publicRuntimeConfig: { localSubpaths },
-    rewrites: async () => nextI18NextRewrites(localSubpaths),
     webpack: (config, options) => {
       config.resolve.alias["~"] = path.resolve(__dirname, "src");
 
