@@ -24,4 +24,4 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - run: yarn
-      - run: yarn run vercel --prod -t $VERCEL_TOKEN
+      - run: yarn run vercel -b GITHUB_REPOSITORY=$GITHUB_REPOSITORY -b GITHUB_SHA=$GITHUB_SHA --prod -t $VERCEL_TOKEN
