@@ -39,7 +39,6 @@ module.exports = withBundleAnalyzer(
       }
 
       if (
-        GITHUB_RELEASE_TAG_NAME &&
         GITHUB_REPOSITORY &&
         GITHUB_SHA &&
         SENTRY_AUTH_TOKEN &&
@@ -55,7 +54,7 @@ module.exports = withBundleAnalyzer(
             },
             ignore: ["node_modules"],
             include: ".next",
-            release: GITHUB_RELEASE_TAG_NAME,
+            release: GITHUB_RELEASE_TAG_NAME || GITHUB_SHA,
             setCommits: {
               // Sentry にある Vercel の Integration で追加される SENTRY_AUTH_TOKEN だとスコープの設定でデプロイに失敗してしまう
               // error: API request failed
