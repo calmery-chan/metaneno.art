@@ -24,4 +24,21 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - run: yarn
+      - id: deployment
+        uses: chrnorm/deployment-action@releases/v1
+        with:
+          environment: Preview
+          token: ${{ secrets.GITHUB_TOKEN }}
       - run: yarn run vercel -b GITHUB_REPOSITORY=$GITHUB_REPOSITORY -b GITHUB_SHA=$GITHUB_SHA -t $VERCEL_TOKEN
+      - if: success()
+        uses: chrnorm/deployment-status@releases/v1
+        with:
+          deployment_id: ${{ steps.deployment.outputs.deployment_id }}
+          state: success
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - if: failure()
+        uses: chrnorm/deployment-status@releases/v1
+        with:
+          deployment_id: ${{ steps.deployment.outputs.deployment_id }}
+          state: failure
+          token: ${{ secrets.GITHUB_TOKEN }}
