@@ -6,6 +6,7 @@ const nextSourceMaps = require("@zeit/next-source-maps");
 // Environment Variables
 
 const {
+  GITHUB_RELEASE_TAG_NAME,
   GITHUB_REPOSITORY,
   GITHUB_SHA,
   NEXT_PUBLIC_SENTRY_DSN: SENTRY_DSN,
@@ -38,6 +39,7 @@ module.exports = withBundleAnalyzer(
       }
 
       if (
+        GITHUB_RELEASE_TAG_NAME &&
         GITHUB_REPOSITORY &&
         GITHUB_SHA &&
         SENTRY_AUTH_TOKEN &&
@@ -53,7 +55,7 @@ module.exports = withBundleAnalyzer(
             },
             ignore: ["node_modules"],
             include: ".next",
-            release: GITHUB_SHA,
+            release: GITHUB_RELEASE_TAG_NAME,
             setCommits: {
               // Sentry にある Vercel の Integration で追加される SENTRY_AUTH_TOKEN だとスコープの設定でデプロイに失敗してしまう
               // error: API request failed
