@@ -40,8 +40,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
       - id: environment-url
         run: echo "::set-output name=body::$(cat environment-url)"
-      - if: steps.vercel.outcome == 'success'
-        uses: chrnorm/deployment-status@releases/v1
+      - uses: chrnorm/deployment-status@releases/v1
         with:
           deployment_id: ${{ steps.deployment-action.outputs.deployment_id }}
           environment_url: ${{ steps.environment-url.outputs.body }}
