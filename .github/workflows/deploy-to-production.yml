@@ -28,23 +28,28 @@ jobs:
       - id: tag_name
         run: echo "::set-output name=body::$(date '+%Y%m%d-%H%M')"
       - run: yarn
-      - id: deployment
+      - run: yarn global add vercel
+      - id: deployment-action
         uses: chrnorm/deployment-action@releases/v1
         with:
           environment: Production
           token: ${{ secrets.GITHUB_TOKEN }}
-      - run: yarn run vercel -b GITHUB_RELEASE_TAG_NAME=${{ steps.tag_name.outputs.body }} -b GITHUB_REPOSITORY=$GITHUB_REPOSITORY -b GITHUB_SHA=$GITHUB_SHA --prod -t $VERCEL_TOKEN
-      - if: success()
-        uses: chrnorm/deployment-status@releases/v1
-        with:
-          deployment_id: ${{ steps.deployment.outputs.deployment_id }}
-          state: success
-          token: ${{ secrets.GITHUB_TOKEN }}
+      - id: vercel
+        run: vercel -b GITHUB_RELEASE_TAG_NAME=${{ steps.tag_name.outputs.body }} -b GITHUB_REPOSITORY=$GITHUB_REPOSITORY -b GITHUB_SHA=$GITHUB_SHA --prod -t $VERCEL_TOKEN > environment-url
       - if: failure()
         uses: chrnorm/deployment-status@releases/v1
         with:
-          deployment_id: ${{ steps.deployment.outputs.deployment_id }}
+          deployment_id: ${{ steps.deployment-action.outputs.deployment_id }}
           state: failure
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - id: environment-url
+        run: echo "::set-output name=body::$(cat environment-url)"
+      - if: steps.vercel.outcome == 'success'
+        uses: chrnorm/deployment-status@releases/v1
+        with:
+          deployment_id: ${{ steps.deployment-action.outputs.deployment_id }}
+          environment_url: ${{ steps.environment-url.outputs.body }}
+          state: success
           token: ${{ secrets.GITHUB_TOKEN }}
       - env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
