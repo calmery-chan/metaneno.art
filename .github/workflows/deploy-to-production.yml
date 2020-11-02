@@ -8,6 +8,7 @@ on:
 jobs:
   deploy:
     env:
+      TZ: Asia/Tokyo
       VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
       VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
       VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
@@ -23,5 +24,14 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
+      # https://github.com/actions/create-release/pull/11#issue-330958665
+      - id: tag_name
+        run: |
+          echo "::set-output name=body::$(date '+%Y%m%d-%H%M')"
       - run: yarn
       - run: yarn run vercel -b GITHUB_REPOSITORY=$GITHUB_REPOSITORY -b GITHUB_SHA=$GITHUB_SHA --prod -t $VERCEL_TOKEN
+      - env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: actions/create-release@v1
+        with:
+          tag_name: ${{ steps.tag_name.outputs.body }}
