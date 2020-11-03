@@ -3,20 +3,6 @@ import blueimpLoadImage from "blueimp-load-image";
 const IMAGE_MAX_WIDTH = 1200;
 const IMAGE_MAX_HEIGHT = 1200;
 
-// Helper Functions
-
-const convertUrlToImage = (url: string): Promise<HTMLImageElement> =>
-  new Promise((resolve, reject) => {
-    const image = new Image();
-
-    image.onerror = reject;
-    image.onload = () => resolve(image);
-
-    image.src = url;
-  });
-
-// Exports
-
 export const convertFileToImage = (file: File): Promise<HTMLImageElement> =>
   new Promise((resolve, reject) => {
     blueimpLoadImage(
@@ -51,6 +37,16 @@ export const convertImageToBlobUrl = (
     context.drawImage(image, 0, 0, width, height);
 
     canvas.toBlob((blob) => resolve(URL.createObjectURL(blob)), "image/png");
+  });
+
+export const convertUrlToImage = (url: string): Promise<HTMLImageElement> =>
+  new Promise((resolve, reject) => {
+    const image = new Image();
+
+    image.onerror = reject;
+    image.onload = () => resolve(image);
+
+    image.src = url;
   });
 
 export const resizeImage = async (image: HTMLImageElement) => {

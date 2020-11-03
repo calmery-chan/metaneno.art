@@ -1,7 +1,6 @@
-import "@tensorflow/tfjs";
-import * as cocoSsd from "@tensorflow-models/coco-ssd"; // eslint-disable-line import/no-unresolved
 import { NextPage } from "next";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
+import { Instax } from "~/components/Instax";
 import {
   convertFileToImage,
   convertImageToBlobUrl,
@@ -9,40 +8,25 @@ import {
 } from "~/utils/instax";
 
 const Noneme: NextPage = () => {
-  const [detectedObject, setDetectedObject] = useState<
-    cocoSsd.DetectedObject[]
-  >([]);
   const [imageUrl, setImageUrl] = useState<string>();
-  const [model, setModel] = useState<cocoSsd.ObjectDetection>();
-
-  useEffect(() => {
-    (async () => {
-      setModel(await cocoSsd.load());
-    })();
-  }, []);
 
   const handleOnChangeFile = useCallback(
     async (event: React.ChangeEvent<HTMLInputElement>) => {
       const { files } = event.target;
 
-      if (!files || !files.length || !model) {
+      if (!files || !files.length) {
         return;
       }
 
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      const image = await resizeImage(await convertFileToImage(files[0]))!;
-
-      setImageUrl(await convertImageToBlobUrl(image));
-      setDetectedObject(await model.detect(image));
+      setImageUrl(
+        await convertImageToBlobUrl(
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          await resizeImage(await convertFileToImage(files[0]))!
+        )
+      );
     },
-    [model]
+    []
   );
-
-  if (!model) {
-    return null;
-  }
-
-  console.log(detectedObject);
 
   return (
     <>
@@ -51,7 +35,11 @@ const Noneme: NextPage = () => {
         onChange={handleOnChangeFile}
         type="file"
       />
-      {imageUrl && <img src={imageUrl} />}
+      {imageUrl && (
+        <div className="container">
+          <Instax imageUrl={imageUrl} />
+        </div>
+      )}
     </>
   );
 };
