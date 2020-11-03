@@ -33,6 +33,7 @@
   "rules": {
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "import/order": ["error", { "alphabetize": { "order": "asc" } }],
+    "no-irregular-whitespace": "off",
     "react/prop-types": "off"
   },
   "settings": {

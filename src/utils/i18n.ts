@@ -25,6 +25,7 @@ type I18nLanguage = "en" | "ja";
 
 const { appWithTranslation, useTranslation, i18n } = new NextI18Next({
   defaultLanguage: "ja",
+  ignoreRoutes: ["/s/"], // 短縮　URL で使用する
   localePath: path.resolve("./public/locales"),
   localeSubpaths: nextConfig.default().publicRuntimeConfig.localSubpaths,
   otherLanguages: ["en"],
