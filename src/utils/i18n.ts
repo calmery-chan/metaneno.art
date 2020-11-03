@@ -1,5 +1,6 @@
 import * as path from "path";
 import NextI18Next from "next-i18next";
+import * as nextConfig from 'next/config'
 import json from "../../public/locales/ja/common.json";
 
 // Template String Types
