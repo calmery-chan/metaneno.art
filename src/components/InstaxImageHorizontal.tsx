@@ -49,8 +49,6 @@ export const InstaxImageHorizontal: React.FC<InstaxImageHorizontalProps> = ({
     setExpansionDirection("horizontal");
   }, [height, width]);
 
-  console.log(expansionDirection);
-
   if (!expansionDirection) {
     return null;
   }
