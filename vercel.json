@@ -1,0 +1,5 @@
+{
+  "redirects": [{ "source": "/s/ar", "destination": "/augmented-reality" }],
+  "trailingSlash": false,
+  "version": 2
+}
