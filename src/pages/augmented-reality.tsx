@@ -1,8 +1,14 @@
 import { NextPage } from "next";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 const AugmentedReality: NextPage = () => {
-  return <div>{window && window.location.search}</div>;
+  const [search, setSearch] = useState("");
+
+  useEffect(() => {
+    setSearch(window.location.search);
+  }, []);
+
+  return <div>{search}</div>;
 };
 
 export default AugmentedReality;
