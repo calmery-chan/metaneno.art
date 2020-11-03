@@ -1,6 +1,7 @@
 import "@tensorflow/tfjs";
 import * as cocoSsd from "@tensorflow-models/coco-ssd"; // eslint-disable-line import/no-unresolved
 import React, { useEffect, useState } from "react";
+import { InstaxCharacter } from "./InstaxCharacter";
 import { InstaxImage } from "~/components/InstaxImage";
 import { InstaxDirection } from "~/types/InstaxDirection";
 import { convertUrlToImage } from "~/utils/instax";
@@ -75,10 +76,6 @@ export const Instax: React.FC<InstaxProps> = ({
         y={INSTAX_MARGIN_TOP}
       />
       {detectedObjects.map(({ bbox, score }, index) => {
-        if (score < 0.5) {
-          return null;
-        }
-
         return (
           <rect
             fill="red"
@@ -90,6 +87,13 @@ export const Instax: React.FC<InstaxProps> = ({
           />
         );
       })}
+      <InstaxCharacter
+        height={height}
+        objects={detectedObjects}
+        width={width}
+        x={INSTAX_MARGIN_LEFT}
+        y={INSTAX_MARGIN_TOP}
+      />
     </svg>
   );
 };
