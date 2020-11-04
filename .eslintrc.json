@@ -29,11 +29,13 @@
     "ecmaVersion": 12,
     "sourceType": "module"
   },
-  "plugins": ["@typescript-eslint", "import", "react"],
+  "plugins": ["@typescript-eslint", "import", "react", "unused-imports"],
   "rules": {
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "import/order": ["error", { "alphabetize": { "order": "asc" } }],
-    "react/prop-types": "off"
+    "no-irregular-whitespace": "off",
+    "react/prop-types": "off",
+    "unused-imports/no-unused-imports": "error"
   },
   "settings": {
     "import/resolver": {

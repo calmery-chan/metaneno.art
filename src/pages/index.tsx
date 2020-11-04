@@ -3,11 +3,17 @@ import Head from "next/head";
 import Link from "next/link";
 import React from "react";
 import styles from "../styles/Home.module.scss";
+import { useDispatch, useSelector, exampleSelector } from "~/domains";
+import * as example from "~/domains/example";
 import { changeLanguage, useI18n } from "~/utils/i18n";
 import { Sentry } from "~/utils/sentry";
 
 const Home: NextPage = () => {
+  const dispatch = useDispatch();
   const { t, language } = useI18n();
+
+  const state = useSelector(exampleSelector);
+  const message = example.selectors.messageSelector(state);
 
   return (
     <div className={styles.container}>
@@ -26,6 +32,32 @@ const Home: NextPage = () => {
           onClick={() => changeLanguage(language === "ja" ? "en" : "ja")}
         >
           {t("message")} {language}
+        </p>
+
+        <p className={styles.description}>
+          {message}
+          <button
+            onClick={() => {
+              dispatch(
+                example.actions.updateMessage({
+                  message: new Date().toString(),
+                })
+              );
+            }}
+          >
+            updateMessage
+          </button>
+          <button
+            onClick={() => {
+              dispatch(
+                example.actions.updateMessageAfterFiveSeconds({
+                  message: new Date().toString(),
+                })
+              );
+            }}
+          >
+            updateMessageAfterFiveSeconds
+          </button>
         </p>
 
         <Link href="/not-exists">not exists</Link>

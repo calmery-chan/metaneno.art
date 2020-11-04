@@ -1,5 +1,6 @@
 import * as path from "path";
 import NextI18Next from "next-i18next";
+import * as nextConfig from 'next/config'
 import json from "../../public/locales/ja/common.json";
 
 // Template String Types
@@ -24,7 +25,9 @@ type I18nLanguage = "en" | "ja";
 
 const { appWithTranslation, useTranslation, i18n } = new NextI18Next({
   defaultLanguage: "ja",
+  ignoreRoutes: ["/s/"], // 短縮　URL で使用する
   localePath: path.resolve("./public/locales"),
+  localeSubpaths: nextConfig.default().publicRuntimeConfig.localSubpaths,
   otherLanguages: ["en"],
 });
 
