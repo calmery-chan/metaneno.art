@@ -1,5 +1,6 @@
-import { combineReducers, createStore } from "redux";
+import { applyMiddleware, combineReducers, createStore } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
+import reduxThunk from "redux-thunk";
 import example, { ExampleState } from "./example";
 
 export type State = {
@@ -9,5 +10,5 @@ export type State = {
 export const store = createStore(
   combineReducers({ example }),
   undefined,
-  composeWithDevTools()
+  composeWithDevTools(applyMiddleware(reduxThunk))
 );
