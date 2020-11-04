@@ -1,9 +1,5 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import {
-  useDispatch as _useDispatch,
-  useSelector as _useSelector,
-  createSelectorHook,
-} from "react-redux";
+import { useDispatch as _useDispatch, createSelectorHook } from "react-redux";
 import { exampleReducer } from "./example";
 
 const reducer = combineReducers({
