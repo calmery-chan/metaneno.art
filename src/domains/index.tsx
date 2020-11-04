@@ -1,14 +1,17 @@
-import { applyMiddleware, combineReducers, createStore } from "redux";
-import { composeWithDevTools } from "redux-devtools-extension";
-import reduxThunk from "redux-thunk";
-import example, { ExampleState } from "./example";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import {
+  useDispatch as _useDispatch,
+  useSelector as _useSelector,
+  createSelectorHook,
+} from "react-redux";
+import { exampleReducer } from "./example";
 
-export type State = {
-  example: ExampleState;
-};
+const reducer = combineReducers({
+  example: exampleReducer,
+});
 
-export const store = createStore(
-  combineReducers({ example }),
-  undefined,
-  composeWithDevTools(applyMiddleware(reduxThunk))
-);
+export const store = configureStore({ reducer });
+export const useDispatch = () => _useDispatch<typeof store.dispatch>();
+export const useSelector = createSelectorHook<
+  ReturnType<typeof store.getState>
+>();
