@@ -2,11 +2,16 @@ import { NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styles from "../styles/Home.module.scss";
+import { State } from "~/domains";
+import { exampleActions } from "~/domains/example";
 import { changeLanguage, useI18n } from "~/utils/i18n";
 import { Sentry } from "~/utils/sentry";
 
 const Home: NextPage = () => {
+  const dispatch = useDispatch();
+  const { message } = useSelector((state: State) => state.example);
   const { t, language } = useI18n();
 
   return (
@@ -26,6 +31,15 @@ const Home: NextPage = () => {
           onClick={() => changeLanguage(language === "ja" ? "en" : "ja")}
         >
           {t("message")} {language}
+        </p>
+
+        <p
+          className={styles.description}
+          onClick={() => {
+            dispatch(exampleActions.updateMessage(new Date().toString()));
+          }}
+        >
+          {message}
         </p>
 
         <Link href="/not-exists">not exists</Link>
