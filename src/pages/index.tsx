@@ -3,15 +3,17 @@ import Head from "next/head";
 import Link from "next/link";
 import React from "react";
 import styles from "../styles/Home.module.scss";
-import { useDispatch, useSelector } from "~/domains";
-import { exampleActions } from "~/domains/example";
+import { useDispatch, useSelector, exampleSelector } from "~/domains";
+import * as example from "~/domains/example";
 import { changeLanguage, useI18n } from "~/utils/i18n";
 import { Sentry } from "~/utils/sentry";
 
 const Home: NextPage = () => {
   const dispatch = useDispatch();
-  const { message } = useSelector((state) => state.example);
   const { t, language } = useI18n();
+
+  const state = useSelector(exampleSelector);
+  const message = example.selectors.messageSelector(state);
 
   return (
     <div className={styles.container}>
@@ -37,7 +39,9 @@ const Home: NextPage = () => {
           <button
             onClick={() => {
               dispatch(
-                exampleActions.updateMessage({ message: new Date().toString() })
+                example.actions.updateMessage({
+                  message: new Date().toString(),
+                })
               );
             }}
           >
@@ -46,7 +50,7 @@ const Home: NextPage = () => {
           <button
             onClick={() => {
               dispatch(
-                exampleActions.updateMessageAfterFiveSeconds({
+                example.actions.updateMessageAfterFiveSeconds({
                   message: new Date().toString(),
                 })
               );

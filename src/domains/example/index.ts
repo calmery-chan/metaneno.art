@@ -1,5 +1,5 @@
 import * as actions from "./actions";
-import { reducer } from "./reducer";
+import * as selectors from "./selectors";
 
-export { actions as exampleActions };
-export { reducer as exampleReducer };
+export { actions, selectors };
+export { reducer } from "./reducer";
