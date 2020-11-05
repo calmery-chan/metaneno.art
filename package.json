@@ -65,8 +65,7 @@
     "fix:svgo": "svgo **/*.svg",
     "start": "next dev",
     "start:analyze": "ANALYZE=true npm start",
-    "storybook": "start-storybook -p 6006 --no-dll",
-    "build-storybook": "build-storybook --no-dll"
+    "start:storybook": "start-storybook -p 6006 --no-dll"
   },
   "version": "0.1.0"
 }
