@@ -1,5 +1,4 @@
 module.exports = {
-  addons: ["@storybook/addon-essentials", "@storybook/addon-links"],
   stories: ["../src/**/*.stories.tsx"],
   webpackFinal(config) {
     config.module.rules.push({
