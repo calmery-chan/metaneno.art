@@ -19,6 +19,7 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
+      - run: yarn
       - run: yarn run build-storybook --no-dll
       - run: |
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
