@@ -75,7 +75,7 @@ export const Instax: React.FC<InstaxProps> = ({
         x={INSTAX_MARGIN_LEFT}
         y={INSTAX_MARGIN_TOP}
       />
-      {detectedObjects.map(({ bbox, score }, index) => {
+      {detectedObjects.map(({ bbox }, index) => {
         return (
           <rect
             fill="red"
