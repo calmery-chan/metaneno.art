@@ -3,7 +3,7 @@ import Head from "next/head";
 import Link from "next/link";
 import React from "react";
 import styles from "../styles/Home.module.scss";
-import { useDispatch, useSelector, exampleSelector } from "~/domains";
+import { useDispatch, useSelector, selectors } from "~/domains";
 import * as example from "~/domains/example";
 import { changeLanguage, useI18n } from "~/utils/i18n";
 import { Sentry } from "~/utils/sentry";
@@ -12,7 +12,7 @@ const Home: NextPage = () => {
   const dispatch = useDispatch();
   const { t, language } = useI18n();
 
-  const state = useSelector(exampleSelector);
+  const state = useSelector(selectors.example);
   const message = example.selectors.messageSelector(state);
 
   return (
