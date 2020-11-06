@@ -51,6 +51,7 @@
     "postcss-loader": "4.0.4",
     "prettier": "2.1.2",
     "prop-types": "15.7.2",
+    "react-i18next": "11.7.3",
     "react-is": "17.0.1",
     "sass": "1.29.0",
     "sass-loader": "10.0.5",
@@ -75,7 +76,7 @@
     "fix:svgo": "svgo **/*.svg",
     "start": "next dev",
     "start:analyze": "ANALYZE=true npm start",
-    "start:storybook": "start-storybook -p 6006 --no-dll"
+    "start:storybook": "start-storybook -p 6006 -s public"
   },
   "version": "0.1.0"
 }

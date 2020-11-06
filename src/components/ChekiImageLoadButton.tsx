@@ -2,6 +2,7 @@ import classnames from "classnames";
 import { css } from "linaria";
 import React, { useCallback, useRef } from "react";
 import { convertFileToImage } from "~/utils/cheki";
+import { useI18n } from "~/utils/i18n";
 
 const button = css`
   color: #fff;
@@ -11,6 +12,7 @@ export const ChekiImageLoadButton: React.FC<{
   onLoad: (image: HTMLImageElement) => void;
 }> = ({ onLoad }) => {
   const ref = useRef<HTMLInputElement>(null);
+  const { t } = useI18n();
 
   const handleOnClick = useCallback(() => {
     ref.current!.click();
@@ -46,7 +48,7 @@ export const ChekiImageLoadButton: React.FC<{
         )}
         onClick={handleOnClick}
       >
-        Button
+        {t("cheki.button")}
       </div>
     </div>
   );
