@@ -1,4 +1,7 @@
+const path = require("path");
+
 module.exports = {
+  addons: ["@storybook/addon-actions"],
   stories: ["../src/**/*.stories.tsx"],
   webpackFinal(config) {
     config.module.rules.push({
@@ -10,6 +13,8 @@ module.exports = {
       test: /\.tsx$/,
       use: "linaria/loader",
     });
+
+    config.resolve.alias["~"] = path.resolve(__dirname, "../src");
 
     return config;
   },
