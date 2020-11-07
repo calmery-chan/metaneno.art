@@ -1,7 +1,7 @@
 import { css } from "linaria";
 import { NextPage } from "next";
 import React from "react";
-import { ChekiCanvas } from "~/components/ChekiCanvas";
+import { ChekiCanvas } from "~/containers/ChekiCanvas";
 
 // Styles
 
