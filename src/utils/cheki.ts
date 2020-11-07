@@ -19,7 +19,7 @@ const isTouchRelatedEvent = (
 
 // Main
 
-export const convertFileToImage = (file: File): Promise<HTMLImageElement> =>
+export const convertFileToUrl = (file: File): Promise<string> =>
   new Promise((resolve, reject) => {
     blueimpLoadImage(
       file,
@@ -28,11 +28,7 @@ export const convertFileToImage = (file: File): Promise<HTMLImageElement> =>
           return reject(canvas);
         }
 
-        resolve(
-          await convertUrlToImage(
-            (canvas as HTMLCanvasElement).toDataURL("image/png")
-          )
-        );
+        resolve((canvas as HTMLCanvasElement).toDataURL("image/png"));
       },
       { canvas: true, orientation: true }
     );

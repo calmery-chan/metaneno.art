@@ -4,6 +4,9 @@ import { ChekiDirection } from "~/types/ChekiDirection";
 
 export type State = {
   direction: ChekiDirection;
+  imageHeight: number;
+  imageUrl: string;
+  imageWidth: number;
   isImageDragging: boolean;
   isImageRotating: boolean;
   isImageScaling: boolean;
@@ -11,6 +14,9 @@ export type State = {
 
 const initialState: State = {
   direction: "horizontal",
+  imageHeight: 0,
+  imageUrl: "",
+  imageWidth: 0,
   isImageDragging: false,
   isImageRotating: false,
   isImageScaling: false,
@@ -18,6 +24,17 @@ const initialState: State = {
 
 export const reducer = createReducer(initialState, (builder) => {
   builder
+    .addCase(actions.addImage.fulfilled, (state, action) => {
+      const { height, url, width } = action.payload;
+
+      return {
+        ...state,
+        direction: height < width ? "horizontal" : "vertical",
+        imageHeight: height,
+        imageUrl: url,
+        imageWidth: width,
+      };
+    })
     .addCase(actions.complete, (state) => ({
       ...state,
       isImageDragging: false,

@@ -10,7 +10,9 @@ import {
 import { selectors, useSelector } from "~/domains";
 
 export const ChekiCanvasImageLayer: React.FC = () => {
-  const { direction } = useSelector(selectors.cheki);
+  const { direction, imageHeight, imageUrl, imageWidth } = useSelector(
+    selectors.cheki
+  );
   const [height, setHeight] = useState(0);
   const [width, setWidth] = useState(0);
 
@@ -41,6 +43,7 @@ export const ChekiCanvasImageLayer: React.FC = () => {
       xmlnsXlink="http://www.w3.org/1999/xlink"
     >
       <rect fill="green" width="100%" height="100%" />
+      <image height={imageHeight} width={imageWidth} xlinkHref={imageUrl} />
     </svg>
   );
 };

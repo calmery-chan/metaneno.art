@@ -1,7 +1,7 @@
 import classnames from "classnames";
 import { css } from "linaria";
 import React, { useCallback, useRef } from "react";
-import { convertFileToImage } from "~/utils/cheki";
+import { convertFileToUrl } from "~/utils/cheki";
 import { useI18n } from "~/utils/i18n";
 
 const button = css`
@@ -9,7 +9,7 @@ const button = css`
 `;
 
 export const ChekiImageLoadButton: React.FC<{
-  onLoad: (image: HTMLImageElement) => void;
+  onLoad: (imageUrl: string) => void;
 }> = ({ onLoad }) => {
   const ref = useRef<HTMLInputElement>(null);
   const { t } = useI18n();
@@ -26,7 +26,7 @@ export const ChekiImageLoadButton: React.FC<{
         return;
       }
 
-      onLoad(await convertFileToImage(files[0]));
+      onLoad(await convertFileToUrl(files[0]));
     },
     []
   );
