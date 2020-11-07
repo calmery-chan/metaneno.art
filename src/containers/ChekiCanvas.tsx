@@ -62,8 +62,13 @@ export const ChekiCanvas: React.FC = () => {
   /* --- Events ---*/
 
   const handleOnUpdateDisplayable = useCallback(() => {
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const displayable = containerRef.current!.getBoundingClientRect();
+    const { current } = containerRef;
+
+    if (!current) {
+      return;
+    }
+
+    const displayable = current.getBoundingClientRect();
 
     setDisplayable(displayable);
   }, [containerRef]);
