@@ -42,8 +42,32 @@ export const ChekiCanvasImageLayer: React.FC = () => {
       xmlns="http://www.w3.org/2000/svg"
       xmlnsXlink="http://www.w3.org/1999/xlink"
     >
+      <defs>
+        <filter id="cheki-canvas-image-layer" colorInterpolationFilters="sRGB">
+          <feColorMatrix
+            in="SourceGraphic"
+            type="matrix"
+            values={[
+              [0.8, 0, 0, 0, 0],
+              [0, 0.8, 0, 0, 0],
+              [0, 0, 0.8, 0, 0],
+              [0, 0, 0, 1, 0],
+            ].join(" ")}
+          />
+          <feComponentTransfer>
+            <feFuncR type="linear" slope="1" intercept={0.2 * (120 / 255)} />
+            <feFuncG type="linear" slope="1" intercept={0.2 * (70 / 255)} />
+            <feFuncB type="linear" slope="1" intercept={0.2 * (13 / 255)} />
+          </feComponentTransfer>
+        </filter>
+      </defs>
       <rect fill="#fff" width="100%" height="100%" />
-      <image height={imageHeight} width={imageWidth} xlinkHref={imageUrl} />
+      <image
+        filter="url(#cheki-canvas-image-layer)"
+        height={imageHeight}
+        width={imageWidth}
+        xlinkHref={imageUrl}
+      />
     </svg>
   );
 };
