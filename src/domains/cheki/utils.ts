@@ -1,23 +1,60 @@
 import {
-  CHEKI_IMAGE_MAX_HEIGHT,
-  CHEKI_IMAGE_MAX_WIDTH,
+  CHEKI_HORIZONTAL_IMAGE_HEIGHT,
+  CHEKI_HORIZONTAL_IMAGE_WIDTH,
+  CHEKI_VERTICAL_IMAGE_HEIGHT,
+  CHEKI_VERTICAL_IMAGE_WIDTH,
 } from "~/constants/cheki";
+import { ChekiDirection } from "~/types/ChekiDirection";
+
+export const convertUrlToImage = (url: string): Promise<HTMLImageElement> =>
+  new Promise((resolve, reject) => {
+    const image = new Image();
+
+    image.onerror = reject;
+    image.onload = () => resolve(image);
+
+    image.src = url;
+  });
+
+export const getDirection = (height: number, width: number): ChekiDirection => {
+  if (width >= height) {
+    return "horizontal";
+  }
+
+  return "vertical";
+};
 
 export const resizeImage = (image: HTMLImageElement) => {
-  const imageHeight = image.height;
-  const imageWidth = image.width;
-  const horizontalRatio = imageWidth / CHEKI_IMAGE_MAX_WIDTH;
-  const verticalRatio = imageHeight / CHEKI_IMAGE_MAX_HEIGHT;
+  let IMAGE_MIN_HEIGHT = CHEKI_HORIZONTAL_IMAGE_HEIGHT;
+  let IMAGE_MIN_WIDTH = CHEKI_HORIZONTAL_IMAGE_WIDTH;
+
+  if (getDirection(image.height, image.width) === "vertical") {
+    IMAGE_MIN_HEIGHT = CHEKI_VERTICAL_IMAGE_HEIGHT;
+    IMAGE_MIN_WIDTH = CHEKI_VERTICAL_IMAGE_WIDTH;
+  }
 
   let height = 0;
   let width = 0;
 
+  const horizontalRatio = image.width / IMAGE_MIN_WIDTH;
+  const verticalRatio = image.height / IMAGE_MIN_HEIGHT;
+
   if (horizontalRatio > verticalRatio) {
-    width = CHEKI_IMAGE_MAX_WIDTH;
-    height = imageHeight * (CHEKI_IMAGE_MAX_WIDTH / imageWidth);
+    height = image.height * (IMAGE_MIN_WIDTH / image.width);
+    width = IMAGE_MIN_WIDTH;
+
+    if (height < IMAGE_MIN_HEIGHT) {
+      width *= IMAGE_MIN_HEIGHT / height;
+      height = IMAGE_MIN_HEIGHT;
+    }
   } else {
-    width = imageWidth * (CHEKI_IMAGE_MAX_HEIGHT / imageHeight);
-    height = CHEKI_IMAGE_MAX_HEIGHT;
+    height = IMAGE_MIN_HEIGHT;
+    width = image.width * (IMAGE_MIN_HEIGHT / image.height);
+
+    if (width < IMAGE_MIN_WIDTH) {
+      height *= IMAGE_MIN_WIDTH / width;
+      width = IMAGE_MIN_WIDTH;
+    }
   }
 
   const canvas = document.createElement("canvas");
@@ -34,13 +71,3 @@ export const resizeImage = (image: HTMLImageElement) => {
     width,
   };
 };
-
-export const convertUrlToImage = (url: string): Promise<HTMLImageElement> =>
-  new Promise((resolve, reject) => {
-    const image = new Image();
-
-    image.onerror = reject;
-    image.onload = () => resolve(image);
-
-    image.src = url;
-  });

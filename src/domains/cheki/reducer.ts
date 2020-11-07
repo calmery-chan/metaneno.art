@@ -1,5 +1,6 @@
 import { createReducer } from "@reduxjs/toolkit";
 import * as actions from "./actions";
+import { getDirection } from "./utils";
 import { ChekiDirection } from "~/types/ChekiDirection";
 
 export type State = {
@@ -29,7 +30,7 @@ export const reducer = createReducer(initialState, (builder) => {
 
       return {
         ...state,
-        direction: height < width ? "horizontal" : "vertical",
+        direction: getDirection(height, width),
         imageHeight: height,
         imageUrl: url,
         imageWidth: width,
