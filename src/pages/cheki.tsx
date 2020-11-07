@@ -1,16 +1,44 @@
+import { css } from "linaria";
 import { NextPage } from "next";
 import React from "react";
-import { ChekiImageLoadButton } from "~/components/ChekiImageLoadButton";
-import { selectors, useDispatch, useSelector } from "~/domains";
+import { ChekiCanvas } from "~/components/ChekiCanvas";
+
+// Styles
+
+const cheki = css`
+  flex-grow: 1;
+  height: fit-content;
+`;
+
+const column = css`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+`;
+
+const footer = css`
+  background: blue;
+  height: 32px;
+  flex-shrink: 0;
+`;
+
+const header = css`
+  background: red;
+  height: 16px;
+  flex-shrink: 0;
+`;
+
+// Page
 
 const Cheki: NextPage = () => {
-  const cheki = useSelector(selectors.cheki);
-  const dispatch = useDispatch();
-
   return (
-    <div className="container mx-auto">
-      <div className="mx-4">
-        <ChekiImageLoadButton onLoad={(image) => console.log(image)} />
+    <div className="container h-full mx-auto">
+      <div className={column}>
+        <div className={header} />
+        <div className={cheki}>
+          <ChekiCanvas />
+        </div>
+        <div className={footer} />
       </div>
     </div>
   );

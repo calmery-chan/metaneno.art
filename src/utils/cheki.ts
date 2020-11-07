@@ -12,6 +12,11 @@ const convertUrlToImage = (url: string): Promise<HTMLImageElement> =>
     image.src = url;
   });
 
+const isTouchRelatedEvent = (
+  event: MouseRelatedEvent | TouchRelatedEvent
+): event is TouchRelatedEvent =>
+  Object.prototype.hasOwnProperty.call(event, "touches");
+
 // Main
 
 export const convertFileToImage = (file: File): Promise<HTMLImageElement> =>
@@ -32,3 +37,29 @@ export const convertFileToImage = (file: File): Promise<HTMLImageElement> =>
       { canvas: true, orientation: true }
     );
   });
+
+export type CursorPosition = { x: number; y: number };
+export type MouseRelatedEvent = MouseEvent | React.MouseEvent;
+export type TouchRelatedEvent = React.TouchEvent | TouchEvent;
+
+export const convertEventToCursorPositions = (
+  event: MouseRelatedEvent | TouchRelatedEvent
+): CursorPosition[] => {
+  const positions = [];
+
+  if (isTouchRelatedEvent(event)) {
+    for (let i = 0; i < event.touches.length; i++) {
+      positions.push({
+        x: event.touches[i].clientX,
+        y: event.touches[i].clientY,
+      });
+    }
+  } else {
+    positions.push({
+      x: event.clientX,
+      y: event.clientY,
+    });
+  }
+
+  return positions;
+};
