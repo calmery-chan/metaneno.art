@@ -63,3 +63,27 @@ export const convertEventToCursorPositions = (
 
   return positions;
 };
+
+export const calculateCanvasPositionAndSize = (
+  displayable: { height: number; width: number; x: number; y: number },
+  frameViewBox: { height: number; width: number }
+) => {
+  let height = frameViewBox.height * (displayable.width / frameViewBox.width);
+  let width = displayable.width;
+  let x = displayable.x;
+  let y = displayable.y + (displayable.height - height) / 2;
+
+  if (height > displayable.height) {
+    height = displayable.height;
+    width = frameViewBox.width * (displayable.height / frameViewBox.height);
+    x = displayable.x + (displayable.width - width) / 2;
+    y = displayable.y;
+  }
+
+  return {
+    height,
+    width,
+    x,
+    y,
+  };
+};

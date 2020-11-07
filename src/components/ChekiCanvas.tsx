@@ -1,8 +1,16 @@
 import { styled } from "linaria/react";
 import React, { useCallback, useEffect, useRef, useState } from "react";
+import { ChekiCanvasFrameLayer } from "./ChekiCanvasFrameLayer";
+import {
+  CHEKI_HORIZONTAL_FRAME_HEIGHT,
+  CHEKI_HORIZONTAL_FRAME_WIDTH,
+  CHEKI_VERTICAL_FRAME_HEIGHT,
+  CHEKI_VERTICAL_FRAME_WIDTH,
+} from "~/constants/cheki";
 import { selectors, useDispatch, useSelector } from "~/domains";
 import { actions } from "~/domains/cheki";
 import {
+  calculateCanvasPositionAndSize,
   convertEventToCursorPositions,
   MouseRelatedEvent,
   TouchRelatedEvent,
@@ -22,7 +30,7 @@ export const ChekiCanvas: React.FC = () => {
   const cheki = useSelector(selectors.cheki);
   const dispatch = useDispatch();
 
-  const { isImageDragging, isImageRotating, isImageScaling } = cheki;
+  const { direction, isImageDragging, isImageRotating, isImageScaling } = cheki;
 
   /* --- Refs --- */
 
@@ -38,16 +46,42 @@ export const ChekiCanvas: React.FC = () => {
     y: 0,
   });
 
+  const [frame, setFrame] = useState({
+    height: 0,
+    width: 0,
+    x: 0,
+    y: 0,
+  });
+
+  const [frameViewBox, setFrameViewBox] = useState({
+    height: 0,
+    width: 0,
+  });
+
   /* --- Events ---*/
 
-  const handleOnUpdateDisplayable = useCallback(
-    () =>
-      setDisplayable(
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        containerRef.current!.getBoundingClientRect()
-      ),
-    [containerRef]
-  );
+  const handleOnUpdateDisplayable = useCallback(() => {
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const displayable = containerRef.current!.getBoundingClientRect();
+
+    setDisplayable(displayable);
+  }, [containerRef]);
+
+  const handleOnUpdateFrame = useCallback(() => {
+    const nextFrameViewBox = {
+      height:
+        direction === "horizontal"
+          ? CHEKI_HORIZONTAL_FRAME_HEIGHT
+          : CHEKI_VERTICAL_FRAME_HEIGHT,
+      width:
+        direction === "horizontal"
+          ? CHEKI_HORIZONTAL_FRAME_WIDTH
+          : CHEKI_VERTICAL_FRAME_WIDTH,
+    };
+
+    setFrame(calculateCanvasPositionAndSize(displayable, nextFrameViewBox));
+    setFrameViewBox(nextFrameViewBox);
+  }, [direction, displayable]);
 
   /* --- Control Events --- */
 
@@ -88,6 +122,10 @@ export const ChekiCanvas: React.FC = () => {
   }, [containerRef]);
 
   useEffect(() => {
+    handleOnUpdateFrame();
+  }, [direction, displayable]);
+
+  useEffect(() => {
     const { current } = svgRef;
 
     if (!current) {
@@ -103,12 +141,10 @@ export const ChekiCanvas: React.FC = () => {
 
   /* --- Render --- */
 
-  const { height, width } = displayable;
-
   return (
     <Container ref={containerRef}>
       <Svg
-        height={height}
+        height={displayable.height}
         onMouseLeave={handleOnComplete}
         onMouseMove={handleOnTick}
         onMouseUp={handleOnComplete}
@@ -116,12 +152,24 @@ export const ChekiCanvas: React.FC = () => {
         // `{ passive: false }` を渡すことができないため `useEffect` 内で登録する
         // onTouchMove={handleOnTick}
         ref={svgRef}
-        viewBox={`0 0 ${width} ${height}`}
-        width={width}
+        viewBox={`0 0 ${displayable.width} ${displayable.height}`}
+        width={displayable.width}
         xmlns="http://www.w3.org/2000/svg"
         xmlnsXlink="http://www.w3.org/1999/xlink"
       >
         <rect fill="#000" width="100%" height="100%" />
+
+        <svg
+          x={frame.x - displayable.x}
+          y={frame.y - displayable.y}
+          width={frame.width}
+          height={frame.height}
+          viewBox={`0 0 ${frameViewBox.width} ${frameViewBox.height}`}
+          xmlns="http://www.w3.org/2000/svg"
+          xmlnsXlink="http://www.w3.org/1999/xlink"
+        >
+          <ChekiCanvasFrameLayer direction={direction} />
+        </svg>
       </Svg>
     </Container>
   );

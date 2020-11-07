@@ -1,21 +1,16 @@
 import { createReducer } from "@reduxjs/toolkit";
 import * as actions from "./actions";
+import { ChekiDirection } from "~/types/ChekiDirection";
 
 export type State = {
-  displayableHeight: number;
-  displayableWidth: number;
-  displayableX: number;
-  displayableY: number;
+  direction: ChekiDirection;
   isImageDragging: boolean;
   isImageRotating: boolean;
   isImageScaling: boolean;
 };
 
 const initialState: State = {
-  displayableHeight: 0,
-  displayableWidth: 0,
-  displayableX: 0,
-  displayableY: 0,
+  direction: "horizontal",
   isImageDragging: false,
   isImageRotating: false,
   isImageScaling: false,
@@ -33,5 +28,9 @@ export const reducer = createReducer(initialState, (builder) => {
       const { cursorPositions } = action.payload;
       console.log(cursorPositions);
       return state;
-    });
+    })
+    .addCase(actions.updateDirection, (state, action) => ({
+      ...state,
+      ...action.payload,
+    }));
 });
