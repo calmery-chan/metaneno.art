@@ -26,11 +26,20 @@ const Vertical: React.FC = () => (
 export const ChekiCanvasFrameLayer: React.FC = () => {
   const { direction } = useSelector(selectors.cheki);
 
-  switch (direction) {
-    case "horizontal":
-      return <Horizontal />;
+  return (
+    <>
+      <mask id="cheki-canvas-frame-layer">
+        {direction === "horizontal" && <Horizontal />}
+        {direction === "vertical" && <Vertical />}
+      </mask>
 
-    case "vertical":
-      return <Vertical />;
-  }
+      {/* Reference: https://www.vecteezy.com/vector-art/123466-cartoon-sweets-vector-pattern */}
+      <image
+        height={CHEKI_VERTICAL_FRAME_HEIGHT}
+        width={CHEKI_HORIZONTAL_FRAME_WIDTH}
+        xlinkHref="/cheki/frame.png"
+        mask="url(#cheki-canvas-frame-layer)"
+      />
+    </>
+  );
 };

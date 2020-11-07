@@ -42,7 +42,7 @@ export const ChekiCanvasImageLayer: React.FC = () => {
       xmlns="http://www.w3.org/2000/svg"
       xmlnsXlink="http://www.w3.org/1999/xlink"
     >
-      <rect fill="green" width="100%" height="100%" />
+      <rect fill="#fff" width="100%" height="100%" />
       <image height={imageHeight} width={imageWidth} xlinkHref={imageUrl} />
     </svg>
   );
