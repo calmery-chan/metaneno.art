@@ -19,3 +19,17 @@ export const tick = createAction<{ cursorPositions: CursorPosition[] }>(
 export const updateDirection = createAction<{
   direction: ChekiDirection;
 }>("CHEKI/UPDATE_DIRECTION");
+
+export const updateDisplayable = createAction<{
+  height: number;
+  width: number;
+  x: number;
+  y: number;
+}>("CHEKI/UPDATE_DISPLAYABLE");
+
+export const updateFrame = createAction<{
+  height: number;
+  width: number;
+  x: number;
+  y: number;
+}>("CHEKI/UPDATE_FRAME");

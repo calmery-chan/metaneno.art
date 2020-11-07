@@ -1,17 +1,10 @@
 import { styled } from "linaria/react";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef } from "react";
 import { ChekiCanvasFrameLayer } from "./ChekiCanvasFrameLayer";
 import { ChekiCanvasImageLayer } from "./ChekiCanvasImageLayer";
-import {
-  CHEKI_HORIZONTAL_FRAME_HEIGHT,
-  CHEKI_HORIZONTAL_FRAME_WIDTH,
-  CHEKI_VERTICAL_FRAME_HEIGHT,
-  CHEKI_VERTICAL_FRAME_WIDTH,
-} from "~/constants/cheki";
 import { selectors, useDispatch, useSelector } from "~/domains";
 import { actions } from "~/domains/cheki";
 import {
-  calculateCanvasPositionAndSize,
   convertEventToCursorPositions,
   MouseRelatedEvent,
   TouchRelatedEvent,
@@ -31,33 +24,13 @@ export const ChekiCanvas: React.FC = () => {
   const cheki = useSelector(selectors.cheki);
   const dispatch = useDispatch();
 
-  const { direction, isImageDragging } = cheki;
+  const { isImageDragging, layout } = cheki;
+  const { displayable, frame } = layout;
 
   /* --- Refs --- */
 
   const containerRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
-
-  /* --- States --- */
-
-  const [displayable, setDisplayable] = useState({
-    height: 0,
-    width: 0,
-    x: 0,
-    y: 0,
-  });
-
-  const [frame, setFrame] = useState({
-    height: 0,
-    width: 0,
-    x: 0,
-    y: 0,
-  });
-
-  const [frameViewBox, setFrameViewBox] = useState({
-    height: 0,
-    width: 0,
-  });
 
   /* --- Events ---*/
 
@@ -68,26 +41,9 @@ export const ChekiCanvas: React.FC = () => {
       return;
     }
 
-    const displayable = current.getBoundingClientRect();
-
-    setDisplayable(displayable);
+    const { height, width, x, y } = current.getBoundingClientRect();
+    dispatch(actions.updateDisplayable({ height, width, x, y }));
   }, [containerRef]);
-
-  const handleOnUpdateFrame = useCallback(() => {
-    const nextFrameViewBox = {
-      height:
-        direction === "horizontal"
-          ? CHEKI_HORIZONTAL_FRAME_HEIGHT
-          : CHEKI_VERTICAL_FRAME_HEIGHT,
-      width:
-        direction === "horizontal"
-          ? CHEKI_HORIZONTAL_FRAME_WIDTH
-          : CHEKI_VERTICAL_FRAME_WIDTH,
-    };
-
-    setFrame(calculateCanvasPositionAndSize(displayable, nextFrameViewBox));
-    setFrameViewBox(nextFrameViewBox);
-  }, [direction, displayable]);
 
   /* --- Control Events --- */
 
@@ -128,10 +84,6 @@ export const ChekiCanvas: React.FC = () => {
   }, [containerRef]);
 
   useEffect(() => {
-    handleOnUpdateFrame();
-  }, [direction, displayable]);
-
-  useEffect(() => {
     const { current } = svgRef;
 
     if (!current) {
@@ -170,7 +122,7 @@ export const ChekiCanvas: React.FC = () => {
           width={frame.width}
           x={frame.x - displayable.x}
           y={frame.y - displayable.y}
-          viewBox={`0 0 ${frameViewBox.width} ${frameViewBox.height}`}
+          viewBox={`0 0 ${frame.viewBoxWidth} ${frame.viewBoxHeight}`}
           xmlns="http://www.w3.org/2000/svg"
           xmlnsXlink="http://www.w3.org/1999/xlink"
         >
