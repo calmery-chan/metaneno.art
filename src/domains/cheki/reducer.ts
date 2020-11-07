@@ -1,39 +1,25 @@
 import { createReducer } from "@reduxjs/toolkit";
 import * as actions from "./actions";
-import { getDirection, getSizeByDirection } from "./utils";
+import { getDirection, updateFrame } from "./utils";
 import {
   CHEKI_FRAME_MARGIN_LEFT,
   CHEKI_FRAME_MARGIN_TOP,
-  CHEKI_HORIZONTAL_FRAME_HEIGHT,
-  CHEKI_HORIZONTAL_FRAME_WIDTH,
-  CHEKI_VERTICAL_FRAME_HEIGHT,
-  CHEKI_VERTICAL_FRAME_WIDTH,
 } from "~/constants/cheki";
 import { ChekiDirection } from "~/types/ChekiDirection";
-import { calculateCanvasPositionAndSize } from "~/utils/cheki";
+import { ChekiRectangle } from "~/types/ChekiRectangle";
+import { getImageSizeByDirection } from "~/utils/cheki";
 
 export type State = {
-  direction: ChekiDirection;
-  imageHeight: number;
-  imagePositionX: number;
-  imagePositionY: number;
-  imageUrl: string;
-  imageWidth: number;
+  image: ChekiRectangle & {
+    direction: ChekiDirection;
+    url: string;
+  };
   layout: {
-    displayable: {
-      height: number;
-      width: number;
-      x: number;
-      y: number;
-    };
+    displayable: ChekiRectangle;
     displayMagnification: number;
-    frame: {
-      height: number;
+    frame: ChekiRectangle & {
       viewBoxHeight: number;
       viewBoxWidth: number;
-      width: number;
-      x: number;
-      y: number;
     };
   };
   temporaries: {
@@ -44,12 +30,14 @@ export type State = {
 };
 
 const initialState: State = {
-  direction: "horizontal",
-  imageHeight: 0,
-  imagePositionX: 0,
-  imagePositionY: 0,
-  imageUrl: "",
-  imageWidth: 0,
+  image: {
+    direction: "horizontal",
+    height: 0,
+    url: "",
+    width: 0,
+    x: 0,
+    y: 0,
+  },
   layout: {
     displayable: {
       height: 0,
@@ -74,52 +62,26 @@ const initialState: State = {
   },
 };
 
-const updateFrame = (
-  displayable: {
-    height: number;
-    width: number;
-    x: number;
-    y: number;
-  },
-  direction: ChekiDirection
-) => {
-  const nextFrameViewBox = {
-    height:
-      direction === "horizontal"
-        ? CHEKI_HORIZONTAL_FRAME_HEIGHT
-        : CHEKI_VERTICAL_FRAME_HEIGHT,
-    width:
-      direction === "horizontal"
-        ? CHEKI_HORIZONTAL_FRAME_WIDTH
-        : CHEKI_VERTICAL_FRAME_WIDTH,
-  };
-
-  return {
-    frame: {
-      ...calculateCanvasPositionAndSize(displayable, nextFrameViewBox),
-      viewBoxHeight: nextFrameViewBox.height,
-      viewBoxWidth: nextFrameViewBox.width,
-    },
-  };
-};
-
 export const reducer = createReducer(initialState, (builder) => {
   builder
     .addCase(actions.addImage.fulfilled, (state, action) => {
       const { height, url, width } = action.payload;
+      const { layout } = state;
+
       const direction = getDirection(height, width);
 
       return {
         ...state,
-        direction,
-        imageHeight: height,
-        imagePositionX: 0,
-        imagePositionY: 0,
-        imageUrl: url,
-        imageWidth: width,
+        image: {
+          ...initialState.image,
+          direction,
+          height,
+          url,
+          width,
+        },
         layout: {
-          ...state.layout,
-          ...updateFrame(state.layout.displayable, direction),
+          ...layout,
+          ...updateFrame(layout.displayable, direction),
         },
         temporaries: initialState.temporaries,
       };
@@ -130,18 +92,18 @@ export const reducer = createReducer(initialState, (builder) => {
     }))
     .addCase(actions.startImageDragging, (state, action) => {
       const { cursorPositions } = action.payload;
-      const { layout, imagePositionX, imagePositionY } = state;
+      const { image, layout } = state;
 
       const [{ x, y }] = cursorPositions;
 
       const cursorOffsetX =
         (x - layout.frame.x) * layout.displayMagnification -
         CHEKI_FRAME_MARGIN_LEFT -
-        imagePositionX;
+        image.x;
       const cursorOffsetY =
         (y - layout.frame.y) * layout.displayMagnification -
         CHEKI_FRAME_MARGIN_TOP -
-        imagePositionY;
+        image.y;
 
       return {
         ...state,
@@ -155,7 +117,8 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(actions.tick, (state, action) => {
       const { cursorPositions } = action.payload;
-      const { direction, layout, temporaries, imageHeight, imageWidth } = state;
+      const { image, layout, temporaries } = state;
+
       const [{ x, y }] = cursorPositions;
 
       if (temporaries.isImageDragging) {
@@ -166,48 +129,46 @@ export const reducer = createReducer(initialState, (builder) => {
           (y - layout.frame.y) * layout.displayMagnification -
           CHEKI_FRAME_MARGIN_TOP;
 
-        let nextImagePositionX = cursorX - temporaries.cursorOffsetX;
-        let nextImagePositionY = cursorY - temporaries.cursorOffsetY;
+        let nextX = cursorX - temporaries.cursorOffsetX;
+        let nextY = cursorY - temporaries.cursorOffsetY;
 
-        if (nextImagePositionX > 0) {
-          nextImagePositionX = 0;
+        if (nextX > 0) {
+          nextX = 0;
         }
 
-        if (nextImagePositionY > 0) {
-          nextImagePositionY = 0;
+        if (nextY > 0) {
+          nextY = 0;
         }
 
-        const { width, height } = getSizeByDirection(direction);
+        const { width, height } = getImageSizeByDirection(image.direction);
 
-        if (width - imageWidth > nextImagePositionX) {
-          nextImagePositionX = width - imageWidth;
+        if (width - image.width > nextX) {
+          nextX = width - image.width;
         }
 
-        if (height - imageHeight > nextImagePositionY) {
-          nextImagePositionY = height - imageHeight;
+        if (height - image.height > nextY) {
+          nextY = height - image.height;
         }
 
         return {
           ...state,
-          imagePositionX: nextImagePositionX,
-          imagePositionY: nextImagePositionY,
+          image: {
+            ...image,
+            x: nextX,
+            y: nextY,
+          },
         };
       }
 
       return state;
     })
-    .addCase(actions.updateDirection, (state, action) => ({
-      ...state,
-      ...action.payload,
-      layout: {
-        ...state.layout,
-        ...updateFrame(state.layout.displayable, state.direction),
-      },
-    }))
     .addCase(actions.updateDisplayable, (state, action) => {
-      const { direction } = state;
-      const displayable = action.payload;
-      const frame = updateFrame(action.payload, direction).frame;
+      const { payload: displayable } = action;
+      const {
+        image: { direction },
+      } = state;
+
+      const { frame } = updateFrame(action.payload, direction);
 
       return {
         ...state,

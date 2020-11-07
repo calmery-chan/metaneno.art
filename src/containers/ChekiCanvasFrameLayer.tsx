@@ -1,36 +1,21 @@
 import React from "react";
 import {
-  CHEKI_HORIZONTAL_FRAME_HEIGHT,
   CHEKI_HORIZONTAL_FRAME_WIDTH,
   CHEKI_VERTICAL_FRAME_HEIGHT,
-  CHEKI_VERTICAL_FRAME_WIDTH,
 } from "~/constants/cheki";
 import { selectors, useSelector } from "~/domains";
-
-const Horizontal: React.FC = () => (
-  <rect
-    fill="#fff"
-    height={CHEKI_HORIZONTAL_FRAME_HEIGHT}
-    width={CHEKI_HORIZONTAL_FRAME_WIDTH}
-  />
-);
-
-const Vertical: React.FC = () => (
-  <rect
-    fill="#fff"
-    height={CHEKI_VERTICAL_FRAME_HEIGHT}
-    width={CHEKI_VERTICAL_FRAME_WIDTH}
-  />
-);
+import { getFrameSizeByDirection } from "~/utils/cheki";
 
 export const ChekiCanvasFrameLayer: React.FC = () => {
-  const { direction } = useSelector(selectors.cheki);
+  const {
+    image: { direction },
+  } = useSelector(selectors.cheki);
+  const { height, width } = getFrameSizeByDirection(direction);
 
   return (
     <>
       <mask id="cheki-canvas-frame-layer">
-        {direction === "horizontal" && <Horizontal />}
-        {direction === "vertical" && <Vertical />}
+        <rect fill="#fff" height={height} width={width} />
       </mask>
 
       {/* Reference: https://www.vecteezy.com/vector-art/123466-cartoon-sweets-vector-pattern */}

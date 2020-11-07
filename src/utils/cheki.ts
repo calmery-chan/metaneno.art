@@ -1,4 +1,15 @@
 import blueimpLoadImage from "blueimp-load-image";
+import {
+  CHEKI_HORIZONTAL_IMAGE_HEIGHT,
+  CHEKI_VERTICAL_IMAGE_HEIGHT,
+  CHEKI_HORIZONTAL_IMAGE_WIDTH,
+  CHEKI_VERTICAL_IMAGE_WIDTH,
+  CHEKI_HORIZONTAL_FRAME_HEIGHT,
+  CHEKI_HORIZONTAL_FRAME_WIDTH,
+  CHEKI_VERTICAL_FRAME_HEIGHT,
+  CHEKI_VERTICAL_FRAME_WIDTH,
+} from "~/constants/cheki";
+import { ChekiDirection } from "~/types/ChekiDirection";
 
 const isTouchRelatedEvent = (
   event: MouseRelatedEvent | TouchRelatedEvent
@@ -46,26 +57,24 @@ export const convertEventToCursorPositions = (
   return positions;
 };
 
-export const calculateCanvasPositionAndSize = (
-  displayable: { height: number; width: number; x: number; y: number },
-  frameViewBox: { height: number; width: number }
-) => {
-  let height = frameViewBox.height * (displayable.width / frameViewBox.width);
-  let width = displayable.width;
-  let x = displayable.x;
-  let y = displayable.y + (displayable.height - height) / 2;
+export const getFrameSizeByDirection = (direction: ChekiDirection) => ({
+  height:
+    direction === "horizontal"
+      ? CHEKI_HORIZONTAL_FRAME_HEIGHT
+      : CHEKI_VERTICAL_FRAME_HEIGHT,
+  width:
+    direction === "horizontal"
+      ? CHEKI_HORIZONTAL_FRAME_WIDTH
+      : CHEKI_VERTICAL_FRAME_WIDTH,
+});
 
-  if (height > displayable.height) {
-    height = displayable.height;
-    width = frameViewBox.width * (displayable.height / frameViewBox.height);
-    x = displayable.x + (displayable.width - width) / 2;
-    y = displayable.y;
-  }
-
-  return {
-    height,
-    width,
-    x,
-    y,
-  };
-};
+export const getImageSizeByDirection = (direction: ChekiDirection) => ({
+  height:
+    direction === "horizontal"
+      ? CHEKI_HORIZONTAL_IMAGE_HEIGHT
+      : CHEKI_VERTICAL_IMAGE_HEIGHT,
+  width:
+    direction === "horizontal"
+      ? CHEKI_HORIZONTAL_IMAGE_WIDTH
+      : CHEKI_VERTICAL_IMAGE_WIDTH,
+});

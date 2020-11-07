@@ -2,14 +2,11 @@ import React, { useCallback, useEffect, useState } from "react";
 import {
   CHEKI_FRAME_MARGIN_LEFT,
   CHEKI_FRAME_MARGIN_TOP,
-  CHEKI_HORIZONTAL_IMAGE_HEIGHT,
-  CHEKI_HORIZONTAL_IMAGE_WIDTH,
-  CHEKI_VERTICAL_IMAGE_HEIGHT,
-  CHEKI_VERTICAL_IMAGE_WIDTH,
 } from "~/constants/cheki";
 import { selectors, useDispatch, useSelector } from "~/domains";
 import { actions } from "~/domains/cheki";
 import {
+  getImageSizeByDirection,
   convertEventToCursorPositions,
   MouseRelatedEvent,
   TouchRelatedEvent,
@@ -17,16 +14,11 @@ import {
 
 export const ChekiCanvasImageLayer: React.FC = () => {
   const dispatch = useDispatch();
-  const {
-    direction,
-    imageHeight,
-    imagePositionX,
-    imagePositionY,
-    imageUrl,
-    imageWidth,
-  } = useSelector(selectors.cheki);
+  const { image } = useSelector(selectors.cheki);
   const [height, setHeight] = useState(0);
   const [width, setWidth] = useState(0);
+
+  const { direction } = image;
 
   const handleOnStartDragging = useCallback(
     (event: MouseRelatedEvent | TouchRelatedEvent) => {
@@ -40,19 +32,9 @@ export const ChekiCanvasImageLayer: React.FC = () => {
   );
 
   useEffect(() => {
-    switch (direction) {
-      case "horizontal": {
-        setHeight(CHEKI_HORIZONTAL_IMAGE_HEIGHT);
-        setWidth(CHEKI_HORIZONTAL_IMAGE_WIDTH);
-        return;
-      }
-
-      case "vertical": {
-        setHeight(CHEKI_VERTICAL_IMAGE_HEIGHT);
-        setWidth(CHEKI_VERTICAL_IMAGE_WIDTH);
-        return;
-      }
-    }
+    const { height, width } = getImageSizeByDirection(direction);
+    setHeight(height);
+    setWidth(width);
   }, [direction]);
 
   return (
@@ -60,12 +42,12 @@ export const ChekiCanvasImageLayer: React.FC = () => {
       height={height}
       onMouseDown={handleOnStartDragging}
       onTouchStart={handleOnStartDragging}
+      viewBox={`0 0 ${width} ${height}`}
       width={width}
       x={CHEKI_FRAME_MARGIN_LEFT}
-      y={CHEKI_FRAME_MARGIN_TOP}
-      viewBox={`0 0 ${width} ${height}`}
       xmlns="http://www.w3.org/2000/svg"
       xmlnsXlink="http://www.w3.org/1999/xlink"
+      y={CHEKI_FRAME_MARGIN_TOP}
     >
       <defs>
         <filter id="cheki-canvas-image-layer" colorInterpolationFilters="sRGB">
@@ -80,20 +62,17 @@ export const ChekiCanvasImageLayer: React.FC = () => {
             ].join(" ")}
           />
           <feComponentTransfer>
-            <feFuncR type="linear" slope="1" intercept={0.2 * (120 / 255)} />
-            <feFuncG type="linear" slope="1" intercept={0.2 * (70 / 255)} />
             <feFuncB type="linear" slope="1" intercept={0.2 * (13 / 255)} />
+            <feFuncG type="linear" slope="1" intercept={0.2 * (70 / 255)} />
+            <feFuncR type="linear" slope="1" intercept={0.2 * (120 / 255)} />
           </feComponentTransfer>
         </filter>
       </defs>
       <rect fill="#fff" width="100%" height="100%" />
       <image
+        {...image}
         filter="url(#cheki-canvas-image-layer)"
-        height={imageHeight}
-        width={imageWidth}
-        x={imagePositionX}
-        xlinkHref={imageUrl}
-        y={imagePositionY}
+        xlinkHref={image.url}
       />
     </svg>
   );

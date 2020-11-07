@@ -21,12 +21,10 @@ const Svg = styled.svg`
 `;
 
 export const ChekiCanvas: React.FC = () => {
-  const cheki = useSelector(selectors.cheki);
+  const {
+    layout: { displayable, frame },
+  } = useSelector(selectors.cheki);
   const dispatch = useDispatch();
-
-  const { layout, temporaries } = cheki;
-  const { displayable, frame } = layout;
-  const { isImageDragging } = temporaries;
 
   /* --- Refs --- */
 
@@ -34,19 +32,6 @@ export const ChekiCanvas: React.FC = () => {
   const svgRef = useRef<SVGSVGElement>(null);
 
   /* --- Events ---*/
-
-  const handleOnUpdateDisplayable = useCallback(() => {
-    const { current } = containerRef;
-
-    if (!current) {
-      return;
-    }
-
-    const { height, width, x, y } = current.getBoundingClientRect();
-    dispatch(actions.updateDisplayable({ height, width, x, y }));
-  }, [containerRef]);
-
-  /* --- Control Events --- */
 
   const handleOnComplete = useCallback(() => dispatch(actions.complete()), []);
 
@@ -58,8 +43,19 @@ export const ChekiCanvas: React.FC = () => {
       const cursorPositions = convertEventToCursorPositions(event);
       dispatch(actions.tick({ cursorPositions }));
     },
-    [isImageDragging]
+    []
   );
+
+  const handleOnUpdateDisplayable = useCallback(() => {
+    const { current } = containerRef;
+
+    if (!current) {
+      return;
+    }
+
+    const { height, width, x, y } = current.getBoundingClientRect();
+    dispatch(actions.updateDisplayable({ height, width, x, y }));
+  }, [containerRef]);
 
   /* --- Side Effects --- */
 
@@ -112,16 +108,14 @@ export const ChekiCanvas: React.FC = () => {
         xmlns="http://www.w3.org/2000/svg"
         xmlnsXlink="http://www.w3.org/1999/xlink"
       >
-        <rect fill="#000" width="100%" height="100%" />
-
         <svg
           height={frame.height}
+          viewBox={`0 0 ${frame.viewBoxWidth} ${frame.viewBoxHeight}`}
           width={frame.width}
           x={frame.x - displayable.x}
-          y={frame.y - displayable.y}
-          viewBox={`0 0 ${frame.viewBoxWidth} ${frame.viewBoxHeight}`}
           xmlns="http://www.w3.org/2000/svg"
           xmlnsXlink="http://www.w3.org/1999/xlink"
+          y={frame.y - displayable.y}
         >
           <ChekiCanvasFrameLayer />
           <ChekiCanvasImageLayer />
