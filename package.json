@@ -6,7 +6,6 @@
     "@sentry/tracing": "5.27.3",
     "@tensorflow-models/coco-ssd": "2.1.0",
     "@tensorflow/tfjs": "2.7.0",
-    "axios": "0.21.0",
     "blueimp-load-image": "5.14.0",
     "classnames": "2.2.6",
     "linaria": "2.0.0",
