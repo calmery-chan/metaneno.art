@@ -5,7 +5,7 @@ import {
   CHEKI_VERTICAL_FRAME_HEIGHT,
   CHEKI_VERTICAL_FRAME_WIDTH,
 } from "~/constants/cheki";
-import { ChekiDirection } from "~/types/ChekiDirection";
+import { selectors, useSelector } from "~/domains";
 
 const Horizontal: React.FC = () => (
   <rect
@@ -23,13 +23,9 @@ const Vertical: React.FC = () => (
   />
 );
 
-type ChekiCanvasFrameLayerProps = {
-  direction: ChekiDirection;
-};
+export const ChekiCanvasFrameLayer: React.FC = () => {
+  const { direction } = useSelector(selectors.cheki);
 
-export const ChekiCanvasFrameLayer: React.FC<ChekiCanvasFrameLayerProps> = ({
-  direction,
-}) => {
   switch (direction) {
     case "horizontal":
       return <Horizontal />;

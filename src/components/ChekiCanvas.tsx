@@ -1,6 +1,7 @@
 import { styled } from "linaria/react";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { ChekiCanvasFrameLayer } from "./ChekiCanvasFrameLayer";
+import { ChekiCanvasImageLayer } from "./ChekiCanvasImageLayer";
 import {
   CHEKI_HORIZONTAL_FRAME_HEIGHT,
   CHEKI_HORIZONTAL_FRAME_WIDTH,
@@ -160,15 +161,16 @@ export const ChekiCanvas: React.FC = () => {
         <rect fill="#000" width="100%" height="100%" />
 
         <svg
+          height={frame.height}
+          width={frame.width}
           x={frame.x - displayable.x}
           y={frame.y - displayable.y}
-          width={frame.width}
-          height={frame.height}
           viewBox={`0 0 ${frameViewBox.width} ${frameViewBox.height}`}
           xmlns="http://www.w3.org/2000/svg"
           xmlnsXlink="http://www.w3.org/1999/xlink"
         >
-          <ChekiCanvasFrameLayer direction={direction} />
+          <ChekiCanvasFrameLayer />
+          <ChekiCanvasImageLayer />
         </svg>
       </Svg>
     </Container>
