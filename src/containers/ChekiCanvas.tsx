@@ -31,7 +31,7 @@ export const ChekiCanvas: React.FC = () => {
   const cheki = useSelector(selectors.cheki);
   const dispatch = useDispatch();
 
-  const { direction, isImageDragging, isImageRotating, isImageScaling } = cheki;
+  const { direction, isImageDragging } = cheki;
 
   /* --- Refs --- */
 
@@ -98,14 +98,14 @@ export const ChekiCanvas: React.FC = () => {
       event.preventDefault();
       event.stopPropagation();
 
-      if (!isImageDragging && !isImageRotating && !isImageScaling) {
+      if (!isImageDragging) {
         return;
       }
 
       const cursorPositions = convertEventToCursorPositions(event);
       dispatch(actions.tick({ cursorPositions }));
     },
-    [isImageDragging, isImageRotating, isImageScaling]
+    [isImageDragging]
   );
 
   /* --- Side Effects --- */

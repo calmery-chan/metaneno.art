@@ -9,8 +9,6 @@ export type State = {
   imageUrl: string;
   imageWidth: number;
   isImageDragging: boolean;
-  isImageRotating: boolean;
-  isImageScaling: boolean;
 };
 
 const initialState: State = {
@@ -19,8 +17,6 @@ const initialState: State = {
   imageUrl: "",
   imageWidth: 0,
   isImageDragging: false,
-  isImageRotating: false,
-  isImageScaling: false,
 };
 
 export const reducer = createReducer(initialState, (builder) => {
