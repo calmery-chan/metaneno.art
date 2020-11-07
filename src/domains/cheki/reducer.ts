@@ -113,6 +113,8 @@ export const reducer = createReducer(initialState, (builder) => {
         ...state,
         direction,
         imageHeight: height,
+        imagePositionX: 0,
+        imagePositionY: 0,
         imageUrl: url,
         imageWidth: width,
         layout: {
