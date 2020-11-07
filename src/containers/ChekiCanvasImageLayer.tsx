@@ -10,9 +10,14 @@ import {
 import { selectors, useSelector } from "~/domains";
 
 export const ChekiCanvasImageLayer: React.FC = () => {
-  const { direction, imageHeight, imageUrl, imageWidth } = useSelector(
-    selectors.cheki
-  );
+  const {
+    direction,
+    imageHeight,
+    imagePositionX,
+    imagePositionY,
+    imageUrl,
+    imageWidth,
+  } = useSelector(selectors.cheki);
   const [height, setHeight] = useState(0);
   const [width, setWidth] = useState(0);
 
@@ -66,7 +71,9 @@ export const ChekiCanvasImageLayer: React.FC = () => {
         filter="url(#cheki-canvas-image-layer)"
         height={imageHeight}
         width={imageWidth}
+        x={imagePositionX}
         xlinkHref={imageUrl}
+        y={imagePositionY}
       />
     </svg>
   );

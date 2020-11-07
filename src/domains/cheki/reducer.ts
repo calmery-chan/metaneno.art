@@ -6,6 +6,8 @@ import { ChekiDirection } from "~/types/ChekiDirection";
 export type State = {
   direction: ChekiDirection;
   imageHeight: number;
+  imagePositionX: number;
+  imagePositionY: number;
   imageUrl: string;
   imageWidth: number;
   isImageDragging: boolean;
@@ -14,6 +16,8 @@ export type State = {
 const initialState: State = {
   direction: "horizontal",
   imageHeight: 0,
+  imagePositionX: 0,
+  imagePositionY: 0,
   imageUrl: "",
   imageWidth: 0,
   isImageDragging: false,
