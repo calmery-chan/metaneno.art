@@ -1,7 +1,9 @@
 import { createReducer } from "@reduxjs/toolkit";
 import * as actions from "./actions";
-import { getDirection } from "./utils";
+import { getDirection, getSizeByDirection } from "./utils";
 import {
+  CHEKI_FRAME_MARGIN_LEFT,
+  CHEKI_FRAME_MARGIN_TOP,
   CHEKI_HORIZONTAL_FRAME_HEIGHT,
   CHEKI_HORIZONTAL_FRAME_WIDTH,
   CHEKI_VERTICAL_FRAME_HEIGHT,
@@ -17,7 +19,6 @@ export type State = {
   imagePositionY: number;
   imageUrl: string;
   imageWidth: number;
-  isImageDragging: boolean;
   layout: {
     displayable: {
       height: number;
@@ -25,6 +26,7 @@ export type State = {
       x: number;
       y: number;
     };
+    displayMagnification: number;
     frame: {
       height: number;
       viewBoxHeight: number;
@@ -33,6 +35,11 @@ export type State = {
       x: number;
       y: number;
     };
+  };
+  temporaries: {
+    cursorOffsetX: number;
+    cursorOffsetY: number;
+    isImageDragging: boolean;
   };
 };
 
@@ -43,7 +50,6 @@ const initialState: State = {
   imagePositionY: 0,
   imageUrl: "",
   imageWidth: 0,
-  isImageDragging: false,
   layout: {
     displayable: {
       height: 0,
@@ -51,6 +57,7 @@ const initialState: State = {
       x: 0,
       y: 0,
     },
+    displayMagnification: 1,
     frame: {
       height: 0,
       viewBoxHeight: 0,
@@ -59,6 +66,11 @@ const initialState: State = {
       x: 0,
       y: 0,
     },
+  },
+  temporaries: {
+    cursorOffsetX: 0,
+    cursorOffsetY: 0,
+    isImageDragging: false,
   },
 };
 
@@ -107,17 +119,79 @@ export const reducer = createReducer(initialState, (builder) => {
           ...state.layout,
           ...updateFrame(state.layout.displayable, direction),
         },
+        temporaries: initialState.temporaries,
       };
     })
     .addCase(actions.complete, (state) => ({
       ...state,
-      isImageDragging: false,
-      isImageRotating: false,
-      isImageScaling: false,
+      temporaries: initialState.temporaries,
     }))
+    .addCase(actions.startImageDragging, (state, action) => {
+      const { cursorPositions } = action.payload;
+      const { layout, imagePositionX, imagePositionY } = state;
+
+      const [{ x, y }] = cursorPositions;
+
+      const cursorOffsetX =
+        (x - layout.frame.x) * layout.displayMagnification -
+        CHEKI_FRAME_MARGIN_LEFT -
+        imagePositionX;
+      const cursorOffsetY =
+        (y - layout.frame.y) * layout.displayMagnification -
+        CHEKI_FRAME_MARGIN_TOP -
+        imagePositionY;
+
+      return {
+        ...state,
+        temporaries: {
+          ...state.temporaries,
+          cursorOffsetX,
+          cursorOffsetY,
+          isImageDragging: true,
+        },
+      };
+    })
     .addCase(actions.tick, (state, action) => {
       const { cursorPositions } = action.payload;
-      console.log(cursorPositions);
+      const { direction, layout, temporaries, imageHeight, imageWidth } = state;
+      const [{ x, y }] = cursorPositions;
+
+      if (temporaries.isImageDragging) {
+        const cursorX =
+          (x - layout.frame.x) * layout.displayMagnification -
+          CHEKI_FRAME_MARGIN_LEFT;
+        const cursorY =
+          (y - layout.frame.y) * layout.displayMagnification -
+          CHEKI_FRAME_MARGIN_TOP;
+
+        let nextImagePositionX = cursorX - temporaries.cursorOffsetX;
+        let nextImagePositionY = cursorY - temporaries.cursorOffsetY;
+
+        if (nextImagePositionX > 0) {
+          nextImagePositionX = 0;
+        }
+
+        if (nextImagePositionY > 0) {
+          nextImagePositionY = 0;
+        }
+
+        const { width, height } = getSizeByDirection(direction);
+
+        if (width - imageWidth > nextImagePositionX) {
+          nextImagePositionX = width - imageWidth;
+        }
+
+        if (height - imageHeight > nextImagePositionY) {
+          nextImagePositionY = height - imageHeight;
+        }
+
+        return {
+          ...state,
+          imagePositionX: nextImagePositionX,
+          imagePositionY: nextImagePositionY,
+        };
+      }
+
       return state;
     })
     .addCase(actions.updateDirection, (state, action) => ({
@@ -130,13 +204,16 @@ export const reducer = createReducer(initialState, (builder) => {
     }))
     .addCase(actions.updateDisplayable, (state, action) => {
       const { direction } = state;
+      const displayable = action.payload;
+      const frame = updateFrame(action.payload, direction).frame;
 
       return {
         ...state,
         layout: {
           ...state.layout,
-          ...updateFrame(action.payload, direction),
-          displayable: action.payload,
+          displayable,
+          displayMagnification: frame.viewBoxWidth / frame.width,
+          frame,
         },
       };
     });

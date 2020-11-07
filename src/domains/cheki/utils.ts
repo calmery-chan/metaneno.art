@@ -71,3 +71,14 @@ export const resizeImage = (image: HTMLImageElement) => {
     width,
   };
 };
+
+export const getSizeByDirection = (direction: ChekiDirection) => ({
+  height:
+    direction === "horizontal"
+      ? CHEKI_HORIZONTAL_IMAGE_HEIGHT
+      : CHEKI_VERTICAL_IMAGE_HEIGHT,
+  width:
+    direction === "horizontal"
+      ? CHEKI_HORIZONTAL_IMAGE_WIDTH
+      : CHEKI_VERTICAL_IMAGE_WIDTH,
+});

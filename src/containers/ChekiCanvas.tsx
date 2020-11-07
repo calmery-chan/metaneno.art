@@ -24,8 +24,9 @@ export const ChekiCanvas: React.FC = () => {
   const cheki = useSelector(selectors.cheki);
   const dispatch = useDispatch();
 
-  const { isImageDragging, layout } = cheki;
+  const { layout, temporaries } = cheki;
   const { displayable, frame } = layout;
+  const { isImageDragging } = temporaries;
 
   /* --- Refs --- */
 
@@ -53,10 +54,6 @@ export const ChekiCanvas: React.FC = () => {
     (event: MouseRelatedEvent | TouchRelatedEvent) => {
       event.preventDefault();
       event.stopPropagation();
-
-      if (!isImageDragging) {
-        return;
-      }
 
       const cursorPositions = convertEventToCursorPositions(event);
       dispatch(actions.tick({ cursorPositions }));

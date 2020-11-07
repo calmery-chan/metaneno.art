@@ -1,23 +1,9 @@
 import blueimpLoadImage from "blueimp-load-image";
 
-// Internal
-
-const convertUrlToImage = (url: string): Promise<HTMLImageElement> =>
-  new Promise((resolve, reject) => {
-    const image = new Image();
-
-    image.onerror = reject;
-    image.onload = () => resolve(image);
-
-    image.src = url;
-  });
-
 const isTouchRelatedEvent = (
   event: MouseRelatedEvent | TouchRelatedEvent
-): event is TouchRelatedEvent =>
-  Object.prototype.hasOwnProperty.call(event, "touches");
-
-// Main
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+): event is TouchRelatedEvent => !!(event as any).touches;
 
 export const convertFileToUrl = (file: File): Promise<string> =>
   new Promise((resolve, reject) => {

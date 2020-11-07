@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   CHEKI_FRAME_MARGIN_LEFT,
   CHEKI_FRAME_MARGIN_TOP,
@@ -7,9 +7,16 @@ import {
   CHEKI_VERTICAL_IMAGE_HEIGHT,
   CHEKI_VERTICAL_IMAGE_WIDTH,
 } from "~/constants/cheki";
-import { selectors, useSelector } from "~/domains";
+import { selectors, useDispatch, useSelector } from "~/domains";
+import { actions } from "~/domains/cheki";
+import {
+  convertEventToCursorPositions,
+  MouseRelatedEvent,
+  TouchRelatedEvent,
+} from "~/utils/cheki";
 
 export const ChekiCanvasImageLayer: React.FC = () => {
+  const dispatch = useDispatch();
   const {
     direction,
     imageHeight,
@@ -20,6 +27,17 @@ export const ChekiCanvasImageLayer: React.FC = () => {
   } = useSelector(selectors.cheki);
   const [height, setHeight] = useState(0);
   const [width, setWidth] = useState(0);
+
+  const handleOnStartDragging = useCallback(
+    (event: MouseRelatedEvent | TouchRelatedEvent) => {
+      dispatch(
+        actions.startImageDragging({
+          cursorPositions: convertEventToCursorPositions(event),
+        })
+      );
+    },
+    []
+  );
 
   useEffect(() => {
     switch (direction) {
@@ -40,6 +58,8 @@ export const ChekiCanvasImageLayer: React.FC = () => {
   return (
     <svg
       height={height}
+      onMouseDown={handleOnStartDragging}
+      onTouchStart={handleOnStartDragging}
       width={width}
       x={CHEKI_FRAME_MARGIN_LEFT}
       y={CHEKI_FRAME_MARGIN_TOP}
