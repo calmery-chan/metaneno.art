@@ -2,6 +2,8 @@ import { css } from "linaria";
 import { NextPage } from "next";
 import React, { useCallback, useState } from "react";
 import { ChekiImageLoadButton } from "~/components/ChekiImageLoadButton";
+import { Horizontal } from "~/components/Horizontal";
+import { CHEKI_FRAME_IMAGE_URLS } from "~/constants/cheki";
 import { ChekiCanvas } from "~/containers/ChekiCanvas";
 import { useDispatch } from "~/domains";
 import { actions } from "~/domains/cheki";
@@ -21,13 +23,29 @@ const column = css`
 
 const footer = css`
   background: blue;
-  height: 32px;
+  height: fit-content;
   flex-shrink: 0;
+`;
+
+const frameImage = css`
+  width: 48px;
+  height: 48px;
+  border-radius: 100%;
+  margin-right: 16px;
+  cursor: pointer;
+
+  &:first-child {
+    margin-left: 24px;
+  }
+
+  &:last-child {
+    margin-right: 24px;
+  }
 `;
 
 const header = css`
   background: red;
-  height: 16px;
+  height: fit-content;
   flex-shrink: 0;
 `;
 
@@ -46,6 +64,11 @@ const Cheki: NextPage = () => {
     setPreview(!preview);
   }, [preview]);
 
+  const handleOnClickFrameImage = useCallback(
+    (url) => dispatch(actions.addFrame({ url })),
+    []
+  );
+
   return (
     <div className="container h-full mx-auto">
       <div className={column}>
@@ -54,6 +77,16 @@ const Cheki: NextPage = () => {
           <ChekiCanvas preview={preview} />
         </div>
         <div className={footer}>
+          <Horizontal>
+            {CHEKI_FRAME_IMAGE_URLS.map((url, index) => (
+              <div
+                className={frameImage}
+                key={index}
+                onClick={() => handleOnClickFrameImage(url)}
+                style={{ background: `url(${url})`, backgroundSize: "cover" }}
+              />
+            ))}
+          </Horizontal>
           <ChekiImageLoadButton onLoad={handleOnLoadImage} />
           <div onClick={handleOnClickDownloadButton}>Download</div>
         </div>
