@@ -10,6 +10,9 @@ import { ChekiRectangle } from "~/types/ChekiRectangle";
 import { getImageSizeByDirection } from "~/utils/cheki";
 
 export type State = {
+  frame: {
+    url: string;
+  };
   image: ChekiRectangle & {
     direction: ChekiDirection;
     url: string;
@@ -30,6 +33,9 @@ export type State = {
 };
 
 const initialState: State = {
+  frame: {
+    url: "",
+  },
   image: {
     direction: "horizontal",
     height: 0,
@@ -64,6 +70,17 @@ const initialState: State = {
 
 export const reducer = createReducer(initialState, (builder) => {
   builder
+    .addCase(actions.addFrame.fulfilled, (state, action) => {
+      const { url } = action.payload;
+
+      return {
+        ...state,
+        frame: {
+          ...state.frame,
+          url,
+        },
+      };
+    })
     .addCase(actions.addImage.fulfilled, (state, action) => {
       const { height, url, width } = action.payload;
       const { layout } = state;

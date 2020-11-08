@@ -1,6 +1,11 @@
 import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
-import { convertUrlToImage, resizeImage } from "./utils";
+import { convertUrlToImage, resizeFrameImage, resizeImage } from "./utils";
 import { CursorPosition } from "~/utils/cheki";
+
+export const addFrame = createAsyncThunk<{ url: string }, { url: string }>(
+  "CHEKI/ADD_FRAME",
+  async ({ url }) => resizeFrameImage(await convertUrlToImage(url))
+);
 
 export const addImage = createAsyncThunk<
   { height: number; url: string; width: number },
