@@ -15,6 +15,7 @@ export const ChekiImageLoadButton: React.FC<{
   const { t } = useI18n();
 
   const handleOnClick = useCallback(() => {
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     ref.current!.click();
   }, []);
 

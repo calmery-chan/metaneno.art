@@ -30,7 +30,6 @@ type ChekiCanvasProps = {
 
 export const ChekiCanvas: React.FC<ChekiCanvasProps> = ({ preview }) => {
   const {
-    image,
     layout: { displayable, frame },
   } = useSelector(selectors.cheki);
   const dispatch = useDispatch();
