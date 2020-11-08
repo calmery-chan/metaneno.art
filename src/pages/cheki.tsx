@@ -9,6 +9,7 @@ import {
   CHEKI_FRAME_IMAGE_URLS,
 } from "~/constants/cheki";
 import { ChekiCanvas } from "~/containers/ChekiCanvas";
+import { ChekiFilterThumbnail } from "~/containers/ChekiFilterThumbnail";
 import { useDispatch } from "~/domains";
 import { actions } from "~/domains/cheki";
 
@@ -43,6 +44,12 @@ const frameImage = css`
 
   &:last-child {
     margin-right: 24px;
+  }
+
+  svg {
+    width: 48px;
+    height: 48px;
+    border-radius: 100%;
   }
 `;
 
@@ -101,16 +108,15 @@ const Cheki: NextPage = () => {
               onClick={() => handleOnClickFilter(null)}
               style={{ background: "#fff" }}
             />
-            {Object.entries(CHEKI_FILTERS).map(
-              ([key, { background }], index) => (
-                <div
-                  className={frameImage}
-                  key={index}
-                  onClick={() => handleOnClickFilter(key as ChekiFilter)}
-                  style={{ background }}
-                />
-              )
-            )}
+            {Object.keys(CHEKI_FILTERS).map((filter, index) => (
+              <div
+                className={frameImage}
+                key={index}
+                onClick={() => handleOnClickFilter(filter as ChekiFilter)}
+              >
+                <ChekiFilterThumbnail filter={filter as ChekiFilter} />
+              </div>
+            ))}
           </Horizontal>
           <ChekiImageLoadButton onLoad={handleOnLoadImage} />
           <div onClick={handleOnClickDownloadButton}>Download</div>
