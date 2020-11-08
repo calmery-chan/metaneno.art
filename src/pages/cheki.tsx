@@ -1,6 +1,6 @@
 import { css } from "linaria";
 import { NextPage } from "next";
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import { ChekiImageLoadButton } from "~/components/ChekiImageLoadButton";
 import { ChekiCanvas } from "~/containers/ChekiCanvas";
 import { useDispatch } from "~/domains";
@@ -35,21 +35,27 @@ const header = css`
 
 const Cheki: NextPage = () => {
   const dispatch = useDispatch();
+  const [preview, setPreview] = useState(false);
 
   const handleOnLoadImage = useCallback(
     (imageUrl: string) => dispatch(actions.addImage({ url: imageUrl })),
     []
   );
 
+  const handleOnClickDownloadButton = useCallback(() => {
+    setPreview(!preview);
+  }, [preview]);
+
   return (
     <div className="container h-full mx-auto">
       <div className={column}>
         <div className={header} />
         <div className={cheki}>
-          <ChekiCanvas />
+          <ChekiCanvas preview={preview} />
         </div>
         <div className={footer}>
           <ChekiImageLoadButton onLoad={handleOnLoadImage} />
+          <div onClick={handleOnClickDownloadButton}>Download</div>
         </div>
       </div>
     </div>

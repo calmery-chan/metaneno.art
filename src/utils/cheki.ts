@@ -57,6 +57,40 @@ export const convertEventToCursorPositions = (
   return positions;
 };
 
+export const convertSvgToDataUrl = (
+  svgText: string,
+  width: number,
+  height: number
+): Promise<string> => {
+  return new Promise((resolve, reject) => {
+    const svg = new Blob([svgText], { type: "image/svg+xml" });
+    const url = URL.createObjectURL(svg);
+    const image = new Image();
+
+    image.onerror = (e) => reject(e);
+    image.onload = () => {
+      const canvas = document.createElement("canvas");
+      canvas.width = width;
+      canvas.height = height;
+
+      const context = canvas.getContext("2d");
+
+      if (context === null) {
+        return reject();
+      }
+
+      // Safari で `context.drawImage` するとたまに内部の image 要素が描写されないことがある
+      // 800ms 程度待ってみる
+      setTimeout(() => {
+        context.drawImage(image, 0, 0, width, height);
+        resolve(canvas.toDataURL("image/png"));
+      }, 800);
+    };
+
+    image.src = url;
+  });
+};
+
 export const getFrameSizeByDirection = (direction: ChekiDirection) => ({
   height:
     direction === "horizontal"
