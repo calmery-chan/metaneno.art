@@ -2,6 +2,7 @@ import { createReducer } from "@reduxjs/toolkit";
 import * as actions from "./actions";
 import { getDirection, updateFrame } from "./utils";
 import {
+  ChekiFilter,
   CHEKI_FRAME_MARGIN_LEFT,
   CHEKI_FRAME_MARGIN_TOP,
 } from "~/constants/cheki";
@@ -15,6 +16,7 @@ export type State = {
   };
   image: ChekiRectangle & {
     direction: ChekiDirection;
+    filter: ChekiFilter | null;
     url: string;
   };
   layout: {
@@ -38,6 +40,7 @@ const initialState: State = {
   },
   image: {
     direction: "horizontal",
+    filter: null,
     height: 0,
     url: "",
     width: 0,
@@ -103,6 +106,13 @@ export const reducer = createReducer(initialState, (builder) => {
         temporaries: initialState.temporaries,
       };
     })
+    .addCase(actions.changeFilter, (state, action) => ({
+      ...state,
+      image: {
+        ...state.image,
+        filter: action.payload.filter,
+      },
+    }))
     .addCase(actions.complete, (state) => ({
       ...state,
       temporaries: initialState.temporaries,

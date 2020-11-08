@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import {
+  CHEKI_FILTERS,
   CHEKI_FRAME_MARGIN_LEFT,
   CHEKI_FRAME_MARGIN_TOP,
 } from "~/constants/cheki";
@@ -18,7 +19,7 @@ export const ChekiCanvasImageLayer: React.FC = () => {
   const [height, setHeight] = useState(0);
   const [width, setWidth] = useState(0);
 
-  const { direction } = image;
+  const { direction, filter } = image;
 
   const handleOnStartDragging = useCallback(
     (event: MouseRelatedEvent | TouchRelatedEvent) => {
@@ -50,28 +51,42 @@ export const ChekiCanvasImageLayer: React.FC = () => {
       y={CHEKI_FRAME_MARGIN_TOP}
     >
       <defs>
-        <filter id="cheki-canvas-image-layer" colorInterpolationFilters="sRGB">
-          <feColorMatrix
-            in="SourceGraphic"
-            type="matrix"
-            values={[
-              [0.8, 0, 0, 0, 0],
-              [0, 0.8, 0, 0, 0],
-              [0, 0, 0.8, 0, 0],
-              [0, 0, 0, 1, 0],
-            ].join(" ")}
-          />
-          <feComponentTransfer>
-            <feFuncB type="linear" slope="1" intercept={0.2 * (13 / 255)} />
-            <feFuncG type="linear" slope="1" intercept={0.2 * (70 / 255)} />
-            <feFuncR type="linear" slope="1" intercept={0.2 * (120 / 255)} />
-          </feComponentTransfer>
-        </filter>
+        {(() => {
+          if (!filter) {
+            return null;
+          }
+
+          const { a, b, g, r } = CHEKI_FILTERS[filter];
+          const factor = 1 - a;
+
+          return (
+            <filter
+              id="cheki-canvas-image-layer"
+              colorInterpolationFilters="sRGB"
+            >
+              <feColorMatrix
+                in="SourceGraphic"
+                type="matrix"
+                values={[
+                  [factor, 0, 0, 0, 0],
+                  [0, factor, 0, 0, 0],
+                  [0, 0, factor, 0, 0],
+                  [0, 0, 0, 1, 0],
+                ].join(" ")}
+              />
+              <feComponentTransfer>
+                <feFuncB type="linear" slope="1" intercept={a * (b / 255)} />
+                <feFuncG type="linear" slope="1" intercept={a * (g / 255)} />
+                <feFuncR type="linear" slope="1" intercept={a * (r / 255)} />
+              </feComponentTransfer>
+            </filter>
+          );
+        })()}
       </defs>
       <rect fill="#fff" width="100%" height="100%" />
       <image
         {...image}
-        filter="url(#cheki-canvas-image-layer)"
+        filter={filter ? "url(#cheki-canvas-image-layer)" : undefined}
         xlinkHref={image.url}
       />
     </svg>

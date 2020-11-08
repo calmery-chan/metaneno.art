@@ -3,7 +3,11 @@ import { NextPage } from "next";
 import React, { useCallback, useState } from "react";
 import { ChekiImageLoadButton } from "~/components/ChekiImageLoadButton";
 import { Horizontal } from "~/components/Horizontal";
-import { CHEKI_FRAME_IMAGE_URLS } from "~/constants/cheki";
+import {
+  ChekiFilter,
+  CHEKI_FILTERS,
+  CHEKI_FRAME_IMAGE_URLS,
+} from "~/constants/cheki";
 import { ChekiCanvas } from "~/containers/ChekiCanvas";
 import { useDispatch } from "~/domains";
 import { actions } from "~/domains/cheki";
@@ -22,7 +26,6 @@ const column = css`
 `;
 
 const footer = css`
-  background: blue;
   height: fit-content;
   flex-shrink: 0;
 `;
@@ -69,6 +72,11 @@ const Cheki: NextPage = () => {
     []
   );
 
+  const handleOnClickFilter = useCallback(
+    (filter: ChekiFilter | null) => dispatch(actions.changeFilter({ filter })),
+    []
+  );
+
   return (
     <div className="container h-full mx-auto">
       <div className={column}>
@@ -86,6 +94,23 @@ const Cheki: NextPage = () => {
                 style={{ background: `url(${url})`, backgroundSize: "cover" }}
               />
             ))}
+          </Horizontal>
+          <Horizontal>
+            <div
+              className={frameImage}
+              onClick={() => handleOnClickFilter(null)}
+              style={{ background: "#fff" }}
+            />
+            {Object.entries(CHEKI_FILTERS).map(
+              ([key, { background }], index) => (
+                <div
+                  className={frameImage}
+                  key={index}
+                  onClick={() => handleOnClickFilter(key as ChekiFilter)}
+                  style={{ background }}
+                />
+              )
+            )}
           </Horizontal>
           <ChekiImageLoadButton onLoad={handleOnLoadImage} />
           <div onClick={handleOnClickDownloadButton}>Download</div>

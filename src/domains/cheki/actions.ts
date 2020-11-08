@@ -1,5 +1,6 @@
 import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
 import { convertUrlToImage, resizeFrameImage, resizeImage } from "./utils";
+import { ChekiFilter } from "~/constants/cheki";
 import { CursorPosition } from "~/utils/cheki";
 
 export const addFrame = createAsyncThunk<{ url: string }, { url: string }>(
@@ -12,6 +13,10 @@ export const addImage = createAsyncThunk<
   { url: string }
 >("CHEKI/ADD_IMAGE", async ({ url }) =>
   resizeImage(await convertUrlToImage(url))
+);
+
+export const changeFilter = createAction<{ filter: ChekiFilter | null }>(
+  "CHEKI/CHANGE_FILTER"
 );
 
 export const complete = createAction("CHEKI/COMPLETE");
