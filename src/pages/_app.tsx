@@ -5,21 +5,22 @@ import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 import { Provider } from "react-redux";
 import { store } from "~/domains";
-import * as GA from "~/utils/ga";
-import { Sentry } from "~/utils/sentry";
+import * as GA from "~/utils/google-analytics";
 
 const App = ({ Component, pageProps }: AppProps): JSX.Element => {
   const router = useRouter();
 
   useEffect(() => {
-    router.events.on("routeChangeComplete", (url: string) => {
-      GA.changePage(url);
-    });
-
-    router.events.on("routeChangeError", (error: Error) => {
-      Sentry.captureException(error);
-    });
+    GA.changeRoute(router.pathname);
   }, []);
+
+  useEffect(() => {
+    router.events.on("routeChangeComplete", GA.changeRoute);
+
+    return () => {
+      router.events.off("routeChangeComplete", GA.changeRoute);
+    };
+  }, [router.events]);
 
   return (
     <>
