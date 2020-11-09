@@ -85,8 +85,11 @@ export const ChekiCanvasImageLayer: React.FC = () => {
       </defs>
       <rect fill="#fff" width="100%" height="100%" />
       <image
-        {...image}
         filter={filter ? "url(#cheki-canvas-image-layer)" : undefined}
+        height={image.height}
+        width={image.width}
+        x={image.x}
+        y={image.y}
         xlinkHref={image.url}
       />
     </svg>
