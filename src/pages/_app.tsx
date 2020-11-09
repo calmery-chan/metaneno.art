@@ -4,7 +4,6 @@ import { AppProps } from "next/app";
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 import { Provider } from "react-redux";
-import { withI18n } from "../utils/i18n";
 import { store } from "~/domains";
 import * as GA from "~/utils/ga";
 import { Sentry } from "~/utils/sentry";
@@ -32,4 +31,4 @@ const App = ({ Component, pageProps }: AppProps): JSX.Element => {
   );
 };
 
-export default withI18n(App);
+export default App;
