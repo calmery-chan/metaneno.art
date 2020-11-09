@@ -27,7 +27,9 @@ export const addImage = createAsyncThunk<
   const image = await convertUrlToImage(url);
   const { height, url: imageUrl, width } = resizeImage(image);
   const { url: thumbnailUrl } = await createThumbnailImage(image);
-  const detectedObjects = await cocoSsd.detect(image);
+  const detectedObjects = await cocoSsd.detect(
+    await convertUrlToImage(imageUrl)
+  );
 
   return { detectedObjects, height, thumbnailUrl, url: imageUrl, width };
 });
