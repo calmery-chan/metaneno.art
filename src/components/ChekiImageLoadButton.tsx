@@ -2,7 +2,6 @@ import classnames from "classnames";
 import { css } from "linaria";
 import React, { useCallback, useRef } from "react";
 import { convertFileToUrl } from "~/utils/cheki";
-import { useI18n } from "~/utils/i18n";
 
 const button = css`
   color: #fff;
@@ -12,7 +11,6 @@ export const ChekiImageLoadButton: React.FC<{
   onLoad: (imageUrl: string) => void;
 }> = ({ onLoad }) => {
   const ref = useRef<HTMLInputElement>(null);
-  const { t } = useI18n();
 
   const handleOnClick = useCallback(() => {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -49,7 +47,7 @@ export const ChekiImageLoadButton: React.FC<{
         )}
         onClick={handleOnClick}
       >
-        {t("cheki.button")}
+        画像を読み込む
       </div>
     </div>
   );
