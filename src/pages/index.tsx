@@ -5,13 +5,10 @@ import React from "react";
 import styles from "../styles/Home.module.scss";
 import { useDispatch, useSelector, selectors } from "~/domains";
 import * as example from "~/domains/example";
-import { changeLanguage, useI18n } from "~/utils/i18n";
 import { Sentry } from "~/utils/sentry";
 
 const Home: NextPage = () => {
   const dispatch = useDispatch();
-  const { t, language } = useI18n();
-
   const state = useSelector(selectors.example);
   const message = example.selectors.messageSelector(state);
 
@@ -26,13 +23,6 @@ const Home: NextPage = () => {
         <h1 className={styles.title}>
           Welcome to <a href="https://nextjs.org">Next.js!</a>
         </h1>
-
-        <p
-          className={styles.description}
-          onClick={() => changeLanguage(language === "ja" ? "en" : "ja")}
-        >
-          {t("message")} {language}
-        </p>
 
         <p className={styles.description}>
           {message}
