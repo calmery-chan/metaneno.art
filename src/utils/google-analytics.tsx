@@ -1,6 +1,6 @@
 import React from "react";
 
-const GOOGLE_ANALYTICS_ID = process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID;
+const GOOGLE_ANALYTICS_ID = process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID || "";
 
 // Helper Functions
 
@@ -55,16 +55,7 @@ export const GoogleAnalytics: React.FC = () => (
     />
     <script
       dangerouslySetInnerHTML={{
-        __html: `window.dataLayer = window.dataLayer || [];
-
-function gtag() {
-  dataLayer.push(arguments);
-}
-
-gtag("js", new Date());
-gtag("config", "${GOOGLE_ANALYTICS_ID}", {
-  send_page_view: false
-});`,
+        __html: `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date());gtag("config","${GOOGLE_ANALYTICS_ID}",{send_page_view:false})`,
       }}
     />
   </>
