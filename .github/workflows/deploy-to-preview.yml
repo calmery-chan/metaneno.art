@@ -30,6 +30,7 @@ jobs:
         with:
           environment: Preview
           token: ${{ secrets.GITHUB_TOKEN }}
+      - run: node scripts/generate-sitemap.js
       - id: vercel
         run: vercel -b GITHUB_REPOSITORY=$GITHUB_REPOSITORY -b GITHUB_SHA=$GITHUB_SHA -t $VERCEL_TOKEN > environment-url
       - if: failure()
