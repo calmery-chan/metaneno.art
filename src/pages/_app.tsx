@@ -6,6 +6,7 @@ import React, { useEffect } from "react";
 import { Provider } from "react-redux";
 import { store } from "~/domains";
 import * as GA from "~/utils/google-analytics";
+import { defaultSeoProps } from "~/utils/next-seo";
 
 const App = ({ Component, pageProps }: AppProps): JSX.Element => {
   const router = useRouter();
@@ -27,7 +28,7 @@ const App = ({ Component, pageProps }: AppProps): JSX.Element => {
       <Provider store={store}>
         <Component {...pageProps} />
       </Provider>
-      <DefaultSeo {...require("~/utils/next-seo")} />
+      <DefaultSeo {...defaultSeoProps} />
     </>
   );
 };
