@@ -1,11 +1,11 @@
-import React from "react";
-
-const GOOGLE_ANALYTICS_ID = process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID || "";
+export const GOOGLE_ANALYTICS_ID =
+  process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID || "";
 
 // Helper Functions
 
 const gtag = () => {
   if (process.env.NEXT_PUBLIC_VERCEL_ENV === "production") {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return (window as any).gtag;
   }
 
@@ -44,19 +44,3 @@ export const sendDummy = () => {
     label: "dummy-label",
   });
 };
-
-// Components
-
-export const GoogleAnalytics: React.FC = () => (
-  <>
-    <script
-      async
-      src={`https://www.googletagmanager.com/gtag/js?id=${GOOGLE_ANALYTICS_ID}`}
-    />
-    <script
-      dangerouslySetInnerHTML={{
-        __html: `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date());gtag("config","${GOOGLE_ANALYTICS_ID}",{send_page_view:false})`,
-      }}
-    />
-  </>
-);
