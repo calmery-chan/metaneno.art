@@ -57,7 +57,7 @@
   "name": "metaneno.art",
   "private": true,
   "scripts": {
-    "build": "next build && node scripts/insert-noneme-aa-to-html.js",
+    "build": "next build && node scripts/insert-noneme-aa-to-html.js && node scripts/generate-sitemap.js",
     "fix": "run-s fix:eslint fix:prettier fix:stylelint fix:svgo",
     "fix:eslint": "eslint --ext .js,.ts,.tsx --fix --ignore-path .gitignore .",
     "fix:prettier": "prettier --write .",
