@@ -1,16 +1,21 @@
 import { NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
-import React from "react";
+import React, { useCallback } from "react";
 import styles from "../styles/Home.module.scss";
 import { useDispatch, useSelector, selectors } from "~/domains";
 import * as example from "~/domains/example";
+import * as GA from "~/utils/google-analytics";
 import { Sentry } from "~/utils/sentry";
 
 const Home: NextPage = () => {
   const dispatch = useDispatch();
   const state = useSelector(selectors.example);
   const message = example.selectors.messageSelector(state);
+
+  const handleOnClickDummyButton = useCallback(() => {
+    GA.sendDummy();
+  }, []);
 
   return (
     <div className={styles.container}>
@@ -51,7 +56,9 @@ const Home: NextPage = () => {
         </p>
 
         <Link href="/not-exists">not exists</Link>
-        <Link href="/dummy">dummy</Link>
+        <Link href="/augmented-reality">augmented-reality</Link>
+
+        <button onClick={handleOnClickDummyButton}>Dummy</button>
 
         <button
           onClick={() =>
