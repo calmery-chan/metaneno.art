@@ -34,6 +34,7 @@ jobs:
         with:
           environment: Production
           token: ${{ secrets.GITHUB_TOKEN }}
+      - run: node scripts/generate-sitemap.js
       - id: vercel
         run: vercel -b GITHUB_RELEASE_TAG_NAME=${{ steps.tag_name.outputs.body }} -b GITHUB_REPOSITORY=$GITHUB_REPOSITORY -b GITHUB_SHA=$GITHUB_SHA --prod -t $VERCEL_TOKEN > environment-url
       - if: failure()
