@@ -1,5 +1,6 @@
 import Head from "next/head";
 import React from "react";
+import { defaultSeoProps } from "~/utils/next-seo";
 
 export type DefaultHeadKeys =
   | "apple-touch-icon"
@@ -40,10 +41,19 @@ export const DefaultHead: React.FC = ({ children }) => (
     />
 
     <meta
+      name="format-detection"
+      content="address=no, email=no, telephone=no"
+    />
+
+    <meta
       content="#000"
       key={"theme-color" as DefaultHeadKeys}
       name="theme-color"
     />
+
+    <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+
+    <title>{defaultSeoProps.title}</title>
 
     {children}
   </Head>
