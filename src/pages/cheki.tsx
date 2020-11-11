@@ -88,10 +88,7 @@ const Cheki: NextPage = () => {
 
     const id = await upload(previewUrl);
     const url = window.location.origin + "/cheki/share/" + id;
-    window.open(
-      `http://twitter.com/share?url=${url}&related=metanen0x0&hashtags=%E3%82%81%E3%81%9F%E3%81%AD%E3%81%AE%E3%81%82%E3%83%BC%E3%81%A8,%E3%83%8E%E3%83%8D%E3%83%A1%E3%81%A1%E3%82%83%E3%82%93%E3%83%81%E3%82%A7%E3%82%AD`,
-      "_blank"
-    );
+    window.location.href = `http://twitter.com/share?url=${url}&related=metanen0x0&hashtags=%E3%82%81%E3%81%9F%E3%81%AD%E3%81%AE%E3%81%82%E3%83%BC%E3%81%A8,%E3%83%8E%E3%83%8D%E3%83%A1%E3%81%A1%E3%82%83%E3%82%93%E3%83%81%E3%82%A7%E3%82%AD`;
   }, [previewUrl]);
 
   const handleOnClickFrameImage = useCallback(
