@@ -26,9 +26,13 @@ const Svg = styled.svg`
 
 type ChekiCanvasProps = {
   preview: boolean;
+  onCreatePreviewUrl?: (url: string) => void;
 };
 
-export const ChekiCanvas: React.FC<ChekiCanvasProps> = ({ preview }) => {
+export const ChekiCanvas: React.FC<ChekiCanvasProps> = ({
+  preview,
+  onCreatePreviewUrl,
+}) => {
   const {
     layout: { displayable, frame },
   } = useSelector(selectors.cheki);
@@ -114,15 +118,16 @@ export const ChekiCanvas: React.FC<ChekiCanvasProps> = ({ preview }) => {
       svg.removeAttribute("x");
       svg.removeAttribute("y");
 
-      setPreviewUrl(
-        await convertSvgToDataUrl(
-          div.innerHTML,
-          frame.viewBoxWidth,
-          frame.viewBoxHeight
-        )
+      const previewUrl = await convertSvgToDataUrl(
+        div.innerHTML,
+        frame.viewBoxWidth,
+        frame.viewBoxHeight
       );
+
+      setPreviewUrl(previewUrl);
+      onCreatePreviewUrl?.(previewUrl);
     })();
-  }, [frame, preview, svgRef]);
+  }, [frame, onCreatePreviewUrl, preview, svgRef]);
 
   useEffect(() => {
     const { current } = svgRef;

@@ -163,7 +163,9 @@ export const upload = async (imageUrl: string): Promise<string> => {
   formData.append(
     "image",
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    new File([uInt8Array], "", { type: splited[0]!.match(/:(.*?);/)![1] })
+    new File([uInt8Array], "cheki.png", {
+      type: splited[0]!.match(/:(.*?);/)![1],
+    })
   );
 
   const response = await fetch(getEndpointUrl("/cheki/images"), {
@@ -175,7 +177,7 @@ export const upload = async (imageUrl: string): Promise<string> => {
     throw new Error(response.statusText);
   }
 
-  const { id } = await response.json();
+  const { data } = await response.json();
 
-  return id;
+  return data.id;
 };

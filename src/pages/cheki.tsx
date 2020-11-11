@@ -12,6 +12,7 @@ import { ChekiCanvas } from "~/containers/ChekiCanvas";
 import { ChekiFilterThumbnail } from "~/containers/ChekiFilterThumbnail";
 import { useDispatch } from "~/domains";
 import { actions } from "~/domains/cheki";
+import { upload } from "~/utils/cheki";
 
 // Styles
 
@@ -64,15 +65,34 @@ const header = css`
 const Cheki: NextPage = () => {
   const dispatch = useDispatch();
   const [preview, setPreview] = useState(false);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
   const handleOnLoadImage = useCallback(
     (imageUrl: string) => dispatch(actions.addImage({ url: imageUrl })),
     []
   );
 
-  const handleOnClickDownloadButton = useCallback(() => {
-    setPreview(!preview);
-  }, [preview]);
+  const handleOnClickCreateImageButton = useCallback(() => {
+    setPreview(true);
+  }, []);
+
+  const handleOnCreatePreviewUrl = useCallback(
+    (url: string) => setPreviewUrl(url),
+    []
+  );
+
+  const handleOnClickDownloadButton = useCallback(async () => {
+    if (!previewUrl) {
+      return;
+    }
+
+    const id = await upload(previewUrl);
+    const url = window.location.origin + "/cheki/share/" + id;
+    window.open(
+      `http://twitter.com/share?url=${url}&related=metanen0x0&hashtags=%E3%82%81%E3%81%9F%E3%81%AD%E3%81%AE%E3%81%82%E3%83%BC%E3%81%A8,%E3%83%8E%E3%83%8D%E3%83%A1%E3%81%A1%E3%82%83%E3%82%93%E3%83%81%E3%82%A7%E3%82%AD`,
+      "_blank"
+    );
+  }, [previewUrl]);
 
   const handleOnClickFrameImage = useCallback(
     (url) => dispatch(actions.addFrame({ url })),
@@ -89,7 +109,10 @@ const Cheki: NextPage = () => {
       <div className={column}>
         <div className={header} />
         <div className={cheki}>
-          <ChekiCanvas preview={preview} />
+          <ChekiCanvas
+            preview={preview}
+            onCreatePreviewUrl={handleOnCreatePreviewUrl}
+          />
         </div>
         <div className={footer}>
           <Horizontal>
@@ -119,7 +142,10 @@ const Cheki: NextPage = () => {
             ))}
           </Horizontal>
           <ChekiImageLoadButton onLoad={handleOnLoadImage} />
-          <div onClick={handleOnClickDownloadButton}>Download</div>
+          <button onClick={handleOnClickCreateImageButton}>Create Image</button>
+          <button disabled={!previewUrl} onClick={handleOnClickDownloadButton}>
+            Download
+          </button>
         </div>
       </div>
     </div>
