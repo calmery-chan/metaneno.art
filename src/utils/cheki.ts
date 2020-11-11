@@ -1,3 +1,4 @@
+import * as url from "url";
 import blueimpLoadImage from "blueimp-load-image";
 import {
   CHEKI_HORIZONTAL_IMAGE_HEIGHT,
@@ -10,6 +11,40 @@ import {
   CHEKI_VERTICAL_FRAME_WIDTH,
 } from "~/constants/cheki";
 import { ChekiDirection } from "~/types/ChekiDirection";
+
+const convertImageToDataUrl = (
+  image: HTMLImageElement,
+  type: "image/jpg" | "image/png" = "image/png"
+) => {
+  const canvas = document.createElement("canvas");
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const context = canvas.getContext("2d")!;
+
+  canvas.height = image.height;
+  canvas.width = image.width;
+
+  context.drawImage(image, 0, 0);
+
+  return canvas.toDataURL(type);
+};
+
+const convertUrlToImage = (url: string): Promise<HTMLImageElement> =>
+  new Promise((resolve, reject) => {
+    const i = new Image();
+
+    i.onerror = reject;
+    i.onload = () => resolve(i);
+
+    i.src = url;
+  });
+
+const getEndpointUrl = (path: string) =>
+  url.resolve(
+    process.env.NODE_ENV === "production"
+      ? "https://creamsoda.in/a/dream/"
+      : "http://localhost:5000/",
+    path.startsWith("/") ? path.slice(1) : path
+  );
 
 const isTouchRelatedEvent = (
   event: MouseRelatedEvent | TouchRelatedEvent
@@ -112,3 +147,35 @@ export const getImageSizeByDirection = (direction: ChekiDirection) => ({
       ? CHEKI_HORIZONTAL_IMAGE_WIDTH
       : CHEKI_VERTICAL_IMAGE_WIDTH,
 });
+
+export const upload = async (imageUrl: string): Promise<string> => {
+  const dataUrl = convertImageToDataUrl(await convertUrlToImage(imageUrl));
+  const formData = new FormData();
+
+  const splited = dataUrl.split(",");
+  const bstr = atob(splited[1]);
+
+  let i = bstr.length;
+  const uInt8Array = new Uint8Array(i);
+
+  while (i--) uInt8Array[i] = bstr.charCodeAt(i);
+
+  formData.append(
+    "image",
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    new File([uInt8Array], "", { type: splited[0]!.match(/:(.*?);/)![1] })
+  );
+
+  const response = await fetch(getEndpointUrl("/cheki/images"), {
+    body: formData,
+    method: "POST",
+  });
+
+  if (!response.ok) {
+    throw new Error(response.statusText);
+  }
+
+  const { id } = await response.json();
+
+  return id;
+};
