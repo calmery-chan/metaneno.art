@@ -1,6 +1,6 @@
 {
   "background_color": "#fff",
-  "description": "Description",
+  "description": "怪しげなクリームソーダを飲んでゆるふわ可愛い世界にトリップ！この世界にはイラストが沢山！キャラクターとの会話を楽しみながら不思議な世界を引きこもりちゃんと一緒に探検しよ♫",
   "display": "browser",
   "icons": [
     {
@@ -15,9 +15,8 @@
     }
   ],
   "lang": "ja_JP",
-  "name": "Name",
-  "orientation": "portrait-primary",
-  "short_name": "Short Name",
+  "name": "めたねのあーと",
+  "short_name": "めたねのあーと",
   "start_url": "/",
   "theme_color": "#ffffff"
 }
