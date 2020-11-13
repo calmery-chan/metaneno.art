@@ -162,8 +162,8 @@ export const upload = async (imageUrl: string): Promise<string> => {
 
   formData.append(
     "image",
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     new File([uInt8Array], "cheki.png", {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       type: splited[0]!.match(/:(.*?);/)![1],
     })
   );
