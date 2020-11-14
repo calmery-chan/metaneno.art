@@ -126,9 +126,10 @@ const Cheki: NextPage = () => {
             <div
               className={frameImage}
               onClick={() => handleOnClickFilter(null)}
-              style={{ background: "#fff" }}
-            />
-            {Object.keys(CHEKI_FILTERS).map((filter, index) => (
+            >
+              <ChekiFilterThumbnail filter={null} />
+            </div>
+            {CHEKI_FILTERS.map((filter, index) => (
               <div
                 className={frameImage}
                 key={index}

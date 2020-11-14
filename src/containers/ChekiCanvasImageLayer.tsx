@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
+import { ChekiFilterDefs } from "~/components/ChekiFilterDefs";
+import { ChekiFilterImage } from "~/components/ChekiFilterImage";
 import {
-  CHEKI_FILTERS,
   CHEKI_FRAME_MARGIN_LEFT,
   CHEKI_FRAME_MARGIN_TOP,
 } from "~/constants/cheki";
@@ -50,48 +51,24 @@ export const ChekiCanvasImageLayer: React.FC = () => {
       xmlnsXlink="http://www.w3.org/1999/xlink"
       y={CHEKI_FRAME_MARGIN_TOP}
     >
-      <defs>
-        {(() => {
-          if (!filter) {
-            return null;
-          }
-
-          const { a, b, g, r } = CHEKI_FILTERS[filter];
-          const factor = 1 - a;
-
-          return (
-            <filter
-              id="cheki-canvas-image-layer"
-              colorInterpolationFilters="sRGB"
-            >
-              <feColorMatrix
-                in="SourceGraphic"
-                type="matrix"
-                values={[
-                  [factor, 0, 0, 0, 0],
-                  [0, factor, 0, 0, 0],
-                  [0, 0, factor, 0, 0],
-                  [0, 0, 0, 1, 0],
-                ].join(" ")}
-              />
-              <feComponentTransfer>
-                <feFuncB type="linear" slope="1" intercept={a * (b / 255)} />
-                <feFuncG type="linear" slope="1" intercept={a * (g / 255)} />
-                <feFuncR type="linear" slope="1" intercept={a * (r / 255)} />
-              </feComponentTransfer>
-            </filter>
-          );
-        })()}
-      </defs>
+      <ChekiFilterDefs />
       <rect fill="#fff" width="100%" height="100%" />
-      <image
-        filter={filter ? "url(#cheki-canvas-image-layer)" : undefined}
+      <svg
         height={image.height}
+        viewBox={`0 0 ${image.width} ${image.height}`}
         width={image.width}
         x={image.x}
+        xmlns="http://www.w3.org/2000/svg"
+        xmlnsXlink="http://www.w3.org/1999/xlink"
         y={image.y}
-        xlinkHref={image.url}
-      />
+      >
+        <ChekiFilterImage
+          filter={filter}
+          height={image.height}
+          href={image.url}
+          width={image.width}
+        />
+      </svg>
     </svg>
   );
 };
