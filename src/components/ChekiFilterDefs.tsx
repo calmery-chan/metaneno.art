@@ -65,34 +65,10 @@ const RadialGradient: React.FC<
   React.SVGProps<SVGRadialGradientElement> & { id: string }
 > = (props) => <radialGradient {...props} id={getGradientId(props.id)} />;
 
-const Sepia: React.FC<{ amount: number }> = ({ amount }) => (
-  <feColorMatrix
-    type="matrix"
-    values={[
-      `${0.393 + 0.607 * (1 - amount)} ${0.769 - 0.769 * (1 - amount)} ${
-        0.189 - 0.189 * (1 - amount)
-      } 0 0`,
-      `${0.349 - 0.349 * (1 - amount)} ${0.686 + 0.314 * (1 - amount)} ${
-        0.168 - 0.168 * (1 - amount)
-      } 0 0`,
-      `${0.272 - 0.272 * (1 - amount)} ${0.534 - 0.534 * (1 - amount)} ${
-        0.131 + 0.869 * (1 - amount)
-      } 0 0`,
-      `0 0 0 1 0`,
-    ].join(" ")}
-  />
-);
-
 // Main
 
 export const ChekiFilterDefs: React.FC = () => (
   <defs>
-    <Filter id="1977">
-      <Sepia amount={0.5} />
-      <feColorMatrix type="hueRotate" values="330" result="flood2" />
-      <feColorMatrix type="saturate" values="1.4" />
-    </Filter>
-
     {/* CSSCO (https://www.cssco.co/) */}
 
     {/* C1 */}
