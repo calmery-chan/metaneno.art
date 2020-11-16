@@ -115,7 +115,7 @@ const Cheki: NextPage = () => {
           />
         </div>
         <div className={footer}>
-          <Controller />
+          <Controller active="camera" />
           <Horizontal>
             {CHEKI_FRAME_IMAGE_URLS.map((url, index) => (
               <div
