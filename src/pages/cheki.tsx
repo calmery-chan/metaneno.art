@@ -3,6 +3,7 @@ import { NextPage } from "next";
 import React, { useCallback, useState } from "react";
 import { ChekiImageLoadButton } from "~/components/ChekiImageLoadButton";
 import { Controller } from "~/components/Controller";
+import { Header } from "~/components/Header";
 import { Horizontal } from "~/components/Horizontal";
 import {
   ChekiFilter,
@@ -56,7 +57,6 @@ const frameImage = css`
 `;
 
 const header = css`
-  background: red;
   height: fit-content;
   flex-shrink: 0;
 `;
@@ -105,7 +105,9 @@ const Cheki: NextPage = () => {
   return (
     <div className="container h-full mx-auto">
       <div className={column}>
-        <div className={header} />
+        <div className={header}>
+          <Header />
+        </div>
         <div className={cheki}>
           <ChekiCanvas
             preview={preview}
