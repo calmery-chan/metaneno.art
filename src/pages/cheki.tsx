@@ -3,6 +3,7 @@ import { NextPage } from "next";
 import React, { useCallback, useState } from "react";
 import { ChekiImageLoadButton } from "~/components/ChekiImageLoadButton";
 import { Horizontal } from "~/components/Horizontal";
+import { Splash } from "~/components/Splash";
 import {
   ChekiFilter,
   CHEKI_FILTERS,
@@ -146,6 +147,7 @@ const Cheki: NextPage = () => {
           </button>
         </div>
       </div>
+      <Splash />
     </div>
   );
 };
