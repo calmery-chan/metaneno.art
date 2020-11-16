@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { ChekiFilterDefs } from "~/components/ChekiFilterDefs";
-import { ChekiFilterImage } from "~/components/ChekiFilterImage";
+import { ChekiPickColorFilterImage } from "~/components/ChekiPickColorFilterImage";
 import {
   CHEKI_FRAME_MARGIN_LEFT,
   CHEKI_FRAME_MARGIN_TOP,
@@ -62,8 +62,7 @@ export const ChekiCanvasImageLayer: React.FC = () => {
         xmlnsXlink="http://www.w3.org/1999/xlink"
         y={image.y}
       >
-        <ChekiFilterImage
-          filter={filter}
+        <ChekiPickColorFilterImage
           height={image.height}
           href={image.url}
           width={image.width}

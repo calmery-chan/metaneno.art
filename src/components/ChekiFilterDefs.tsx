@@ -25,7 +25,7 @@ const Contrast: React.FC<{ amount: number }> = ({ amount }) => (
   </feComponentTransfer>
 );
 
-const Filter: React.FC<{ id: string }> = ({ children, id }) => (
+export const Filter: React.FC<{ id: string }> = ({ children, id }) => (
   <filter
     filterUnits="objectBoundingBox"
     id={getFilterId(id)}
@@ -35,7 +35,7 @@ const Filter: React.FC<{ id: string }> = ({ children, id }) => (
   </filter>
 );
 
-const Grayscale: React.FC<{ amount: number }> = ({ amount }) => (
+export const Grayscale: React.FC<{ amount: number }> = ({ amount }) => (
   <feColorMatrix
     type="matrix"
     values={[
