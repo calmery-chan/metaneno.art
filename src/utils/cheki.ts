@@ -1,4 +1,5 @@
 import * as url from "url";
+import _axios from "axios";
 import blueimpLoadImage from "blueimp-load-image";
 import {
   CHEKI_HORIZONTAL_IMAGE_HEIGHT,
@@ -11,6 +12,19 @@ import {
   CHEKI_VERTICAL_FRAME_WIDTH,
 } from "~/constants/cheki";
 import { ChekiDirection } from "~/types/ChekiDirection";
+
+const axios = _axios.create({
+  baseURL:
+    process.env.NODE_ENV === "production"
+      ? "https://creamsoda.in/a/dream/"
+      : "http://localhost:5000/",
+});
+
+export const getShareImage = (id: string) =>
+  axios.get<{
+    image_url: string;
+    og_image_url: string;
+  }>(`/cheki/images/${id}`);
 
 const convertImageToDataUrl = (
   image: HTMLImageElement,
