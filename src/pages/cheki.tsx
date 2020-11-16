@@ -2,8 +2,8 @@ import { css } from "linaria";
 import { NextPage } from "next";
 import React, { useCallback, useState } from "react";
 import { ChekiImageLoadButton } from "~/components/ChekiImageLoadButton";
+import { Controller } from "~/components/Controller";
 import { Horizontal } from "~/components/Horizontal";
-import { Splash } from "~/components/Splash";
 import {
   ChekiFilter,
   CHEKI_FILTERS,
@@ -113,6 +113,7 @@ const Cheki: NextPage = () => {
           />
         </div>
         <div className={footer}>
+          <Controller />
           <Horizontal>
             {CHEKI_FRAME_IMAGE_URLS.map((url, index) => (
               <div
@@ -147,7 +148,6 @@ const Cheki: NextPage = () => {
           </button>
         </div>
       </div>
-      <Splash />
     </div>
   );
 };
