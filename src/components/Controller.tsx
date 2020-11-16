@@ -15,7 +15,7 @@ const Container = styled.div`
     height: 32px;
     margin-right: ${Spacing.l}px;
     filter: brightness(0);
-    opacity: 0.21;
+    opacity: 0.37;
     cursor: pointer;
 
     &:last-child {
@@ -30,11 +30,29 @@ const Container = styled.div`
   }
 `;
 
-export const Controller: React.FC = () => (
+export const Controller: React.FC<{
+  active: "camera" | "filters" | "frames" | "save";
+}> = ({ active }) => (
   <Container>
-    <img alt="カメラ" src="/camera.svg" className="active" />
-    <img alt="フィルター" src="/filters.svg" />
-    <img alt="フレーム" src="/frames.svg" />
-    <img alt="保存・シェア" src="/save-and-share.svg" />
+    <img
+      alt="カメラ"
+      src="/camera.svg"
+      className={active === "camera" ? "active" : ""}
+    />
+    <img
+      alt="フィルター"
+      src="/filters.svg"
+      className={active === "filters" ? "active" : ""}
+    />
+    <img
+      alt="フレーム"
+      src="/frames.svg"
+      className={active === "frames" ? "active" : ""}
+    />
+    <img
+      alt="保存・シェア"
+      src="/save-and-share.svg"
+      className={active === "save" ? "active" : ""}
+    />
   </Container>
 );
