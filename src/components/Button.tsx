@@ -8,8 +8,8 @@ import { Typography } from "~/styles/typography";
 
 export const Button: React.FC<{
   children: string;
-  onClick: () => void;
   maxWidth?: number;
+  onClick?: () => void;
 }> = ({ children, maxWidth, onClick }) => (
   <div
     className={classnames(
