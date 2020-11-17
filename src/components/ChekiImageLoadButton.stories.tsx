@@ -1,9 +1,9 @@
 import { action } from "@storybook/addon-actions";
 import React from "react";
-import { ChekiImageLoadButton } from "./ChekiImageLoadButton";
+import { ChekiInput } from "./ChekiInput";
 
 export default {
   title: "Cheki/ChekiImageLoadButton",
 };
 
-export const Default = () => <ChekiImageLoadButton onLoad={action("onLoad")} />;
+export const Default = () => <ChekiInput onLoad={action("onLoad")} />;

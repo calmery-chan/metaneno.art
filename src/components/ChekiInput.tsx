@@ -1,13 +1,14 @@
 import classnames from "classnames";
-import { css } from "linaria";
+import { styled } from "linaria/react";
 import React, { useCallback, useRef } from "react";
 import { convertFileToUrl } from "~/utils/cheki";
 
-const button = css`
-  color: #fff;
+const Container = styled.div`
+  flex-grow: 1;
+  height: fit-content;
 `;
 
-export const ChekiImageLoadButton: React.FC<{
+export const ChekiInput: React.FC<{
   onLoad: (imageUrl: string) => void;
 }> = ({ onLoad }) => {
   const ref = useRef<HTMLInputElement>(null);
@@ -31,7 +32,7 @@ export const ChekiImageLoadButton: React.FC<{
   );
 
   return (
-    <div className="h-12 max-w-md mx-auto relative w-full">
+    <Container className="relative">
       <input
         accept="image/jpg, image/png"
         className="absolute h-full opacity-0 w-full"
@@ -42,13 +43,12 @@ export const ChekiImageLoadButton: React.FC<{
 
       <div
         className={classnames(
-          "absolute bg-orange-500 cursor-pointer flex h-full items-center justify-center rounded-full w-full",
-          button
+          "absolute cursor-pointer flex h-full items-center justify-center w-full"
         )}
         onClick={handleOnClick}
       >
-        画像を読み込む
+        <div>タップして画像を追加する</div>
       </div>
-    </div>
+    </Container>
   );
 };

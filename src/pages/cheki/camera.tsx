@@ -6,6 +6,7 @@ import { Controller } from "~/components/Controller";
 import { Header } from "~/components/Header";
 import { Page } from "~/components/Page";
 import { ChekiCanvas } from "~/containers/ChekiCanvas";
+import { ChekiShootButton } from "~/containers/ChekiShootButton";
 import { selectors, useDispatch, useSelector } from "~/domains";
 import { actions } from "~/domains/cheki";
 
@@ -15,7 +16,7 @@ const Container = styled.div`
   height: 100%;
 `;
 
-export const Cheki: NextPage = () => {
+export const Camera: NextPage = () => {
   const dispatch = useDispatch();
   const {
     image: { url },
@@ -31,10 +32,11 @@ export const Cheki: NextPage = () => {
       <Container>
         <Header />
         {url ? <ChekiCanvas /> : <ChekiInput onLoad={handleOnLoadImage} />}
+        <ChekiShootButton />
         <Controller active="camera" />
       </Container>
     </Page>
   );
 };
 
-export default Cheki;
+export default Camera;

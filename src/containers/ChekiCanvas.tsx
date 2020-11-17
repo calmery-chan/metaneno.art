@@ -1,3 +1,4 @@
+import { css } from "linaria";
 import { styled } from "linaria/react";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { ChekiCanvasFrameLayer } from "./ChekiCanvasFrameLayer";
@@ -25,12 +26,12 @@ const Svg = styled.svg`
 `;
 
 type ChekiCanvasProps = {
-  preview: boolean;
+  preview?: boolean;
   onCreatePreviewUrl?: (url: string) => void;
 };
 
 export const ChekiCanvas: React.FC<ChekiCanvasProps> = ({
-  preview,
+  preview = false,
   onCreatePreviewUrl,
 }) => {
   const {
@@ -146,39 +147,46 @@ export const ChekiCanvas: React.FC<ChekiCanvasProps> = ({
   /* --- Render --- */
 
   return (
-    <Container ref={containerRef}>
-      {!previewUrl && (
-        <Svg
-          height={displayable.height}
-          onMouseLeave={handleOnComplete}
-          onMouseMove={handleOnTick}
-          onMouseUp={handleOnComplete}
-          onTouchEnd={handleOnComplete}
-          // `{ passive: false }` を渡すことができないため `useEffect` 内で登録する
-          // onTouchMove={handleOnTick}
-          ref={svgRef}
-          viewBox={`0 0 ${displayable.width} ${displayable.height}`}
-          width={displayable.width}
-          xmlns="http://www.w3.org/2000/svg"
-          xmlnsXlink="http://www.w3.org/1999/xlink"
-        >
-          <svg
-            height={frame.height}
-            viewBox={`0 0 ${frame.viewBoxWidth} ${frame.viewBoxHeight}`}
-            width={frame.width}
-            x={frame.x - displayable.x}
+    <div
+      className={css`
+        flex-grow: 1;
+        height: fit-content;
+      `}
+    >
+      <Container ref={containerRef}>
+        {!previewUrl && (
+          <Svg
+            height={displayable.height}
+            onMouseLeave={handleOnComplete}
+            onMouseMove={handleOnTick}
+            onMouseUp={handleOnComplete}
+            onTouchEnd={handleOnComplete}
+            // `{ passive: false }` を渡すことができないため `useEffect` 内で登録する
+            // onTouchMove={handleOnTick}
+            ref={svgRef}
+            viewBox={`0 0 ${displayable.width} ${displayable.height}`}
+            width={displayable.width}
             xmlns="http://www.w3.org/2000/svg"
             xmlnsXlink="http://www.w3.org/1999/xlink"
-            y={frame.y - displayable.y}
           >
-            <ChekiCanvasFrameLayer />
-            <ChekiCanvasImageLayer />
-          </svg>
-        </Svg>
-      )}
-      {previewUrl && (
-        <img height={frame.height} src={previewUrl} width={frame.width} />
-      )}
-    </Container>
+            <svg
+              height={frame.height}
+              viewBox={`0 0 ${frame.viewBoxWidth} ${frame.viewBoxHeight}`}
+              width={frame.width}
+              x={frame.x - displayable.x}
+              xmlns="http://www.w3.org/2000/svg"
+              xmlnsXlink="http://www.w3.org/1999/xlink"
+              y={frame.y - displayable.y}
+            >
+              <ChekiCanvasFrameLayer />
+              <ChekiCanvasImageLayer />
+            </svg>
+          </Svg>
+        )}
+        {previewUrl && (
+          <img height={frame.height} src={previewUrl} width={frame.width} />
+        )}
+      </Container>
+    </div>
   );
 };
