@@ -1,26 +1,20 @@
-import classnames from "classnames";
-import { css } from "linaria";
 import { styled } from "linaria/react";
 import { NextPage, NextPageContext } from "next";
 import { useRouter } from "next/router";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { ChekiApp } from "~/components/Cheki/App";
 import { ChekiButton } from "~/components/Cheki/Button";
+import { ChekiColumn } from "~/components/Cheki/Column";
+import { ExternalLink } from "~/components/Cheki/ExternalLink";
+import { ChekiFlexColumn } from "~/components/Cheki/FlexColumn";
+import { ChekiFooter } from "~/components/Cheki/Footer";
 import { ChekiHashTag } from "~/components/Cheki/HashTag";
-import { Colors } from "~/styles/colors";
+import { ChekiNote } from "~/components/Cheki/Note";
+import { TWITTER_HASHTAG_URL } from "~/constants/cheki";
 import { Spacing } from "~/styles/spacing";
-import { Typography } from "~/styles/typography";
 import { getShareImage } from "~/utils/cheki";
 
 // Styles
-
-const Container = styled.div`
-  color: ${Colors.black};
-  display: flex;
-  flex-direction: column;
-  font-weight: bold;
-  height: 100%;
-`;
 
 const Header = styled.div`
   height: 64px;
@@ -35,40 +29,18 @@ const Image = styled.div`
   width: 100%;
 `;
 
-const Try = styled.div`
-  margin-top: ${Spacing.l}px;
-`;
-
-const Footer = styled.div`
-  display: flex;
-  justify-content: center;
-  margin: ${Spacing.l}px 0;
-
-  a {
-    color: ${Colors.black};
-    margin-right: ${Spacing.s}px;
-    text-decoration: none;
-
-    &:last-child {
-      margin-right: 0;
-    }
-  }
-`;
-
 // Types
 
-type ShareProps = {
+const Share: NextPage<{
   imageUrl: string;
   ogImageUrl: string;
-};
-
-// Components
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const Share: NextPage<ShareProps> = ({ imageUrl, ogImageUrl }) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+}> = ({ imageUrl, ogImageUrl }) => {
   const ref = useRef<HTMLDivElement>(null);
   const { push } = useRouter();
   const [size, setSize] = useState<{ width: number; height: number }>();
+
+  // Side Effects
 
   useEffect(() => {
     const { current } = ref;
@@ -77,9 +49,9 @@ const Share: NextPage<ShareProps> = ({ imageUrl, ogImageUrl }) => {
       return;
     }
 
-    const resizeObserver = new ResizeObserver(() => {
-      setSize(current.getBoundingClientRect());
-    });
+    const resizeObserver = new ResizeObserver(() =>
+      setSize(current.getBoundingClientRect())
+    );
 
     resizeObserver.observe(current);
 
@@ -88,13 +60,16 @@ const Share: NextPage<ShareProps> = ({ imageUrl, ogImageUrl }) => {
     };
   }, [ref]);
 
+  // Events
+
   const handleOnClickStartButton = useCallback(() => push("/cheki"), []);
 
-  return (
-    <ChekiApp margin>
-      <Container>
-        <Header className="text-center" />
+  // Render
 
+  return (
+    <ChekiApp>
+      <ChekiFlexColumn>
+        <Header className="text-center" />
         <Image ref={ref}>
           {size && (
             <img
@@ -109,45 +84,20 @@ const Share: NextPage<ShareProps> = ({ imageUrl, ogImageUrl }) => {
             />
           )}
         </Image>
-
-        <Try>
-          <div
-            className={classnames(
-              Typography.XS,
-              "font-bold text-center",
-              css`
-                color: ${Colors.black};
-                margin-bottom: ${Spacing.s}px;
-              `
-            )}
-          >
+        <ChekiColumn margin>
+          <ChekiNote>
             Twitterで
-            <a
-              href="https://twitter.com/ChekiHashTag/%E3%83%8E%E3%83%8D%E3%83%A1%E3%81%A1%E3%82%83%E3%82%93%E3%83%81%E3%82%A7%E3%82%AD"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <ExternalLink href={TWITTER_HASHTAG_URL}>
               <ChekiHashTag>#ノネメちゃんチェキ</ChekiHashTag>
-            </a>
+            </ExternalLink>
             を見てみよう
-          </div>
+          </ChekiNote>
           <ChekiButton onClick={handleOnClickStartButton}>
             ノネメちゃんチェキを試してみる！
           </ChekiButton>
-        </Try>
-
-        <Footer className={Typography.XS}>
-          <a href="https://metaneno.art/">めたねのあーと</a>
-          <a href="terms-of-service">利用規約</a>
-          <a
-            href="https://forms.gle/37ucm5pkdZV7L4HAA"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            お問い合わせ
-          </a>
-        </Footer>
-      </Container>
+        </ChekiColumn>
+        <ChekiFooter />
+      </ChekiFlexColumn>
     </ChekiApp>
   );
 };

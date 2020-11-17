@@ -42,14 +42,6 @@ const Text = styled.p`
   margin-bottom: ${Spacing.l}px;
 `;
 
-const HistoryButton = styled.div`
-  margin-bottom: ${Spacing.m}px;
-
-  a {
-    text-decoration: none;
-  }
-`;
-
 const Terms: NextPage = () => {
   const { push } = useRouter();
   const handleOnClickTop = useCallback(() => push("/cheki"), []);
