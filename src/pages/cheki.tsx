@@ -3,6 +3,7 @@ import { NextPage } from "next";
 import React, { useCallback, useState } from "react";
 import { ChekiImageLoadButton } from "~/components/ChekiImageLoadButton";
 import { Controller } from "~/components/Controller";
+import { FilterList } from "~/components/FilterList";
 import { Header } from "~/components/Header";
 import { Horizontal } from "~/components/Horizontal";
 import {
@@ -126,6 +127,7 @@ const Cheki: NextPage = () => {
               />
             ))}
           </Horizontal>
+          <FilterList onClick={console.log} />
           <Horizontal>
             <div
               className={frameImage}

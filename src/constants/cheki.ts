@@ -55,7 +55,7 @@ export const CHEKI_FILTERS = [
   "t1",
   "b5",
   "x1",
-];
+] as ChekiFilter[];
 
 export type ChekiFilter =
   | "c1"

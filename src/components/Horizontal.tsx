@@ -17,8 +17,17 @@ const Children = styled.div`
   display: flex;
 `;
 
-export const Horizontal: React.FC = ({ children }) => (
+export const Horizontal: React.FC<{ padding?: number }> = ({
+  children,
+  padding,
+}) => (
   <Container>
-    <Children>{children}</Children>
+    <Children
+      style={{
+        padding: `0 ${padding}px`,
+      }}
+    >
+      {children}
+    </Children>
   </Container>
 );
