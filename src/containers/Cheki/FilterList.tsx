@@ -1,7 +1,7 @@
 import { styled } from "linaria/react";
 import React from "react";
-import { ChekiGradientText } from "./Cheki/GradientText";
-import { Horizontal } from "./Horizontal";
+import { ChekiGradientText } from "../../components/Cheki/GradientText";
+import { ChekiHorizontal } from "../../components/Cheki/Horizontal";
 import { ChekiFilter, CHEKI_FILTERS } from "~/constants/cheki";
 import { ChekiFilterThumbnail } from "~/containers/Cheki/FilterThumbnail";
 import { Colors } from "~/styles/colors";
@@ -41,12 +41,12 @@ type FilterListProps = {
   selected: ChekiFilter;
 };
 
-export const FilterList: React.FC<FilterListProps> = ({
+export const ChekiFilterList: React.FC<FilterListProps> = ({
   onClick,
   selected,
 }) => (
   <Container>
-    <Horizontal padding={Spacing.l}>
+    <ChekiHorizontal padding={Spacing.l}>
       {CHEKI_FILTERS.map((filter, index) => (
         <Filter className="filter" key={index} onClick={() => onClick(filter)}>
           <FilterTitle className={Typography.XS}>
@@ -59,6 +59,6 @@ export const FilterList: React.FC<FilterListProps> = ({
           <ChekiFilterThumbnail filter={filter} />
         </Filter>
       ))}
-    </Horizontal>
+    </ChekiHorizontal>
   </Container>
 );

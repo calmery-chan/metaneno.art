@@ -17,7 +17,7 @@ const Children = styled.div`
   display: flex;
 `;
 
-export const Horizontal: React.FC<{ padding?: number }> = ({
+export const ChekiHorizontal: React.FC<{ padding?: number }> = ({
   children,
   padding,
 }) => (
