@@ -1,5 +1,6 @@
 import { styled } from "linaria/react";
 import React from "react";
+import { GradientText } from "./GradientText";
 import { Horizontal } from "./Horizontal";
 import { ChekiFilter, CHEKI_FILTERS } from "~/constants/cheki";
 import { ChekiFilterThumbnail } from "~/containers/ChekiFilterThumbnail";
@@ -25,13 +26,19 @@ const FilterTitle = styled.div`
 
 type FilterListProps = {
   onClick: (filter: ChekiFilter) => void;
+  selected: ChekiFilter;
 };
 
-export const FilterList: React.FC<FilterListProps> = ({ onClick }) => (
+export const FilterList: React.FC<FilterListProps> = ({
+  onClick,
+  selected,
+}) => (
   <Horizontal padding={Spacing.l}>
     {CHEKI_FILTERS.map((filter, index) => (
       <Filter key={index} onClick={() => onClick(filter)}>
-        <FilterTitle className={Typography.XS}>{filter}</FilterTitle>
+        <FilterTitle className={Typography.XS}>
+          {filter === selected ? <GradientText>{filter}</GradientText> : filter}
+        </FilterTitle>
         <ChekiFilterThumbnail filter={filter} />
       </Filter>
     ))}
