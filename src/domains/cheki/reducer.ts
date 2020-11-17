@@ -9,14 +9,12 @@ import {
 import { ChekiDirection } from "~/types/ChekiDirection";
 import { ChekiRectangle } from "~/types/ChekiRectangle";
 import { getImageSizeByDirection } from "~/utils/cheki";
-import { DetectedObject } from "~/utils/coco-ssd";
 
 export type State = {
   frame: {
     url: string;
   };
   image: ChekiRectangle & {
-    detectedObjects: DetectedObject[];
     direction: ChekiDirection;
     filter: ChekiFilter | null;
     thumbnailUrl: string;
@@ -42,7 +40,6 @@ const initialState: State = {
     url: "",
   },
   image: {
-    detectedObjects: [],
     direction: "horizontal",
     filter: null,
     height: 0,
@@ -90,13 +87,7 @@ export const reducer = createReducer(initialState, (builder) => {
       };
     })
     .addCase(actions.addImage.fulfilled, (state, action) => {
-      const {
-        detectedObjects,
-        height,
-        thumbnailUrl,
-        url,
-        width,
-      } = action.payload;
+      const { height, thumbnailUrl, url, width } = action.payload;
       const { layout } = state;
 
       const direction = getDirection(height, width);
@@ -105,7 +96,6 @@ export const reducer = createReducer(initialState, (builder) => {
         ...state,
         image: {
           ...initialState.image,
-          detectedObjects,
           direction,
           height,
           thumbnailUrl,

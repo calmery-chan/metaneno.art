@@ -7,7 +7,6 @@ import {
 } from "./utils";
 import { ChekiFilter } from "~/constants/cheki";
 import { CursorPosition } from "~/utils/cheki";
-import * as cocoSsd from "~/utils/coco-ssd";
 
 export const addFrame = createAsyncThunk<{ url: string }, { url: string }>(
   "CHEKI/ADD_FRAME",
@@ -16,7 +15,6 @@ export const addFrame = createAsyncThunk<{ url: string }, { url: string }>(
 
 export const addImage = createAsyncThunk<
   {
-    detectedObjects: cocoSsd.DetectedObject[];
     height: number;
     thumbnailUrl: string;
     url: string;
@@ -27,11 +25,8 @@ export const addImage = createAsyncThunk<
   const image = await convertUrlToImage(url);
   const { height, url: imageUrl, width } = resizeImage(image);
   const { url: thumbnailUrl } = await createThumbnailImage(image);
-  const detectedObjects = await cocoSsd.detect(
-    await convertUrlToImage(imageUrl)
-  );
 
-  return { detectedObjects, height, thumbnailUrl, url: imageUrl, width };
+  return { height, thumbnailUrl, url: imageUrl, width };
 });
 
 export const changeFilter = createAction<{ filter: ChekiFilter | null }>(
