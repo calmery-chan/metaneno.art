@@ -1,9 +1,12 @@
+import classnames from "classnames";
+import { css } from "linaria";
 import { styled } from "linaria/react";
 import React, { useState, useEffect } from "react";
 import { Colors, GradientColors } from "~/styles/colors";
 import { Media } from "~/styles/media";
 import { fadeIn, fadeInUp, fadeOut, fadeOutDown, Mixin } from "~/styles/mixin";
 import { Spacing } from "~/styles/spacing";
+import { Typography } from "~/styles/typography";
 
 const Container = styled.div`
   width: 100%;
@@ -136,3 +139,44 @@ export const Modal: React.FC<ModalProps> = ({
     </Container>
   );
 };
+
+export const ModalTitle: React.FC = ({ children }) => (
+  <div
+    className={classnames(
+      css`
+        color: ${Colors.black};
+        font-family: Roboto, sans-serif;
+        margin-bottom: ${Spacing.s}px;
+      `,
+      Typography.L
+    )}
+  >
+    {children}
+  </div>
+);
+
+export const ModalText: React.FC = ({ children }) => (
+  <div
+    className={classnames(
+      css`
+        color: ${Colors.black};
+        font-family: Roboto, sans-serif;
+        margin-bottom: ${Spacing.m}px;
+
+        a {
+          color: ${Colors.black};
+          font-family: Roboto, sans-serif;
+          font-weight: bold;
+          padding: 0 ${Spacing.xs}px;
+        }
+
+        img {
+          border-radius: 4px;
+        }
+      `,
+      Typography.S
+    )}
+  >
+    {children}
+  </div>
+);

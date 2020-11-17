@@ -1,6 +1,6 @@
 import { styled } from "linaria/lib/react";
 import React, { useCallback, useState } from "react";
-import { Modal } from "./Modal";
+import { Modal, ModalText, ModalTitle } from "./Modal";
 import { Mixin } from "~/styles/mixin";
 import { Spacing } from "~/styles/spacing";
 
@@ -39,7 +39,7 @@ export const Header: React.FC = () => {
         <img
           alt="インフォメーション"
           onClick={handleOnClickInformation}
-          src="/information.svg"
+          src={information ? "/information.selected.svg" : "/information.svg"}
         />
       </Container>
 
@@ -49,7 +49,24 @@ export const Header: React.FC = () => {
           setInformation(false);
         }}
       >
-        Test
+        <ModalTitle>利用規約</ModalTitle>
+        <ModalText>
+          利用規約は
+          <a href="/cheki/terms-of-service">こちら</a>
+          をご確認ください。
+        </ModalText>
+        <ModalTitle>お問い合わせ</ModalTitle>
+        <ModalText>
+          ご感想や不具合の報告は
+          <a
+            href="https://forms.gle/37ucm5pkdZV7L4HAA"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Google フォーム
+          </a>
+          までお願いします。
+        </ModalText>
       </Modal>
     </>
   );
