@@ -130,9 +130,7 @@ const Terms: NextPage = () => {
         </Text>
         <Text className={Typography.S}>以上</Text>
         <Text className={Typography.S}>2020/11/17 制定</Text>
-        <ChekiButton maxWidth={512} onClick={handleOnClickTop}>
-          トップに戻る
-        </ChekiButton>
+        <ChekiButton onClick={handleOnClickTop}>トップに戻る</ChekiButton>
       </Container>
     </>
   );

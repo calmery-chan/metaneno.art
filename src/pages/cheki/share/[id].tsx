@@ -131,7 +131,7 @@ const Share: NextPage<ShareProps> = ({ imageUrl, ogImageUrl }) => {
             </a>
             を見てみよう
           </div>
-          <ChekiButton maxWidth={512} onClick={handleOnClickStartButton}>
+          <ChekiButton onClick={handleOnClickStartButton}>
             ノネメちゃんチェキを試してみる！
           </ChekiButton>
         </Try>

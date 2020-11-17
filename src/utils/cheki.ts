@@ -10,6 +10,7 @@ import {
   CHEKI_HORIZONTAL_FRAME_WIDTH,
   CHEKI_VERTICAL_FRAME_HEIGHT,
   CHEKI_VERTICAL_FRAME_WIDTH,
+  SHARE_RANDOM_HASHTAGS,
 } from "~/constants/cheki";
 import { ChekiDirection } from "~/types/ChekiDirection";
 
@@ -195,3 +196,10 @@ export const upload = async (imageUrl: string): Promise<string> => {
 
   return data.id;
 };
+
+export const getShareUrlById = (id: string) =>
+  `http://twitter.com/share?url=${`${window.location.origin}/cheki/share/${id}`}&related=metanen0x0&hashtags=%E3%83%8E%E3%83%8D%E3%83%A1%E3%81%A1%E3%82%83%E3%82%93%E3%83%81%E3%82%A7%E3%82%AD,${
+    SHARE_RANDOM_HASHTAGS[
+      Math.floor(Math.random() * SHARE_RANDOM_HASHTAGS.length)
+    ]
+  }`;

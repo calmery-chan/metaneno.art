@@ -7,9 +7,9 @@ import { Spacing } from "~/styles/spacing";
 import { Typography } from "~/styles/typography";
 
 export const ChekiButton: React.FC<{
-  maxWidth?: number;
+  disabled?: boolean;
   onClick?: () => void;
-}> = ({ children, maxWidth, onClick }) => (
+}> = ({ children, disabled, onClick }) => (
   <div
     className={classnames(
       Typography.M,
@@ -27,16 +27,22 @@ export const ChekiButton: React.FC<{
       className={classnames(
         "h-full rounded-full w-full",
         css`
-          ${Mixin.clickable};
-
           background: ${GradientColors.pinkToOrange};
+          cursor: not-allowed;
           font-weight: bold;
+          opacity: 0.48;
           outline: none !important;
-        `
+        `,
+        !disabled &&
+          css`
+            ${Mixin.clickable};
+            opacity: 1;
+            cursor: pointer;
+          `
       )}
-      onClick={onClick}
+      onClick={disabled ? undefined : onClick}
       style={{
-        maxWidth: maxWidth ? `${maxWidth}px` : "auto",
+        maxWidth: "512px",
       }}
     >
       <div
