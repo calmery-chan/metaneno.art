@@ -5,11 +5,23 @@ import { Horizontal } from "./Horizontal";
 import { ChekiFilter, CHEKI_FILTERS } from "~/constants/cheki";
 import { ChekiFilterThumbnail } from "~/containers/ChekiFilterThumbnail";
 import { Colors } from "~/styles/colors";
+import { Mixin } from "~/styles/mixin";
 import { Spacing } from "~/styles/spacing";
 import { Typography } from "~/styles/typography";
 
+const Container = styled.div`
+  margin-top: ${Spacing.m}px;
+
+  /* &:hover .filter:not(:hover) {
+    opacity: 0.48;
+  } */
+`;
+
 const Filter = styled.div`
+  /* ${Mixin.clickable}; */
+
   margin-right: ${Spacing.xs}px;
+  cursor: pointer;
 
   &:last-child {
     margin-right: 0;
@@ -33,14 +45,20 @@ export const FilterList: React.FC<FilterListProps> = ({
   onClick,
   selected,
 }) => (
-  <Horizontal padding={Spacing.l}>
-    {CHEKI_FILTERS.map((filter, index) => (
-      <Filter key={index} onClick={() => onClick(filter)}>
-        <FilterTitle className={Typography.XS}>
-          {filter === selected ? <GradientText>{filter}</GradientText> : filter}
-        </FilterTitle>
-        <ChekiFilterThumbnail filter={filter} />
-      </Filter>
-    ))}
-  </Horizontal>
+  <Container>
+    <Horizontal padding={Spacing.l}>
+      {CHEKI_FILTERS.map((filter, index) => (
+        <Filter className="filter" key={index} onClick={() => onClick(filter)}>
+          <FilterTitle className={Typography.XS}>
+            {filter === selected ? (
+              <GradientText>{filter}</GradientText>
+            ) : (
+              filter
+            )}
+          </FilterTitle>
+          <ChekiFilterThumbnail filter={filter} />
+        </Filter>
+      ))}
+    </Horizontal>
+  </Container>
 );
