@@ -2,6 +2,7 @@ import { styled } from "linaria/react";
 import { NextPage } from "next";
 import React, { useCallback } from "react";
 import { ChekiNavigation } from "~/components/Cheki/Navigation";
+import { SplashScreen } from "~/components/Cheki/SplashScreen";
 import { ChekiInput } from "~/components/ChekiInput";
 import { Header } from "~/components/Header";
 import { Page } from "~/components/Page";
@@ -27,13 +28,17 @@ export const Cheki: NextPage = () => {
   );
 
   return (
-    <Page>
-      <Container>
-        <Header />
-        {url ? <ChekiCanvas /> : <ChekiInput onLoad={handleOnLoadImage} />}
-        <ChekiNavigation active="camera" />
-      </Container>
-    </Page>
+    <>
+      <Page>
+        <Container>
+          <Header />
+          {url ? <ChekiCanvas /> : <ChekiInput onLoad={handleOnLoadImage} />}
+          <ChekiNavigation active="camera" />
+        </Container>
+      </Page>
+
+      <SplashScreen />
+    </>
   );
 };
 

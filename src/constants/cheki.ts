@@ -73,3 +73,5 @@ export type ChekiFilter =
   | "t1"
   | "b5"
   | "x1";
+
+export const SPLASH_SCREEN_DURATION = 1600;
