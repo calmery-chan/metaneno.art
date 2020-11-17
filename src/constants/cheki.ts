@@ -75,3 +75,6 @@ export type ChekiFilter =
   | "x1";
 
 export const SPLASH_SCREEN_DURATION = 1600;
+
+export const TWITTER_HASHTAG_URL =
+  "https://twitter.com/hashtag/%E3%83%8E%E3%83%8D%E3%83%A1%E3%81%A1%E3%82%83%E3%82%93%E3%83%81%E3%82%A7%E3%82%AD";

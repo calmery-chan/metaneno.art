@@ -32,7 +32,7 @@ const Image = styled.img`
 `;
 
 export const ChekiNavigation: React.FC<{
-  active: "camera" | "filters" | "frames" | "save";
+  active: "camera" | "filters" | "frames" | "save-and-share";
 }> = ({ active }) => {
   const { push } = useRouter();
 
@@ -66,7 +66,7 @@ export const ChekiNavigation: React.FC<{
       />
       <Image
         alt="保存・シェア"
-        className={active === "save" ? "active" : ""}
+        className={active === "save-and-share" ? "active" : ""}
         onClick={handleOnClickSaveAndShare}
         src="/save-and-share.svg"
       />
