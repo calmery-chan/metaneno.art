@@ -1,3 +1,4 @@
+import { styled } from "linaria/react";
 import { NextPage } from "next";
 import React from "react";
 import { ChekiApp } from "~/components/Cheki/App";
@@ -11,6 +12,12 @@ import { ChekiNavigation } from "~/components/Cheki/Navigation";
 import { ChekiNote } from "~/components/Cheki/Note";
 import { TWITTER_HASHTAG_URL } from "~/constants/cheki";
 import { ChekiCanvas } from "~/containers/Cheki/Canvas";
+import { Spacing } from "~/styles/spacing";
+
+const TwitterImage = styled.img`
+  height: 14px;
+  margin-right: ${Spacing.xs}px;
+`;
 
 const SaveAndShare: NextPage = () => {
   return (
@@ -25,7 +32,10 @@ const SaveAndShare: NextPage = () => {
             </ExternalLink>
             を付けてシェアしよう
           </ChekiNote>
-          <ChekiButton>Twitter にシェアする</ChekiButton>
+          <ChekiButton>
+            <TwitterImage alt="Twitter" src="/twitter.svg" />
+            Twitter にシェアする
+          </ChekiButton>
         </ChekiColumn>
         <ChekiNavigation active="save-and-share" />
       </ChekiFlexColumn>

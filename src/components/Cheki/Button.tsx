@@ -7,7 +7,6 @@ import { Spacing } from "~/styles/spacing";
 import { Typography } from "~/styles/typography";
 
 export const ChekiButton: React.FC<{
-  children: string;
   maxWidth?: number;
   onClick?: () => void;
 }> = ({ children, maxWidth, onClick }) => (
@@ -40,7 +39,15 @@ export const ChekiButton: React.FC<{
         maxWidth: maxWidth ? `${maxWidth}px` : "auto",
       }}
     >
-      {children}
+      <div
+        className={css`
+          display: flex;
+          margin: 0 auto;
+          width: fit-content;
+        `}
+      >
+        {children}
+      </div>
     </button>
   </div>
 );
