@@ -1,3 +1,5 @@
+import { css } from "linaria";
+
 const ANIMATION_DURATION = {
   seconds: 0.4,
   milliseconds: 400,
@@ -16,6 +18,26 @@ const clickable = `
   &:hover {
     transform: scale(1.06);
   }
+`;
+
+export const fadeIn = css`
+  animation-name: fadeIn;
+  -webkit-animation-name: fadeIn;
+`;
+
+export const fadeOut = css`
+  animation-name: fadeOut;
+  -webkit-animation-name: fadeOut;
+`;
+
+export const fadeInUp = css`
+  animation-name: fadeInUp;
+  -webkit-animation-name: fadeInUp;
+`;
+
+export const fadeOutDown = css`
+  animation-name: fadeOutDown;
+  -webkit-animation-name: fadeOutDown;
 `;
 
 export const Mixin = { ANIMATION_DURATION, animation, clickable };

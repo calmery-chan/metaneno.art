@@ -1,5 +1,6 @@
 import { styled } from "linaria/lib/react";
-import React from "react";
+import React, { useCallback, useState } from "react";
+import { Modal } from "./Modal";
 import { Mixin } from "~/styles/mixin";
 import { Spacing } from "~/styles/spacing";
 
@@ -22,9 +23,34 @@ const Container = styled.div`
   }
 `;
 
-export const Header: React.FC = () => (
-  <Container>
-    <img alt="閉じる" src="/close.svg" />
-    <img alt="インフォメーション" src="/information.svg" />
-  </Container>
-);
+export const Header: React.FC = () => {
+  const [information, setInformation] = useState(false);
+
+  const handleOnClickInformation = useCallback(() => {
+    setInformation(!information);
+  }, [information]);
+
+  return (
+    <>
+      <Container>
+        <a href="/">
+          <img alt="閉じる" src="/close.svg" />
+        </a>
+        <img
+          alt="インフォメーション"
+          onClick={handleOnClickInformation}
+          src="/information.svg"
+        />
+      </Container>
+
+      <Modal
+        visible={information}
+        onClickCloseButton={() => {
+          setInformation(false);
+        }}
+      >
+        Test
+      </Modal>
+    </>
+  );
+};

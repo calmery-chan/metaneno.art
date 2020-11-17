@@ -24,3 +24,96 @@ a {
 * {
   box-sizing: border-box;
 }
+
+// https://animate.style/
+
+@-webkit-keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+@-webkit-keyframes fadeInUp {
+  from {
+    opacity: 0;
+    -webkit-transform: translate3d(0, 100%, 0);
+    transform: translate3d(0, 100%, 0);
+  }
+
+  to {
+    opacity: 1;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    -webkit-transform: translate3d(0, 100%, 0);
+    transform: translate3d(0, 100%, 0);
+  }
+
+  to {
+    opacity: 1;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@-webkit-keyframes fadeOutDown {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+    -webkit-transform: translate3d(0, 100%, 0);
+    transform: translate3d(0, 100%, 0);
+  }
+}
+@keyframes fadeOutDown {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+    -webkit-transform: translate3d(0, 100%, 0);
+    transform: translate3d(0, 100%, 0);
+  }
+}
