@@ -9,6 +9,6 @@ const Container = styled.div`
   display: inline-block;
 `;
 
-export const GradientText: React.FC<{ children: string }> = ({ children }) => (
-  <Container>{children}</Container>
-);
+export const ChekiGradientText: React.FC<{ children: string }> = ({
+  children,
+}) => <Container>{children}</Container>;

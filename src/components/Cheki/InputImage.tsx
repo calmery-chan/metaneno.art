@@ -8,7 +8,7 @@ const Container = styled.div`
   height: fit-content;
 `;
 
-export const ChekiInput: React.FC<{
+export const ChekiInputImage: React.FC<{
   onLoad: (imageUrl: string) => void;
 }> = ({ onLoad }) => {
   const ref = useRef<HTMLInputElement>(null);

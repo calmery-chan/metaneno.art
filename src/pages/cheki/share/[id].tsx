@@ -4,9 +4,9 @@ import { styled } from "linaria/react";
 import { NextPage, NextPageContext } from "next";
 import { useRouter } from "next/router";
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { Button } from "~/components/Button";
+import { ChekiApp } from "~/components/Cheki/App";
+import { ChekiButton } from "~/components/Cheki/Button";
 import { ChekiHashTag } from "~/components/Cheki/HashTag";
-import { Page } from "~/components/Page";
 import { Colors } from "~/styles/colors";
 import { Spacing } from "~/styles/spacing";
 import { Typography } from "~/styles/typography";
@@ -91,7 +91,7 @@ const Share: NextPage<ShareProps> = ({ imageUrl, ogImageUrl }) => {
   const handleOnClickStartButton = useCallback(() => push("/cheki"), []);
 
   return (
-    <Page margin>
+    <ChekiApp margin>
       <Container>
         <Header className="text-center" />
 
@@ -131,9 +131,9 @@ const Share: NextPage<ShareProps> = ({ imageUrl, ogImageUrl }) => {
             </a>
             を見てみよう
           </div>
-          <Button maxWidth={512} onClick={handleOnClickStartButton}>
+          <ChekiButton maxWidth={512} onClick={handleOnClickStartButton}>
             ノネメちゃんチェキを試してみる！
-          </Button>
+          </ChekiButton>
         </Try>
 
         <Footer className={Typography.XS}>
@@ -148,7 +148,7 @@ const Share: NextPage<ShareProps> = ({ imageUrl, ogImageUrl }) => {
           </a>
         </Footer>
       </Container>
-    </Page>
+    </ChekiApp>
   );
 };
 

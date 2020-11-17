@@ -3,7 +3,7 @@ import { GradientColors } from "~/styles/colors";
 import { Media } from "~/styles/media";
 import { Spacing } from "~/styles/spacing";
 
-export const Page = styled.div<{ margin?: boolean }>`
+export const ChekiApp = styled.div<{ margin?: boolean }>`
   background: ${GradientColors.page};
   box-sizing: border-box;
   height: 100%;

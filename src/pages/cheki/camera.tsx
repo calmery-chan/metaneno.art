@@ -1,10 +1,10 @@
 import { styled } from "linaria/react";
 import { NextPage } from "next";
 import React, { useCallback } from "react";
+import { ChekiApp } from "~/components/Cheki/App";
+import { ChekiHeader } from "~/components/Cheki/Header";
+import { ChekiInputImage } from "~/components/Cheki/InputImage";
 import { ChekiNavigation } from "~/components/Cheki/Navigation";
-import { ChekiInput } from "~/components/ChekiInput";
-import { Header } from "~/components/Header";
-import { Page } from "~/components/Page";
 import { ChekiCanvas } from "~/containers/Cheki/Canvas";
 import { ChekiShootButton } from "~/containers/Cheki/ShootButton";
 import { selectors, useDispatch, useSelector } from "~/domains";
@@ -28,14 +28,14 @@ export const Camera: NextPage = () => {
   );
 
   return (
-    <Page>
+    <ChekiApp>
       <Container>
-        <Header />
-        {url ? <ChekiCanvas /> : <ChekiInput onLoad={handleOnLoadImage} />}
+        <ChekiHeader />
+        {url ? <ChekiCanvas /> : <ChekiInputImage onLoad={handleOnLoadImage} />}
         <ChekiShootButton />
         <ChekiNavigation active="camera" />
       </Container>
-    </Page>
+    </ChekiApp>
   );
 };
 

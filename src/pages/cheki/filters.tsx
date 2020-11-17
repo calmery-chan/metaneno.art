@@ -1,10 +1,10 @@
 import { css } from "linaria";
 import { NextPage } from "next";
 import React from "react";
+import { ChekiApp } from "~/components/Cheki/App";
+import { ChekiHeader } from "~/components/Cheki/Header";
 import { ChekiNavigation } from "~/components/Cheki/Navigation";
 import { FilterList } from "~/components/FilterList";
-import { Header } from "~/components/Header";
-import { Page } from "~/components/Page";
 import { ChekiCanvas } from "~/containers/Cheki/Canvas";
 
 const cheki = css`
@@ -19,16 +19,16 @@ const column = css`
 `;
 
 export const Filters: NextPage = () => (
-  <Page>
+  <ChekiApp>
     <div className={column}>
-      <Header />
+      <ChekiHeader />
       <div className={cheki}>
         <ChekiCanvas preview={false} />
       </div>
       <FilterList onClick={console.log} selected="f2" />
       <ChekiNavigation active="filters" />
     </div>
-  </Page>
+  </ChekiApp>
 );
 
 export default Filters;

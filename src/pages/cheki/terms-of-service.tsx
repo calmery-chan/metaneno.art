@@ -2,7 +2,7 @@ import { styled } from "linaria/react";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import React, { useCallback } from "react";
-import { Button } from "~/components/Button";
+import { ChekiButton } from "~/components/Cheki/Button";
 import { Colors, GradientColors } from "~/styles/colors";
 import { Spacing } from "~/styles/spacing";
 import { Typography } from "~/styles/typography";
@@ -130,9 +130,9 @@ const Terms: NextPage = () => {
         </Text>
         <Text className={Typography.S}>以上</Text>
         <Text className={Typography.S}>2020/11/17 制定</Text>
-        <Button maxWidth={512} onClick={handleOnClickTop}>
+        <ChekiButton maxWidth={512} onClick={handleOnClickTop}>
           トップに戻る
-        </Button>
+        </ChekiButton>
       </Container>
     </>
   );

@@ -90,17 +90,17 @@ const Contents = styled.div`
   }
 `;
 
-type ModalProps = {
+type ChekiModalProps = {
   children: React.ReactNode;
   onClickCloseButton: () => void;
   visible: boolean;
 };
 
-export const Modal: React.FC<ModalProps> = ({
+export const ChekiModal: React.FC<ChekiModalProps> = ({
   children,
   onClickCloseButton,
   visible,
-}: ModalProps) => {
+}: ChekiModalProps) => {
   const [isFirstUpdate, setFirstUpdate] = useState(true);
   const [isAnimationCompleted, setIsAnimationCompleted] = useState(true);
 
@@ -140,7 +140,7 @@ export const Modal: React.FC<ModalProps> = ({
   );
 };
 
-export const ModalTitle: React.FC = ({ children }) => (
+export const ChekiModalTitle: React.FC = ({ children }) => (
   <div
     className={classnames(
       css`
@@ -155,7 +155,7 @@ export const ModalTitle: React.FC = ({ children }) => (
   </div>
 );
 
-export const ModalText: React.FC = ({ children }) => (
+export const ChekiModalText: React.FC = ({ children }) => (
   <div
     className={classnames(
       css`

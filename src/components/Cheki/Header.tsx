@@ -1,6 +1,6 @@
 import { styled } from "linaria/lib/react";
 import React, { useCallback, useState } from "react";
-import { Modal, ModalText, ModalTitle } from "./Modal";
+import { ChekiModal, ChekiModalText, ChekiModalTitle } from "./Modal";
 import { Mixin } from "~/styles/mixin";
 import { Spacing } from "~/styles/spacing";
 
@@ -23,7 +23,7 @@ const Container = styled.div`
   }
 `;
 
-export const Header: React.FC = () => {
+export const ChekiHeader: React.FC = () => {
   const [information, setInformation] = useState(false);
 
   const handleOnClickInformation = useCallback(() => {
@@ -43,20 +43,20 @@ export const Header: React.FC = () => {
         />
       </Container>
 
-      <Modal
+      <ChekiModal
         visible={information}
         onClickCloseButton={() => {
           setInformation(false);
         }}
       >
-        <ModalTitle>利用規約</ModalTitle>
-        <ModalText>
+        <ChekiModalTitle>利用規約</ChekiModalTitle>
+        <ChekiModalText>
           利用規約は
           <a href="/cheki/terms-of-service">こちら</a>
           をご確認ください。
-        </ModalText>
-        <ModalTitle>お問い合わせ</ModalTitle>
-        <ModalText>
+        </ChekiModalText>
+        <ChekiModalTitle>お問い合わせ</ChekiModalTitle>
+        <ChekiModalText>
           ご感想や不具合の報告は
           <a
             href="https://forms.gle/37ucm5pkdZV7L4HAA"
@@ -66,8 +66,8 @@ export const Header: React.FC = () => {
             Google フォーム
           </a>
           までお願いします。
-        </ModalText>
-      </Modal>
+        </ChekiModalText>
+      </ChekiModal>
     </>
   );
 };

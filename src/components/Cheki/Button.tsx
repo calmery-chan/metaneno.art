@@ -6,7 +6,7 @@ import { Mixin } from "~/styles/mixin";
 import { Spacing } from "~/styles/spacing";
 import { Typography } from "~/styles/typography";
 
-export const Button: React.FC<{
+export const ChekiButton: React.FC<{
   children: string;
   maxWidth?: number;
   onClick?: () => void;

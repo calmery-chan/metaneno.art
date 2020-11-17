@@ -1,7 +1,7 @@
 import classnames from "classnames";
 import { styled } from "linaria/lib/react";
 import React, { useEffect, useState } from "react";
-import { Page } from "../Page";
+import { ChekiApp } from "./App";
 import { SPLASH_SCREEN_DURATION } from "~/constants/cheki";
 import { Colors } from "~/styles/colors";
 import { fadeOut, Mixin } from "~/styles/mixin";
@@ -55,7 +55,7 @@ export const SplashScreen: React.FC = () => {
 
   return (
     <Animation className={fire ? fadeOut : undefined}>
-      <Page
+      <ChekiApp
         className={classnames(
           "bottom-0 flex items-center justify-center left-0 right-0 top-0"
         )}
@@ -64,7 +64,7 @@ export const SplashScreen: React.FC = () => {
         <Comment className={classnames("absolute font-bold", Typography.XS)}>
           Made with <img src="/heart.svg" /> by めたねのおくすり
         </Comment>
-      </Page>
+      </ChekiApp>
     </Animation>
   );
 };

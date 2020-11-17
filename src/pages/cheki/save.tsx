@@ -1,14 +1,14 @@
 import { NextPage } from "next";
 import React from "react";
+import { ChekiApp } from "~/components/Cheki/App";
+import { ChekiHeader } from "~/components/Cheki/Header";
 import { ChekiNavigation } from "~/components/Cheki/Navigation";
-import { Header } from "~/components/Header";
-import { Page } from "~/components/Page";
 
 export const Save: NextPage = () => (
-  <Page>
-    <Header />
+  <ChekiApp>
+    <ChekiHeader />
     <ChekiNavigation active="save" />
-  </Page>
+  </ChekiApp>
 );
 
 export default Save;
