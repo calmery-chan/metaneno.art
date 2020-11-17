@@ -5,7 +5,7 @@ import { NextPage, NextPageContext } from "next";
 import { useRouter } from "next/router";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Button } from "~/components/Button";
-import { HashTag } from "~/components/HashTag";
+import { ChekiHashTag } from "~/components/Cheki/HashTag";
 import { Page } from "~/components/Page";
 import { Colors } from "~/styles/colors";
 import { Spacing } from "~/styles/spacing";
@@ -123,11 +123,11 @@ const Share: NextPage<ShareProps> = ({ imageUrl, ogImageUrl }) => {
           >
             Twitterで
             <a
-              href="https://twitter.com/hashtag/%E3%83%8E%E3%83%8D%E3%83%A1%E3%81%A1%E3%82%83%E3%82%93%E3%83%81%E3%82%A7%E3%82%AD"
+              href="https://twitter.com/ChekiHashTag/%E3%83%8E%E3%83%8D%E3%83%A1%E3%81%A1%E3%82%83%E3%82%93%E3%83%81%E3%82%A7%E3%82%AD"
               target="_blank"
               rel="noopener noreferrer"
             >
-              <HashTag>#ノネメちゃんチェキ</HashTag>
+              <ChekiHashTag>#ノネメちゃんチェキ</ChekiHashTag>
             </a>
             を見てみよう
           </div>

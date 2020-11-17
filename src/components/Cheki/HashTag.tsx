@@ -13,6 +13,6 @@ const container = css`
   padding: ${Spacing.xs / 2}px ${Spacing.xs}px;
 `;
 
-export const HashTag: React.FC<{
+export const ChekiHashTag: React.FC<{
   children: string;
 }> = ({ children }) => <span className={container}>{children}</span>;

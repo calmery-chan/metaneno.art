@@ -1,8 +1,8 @@
 import { css } from "linaria";
 import { styled } from "linaria/react";
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { ChekiCanvasFrameLayer } from "./ChekiCanvasFrameLayer";
-import { ChekiCanvasImageLayer } from "./ChekiCanvasImageLayer";
+import { ChekiCanvasFrameLayer } from "./CanvasFrameLayer";
+import { ChekiCanvasImageLayer } from "./CanvasImageLayer";
 import { selectors, useDispatch, useSelector } from "~/domains";
 import { actions } from "~/domains/cheki";
 import {

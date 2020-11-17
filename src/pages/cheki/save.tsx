@@ -1,13 +1,13 @@
 import { NextPage } from "next";
 import React from "react";
-import { Controller } from "~/components/Controller";
+import { ChekiNavigation } from "~/components/Cheki/Navigation";
 import { Header } from "~/components/Header";
 import { Page } from "~/components/Page";
 
 export const Save: NextPage = () => (
   <Page>
     <Header />
-    <Controller active="save" />
+    <ChekiNavigation active="save" />
   </Page>
 );
 

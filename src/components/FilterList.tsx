@@ -3,7 +3,7 @@ import React from "react";
 import { GradientText } from "./GradientText";
 import { Horizontal } from "./Horizontal";
 import { ChekiFilter, CHEKI_FILTERS } from "~/constants/cheki";
-import { ChekiFilterThumbnail } from "~/containers/ChekiFilterThumbnail";
+import { ChekiFilterThumbnail } from "~/containers/Cheki/FilterThumbnail";
 import { Colors } from "~/styles/colors";
 import { Mixin } from "~/styles/mixin";
 import { Spacing } from "~/styles/spacing";

@@ -15,7 +15,7 @@ import {
   P5,
   T1,
   X1,
-} from "./ChekiFilterDefs";
+} from "./FilterDefs";
 import { ChekiFilter } from "~/constants/cheki";
 
 export const ChekiFilterImage: React.FC<{

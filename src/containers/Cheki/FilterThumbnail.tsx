@@ -1,6 +1,6 @@
 import React from "react";
-import { ChekiFilterDefs } from "~/components/ChekiFilterDefs";
-import { ChekiFilterImage } from "~/components/ChekiFilterImage";
+import { ChekiFilterDefs } from "~/components/Cheki/FilterDefs";
+import { ChekiFilterImage } from "~/components/Cheki/FilterImage";
 import { ChekiFilter, CHEKI_THUMBNAIL_IMAGE_SIZE } from "~/constants/cheki";
 import { selectors, useSelector } from "~/domains";
 

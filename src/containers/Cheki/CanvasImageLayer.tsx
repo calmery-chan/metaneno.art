@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { ChekiFilterDefs } from "~/components/ChekiFilterDefs";
-import { ChekiFilterImage } from "~/components/ChekiFilterImage";
+import { ChekiFilterDefs } from "~/components/Cheki/FilterDefs";
+import { ChekiFilterImage } from "~/components/Cheki/FilterImage";
 import {
   CHEKI_FRAME_MARGIN_LEFT,
   CHEKI_FRAME_MARGIN_TOP,

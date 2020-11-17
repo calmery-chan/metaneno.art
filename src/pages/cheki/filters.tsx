@@ -1,11 +1,11 @@
 import { css } from "linaria";
 import { NextPage } from "next";
 import React from "react";
-import { Controller } from "~/components/Controller";
+import { ChekiNavigation } from "~/components/Cheki/Navigation";
 import { FilterList } from "~/components/FilterList";
 import { Header } from "~/components/Header";
 import { Page } from "~/components/Page";
-import { ChekiCanvas } from "~/containers/ChekiCanvas";
+import { ChekiCanvas } from "~/containers/Cheki/Canvas";
 
 const cheki = css`
   flex-grow: 1;
@@ -26,7 +26,7 @@ export const Filters: NextPage = () => (
         <ChekiCanvas preview={false} />
       </div>
       <FilterList onClick={console.log} selected="f2" />
-      <Controller active="filters" />
+      <ChekiNavigation active="filters" />
     </div>
   </Page>
 );
