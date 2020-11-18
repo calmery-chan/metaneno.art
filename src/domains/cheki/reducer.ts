@@ -218,24 +218,8 @@ export const reducer = createReducer(initialState, (builder) => {
         layout: {
           ...state.layout,
           ...updateFrame(action.payload, direction),
+          ...updateTrim(action.payload, direction),
           displayable,
-        },
-      };
-    })
-    .addCase(actions.updateTrimDisplayable, (state, action) => {
-      const { payload: displayable } = action;
-      const {
-        image: { direction },
-      } = state;
-
-      const { trim } = updateTrim(action.payload, direction);
-
-      return {
-        ...state,
-        layout: {
-          ...state.layout,
-          displayable,
-          trim,
         },
       };
     });

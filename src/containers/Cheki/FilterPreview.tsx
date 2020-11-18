@@ -32,7 +32,7 @@ export const ChekiFilterPreview: React.FC = () => {
 
   const handleOnUpdateDisplayable = useCallback(
     ({ height, width, x, y }) =>
-      dispatch(actions.updateTrimDisplayable({ height, width, x, y })),
+      dispatch(actions.updateDisplayable({ height, width, x, y })),
     []
   );
 
