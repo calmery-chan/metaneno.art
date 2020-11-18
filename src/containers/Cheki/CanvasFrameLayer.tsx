@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import {
-  CHEKI_FRAME_IMAGE_URLS,
   CHEKI_HORIZONTAL_FRAME_WIDTH,
   CHEKI_VERTICAL_FRAME_HEIGHT,
 } from "~/constants/cheki";
@@ -18,7 +17,7 @@ export const ChekiCanvasFrameLayer: React.FC = () => {
 
   // Dummy
   useEffect(() => {
-    dispatch(actions.addFrame({ url: CHEKI_FRAME_IMAGE_URLS[0] }));
+    dispatch(actions.addFrame({ index: 0 }));
   }, []);
 
   return (
