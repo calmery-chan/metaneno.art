@@ -8,9 +8,9 @@ import { ExternalLink } from "~/components/Cheki/ExternalLink";
 import { ChekiFlexColumn } from "~/components/Cheki/FlexColumn";
 import { ChekiHashTag } from "~/components/Cheki/HashTag";
 import { ChekiHeader } from "~/components/Cheki/Header";
-import { ChekiNavigation } from "~/components/Cheki/Navigation";
 import { ChekiNote } from "~/components/Cheki/Note";
 import { TWITTER_HASHTAG_URL } from "~/constants/cheki";
+import { ChekiNavigation } from "~/containers/Cheki/Navigation";
 import { ChekiPreview } from "~/containers/Cheki/Preview";
 import { Spacing } from "~/styles/spacing";
 import { getShareUrlById, upload } from "~/utils/cheki";
@@ -70,7 +70,7 @@ const ChekiSaveAndShare: NextPage = () => {
             Twitter にシェアする
           </ChekiButton>
         </ChekiColumn>
-        <ChekiNavigation active="save-and-share" />
+        <ChekiNavigation />
       </ChekiFlexColumn>
     </ChekiApp>
   );

@@ -5,9 +5,9 @@ import { ChekiApp } from "~/components/Cheki/App";
 import { ChekiColumn } from "~/components/Cheki/Column";
 import { ChekiHeader } from "~/components/Cheki/Header";
 import { ChekiInputImage } from "~/components/Cheki/InputImage";
-import { ChekiNavigation } from "~/components/Cheki/Navigation";
 import { ChekiSubButton } from "~/components/Cheki/SubButton";
 import { ChekiTrimPreview } from "~/containers/Cheki/ChekiTrimPreview";
+import { ChekiNavigation } from "~/containers/Cheki/Navigation";
 import { ChekiShootButton } from "~/containers/Cheki/ShootButton";
 import { SplashScreen } from "~/containers/Cheki/SplashScreen";
 import { ChekiTrim } from "~/containers/Cheki/Trim";
@@ -73,7 +73,7 @@ export const Cheki: NextPage = () => {
               </ChekiColumn>
             </>
           )}
-          <ChekiNavigation active="camera" />
+          <ChekiNavigation />
         </Container>
       </ChekiApp>
 

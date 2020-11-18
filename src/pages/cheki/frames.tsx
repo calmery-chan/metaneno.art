@@ -4,9 +4,9 @@ import { ChekiApp } from "~/components/Cheki/App";
 import { ChekiColumn } from "~/components/Cheki/Column";
 import { ChekiFlexColumn } from "~/components/Cheki/FlexColumn";
 import { ChekiHeader } from "~/components/Cheki/Header";
-import { ChekiNavigation } from "~/components/Cheki/Navigation";
 import { ChekiFrameList } from "~/containers/Cheki/FrameList";
 import { ChekiFramePreview } from "~/containers/Cheki/FramePreview";
+import { ChekiNavigation } from "~/containers/Cheki/Navigation";
 
 export const ChekiFrames: NextPage = () => (
   <ChekiApp>
@@ -16,7 +16,7 @@ export const ChekiFrames: NextPage = () => (
       <ChekiColumn>
         <ChekiFrameList />
       </ChekiColumn>
-      <ChekiNavigation active="frames" />
+      <ChekiNavigation />
     </ChekiFlexColumn>
   </ChekiApp>
 );
