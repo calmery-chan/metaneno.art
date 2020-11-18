@@ -8,7 +8,10 @@ import {
   CHEKI_VERTICAL_IMAGE_WIDTH,
 } from "~/constants/cheki";
 import { ChekiDirection } from "~/types/ChekiDirection";
-import { getFrameSizeByDirection } from "~/utils/cheki";
+import {
+  getFrameSizeByDirection,
+  getImageSizeByDirection,
+} from "~/utils/cheki";
 
 const calculateCanvasPositionAndSize = (
   displayable: { height: number; width: number; x: number; y: number },
@@ -187,6 +190,31 @@ export const updateFrame = (
   return {
     frame: {
       ...calculateCanvasPositionAndSize(displayable, nextFrameViewBox),
+      viewBoxHeight: nextFrameViewBox.height,
+      viewBoxWidth: nextFrameViewBox.width,
+    },
+  };
+};
+
+export const updateTrim = (
+  displayable: {
+    height: number;
+    width: number;
+    x: number;
+    y: number;
+  },
+  direction: ChekiDirection
+) => {
+  const nextFrameViewBox = getImageSizeByDirection(direction);
+  const positionAndSize = calculateCanvasPositionAndSize(
+    displayable,
+    nextFrameViewBox
+  );
+
+  return {
+    trim: {
+      ...positionAndSize,
+      displayMagnification: nextFrameViewBox.width / positionAndSize.width,
       viewBoxHeight: nextFrameViewBox.height,
       viewBoxWidth: nextFrameViewBox.width,
     },

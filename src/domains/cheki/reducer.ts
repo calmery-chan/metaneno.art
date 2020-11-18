@@ -1,11 +1,7 @@
 import { createReducer } from "@reduxjs/toolkit";
 import * as actions from "./actions";
-import { getDirection, updateFrame } from "./utils";
-import {
-  ChekiFilter,
-  CHEKI_FRAME_MARGIN_LEFT,
-  CHEKI_FRAME_MARGIN_TOP,
-} from "~/constants/cheki";
+import { getDirection, updateFrame, updateTrim } from "./utils";
+import { ChekiFilter } from "~/constants/cheki";
 import { ChekiDirection } from "~/types/ChekiDirection";
 import { ChekiRectangle } from "~/types/ChekiRectangle";
 import { getImageSizeByDirection } from "~/utils/cheki";
@@ -24,6 +20,11 @@ export type State = {
     displayable: ChekiRectangle;
     displayMagnification: number;
     frame: ChekiRectangle & {
+      viewBoxHeight: number;
+      viewBoxWidth: number;
+    };
+    trim: ChekiRectangle & {
+      displayMagnification: number;
       viewBoxHeight: number;
       viewBoxWidth: number;
     };
@@ -58,6 +59,15 @@ const initialState: State = {
     },
     displayMagnification: 1,
     frame: {
+      height: 0,
+      viewBoxHeight: 0,
+      viewBoxWidth: 0,
+      width: 0,
+      x: 0,
+      y: 0,
+    },
+    trim: {
+      displayMagnification: 1,
       height: 0,
       viewBoxHeight: 0,
       viewBoxWidth: 0,
@@ -123,17 +133,12 @@ export const reducer = createReducer(initialState, (builder) => {
     .addCase(actions.startImageDragging, (state, action) => {
       const { cursorPositions } = action.payload;
       const { image, layout } = state;
+      const { trim } = layout;
 
       const [{ x, y }] = cursorPositions;
 
-      const cursorOffsetX =
-        (x - layout.frame.x) * layout.displayMagnification -
-        CHEKI_FRAME_MARGIN_LEFT -
-        image.x;
-      const cursorOffsetY =
-        (y - layout.frame.y) * layout.displayMagnification -
-        CHEKI_FRAME_MARGIN_TOP -
-        image.y;
+      const cursorOffsetX = (x - trim.x) * trim.displayMagnification - image.x;
+      const cursorOffsetY = (y - trim.y) * trim.displayMagnification - image.y;
 
       return {
         ...state,
@@ -148,16 +153,13 @@ export const reducer = createReducer(initialState, (builder) => {
     .addCase(actions.tick, (state, action) => {
       const { cursorPositions } = action.payload;
       const { image, layout, temporaries } = state;
+      const { trim } = layout;
 
       const [{ x, y }] = cursorPositions;
 
       if (temporaries.isImageDragging) {
-        const cursorX =
-          (x - layout.frame.x) * layout.displayMagnification -
-          CHEKI_FRAME_MARGIN_LEFT;
-        const cursorY =
-          (y - layout.frame.y) * layout.displayMagnification -
-          CHEKI_FRAME_MARGIN_TOP;
+        const cursorX = (x - trim.x) * trim.displayMagnification;
+        const cursorY = (y - trim.y) * trim.displayMagnification;
 
         let nextX = cursorX - temporaries.cursorOffsetX;
         let nextY = cursorY - temporaries.cursorOffsetY;
@@ -207,6 +209,23 @@ export const reducer = createReducer(initialState, (builder) => {
           displayable,
           displayMagnification: frame.viewBoxWidth / frame.width,
           frame,
+        },
+      };
+    })
+    .addCase(actions.updateTrimDisplayable, (state, action) => {
+      const { payload: displayable } = action;
+      const {
+        image: { direction },
+      } = state;
+
+      const { trim } = updateTrim(action.payload, direction);
+
+      return {
+        ...state,
+        layout: {
+          ...state.layout,
+          displayable,
+          trim,
         },
       };
     });

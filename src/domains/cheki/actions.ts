@@ -49,3 +49,10 @@ export const updateDisplayable = createAction<{
   x: number;
   y: number;
 }>("CHEKI/UPDATE_DISPLAYABLE");
+
+export const updateTrimDisplayable = createAction<{
+  height: number;
+  width: number;
+  x: number;
+  y: number;
+}>("CHEKI/UPDATE_TRIM_DISPLAYABLE");
