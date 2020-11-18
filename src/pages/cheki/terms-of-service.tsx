@@ -42,7 +42,7 @@ const Text = styled.p`
   margin-bottom: ${Spacing.l}px;
 `;
 
-const Terms: NextPage = () => {
+const ChekiTermsOfService: NextPage = () => {
   const { push } = useRouter();
   const handleOnClickTop = useCallback(() => push("/cheki"), []);
 
@@ -128,4 +128,4 @@ const Terms: NextPage = () => {
   );
 };
 
-export default Terms;
+export default ChekiTermsOfService;

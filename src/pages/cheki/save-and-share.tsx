@@ -20,7 +20,7 @@ const TwitterImage = styled.img`
   margin-right: ${Spacing.xs}px;
 `;
 
-const SaveAndShare: NextPage = () => {
+const ChekiSaveAndShare: NextPage = () => {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [shareId, setShareId] = useState<string | null>(null);
 
@@ -76,4 +76,4 @@ const SaveAndShare: NextPage = () => {
   );
 };
 
-export default SaveAndShare;
+export default ChekiSaveAndShare;

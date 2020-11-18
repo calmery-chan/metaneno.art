@@ -31,7 +31,7 @@ const Image = styled.div`
 
 // Types
 
-const Share: NextPage<{
+const ChekiShare: NextPage<{
   imageUrl: string;
   ogImageUrl: string;
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -102,7 +102,7 @@ const Share: NextPage<{
   );
 };
 
-Share.getInitialProps = async ({ query }: NextPageContext) => {
+ChekiShare.getInitialProps = async ({ query }: NextPageContext) => {
   const { data } = await getShareImage(query.id as string);
 
   return {
@@ -111,4 +111,4 @@ Share.getInitialProps = async ({ query }: NextPageContext) => {
   };
 };
 
-export default Share;
+export default ChekiShare;

@@ -8,7 +8,7 @@ import { ChekiNavigation } from "~/components/Cheki/Navigation";
 import { ChekiFrameList } from "~/containers/Cheki/FrameList";
 import { ChekiFramePreview } from "~/containers/Cheki/FramePreview";
 
-export const Frames: NextPage = () => (
+export const ChekiFrames: NextPage = () => (
   <ChekiApp>
     <ChekiFlexColumn>
       <ChekiHeader />
@@ -21,4 +21,4 @@ export const Frames: NextPage = () => (
   </ChekiApp>
 );
 
-export default Frames;
+export default ChekiFrames;

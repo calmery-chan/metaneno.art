@@ -20,7 +20,7 @@ const Container = styled.div`
   height: 100%;
 `;
 
-export const Camera: NextPage = () => {
+export const Cheki: NextPage = () => {
   const dispatch = useDispatch();
   const [transition, setTransition] = useState<"camera" | "trim" | "preview">(
     "camera"
@@ -76,4 +76,4 @@ export const Camera: NextPage = () => {
   );
 };
 
-export default Camera;
+export default Cheki;

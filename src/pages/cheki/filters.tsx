@@ -8,7 +8,7 @@ import { ChekiNavigation } from "~/components/Cheki/Navigation";
 import { ChekiFilterList } from "~/containers/Cheki/FilterList";
 import { ChekiFilterPreview } from "~/containers/Cheki/FilterPreview";
 
-export const Filters: NextPage = () => (
+export const ChekiFilters: NextPage = () => (
   <ChekiApp>
     <ChekiFlexColumn>
       <ChekiHeader />
@@ -21,4 +21,4 @@ export const Filters: NextPage = () => (
   </ChekiApp>
 );
 
-export default Filters;
+export default ChekiFilters;
