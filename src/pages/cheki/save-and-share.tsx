@@ -11,7 +11,7 @@ import { ChekiHeader } from "~/components/Cheki/Header";
 import { ChekiNavigation } from "~/components/Cheki/Navigation";
 import { ChekiNote } from "~/components/Cheki/Note";
 import { TWITTER_HASHTAG_URL } from "~/constants/cheki";
-import { ChekiCanvas } from "~/containers/Cheki/Canvas";
+import { ChekiPreview } from "~/containers/Cheki/Preview";
 import { Spacing } from "~/styles/spacing";
 import { getShareUrlById, upload } from "~/utils/cheki";
 
@@ -54,7 +54,7 @@ const SaveAndShare: NextPage = () => {
     <ChekiApp>
       <ChekiFlexColumn>
         <ChekiHeader />
-        <ChekiCanvas preview onCreatePreviewUrl={handleOnCreatePreviewUrl} />
+        <ChekiPreview onCreatePreviewUrl={handleOnCreatePreviewUrl} />
         <ChekiColumn margin>
           <ChekiNote>
             <ExternalLink href={TWITTER_HASHTAG_URL}>
