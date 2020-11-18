@@ -2,6 +2,7 @@ import { css } from "linaria";
 import { NextPage } from "next";
 import React from "react";
 import { ChekiApp } from "~/components/Cheki/App";
+import { ChekiFlexColumn } from "~/components/Cheki/FlexColumn";
 import { ChekiHeader } from "~/components/Cheki/Header";
 import { ChekiNavigation } from "~/components/Cheki/Navigation";
 import { ChekiCanvas } from "~/containers/Cheki/Canvas";
@@ -12,22 +13,14 @@ const cheki = css`
   height: fit-content;
 `;
 
-const column = css`
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-`;
-
 export const Filters: NextPage = () => (
   <ChekiApp>
-    <div className={column}>
+    <ChekiFlexColumn>
       <ChekiHeader />
-      <div className={cheki}>
-        <ChekiCanvas preview={false} />
-      </div>
-      <ChekiFilterList onClick={console.log} selected="f2" />
+      <ChekiCanvas preview={false} />
+      <ChekiFilterList />
       <ChekiNavigation active="filters" />
-    </div>
+    </ChekiFlexColumn>
   </ChekiApp>
 );
 

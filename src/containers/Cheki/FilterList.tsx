@@ -1,9 +1,11 @@
 import { styled } from "linaria/react";
-import React from "react";
+import React, { useCallback } from "react";
 import { ChekiGradientText } from "../../components/Cheki/GradientText";
 import { ChekiHorizontal } from "../../components/Cheki/Horizontal";
 import { ChekiFilter, CHEKI_FILTERS } from "~/constants/cheki";
 import { ChekiFilterThumbnail } from "~/containers/Cheki/FilterThumbnail";
+import { selectors, useDispatch, useSelector } from "~/domains";
+import { actions } from "~/domains/cheki";
 import { Colors } from "~/styles/colors";
 import { Mixin } from "~/styles/mixin";
 import { Spacing } from "~/styles/spacing";
@@ -36,29 +38,37 @@ const FilterTitle = styled.div`
   text-transform: uppercase;
 `;
 
-type FilterListProps = {
-  onClick: (filter: ChekiFilter) => void;
-  selected: ChekiFilter;
-};
+export const ChekiFilterList: React.FC = () => {
+  const dispatch = useDispatch();
+  const {
+    image: { filter: selected },
+  } = useSelector(selectors.cheki);
 
-export const ChekiFilterList: React.FC<FilterListProps> = ({
-  onClick,
-  selected,
-}) => (
-  <Container>
-    <ChekiHorizontal padding={Spacing.l}>
-      {CHEKI_FILTERS.map((filter, index) => (
-        <Filter className="filter" key={index} onClick={() => onClick(filter)}>
-          <FilterTitle className={Typography.XS}>
-            {filter === selected ? (
-              <ChekiGradientText>{filter}</ChekiGradientText>
-            ) : (
-              filter
-            )}
-          </FilterTitle>
-          <ChekiFilterThumbnail filter={filter} />
-        </Filter>
-      ))}
-    </ChekiHorizontal>
-  </Container>
-);
+  const handleOnClickFilter = useCallback(
+    (filter: ChekiFilter) => dispatch(actions.changeFilter({ filter })),
+    []
+  );
+
+  return (
+    <Container>
+      <ChekiHorizontal padding={Spacing.l}>
+        {CHEKI_FILTERS.map((filter, index) => (
+          <Filter
+            className="filter"
+            key={index}
+            onClick={() => handleOnClickFilter(filter)}
+          >
+            <FilterTitle className={Typography.XS}>
+              {filter === selected ? (
+                <ChekiGradientText>{filter}</ChekiGradientText>
+              ) : (
+                filter
+              )}
+            </FilterTitle>
+            <ChekiFilterThumbnail filter={filter} />
+          </Filter>
+        ))}
+      </ChekiHorizontal>
+    </Container>
+  );
+};
