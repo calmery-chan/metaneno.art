@@ -40,4 +40,14 @@ export const fadeOutDown = css`
   -webkit-animation-name: fadeOutDown;
 `;
 
+export const bounceIn = css`
+  animation-name: bounceIn;
+  -webkit-animation-name: bounceIn;
+`;
+
+export const bounceOut = css`
+  animation-name: bounceOut;
+  -webkit-animation-name: bounceOut;
+`;
+
 export const Mixin = { ANIMATION_DURATION, animation, clickable };

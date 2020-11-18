@@ -1,6 +1,8 @@
 import { styled } from "linaria/lib/react";
+import { useRouter } from "next/router";
 import React, { useCallback, useState } from "react";
 import { ChekiModal, ChekiModalText, ChekiModalTitle } from "./Modal";
+import { ChekiPopup } from "./Popup";
 import { Mixin } from "~/styles/mixin";
 import { Spacing } from "~/styles/spacing";
 
@@ -24,18 +26,22 @@ const Container = styled.div`
 `;
 
 export const ChekiHeader: React.FC = () => {
+  const { push } = useRouter();
   const [information, setInformation] = useState(false);
+  const [backToTop, setBackToTop] = useState(false);
 
-  const handleOnClickInformation = useCallback(() => {
-    setInformation(!information);
-  }, [information]);
+  const handleOnClickBackToTop = useCallback(() => push("/"), []);
+  const handleOnClickClosePopup = useCallback(() => setBackToTop(false), []);
+  const handleOnClickInformation = useCallback(
+    () => setInformation(!information),
+    [information]
+  );
+  const handleOnClickOpenPopup = useCallback(() => setBackToTop(true), []);
 
   return (
     <>
       <Container>
-        <a href="/">
-          <img alt="閉じる" src="/close.svg" />
-        </a>
+        <img alt="閉じる" onClick={handleOnClickOpenPopup} src="/close.svg" />
         <img
           alt="インフォメーション"
           onClick={handleOnClickInformation}
@@ -68,6 +74,18 @@ export const ChekiHeader: React.FC = () => {
           までお願いします。
         </ChekiModalText>
       </ChekiModal>
+
+      {backToTop && (
+        <ChekiPopup
+          onCancel={handleOnClickClosePopup}
+          onEnter={handleOnClickBackToTop}
+          enterText="戻る"
+        >
+          めたねのあーとのトップページに戻りますか？
+          <br />
+          編集中の内容は全て失われます！
+        </ChekiPopup>
+      )}
     </>
   );
 };
