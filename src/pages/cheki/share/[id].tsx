@@ -54,6 +54,7 @@ const ChekiShare: NextPage<{
     );
 
     resizeObserver.observe(current);
+    setSize(current.getBoundingClientRect());
 
     return () => {
       resizeObserver.unobserve(current);

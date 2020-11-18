@@ -64,6 +64,7 @@ export const ChekiPreview: React.FC<ChekiPreviewProps> = ({
     const resizeObserver = new ResizeObserver(handleOnUpdateDisplayable);
 
     resizeObserver.observe(current);
+    handleOnUpdateDisplayable();
 
     return () => {
       resizeObserver.unobserve(current);

@@ -54,6 +54,7 @@ export const ChekiFilterPreview: React.FC = () => {
     const resizeObserver = new ResizeObserver(handleOnUpdateDisplayable);
 
     resizeObserver.observe(current);
+    handleOnUpdateDisplayable();
 
     return () => {
       resizeObserver.unobserve(current);
