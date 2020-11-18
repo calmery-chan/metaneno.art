@@ -5,8 +5,8 @@ import { ChekiApp } from "~/components/Cheki/App";
 import { ChekiFlexColumn } from "~/components/Cheki/FlexColumn";
 import { ChekiHeader } from "~/components/Cheki/Header";
 import { ChekiNavigation } from "~/components/Cheki/Navigation";
-import { ChekiCanvas } from "~/containers/Cheki/Canvas";
 import { ChekiFilterList } from "~/containers/Cheki/FilterList";
+import { ChekiFilterPreview } from "~/containers/Cheki/FilterPreview";
 
 const cheki = css`
   flex-grow: 1;
@@ -17,7 +17,7 @@ export const Filters: NextPage = () => (
   <ChekiApp>
     <ChekiFlexColumn>
       <ChekiHeader />
-      <ChekiCanvas preview={false} />
+      <ChekiFilterPreview />
       <ChekiFilterList />
       <ChekiNavigation active="filters" />
     </ChekiFlexColumn>
