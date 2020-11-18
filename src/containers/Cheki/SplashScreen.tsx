@@ -1,8 +1,10 @@
 import classnames from "classnames";
 import { styled } from "linaria/lib/react";
 import React, { useEffect, useState } from "react";
-import { ChekiApp } from "./App";
+import { ChekiApp } from "../../components/Cheki/App";
 import { SPLASH_SCREEN_DURATION } from "~/constants/cheki";
+import { selectors, useDispatch, useSelector } from "~/domains";
+import { actions } from "~/domains/cheki";
 import { Colors } from "~/styles/colors";
 import { fadeOut, Mixin } from "~/styles/mixin";
 import { Spacing } from "~/styles/spacing";
@@ -28,8 +30,10 @@ const Image = styled.img`
 `;
 
 export const SplashScreen: React.FC = () => {
+  const dispatch = useDispatch();
+  const { ready } = useSelector(selectors.cheki);
+
   const [fire, setFire] = useState(false);
-  const [hidden, setHidden] = useState(false);
 
   // Side Effects
 
@@ -42,14 +46,14 @@ export const SplashScreen: React.FC = () => {
   useEffect(() => {
     if (fire) {
       setTimeout(() => {
-        setHidden(true);
+        dispatch(actions.ready());
       }, Mixin.ANIMATION_DURATION.milliseconds);
     }
   }, [fire]);
 
   // Render
 
-  if (hidden) {
+  if (ready) {
     return null;
   }
 

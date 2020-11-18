@@ -29,6 +29,7 @@ export type State = {
       viewBoxWidth: number;
     };
   };
+  ready: boolean;
   temporaries: {
     cursorOffsetX: number;
     cursorOffsetY: number;
@@ -76,6 +77,7 @@ const initialState: State = {
       y: 0,
     },
   },
+  ready: false,
   temporaries: {
     cursorOffsetX: 0,
     cursorOffsetY: 0,
@@ -85,6 +87,10 @@ const initialState: State = {
 
 export const reducer = createReducer(initialState, (builder) => {
   builder
+    .addCase(actions.ready, (state) => ({
+      ...state,
+      ready: true,
+    }))
     .addCase(actions.addFrame.fulfilled, (state, action) => {
       const { index, url } = action.payload;
 

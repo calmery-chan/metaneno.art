@@ -61,3 +61,5 @@ export const updateTrimDisplayable = createAction<{
   x: number;
   y: number;
 }>("CHEKI/UPDATE_TRIM_DISPLAYABLE");
+
+export const ready = createAction("CHEKI/READY");
