@@ -19,7 +19,6 @@ export type State = {
   };
   layout: {
     displayable: ChekiRectangle;
-    displayMagnification: number;
     frame: ChekiRectangle & {
       viewBoxHeight: number;
       viewBoxWidth: number;
@@ -59,7 +58,6 @@ const initialState: State = {
       x: 0,
       y: 0,
     },
-    displayMagnification: 1,
     frame: {
       height: 0,
       viewBoxHeight: 0,
@@ -203,15 +201,12 @@ export const reducer = createReducer(initialState, (builder) => {
         image: { direction },
       } = state;
 
-      const { frame } = updateFrame(action.payload, direction);
-
       return {
         ...state,
         layout: {
           ...state.layout,
+          ...updateFrame(action.payload, direction),
           displayable,
-          displayMagnification: frame.viewBoxWidth / frame.width,
-          frame,
         },
       };
     })
