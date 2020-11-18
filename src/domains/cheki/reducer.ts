@@ -30,6 +30,7 @@ export type State = {
     };
   };
   ready: boolean;
+  shootingCondition: "in-preparation" | "trimming" | "complate";
   temporaries: {
     cursorOffsetX: number;
     cursorOffsetY: number;
@@ -78,6 +79,7 @@ const initialState: State = {
     },
   },
   ready: false,
+  shootingCondition: "in-preparation",
   temporaries: {
     cursorOffsetX: 0,
     cursorOffsetY: 0,
@@ -87,6 +89,10 @@ const initialState: State = {
 
 export const reducer = createReducer(initialState, (builder) => {
   builder
+    .addCase(actions.changeShootingCondition, (state, action) => ({
+      ...state,
+      ...action.payload,
+    }))
     .addCase(actions.ready, (state) => ({
       ...state,
       ready: true,

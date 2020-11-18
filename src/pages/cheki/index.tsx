@@ -1,6 +1,6 @@
 import { styled } from "linaria/react";
 import { NextPage } from "next";
-import React, { useCallback, useState } from "react";
+import React, { useCallback } from "react";
 import { ChekiApp } from "~/components/Cheki/App";
 import { ChekiColumn } from "~/components/Cheki/Column";
 import { ChekiHeader } from "~/components/Cheki/Header";
@@ -11,7 +11,7 @@ import { ChekiTrimPreview } from "~/containers/Cheki/ChekiTrimPreview";
 import { ChekiShootButton } from "~/containers/Cheki/ShootButton";
 import { SplashScreen } from "~/containers/Cheki/SplashScreen";
 import { ChekiTrim } from "~/containers/Cheki/Trim";
-import { useDispatch } from "~/domains";
+import { selectors, useDispatch, useSelector } from "~/domains";
 import { actions } from "~/domains/cheki";
 
 const Container = styled.div`
@@ -22,22 +22,28 @@ const Container = styled.div`
 
 export const Cheki: NextPage = () => {
   const dispatch = useDispatch();
-  const [transition, setTransition] = useState<"camera" | "trim" | "preview">(
-    "camera"
-  );
+  const { shootingCondition } = useSelector(selectors.cheki);
 
   const handleOnLoadImage = useCallback((url: string) => {
     dispatch(actions.addImage({ url }));
-    setTransition("trim");
+    dispatch(
+      actions.changeShootingCondition({ shootingCondition: "trimming" })
+    );
   }, []);
 
   const handleOnClickShootButton = useCallback(
-    () => setTransition("preview"),
+    () =>
+      dispatch(
+        actions.changeShootingCondition({ shootingCondition: "complate" })
+      ),
     []
   );
 
   const handleOnClickShootAgainButton = useCallback(
-    () => setTransition("trim"),
+    () =>
+      dispatch(
+        actions.changeShootingCondition({ shootingCondition: "trimming" })
+      ),
     []
   );
 
@@ -46,10 +52,10 @@ export const Cheki: NextPage = () => {
       <ChekiApp>
         <Container>
           <ChekiHeader />
-          {transition === "camera" && (
+          {shootingCondition === "in-preparation" && (
             <ChekiInputImage onLoad={handleOnLoadImage} />
           )}
-          {transition === "trim" && (
+          {shootingCondition === "trimming" && (
             <>
               <ChekiTrim />
               <ChekiColumn margin>
@@ -57,7 +63,7 @@ export const Cheki: NextPage = () => {
               </ChekiColumn>
             </>
           )}
-          {transition === "preview" && (
+          {shootingCondition === "complate" && (
             <>
               <ChekiTrimPreview />
               <ChekiColumn margin>

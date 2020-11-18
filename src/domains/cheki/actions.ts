@@ -63,3 +63,7 @@ export const updateTrimDisplayable = createAction<{
 }>("CHEKI/UPDATE_TRIM_DISPLAYABLE");
 
 export const ready = createAction("CHEKI/READY");
+
+export const changeShootingCondition = createAction<{
+  shootingCondition: "in-preparation" | "trimming" | "complate";
+}>("CHEKI/CHANGE_SHOOTING_CONDITION");
