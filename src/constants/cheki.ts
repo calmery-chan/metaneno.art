@@ -32,11 +32,17 @@ export const CHEKI_VERTICAL_FRAME_WIDTH =
 
 export const CHEKI_FRAME_IMAGE_URLS = [
   // https://www.vecteezy.com/vector-art/123466-cartoon-sweets-vector-pattern
-  "/cheki/frames/1.png",
+  { name: "Test", url: "/cheki/frames/1.png" },
   // https://www.vecteezy.com/vector-art/98112-cute-girly-pattern-vector
-  "/cheki/frames/2.png",
+  { name: "Test", url: "/cheki/frames/2.png" },
   // https://www.vecteezy.com/vector-art/149825-colorful-candy-pattern-vectors
-  "/cheki/frames/3.png",
+  { name: "Test", url: "/cheki/frames/3.png" },
+  // https://www.vecteezy.com/vector-art/123466-cartoon-sweets-vector-pattern
+  { name: "Test", url: "/cheki/frames/1.png" },
+  // https://www.vecteezy.com/vector-art/98112-cute-girly-pattern-vector
+  { name: "Test", url: "/cheki/frames/2.png" },
+  // https://www.vecteezy.com/vector-art/149825-colorful-candy-pattern-vectors
+  { name: "Test", url: "/cheki/frames/3.png" },
 ];
 
 export const CHEKI_FILTERS = [

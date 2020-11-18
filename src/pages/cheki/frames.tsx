@@ -1,21 +1,24 @@
 import { NextPage } from "next";
 import React from "react";
 import { ChekiApp } from "~/components/Cheki/App";
+import { ChekiColumn } from "~/components/Cheki/Column";
 import { ChekiFlexColumn } from "~/components/Cheki/FlexColumn";
 import { ChekiHeader } from "~/components/Cheki/Header";
 import { ChekiNavigation } from "~/components/Cheki/Navigation";
-import { ChekiFilterList } from "~/containers/Cheki/FilterList";
-import { ChekiFilterPreview } from "~/containers/Cheki/FilterPreview";
+import { ChekiFrameList } from "~/containers/Cheki/FrameList";
+import { ChekiFramePreview } from "~/containers/Cheki/FramePreview";
 
-export const Filters: NextPage = () => (
+export const Frames: NextPage = () => (
   <ChekiApp>
     <ChekiFlexColumn>
       <ChekiHeader />
-      <ChekiFilterPreview />
-      <ChekiFilterList />
-      <ChekiNavigation active="filters" />
+      <ChekiFramePreview />
+      <ChekiColumn>
+        <ChekiFrameList />
+      </ChekiColumn>
+      <ChekiNavigation active="frames" />
     </ChekiFlexColumn>
   </ChekiApp>
 );
 
-export default Filters;
+export default Frames;

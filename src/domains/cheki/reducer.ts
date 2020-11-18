@@ -8,6 +8,7 @@ import { getImageSizeByDirection } from "~/utils/cheki";
 
 export type State = {
   frame: {
+    index: number;
     url: string;
   };
   image: ChekiRectangle & {
@@ -38,6 +39,7 @@ export type State = {
 
 const initialState: State = {
   frame: {
+    index: 0,
     url: "",
   },
   image: {
@@ -86,12 +88,13 @@ const initialState: State = {
 export const reducer = createReducer(initialState, (builder) => {
   builder
     .addCase(actions.addFrame.fulfilled, (state, action) => {
-      const { url } = action.payload;
+      const { index, url } = action.payload;
 
       return {
         ...state,
         frame: {
           ...state.frame,
+          index,
           url,
         },
       };

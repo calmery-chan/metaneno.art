@@ -5,13 +5,18 @@ import {
   resizeFrameImage,
   resizeImage,
 } from "./utils";
-import { ChekiFilter } from "~/constants/cheki";
+import { ChekiFilter, CHEKI_FRAME_IMAGE_URLS } from "~/constants/cheki";
 import { CursorPosition } from "~/utils/cheki";
 
-export const addFrame = createAsyncThunk<{ url: string }, { url: string }>(
-  "CHEKI/ADD_FRAME",
-  async ({ url }) => resizeFrameImage(await convertUrlToImage(url))
-);
+export const addFrame = createAsyncThunk<
+  { index: number; url: string },
+  { index: number }
+>("CHEKI/ADD_FRAME", async ({ index }) => ({
+  ...resizeFrameImage(
+    await convertUrlToImage(CHEKI_FRAME_IMAGE_URLS[index].url)
+  ),
+  index,
+}));
 
 export const addImage = createAsyncThunk<
   {
