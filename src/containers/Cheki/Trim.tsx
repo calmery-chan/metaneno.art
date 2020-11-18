@@ -58,9 +58,11 @@ export const ChekiTrim: React.FC = () => {
     []
   );
 
-  const handleOnUpdateDisplayable = useCallback(({ height, width, x, y }) => {
-    dispatch(actions.updateTrimDisplayable({ height, width, x, y }));
-  }, []);
+  const handleOnUpdateDisplayable = useCallback(
+    ({ height, width, x, y }) =>
+      dispatch(actions.updateTrimDisplayable({ height, width, x, y })),
+    []
+  );
 
   // Side Effects
 

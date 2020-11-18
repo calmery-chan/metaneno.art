@@ -5,7 +5,7 @@ import { ChekiCanvasFrameLayer } from "./CanvasFrameLayer";
 import { ChekiCanvasImageLayer } from "./CanvasImageLayer";
 import { selectors, useDispatch, useSelector } from "~/domains";
 import { actions } from "~/domains/cheki";
-import { convertSvgToDataUrl } from "~/utils/cheki";
+import { convertSvgToDataUrl, useDisplayable } from "~/utils/cheki";
 
 const Container = styled.div`
   height: 100%;
@@ -39,38 +39,15 @@ export const ChekiPreview: React.FC<ChekiPreviewProps> = ({
 
   /* --- Refs --- */
 
-  const containerRef = useRef<HTMLDivElement>(null);
+  const handleOnUpdateDisplayable = useCallback(
+    ({ height, width, x, y }) =>
+      dispatch(actions.updateDisplayable({ height, width, x, y })),
+    []
+  );
 
-  const handleOnUpdateDisplayable = useCallback(() => {
-    const { current } = containerRef;
-
-    if (!current) {
-      return;
-    }
-
-    const { height, width, x, y } = current.getBoundingClientRect();
-    dispatch(actions.updateDisplayable({ height, width, x, y }));
-  }, [containerRef]);
-
-  /* --- Side Effects --- */
-
-  useEffect(() => {
-    const { current } = containerRef;
-
-    if (!current) {
-      return;
-    }
-
-    const resizeObserver = new ResizeObserver(handleOnUpdateDisplayable);
-
-    resizeObserver.observe(current);
-    handleOnUpdateDisplayable();
-
-    return () => {
-      resizeObserver.unobserve(current);
-      resizeObserver.disconnect();
-    };
-  }, [containerRef]);
+  const containerRef = useDisplayable<HTMLDivElement>(
+    handleOnUpdateDisplayable
+  );
 
   useEffect(() => {
     const { current } = svgRef;

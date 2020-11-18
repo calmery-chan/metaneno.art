@@ -1,9 +1,10 @@
 import { styled } from "linaria/react";
-import React, { useCallback, useEffect, useRef } from "react";
+import React, { useCallback } from "react";
 import { ChekiFilterDefs } from "~/components/Cheki/FilterDefs";
 import { ChekiFilterImage } from "~/components/Cheki/FilterImage";
 import { useDispatch, useSelector, selectors } from "~/domains";
 import { actions } from "~/domains/cheki";
+import { useDisplayable } from "~/utils/cheki";
 
 // Styles
 
@@ -24,43 +25,20 @@ export const ChekiFilterPreview: React.FC = () => {
 
   // Refs
 
-  const containerRef = useRef<HTMLDivElement>(null);
-
   const { image, layout } = cheki;
   const { displayable, trim } = layout;
 
-  // Events
-
-  const handleOnUpdateDisplayable = useCallback(() => {
-    const { current } = containerRef;
-
-    if (!current) {
-      return;
-    }
-
-    const { height, width, x, y } = current.getBoundingClientRect();
-    dispatch(actions.updateTrimDisplayable({ height, width, x, y }));
-  }, [containerRef]);
-
   // Side Effects
 
-  useEffect(() => {
-    const { current } = containerRef;
+  const handleOnUpdateDisplayable = useCallback(
+    ({ height, width, x, y }) =>
+      dispatch(actions.updateTrimDisplayable({ height, width, x, y })),
+    []
+  );
 
-    if (!current) {
-      return;
-    }
-
-    const resizeObserver = new ResizeObserver(handleOnUpdateDisplayable);
-
-    resizeObserver.observe(current);
-    handleOnUpdateDisplayable();
-
-    return () => {
-      resizeObserver.unobserve(current);
-      resizeObserver.disconnect();
-    };
-  }, [containerRef]);
+  const containerRef = useDisplayable<HTMLDivElement>(
+    handleOnUpdateDisplayable
+  );
 
   // Render
 
