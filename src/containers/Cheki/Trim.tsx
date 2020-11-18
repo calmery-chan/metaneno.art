@@ -9,6 +9,7 @@ import {
   convertEventToCursorPositions,
   MouseRelatedEvent,
   TouchRelatedEvent,
+  useDisplayable,
 } from "~/utils/cheki";
 
 // Styles
@@ -35,7 +36,6 @@ export const ChekiTrim: React.FC = () => {
   // Refs
 
   const canvasRef = useRef<SVGSVGElement>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
 
   const { layout } = cheki;
   const { displayable } = layout;
@@ -58,16 +58,9 @@ export const ChekiTrim: React.FC = () => {
     []
   );
 
-  const handleOnUpdateDisplayable = useCallback(() => {
-    const { current } = containerRef;
-
-    if (!current) {
-      return;
-    }
-
-    const { height, width, x, y } = current.getBoundingClientRect();
+  const handleOnUpdateDisplayable = useCallback(({ height, width, x, y }) => {
     dispatch(actions.updateTrimDisplayable({ height, width, x, y }));
-  }, [containerRef]);
+  }, []);
 
   // Side Effects
 
@@ -85,23 +78,9 @@ export const ChekiTrim: React.FC = () => {
     };
   }, [canvasRef]);
 
-  useEffect(() => {
-    const { current } = containerRef;
-
-    if (!current) {
-      return;
-    }
-
-    const resizeObserver = new ResizeObserver(handleOnUpdateDisplayable);
-
-    resizeObserver.observe(current);
-    handleOnUpdateDisplayable();
-
-    return () => {
-      resizeObserver.unobserve(current);
-      resizeObserver.disconnect();
-    };
-  }, [containerRef]);
+  const containerRef = useDisplayable<HTMLDivElement>(
+    handleOnUpdateDisplayable
+  );
 
   // Render
 

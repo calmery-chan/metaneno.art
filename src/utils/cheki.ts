@@ -1,6 +1,7 @@
 import * as url from "url";
 import _axios from "axios";
 import blueimpLoadImage from "blueimp-load-image";
+import { useCallback, useEffect, useRef } from "react";
 import {
   CHEKI_HORIZONTAL_IMAGE_HEIGHT,
   CHEKI_VERTICAL_IMAGE_HEIGHT,
@@ -203,3 +204,48 @@ export const getShareUrlById = (id: string) =>
       Math.floor(Math.random() * SHARE_RANDOM_HASHTAGS.length)
     ]
   }`;
+
+// Hooks
+
+export const useDisplayable = <T extends HTMLElement>(
+  onUpdate: (rect: {
+    height: number;
+    width: number;
+    x: number;
+    y: number;
+  }) => void
+) => {
+  const ref = useRef<T>(null);
+
+  const handleOnUpdateDisplayable = useCallback(() => {
+    const { current } = ref;
+
+    if (!current) {
+      return;
+    }
+
+    const { height, width, x, y } = current.getBoundingClientRect();
+
+    onUpdate({ height, width, x, y });
+  }, [onUpdate]);
+
+  useEffect(() => {
+    const { current } = ref;
+
+    if (!current) {
+      return;
+    }
+
+    const resizeObserver = new ResizeObserver(handleOnUpdateDisplayable);
+
+    resizeObserver.observe(current);
+    handleOnUpdateDisplayable();
+
+    return () => {
+      resizeObserver.unobserve(current);
+      resizeObserver.disconnect();
+    };
+  }, [ref]);
+
+  return ref;
+};
