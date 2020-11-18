@@ -1,6 +1,7 @@
 import { NextPage } from "next";
 import React from "react";
 import { ChekiApp } from "~/components/Cheki/App";
+import { ChekiColumn } from "~/components/Cheki/Column";
 import { ChekiFlexColumn } from "~/components/Cheki/FlexColumn";
 import { ChekiHeader } from "~/components/Cheki/Header";
 import { ChekiNavigation } from "~/components/Cheki/Navigation";
@@ -12,7 +13,9 @@ export const Filters: NextPage = () => (
     <ChekiFlexColumn>
       <ChekiHeader />
       <ChekiFilterPreview />
-      <ChekiFilterList />
+      <ChekiColumn>
+        <ChekiFilterList />
+      </ChekiColumn>
       <ChekiNavigation active="filters" />
     </ChekiFlexColumn>
   </ChekiApp>

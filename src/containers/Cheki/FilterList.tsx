@@ -11,14 +11,6 @@ import { Mixin } from "~/styles/mixin";
 import { Spacing } from "~/styles/spacing";
 import { Typography } from "~/styles/typography";
 
-const Container = styled.div`
-  margin-top: ${Spacing.m}px;
-
-  /* &:hover .filter:not(:hover) {
-    opacity: 0.48;
-  } */
-`;
-
 const Filter = styled.div`
   /* ${Mixin.clickable}; */
 
@@ -50,25 +42,23 @@ export const ChekiFilterList: React.FC = () => {
   );
 
   return (
-    <Container>
-      <ChekiHorizontal padding={Spacing.l}>
-        {CHEKI_FILTERS.map((filter, index) => (
-          <Filter
-            className="filter"
-            key={index}
-            onClick={() => handleOnClickFilter(filter)}
-          >
-            <FilterTitle className={Typography.XS}>
-              {filter === selected ? (
-                <ChekiGradientText>{filter}</ChekiGradientText>
-              ) : (
-                filter
-              )}
-            </FilterTitle>
-            <ChekiFilterThumbnail filter={filter} />
-          </Filter>
-        ))}
-      </ChekiHorizontal>
-    </Container>
+    <ChekiHorizontal padding={Spacing.l}>
+      {CHEKI_FILTERS.map((filter, index) => (
+        <Filter
+          className="filter"
+          key={index}
+          onClick={() => handleOnClickFilter(filter)}
+        >
+          <FilterTitle className={Typography.XS}>
+            {filter === selected ? (
+              <ChekiGradientText>{filter}</ChekiGradientText>
+            ) : (
+              filter
+            )}
+          </FilterTitle>
+          <ChekiFilterThumbnail filter={filter} />
+        </Filter>
+      ))}
+    </ChekiHorizontal>
   );
 };
