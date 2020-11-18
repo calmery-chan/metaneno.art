@@ -29,6 +29,7 @@ export const ChekiTrimImageOperator: React.FC = () => {
       height={trim.height}
       onMouseDown={handleOnStartDragging}
       onTouchStart={handleOnStartDragging}
+      style={{ cursor: "move" }}
       width={trim.width}
       x={trim.x - displayable.x}
       y={trim.y - displayable.y}
