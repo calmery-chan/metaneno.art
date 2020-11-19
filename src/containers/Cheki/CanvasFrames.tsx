@@ -3,7 +3,7 @@ import { ChekiCanvasFrameLayer } from "./CanvasFrameLayer";
 import { ChekiCanvasImageLayer } from "./CanvasImageLayer";
 import { selectors, useSelector } from "~/domains";
 
-export const ChekiFramedCanvas: React.FC = () => {
+export const ChekiCanvasFrames: React.FC = () => {
   const {
     layout: { displayable, frame },
   } = useSelector(selectors.cheki);

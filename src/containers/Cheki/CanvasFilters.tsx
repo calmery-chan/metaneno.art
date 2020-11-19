@@ -3,7 +3,7 @@ import { ChekiFilterDefs } from "~/components/Cheki/FilterDefs";
 import { ChekiFilterImage } from "~/components/Cheki/FilterImage";
 import { selectors, useSelector } from "~/domains";
 
-export const ChekiFilteredCanvas: React.FC = () => {
+export const ChekiCanvasFilters: React.FC = () => {
   const cheki = useSelector(selectors.cheki);
 
   const { image, layout } = cheki;

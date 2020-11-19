@@ -84,6 +84,6 @@ export const ChekiNavigation = () => (
     <NavigationIcon always href="/cheki" src="/camera.svg" />
     <NavigationIcon href="/cheki/filters" src="/filters.svg" />
     <NavigationIcon href="/cheki/frames" src="/frames.svg" />
-    <NavigationIcon href="/cheki/save-and-share" src="/save-and-share.svg" />
+    <NavigationIcon href="/cheki/save" src="/save.svg" />
   </Container>
 );
