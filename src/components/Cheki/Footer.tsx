@@ -21,7 +21,7 @@ const Container = styled.div`
 export const ChekiFooter: React.FC = () => (
   <Container className="flex font-bold justify-center" css={Typography.XS}>
     <a href="https://metaneno.art/">めたねのあーと</a>
-    <a href="terms-of-service">利用規約</a>
+    <a href="/cheki/terms-of-service">利用規約</a>
     <ExternalLink href="https://forms.gle/37ucm5pkdZV7L4HAA">
       お問い合わせ
     </ExternalLink>
