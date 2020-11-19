@@ -202,6 +202,11 @@ export const reducer = createReducer(initialState, (builder) => {
       ...state,
       ...action.payload,
     }))
+    .addCase(actions.removeImage, (state, action) => ({
+      ...state,
+      image: initialState.image,
+      ready: false,
+    }))
     .addCase(actions.splashed, (state) => ({
       ...state,
       splashed: true,

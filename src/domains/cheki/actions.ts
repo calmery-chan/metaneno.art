@@ -24,6 +24,8 @@ export const addImage = createAsyncThunk<
   return { height, thumbnailUrl, url: imageUrl, width };
 });
 
+export const removeImage = createAction("CHEKI/REMOVE_IMAGE");
+
 export const startImageDragging = createAction<{
   cursorPositions: CursorPosition[];
 }>("CHEKI/START_IMAGE_DRAGGING");
