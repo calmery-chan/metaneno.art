@@ -1,0 +1,22 @@
+{
+  "background_color": "#fff",
+  "description": "ノネメちゃんと一緒に写真を撮ろう！",
+  "display": "browser",
+  "icons": [
+    {
+      "sizes": "192x192",
+      "src": "/cheki/icon.png",
+      "type": "image/png"
+    },
+    {
+      "sizes": "512x512",
+      "src": "/cheki/icon-512x512.png",
+      "type": "image/png"
+    }
+  ],
+  "lang": "ja_JP",
+  "name": "ノネメちゃんチェキ",
+  "short_name": "ノネメチェキ",
+  "start_url": "/cheki",
+  "theme_color": "#ffffff"
+}

@@ -27,6 +27,7 @@ const IconContainer = styled.div`
   }
 `;
 
+// `object` タグに `alt` を指定したいが型に存在しないため
 const Icon = styled.object`
   filter: brightness(0) invert(63%);
   height: 32px;
@@ -35,17 +36,18 @@ const Icon = styled.object`
   &.active {
     filter: none;
   }
-`;
+` as any;
 
 const disabled = css`
   cursor: auto;
 `;
 
 const NavigationIcon: React.FC<{
+  alt: string;
   href: string;
   src: string;
   always?: boolean;
-}> = ({ always = false, href, src }) => {
+}> = ({ alt, always = false, href, src }) => {
   const { pathname, push } = useRouter();
   const { ready } = useSelector(selectors.cheki);
 
@@ -71,6 +73,7 @@ const NavigationIcon: React.FC<{
       }
     >
       <Icon
+        alt={alt}
         className={classnames({ active: pathname === href })}
         data={src}
         type="image/svg+xml"
@@ -81,9 +84,21 @@ const NavigationIcon: React.FC<{
 
 export const ChekiNavigation = () => (
   <Container>
-    <NavigationIcon always href="/cheki" src="/cheki/camera.svg" />
-    <NavigationIcon href="/cheki/filters" src="/cheki/filters.svg" />
-    <NavigationIcon href="/cheki/frames" src="/cheki/frames.svg" />
-    <NavigationIcon href="/cheki/save" src="/cheki/save.svg" />
+    <NavigationIcon alt="カメラ" always href="/cheki" src="/cheki/camera.svg" />
+    <NavigationIcon
+      alt="フィルター"
+      href="/cheki/filters"
+      src="/cheki/filters.svg"
+    />
+    <NavigationIcon
+      alt="フレーム"
+      href="/cheki/frames"
+      src="/cheki/frames.svg"
+    />
+    <NavigationIcon
+      alt="保存・シェア"
+      href="/cheki/save"
+      src="/cheki/save.svg"
+    />
   </Container>
 );

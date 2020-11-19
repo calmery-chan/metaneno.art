@@ -2,6 +2,7 @@ import styled from "@emotion/styled";
 import { DefaultSeoProps, NextSeo } from "next-seo";
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
+import { ChekiHead } from "~/components/Cheki/Head";
 import { selectors, useSelector } from "~/domains";
 import { GradientColors } from "~/styles/colors";
 import { Media } from "~/styles/media";
@@ -43,6 +44,8 @@ export const ChekiApp: React.FC<{
 
   return (
     <>
+      <ChekiHead />
+
       <NextSeo
         {...{
           ...defaultSeoProps,

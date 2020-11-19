@@ -43,17 +43,21 @@ export const ChekiHeader: React.FC = () => {
       <Container>
         <img
           alt="閉じる"
+          height="24px"
           onClick={handleOnClickOpenPopup}
           src="/cheki/close.svg"
+          width="24px"
         />
         <img
           alt="インフォメーション"
+          height="24px"
           onClick={handleOnClickInformation}
           src={
             information
               ? "/cheki/information.selected.svg"
               : "/cheki/information.svg"
           }
+          width="24px"
         />
       </Container>
 

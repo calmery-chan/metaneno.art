@@ -91,10 +91,9 @@ export const ChekiInputImage: React.FC<{
           <img
             alt="タップして画像を追加する"
             className="mx-auto"
-            css={css`
-              width: 48px;
-            `}
+            height="48px"
             src="/cheki/add.svg"
+            width="48px"
           />
           <div
             className="font-bold"
