@@ -3,6 +3,7 @@ import { NextPage } from "next";
 import { useRouter } from "next/router";
 import React, { useCallback } from "react";
 import { ChekiButton } from "~/components/Cheki/Button";
+import { ChekiLogo } from "~/components/Cheki/Logo";
 import { Colors, GradientColors } from "~/styles/colors";
 import { Spacing } from "~/styles/spacing";
 import { Typography } from "~/styles/typography";
@@ -19,12 +20,9 @@ const Container = styled.div`
 `;
 
 const Logo = styled.div`
-  text-align: center;
+  display: flex;
+  justify-content: center;
   margin-bottom: ${Spacing.l}px;
-
-  img {
-    height: 96px;
-  }
 `;
 
 const Title = styled.h1`
@@ -50,7 +48,9 @@ const ChekiTermsOfService: NextPage = () => {
     <>
       <Border />
       <Container>
-        <Logo>{/* <img src="logo.svg" alt="ロゴ" /> */}</Logo>
+        <Logo>
+          <ChekiLogo size={96} />
+        </Logo>
         <Title css={Typography.L}>利用規約</Title>
         <Text css={Typography.S}>
           この利用規約（以下「本規約」といいます）は、めたねのおくすり（以下「当サービス提供者」といいます）がこの
