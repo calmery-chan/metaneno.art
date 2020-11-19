@@ -30,8 +30,8 @@ export type State = {
       viewBoxWidth: number;
     };
   };
-  ready: boolean;
   shootingCondition: "in-preparation" | "trimming" | "complate";
+  splashed: boolean;
   temporaries: {
     cursorOffsetX: number;
     cursorOffsetY: number;
@@ -80,8 +80,8 @@ const initialState: State = {
       y: 0,
     },
   },
-  ready: false,
   shootingCondition: "in-preparation",
+  splashed: false,
   temporaries: {
     cursorOffsetX: 0,
     cursorOffsetY: 0,
@@ -95,9 +95,9 @@ export const reducer = createReducer(initialState, (builder) => {
       ...state,
       ...action.payload,
     }))
-    .addCase(actions.ready, (state) => ({
+    .addCase(actions.splashed, (state) => ({
       ...state,
-      ready: true,
+      splashed: true,
     }))
     .addCase(actions.addFrame.fulfilled, (state, action) => {
       const { index, url } = action.payload;

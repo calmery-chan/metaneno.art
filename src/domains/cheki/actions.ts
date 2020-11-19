@@ -55,7 +55,7 @@ export const updateDisplayable = createAction<{
   y: number;
 }>("CHEKI/UPDATE_DISPLAYABLE");
 
-export const ready = createAction("CHEKI/READY");
+export const splashed = createAction("CHEKI/SPLASHED");
 
 export const changeShootingCondition = createAction<{
   shootingCondition: "in-preparation" | "trimming" | "complate";

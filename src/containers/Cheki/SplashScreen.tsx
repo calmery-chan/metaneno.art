@@ -31,7 +31,7 @@ const Image = styled.img`
 
 export const SplashScreen: React.FC = () => {
   const dispatch = useDispatch();
-  const { ready } = useSelector(selectors.cheki);
+  const { splashed } = useSelector(selectors.cheki);
 
   const [fire, setFire] = useState(false);
 
@@ -46,14 +46,14 @@ export const SplashScreen: React.FC = () => {
   useEffect(() => {
     if (fire) {
       setTimeout(() => {
-        dispatch(actions.ready());
+        dispatch(actions.splashed());
       }, Mixin.ANIMATION_DURATION.milliseconds);
     }
   }, [fire]);
 
   // Render
 
-  if (ready) {
+  if (splashed) {
     return null;
   }
 
