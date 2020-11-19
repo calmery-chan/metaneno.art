@@ -14,19 +14,23 @@ const Container = styled.div`
   padding: ${Spacing.l}px;
 `;
 
-const Image = styled.img`
+const IconContainer = styled.div`
   ${Mixin.animation};
   ${Mixin.clickable};
 
   cursor: pointer;
-  filter: brightness(0) invert(63%);
-  height: 32px;
   margin-right: ${Spacing.l}px;
 
   &:last-child {
     margin-left: auto;
     margin-right: 0;
   }
+`;
+
+const Icon = styled.object`
+  filter: brightness(0) invert(63%);
+  height: 32px;
+  pointer-events: none;
 
   &.active {
     filter: none;
@@ -38,11 +42,10 @@ const disabled = css`
 `;
 
 const NavigationIcon: React.FC<{
-  alt: string;
   href: string;
   src: string;
   always?: boolean;
-}> = ({ alt, always = false, href, src }) => {
+}> = ({ always = false, href, src }) => {
   const { pathname, push } = useRouter();
   const { shootingCondition } = useSelector(selectors.cheki);
   const ready = shootingCondition === "complate";
@@ -56,9 +59,8 @@ const NavigationIcon: React.FC<{
   }, [shootingCondition]);
 
   return (
-    <Image
-      alt={alt}
-      className={classnames({ active: pathname === href })}
+    <IconContainer
+      onClick={handleOnClick}
       css={
         !always &&
         (ready
@@ -68,21 +70,21 @@ const NavigationIcon: React.FC<{
               ${disabled}
             `)
       }
-      onClick={handleOnClick}
-      src={src}
-    />
+    >
+      <Icon
+        className={classnames({ active: pathname === href })}
+        data={src}
+        type="image/svg+xml"
+      />
+    </IconContainer>
   );
 };
 
 export const ChekiNavigation = () => (
   <Container>
-    <NavigationIcon alt="カメラ" always href="/cheki" src="/camera.svg" />
-    <NavigationIcon alt="フィルター" href="/cheki/filters" src="/filters.svg" />
-    <NavigationIcon alt="フレーム" href="/cheki/frames" src="/frames.svg" />
-    <NavigationIcon
-      alt="保存・シェア"
-      href="/cheki/save-and-share"
-      src="/save-and-share.svg"
-    />
+    <NavigationIcon always href="/cheki" src="/camera.svg" />
+    <NavigationIcon href="/cheki/filters" src="/filters.svg" />
+    <NavigationIcon href="/cheki/frames" src="/frames.svg" />
+    <NavigationIcon href="/cheki/save-and-share" src="/save-and-share.svg" />
   </Container>
 );
