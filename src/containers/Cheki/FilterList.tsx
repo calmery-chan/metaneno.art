@@ -37,12 +37,22 @@ export const ChekiFilterList: React.FC = () => {
   } = useSelector(selectors.cheki);
 
   const handleOnClickFilter = useCallback(
-    (filter: ChekiFilter) => dispatch(actions.changeFilter({ filter })),
+    (filter: ChekiFilter | null) => dispatch(actions.changeFilter({ filter })),
     []
   );
 
   return (
     <ChekiHorizontal padding={Spacing.l}>
+      <Filter className="filter" onClick={() => handleOnClickFilter(null)}>
+        <FilterTitle css={Typography.XS}>
+          {selected === null ? (
+            <ChekiGradientText>None</ChekiGradientText>
+          ) : (
+            <>None</>
+          )}
+        </FilterTitle>
+        <ChekiFilterThumbnail filter={null} />
+      </Filter>
       {CHEKI_FILTERS.map((filter, index) => (
         <Filter
           className="filter"
