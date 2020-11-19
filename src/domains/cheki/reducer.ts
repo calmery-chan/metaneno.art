@@ -139,7 +139,7 @@ export const reducer = createReducer(initialState, (builder) => {
       ...state,
       image: {
         ...state.image,
-        filter: action.payload.filter,
+        ...action.payload,
       },
     }))
     .addCase(actions.complete, (state) => ({

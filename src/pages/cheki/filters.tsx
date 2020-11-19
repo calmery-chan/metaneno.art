@@ -4,15 +4,18 @@ import { ChekiColumn } from "~/components/Cheki/Column";
 import { ChekiFlexColumn } from "~/components/Cheki/FlexColumn";
 import { ChekiHeader } from "~/components/Cheki/Header";
 import { ChekiApp } from "~/containers/Cheki/App";
+import { ChekiCanvas } from "~/containers/Cheki/Canvas";
 import { ChekiFilterList } from "~/containers/Cheki/FilterList";
-import { ChekiFilterPreview } from "~/containers/Cheki/FilterPreview";
+import { ChekiFilteredCanvas } from "~/containers/Cheki/FilteredCanvas";
 import { ChekiNavigation } from "~/containers/Cheki/Navigation";
 
 export const ChekiFilters: NextPage = () => (
   <ChekiApp>
     <ChekiFlexColumn>
       <ChekiHeader />
-      <ChekiFilterPreview />
+      <ChekiCanvas>
+        <ChekiFilteredCanvas />
+      </ChekiCanvas>
       <ChekiColumn>
         <ChekiFilterList />
       </ChekiColumn>

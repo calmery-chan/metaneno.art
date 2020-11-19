@@ -24,10 +24,6 @@ export const addImage = createAsyncThunk<
   return { height, thumbnailUrl, url: imageUrl, width };
 });
 
-export const changeFilter = createAction<{ filter: ChekiFilter | null }>(
-  "CHEKI/CHANGE_FILTER"
-);
-
 export const complete = createAction("CHEKI/COMPLETE");
 
 export const startImageDragging = createAction<{
@@ -50,6 +46,10 @@ export const splashed = createAction("CHEKI/SPLASHED");
 export const ready = createAction<{ ready: boolean }>("CHEKI/READY");
 
 //
+
+export const changeFilter = createAction<{ filter: ChekiFilter | null }>(
+  "CHEKI/CHANGE_FILTER"
+);
 
 export const changeFrame = createAsyncThunk<
   { dataUrl: string; index: number },

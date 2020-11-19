@@ -40,17 +40,7 @@ export const ChekiCanvas: React.FC = ({ children }) => {
         xmlns="http://www.w3.org/2000/svg"
         xmlnsXlink="http://www.w3.org/1999/xlink"
       >
-        <svg
-          height={frame.height}
-          viewBox={`0 0 ${frame.viewBoxWidth} ${frame.viewBoxHeight}`}
-          width={frame.width}
-          x={frame.x - displayable.x}
-          xmlns="http://www.w3.org/2000/svg"
-          xmlnsXlink="http://www.w3.org/1999/xlink"
-          y={frame.y - displayable.y}
-        >
-          {children}
-        </svg>
+        {children}
       </Canvas>
     </Container>
   );

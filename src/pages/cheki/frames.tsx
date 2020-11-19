@@ -5,9 +5,8 @@ import { ChekiFlexColumn } from "~/components/Cheki/FlexColumn";
 import { ChekiHeader } from "~/components/Cheki/Header";
 import { ChekiApp } from "~/containers/Cheki/App";
 import { ChekiCanvas } from "~/containers/Cheki/Canvas";
-import { ChekiCanvasFrameLayer } from "~/containers/Cheki/CanvasFrameLayer";
-import { ChekiCanvasImageLayer } from "~/containers/Cheki/CanvasImageLayer";
 import { ChekiFrameList } from "~/containers/Cheki/FrameList";
+import { ChekiFramedCanvas } from "~/containers/Cheki/FramedCanvas";
 import { ChekiNavigation } from "~/containers/Cheki/Navigation";
 
 export const ChekiFrames: NextPage = () => (
@@ -15,8 +14,7 @@ export const ChekiFrames: NextPage = () => (
     <ChekiFlexColumn>
       <ChekiHeader />
       <ChekiCanvas>
-        <ChekiCanvasFrameLayer />
-        <ChekiCanvasImageLayer />
+        <ChekiFramedCanvas />
       </ChekiCanvas>
       <ChekiColumn>
         <ChekiFrameList />
