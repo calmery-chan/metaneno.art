@@ -5,7 +5,7 @@ type ChekiTrimImageProps = {
   hidden?: boolean;
 };
 
-export const ChekiTrimImage: React.FC<ChekiTrimImageProps> = ({
+export const ChekiCanvasTrim: React.FC<ChekiTrimImageProps> = ({
   hidden = false,
 }) => {
   const { image, layout } = useSelector(selectors.cheki);

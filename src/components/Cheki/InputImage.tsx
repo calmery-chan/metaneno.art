@@ -1,7 +1,9 @@
+import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 import classnames from "classnames";
 import React, { useCallback, useRef } from "react";
 import { Spacing } from "~/styles/spacing";
+import { Typography } from "~/styles/typography";
 import { convertFileToUrl } from "~/utils/cheki";
 
 const Container = styled.div`
@@ -85,7 +87,26 @@ export const ChekiInputImage: React.FC<{
         )}
         onClick={handleOnClick}
       >
-        <img alt="タップして画像を追加する" src="/cheki/add.svg" />
+        <div>
+          <img
+            alt="タップして画像を追加する"
+            className="mx-auto"
+            css={css`
+              width: 48px;
+            `}
+            src="/add.svg"
+          />
+          <div
+            className="font-bold"
+            css={css`
+              ${Typography.M};
+              color: #ffb474;
+              margin-top: ${Spacing.xs}px;
+            `}
+          >
+            タップして画像を読み込む
+          </div>
+        </div>
       </div>
     </Container>
   );

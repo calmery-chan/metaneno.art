@@ -24,8 +24,6 @@ export const addImage = createAsyncThunk<
   return { height, thumbnailUrl, url: imageUrl, width };
 });
 
-export const complete = createAction("CHEKI/COMPLETE");
-
 export const startImageDragging = createAction<{
   cursorPositions: CursorPosition[];
 }>("CHEKI/START_IMAGE_DRAGGING");
@@ -33,17 +31,6 @@ export const startImageDragging = createAction<{
 export const tick = createAction<{ cursorPositions: CursorPosition[] }>(
   "CHEKI/TICK"
 );
-
-export const updateDisplayable = createAction<{
-  height: number;
-  width: number;
-  x: number;
-  y: number;
-}>("CHEKI/UPDATE_DISPLAYABLE");
-
-export const splashed = createAction("CHEKI/SPLASHED");
-
-export const ready = createAction<{ ready: boolean }>("CHEKI/READY");
 
 //
 
@@ -60,3 +47,16 @@ export const changeFrame = createAsyncThunk<
   ),
   index,
 }));
+
+export const complete = createAction("CHEKI/COMPLETE");
+
+export const ready = createAction<{ ready: boolean }>("CHEKI/READY");
+
+export const splashed = createAction("CHEKI/SPLASHED");
+
+export const updateDisplayable = createAction<{
+  height: number;
+  width: number;
+  x: number;
+  y: number;
+}>("CHEKI/UPDATE_DISPLAYABLE");

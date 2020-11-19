@@ -91,27 +91,6 @@ const initialState: State = {
 
 export const reducer = createReducer(initialState, (builder) => {
   builder
-    .addCase(actions.ready, (state, action) => ({
-      ...state,
-      ...action.payload,
-    }))
-    .addCase(actions.splashed, (state) => ({
-      ...state,
-      splashed: true,
-    }))
-    .addCase(actions.changeFrame.fulfilled, (state, action) => {
-      const { dataUrl, index } = action.payload;
-
-      return {
-        ...state,
-        frame: {
-          ...state.frame,
-          index,
-          ready: true,
-          dataUrl,
-        },
-      };
-    })
     .addCase(actions.addImage.fulfilled, (state, action) => {
       const { height, thumbnailUrl, url, width } = action.payload;
       const { layout } = state;
@@ -135,17 +114,6 @@ export const reducer = createReducer(initialState, (builder) => {
         temporaries: initialState.temporaries,
       };
     })
-    .addCase(actions.changeFilter, (state, action) => ({
-      ...state,
-      image: {
-        ...state.image,
-        ...action.payload,
-      },
-    }))
-    .addCase(actions.complete, (state) => ({
-      ...state,
-      temporaries: initialState.temporaries,
-    }))
     .addCase(actions.startImageDragging, (state, action) => {
       const { cursorPositions } = action.payload;
       const { image, layout } = state;
@@ -210,6 +178,34 @@ export const reducer = createReducer(initialState, (builder) => {
 
       return state;
     })
+    //
+    .addCase(actions.changeFilter, (state, action) => ({
+      ...state,
+      image: {
+        ...state.image,
+        ...action.payload,
+      },
+    }))
+    .addCase(actions.changeFrame.fulfilled, (state, action) => ({
+      ...state,
+      frame: {
+        ...state.frame,
+        ...action.payload,
+        ready: true,
+      },
+    }))
+    .addCase(actions.complete, (state) => ({
+      ...state,
+      temporaries: initialState.temporaries,
+    }))
+    .addCase(actions.ready, (state, action) => ({
+      ...state,
+      ...action.payload,
+    }))
+    .addCase(actions.splashed, (state) => ({
+      ...state,
+      splashed: true,
+    }))
     .addCase(actions.updateDisplayable, (state, action) => {
       const { payload: displayable } = action;
       const {
@@ -220,8 +216,8 @@ export const reducer = createReducer(initialState, (builder) => {
         ...state,
         layout: {
           ...state.layout,
-          ...updateFrame(action.payload, direction),
-          ...updateTrim(action.payload, direction),
+          ...updateFrame(displayable, direction),
+          ...updateTrim(displayable, direction),
           displayable,
         },
       };
