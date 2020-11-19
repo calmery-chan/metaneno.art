@@ -1,5 +1,4 @@
-import classnames from "classnames";
-import { css } from "linaria";
+import { css } from "@emotion/react";
 import React, { useCallback, useRef } from "react";
 import { convertFileToUrl } from "~/utils/cheki";
 
@@ -41,10 +40,8 @@ export const ChekiImageLoadButton: React.FC<{
       />
 
       <div
-        className={classnames(
-          "absolute bg-orange-500 cursor-pointer flex h-full items-center justify-center rounded-full w-full",
-          button
-        )}
+        className="absolute bg-orange-500 cursor-pointer flex h-full items-center justify-center rounded-full w-full"
+        css={button}
         onClick={handleOnClick}
       >
         画像を読み込む

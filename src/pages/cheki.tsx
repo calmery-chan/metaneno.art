@@ -1,4 +1,4 @@
-import { css } from "linaria";
+import { css } from "@emotion/react";
 import { NextPage } from "next";
 import React, { useCallback, useState } from "react";
 import { ChekiImageLoadButton } from "~/components/ChekiImageLoadButton";
@@ -103,19 +103,19 @@ const Cheki: NextPage = () => {
 
   return (
     <div className="container h-full mx-auto">
-      <div className={column}>
-        <div className={header} />
-        <div className={cheki}>
+      <div css={column}>
+        <div css={header} />
+        <div css={cheki}>
           <ChekiCanvas
             preview={preview}
             onCreatePreviewUrl={handleOnCreatePreviewUrl}
           />
         </div>
-        <div className={footer}>
+        <div css={footer}>
           <Horizontal>
             {CHEKI_FRAME_IMAGE_URLS.map((url, index) => (
               <div
-                className={frameImage}
+                css={frameImage}
                 key={index}
                 onClick={() => handleOnClickFrameImage(url)}
                 style={{ background: `url(${url})`, backgroundSize: "cover" }}
@@ -123,15 +123,12 @@ const Cheki: NextPage = () => {
             ))}
           </Horizontal>
           <Horizontal>
-            <div
-              className={frameImage}
-              onClick={() => handleOnClickFilter(null)}
-            >
+            <div css={frameImage} onClick={() => handleOnClickFilter(null)}>
               <ChekiFilterThumbnail filter={null} />
             </div>
             {CHEKI_FILTERS.map((filter, index) => (
               <div
-                className={frameImage}
+                css={frameImage}
                 key={index}
                 onClick={() => handleOnClickFilter(filter as ChekiFilter)}
               >
