@@ -77,7 +77,7 @@ export const ChekiHeader: React.FC = () => {
         <ChekiModalText>
           ご感想や不具合の報告は
           <a
-            href="https://forms.gle/37ucm5pkdZV7L4HAA"
+            href="https://forms.gle/3snQ5xwAJJn86Mv69"
             target="_blank"
             rel="noopener noreferrer"
           >
