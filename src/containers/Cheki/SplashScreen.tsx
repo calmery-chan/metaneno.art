@@ -62,7 +62,7 @@ export const SplashScreen: React.FC = () => {
       <ChekiApp className="bottom-0 flex items-center justify-center left-0 right-0 top-0">
         <ChekiLogo size={196} />
         <Comment className="absolute font-bold" css={Typography.XS}>
-          Made with <img src="/heart.svg" /> by めたねのおくすり
+          Made with <img src="/cheki/heart.svg" /> by めたねのおくすり
         </Comment>
       </ChekiApp>
     </Animation>

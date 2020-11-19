@@ -91,7 +91,7 @@ export const ChekiCamera: React.FC = () => {
                   width: 32px;
                 `}
                 onClick={handleOnClickRenewConfirmButton}
-                src="/image.svg"
+                src="/cheki/image.svg"
               />
             </div>
           </ChekiColumn>

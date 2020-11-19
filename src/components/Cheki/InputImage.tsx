@@ -94,7 +94,7 @@ export const ChekiInputImage: React.FC<{
             css={css`
               width: 48px;
             `}
-            src="/add.svg"
+            src="/cheki/add.svg"
           />
           <div
             className="font-bold"

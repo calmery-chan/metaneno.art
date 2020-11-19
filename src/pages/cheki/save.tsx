@@ -95,7 +95,7 @@ const ChekiSaveAndShare: NextPage = () => {
                 height: 14px;
                 margin-right: ${Spacing.xs}px;
               `}
-              src="/twitter.svg"
+              src="/cheki/twitter.svg"
             />
             Twitter にシェアする
           </ChekiButton>

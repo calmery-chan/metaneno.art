@@ -130,7 +130,7 @@ export const ChekiModal: React.FC<ChekiModalProps> = ({
       />
       <Body css={visible ? fadeInUp : fadeOutDown}>
         <CloseButton onClick={onClickCloseButton}>
-          <img src="/close.svg" alt="閉じる" />
+          <img src="/cheki/close.svg" alt="閉じる" />
         </CloseButton>
         <Border />
         <Contents>{children}</Contents>

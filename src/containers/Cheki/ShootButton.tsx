@@ -16,6 +16,6 @@ export const ChekiShootButton: React.FC<{
   onClick: () => void;
 }> = ({ onClick }) => (
   <Container>
-    <Image alt="撮影する" onClick={onClick} src="/shoot.svg" />
+    <Image alt="撮影する" onClick={onClick} src="/cheki/shoot.svg" />
   </Container>
 );

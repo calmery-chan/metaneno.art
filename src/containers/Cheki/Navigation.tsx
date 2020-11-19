@@ -81,9 +81,9 @@ const NavigationIcon: React.FC<{
 
 export const ChekiNavigation = () => (
   <Container>
-    <NavigationIcon always href="/cheki" src="/camera.svg" />
-    <NavigationIcon href="/cheki/filters" src="/filters.svg" />
-    <NavigationIcon href="/cheki/frames" src="/frames.svg" />
-    <NavigationIcon href="/cheki/save" src="/save.svg" />
+    <NavigationIcon always href="/cheki" src="/cheki/camera.svg" />
+    <NavigationIcon href="/cheki/filters" src="/cheki/filters.svg" />
+    <NavigationIcon href="/cheki/frames" src="/cheki/frames.svg" />
+    <NavigationIcon href="/cheki/save" src="/cheki/save.svg" />
   </Container>
 );
