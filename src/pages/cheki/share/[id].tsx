@@ -8,14 +8,11 @@ import { ExternalLink } from "~/components/Cheki/ExternalLink";
 import { ChekiFlexColumn } from "~/components/Cheki/FlexColumn";
 import { ChekiFooter } from "~/components/Cheki/Footer";
 import { ChekiHashTag } from "~/components/Cheki/HashTag";
+import { ChekiLogo } from "~/components/Cheki/Logo";
 import { ChekiNote } from "~/components/Cheki/Note";
 import { TWITTER_HASHTAG_URL } from "~/constants/cheki";
 import { ChekiApp } from "~/containers/Cheki/App";
 import { Spacing } from "~/styles/spacing";
-import { getShareImage } from "~/utils/cheki";
-
-// Styles
-
 const Header = styled.div`
   height: 64px;
   margin-bottom: ${Spacing.m}px;
@@ -70,7 +67,9 @@ const ChekiShare: NextPage<{
   return (
     <ChekiApp>
       <ChekiFlexColumn>
-        <Header className="text-center" />
+        <Header className="flex justify-center">
+          <ChekiLogo size={64} />
+        </Header>
         <Image ref={ref}>
           {size && (
             <img
@@ -104,11 +103,11 @@ const ChekiShare: NextPage<{
 };
 
 ChekiShare.getInitialProps = async ({ query }: NextPageContext) => {
-  const { data } = await getShareImage(query.id as string);
+  // const { data } = await getShareImage(query.id as string);
 
   return {
-    imageUrl: data.image_url,
-    ogImageUrl: data.og_image_url,
+    imageUrl: "",
+    ogImageUrl: "",
   };
 };
 
