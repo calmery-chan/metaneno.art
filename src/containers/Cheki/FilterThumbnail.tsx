@@ -16,9 +16,9 @@ export const ChekiFilterThumbnail: React.FC<ChekiFilterThumbnailProps> = ({
 
   return (
     <svg
-      height={CHEKI_THUMBNAIL_IMAGE_SIZE}
+      height={CHEKI_THUMBNAIL_IMAGE_SIZE / 2}
       viewBox={`0 0 ${CHEKI_THUMBNAIL_IMAGE_SIZE} ${CHEKI_THUMBNAIL_IMAGE_SIZE}`}
-      width={CHEKI_THUMBNAIL_IMAGE_SIZE}
+      width={CHEKI_THUMBNAIL_IMAGE_SIZE / 2}
       xmlns="http://www.w3.org/2000/svg"
       xmlnsXlink="http://www.w3.org/1999/xlink"
     >

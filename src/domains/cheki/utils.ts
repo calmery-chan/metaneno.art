@@ -70,6 +70,8 @@ export const createThumbnailImage = async (image: HTMLImageElement) => {
 
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const context2 = canvas2.getContext("2d")!;
+  context2.fillStyle = "white";
+  context2.fillRect(0, 0, canvas2.width, canvas2.height);
   context2.drawImage(
     resizedImage,
     0,
@@ -161,12 +163,19 @@ export const resizeImage = (image: HTMLImageElement) => {
     }
   }
 
+  // 画像の上下左右に黒い線が入る問題を修正するため
+  // 小数点以下の値を削除する
+  height = Math.floor(height);
+  width = Math.floor(width);
+
   const canvas = document.createElement("canvas");
   canvas.height = height;
   canvas.width = width;
 
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const context = canvas.getContext("2d")!;
+  context.fillStyle = "white";
+  context.fillRect(0, 0, canvas.width, canvas.height);
   context.drawImage(image, 0, 0, width, height);
 
   return {
