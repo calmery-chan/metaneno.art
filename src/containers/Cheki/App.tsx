@@ -1,6 +1,8 @@
 import styled from "@emotion/styled";
 import { DefaultSeoProps, NextSeo } from "next-seo";
-import React from "react";
+import { useRouter } from "next/router";
+import React, { useEffect } from "react";
+import { selectors, useSelector } from "~/domains";
 import { GradientColors } from "~/styles/colors";
 import { Media } from "~/styles/media";
 import { Spacing } from "~/styles/spacing";
@@ -26,15 +28,26 @@ export const Container = styled.div<{ margin?: boolean }>`
 export const ChekiApp: React.FC<{
   className?: string;
   seoProps?: DefaultSeoProps;
-}> = ({ children, className, seoProps }) => (
-  <>
-    <NextSeo
-      {...{
-        ...defaultSeoProps,
-        ...seoProps,
-      }}
-    />
+}> = ({ children, className, seoProps }) => {
+  const { pathname, push } = useRouter();
+  const { ready } = useSelector(selectors.cheki);
 
-    <Container className={className}>{children}</Container>
-  </>
-);
+  useEffect(() => {
+    if (!ready && pathname !== "/cheki") {
+      push("/cheki");
+    }
+  }, [ready]);
+
+  return (
+    <>
+      <NextSeo
+        {...{
+          ...defaultSeoProps,
+          ...seoProps,
+        }}
+      />
+
+      <Container className={className}>{children}</Container>
+    </>
+  );
+};

@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import React, { useEffect, useState } from "react";
-import { ChekiApp } from "../../components/Cheki/App";
+import { ChekiApp } from "./App";
 import { ChekiLogo } from "~/components/Cheki/Logo";
 import { SPLASH_SCREEN_DURATION } from "~/constants/cheki";
 import { selectors, useDispatch, useSelector } from "~/domains";

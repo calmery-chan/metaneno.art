@@ -1,11 +1,11 @@
 import styled from "@emotion/styled";
 import { NextPage } from "next";
 import React, { useCallback } from "react";
-import { ChekiApp } from "~/components/Cheki/App";
 import { ChekiColumn } from "~/components/Cheki/Column";
 import { ChekiHeader } from "~/components/Cheki/Header";
 import { ChekiInputImage } from "~/components/Cheki/InputImage";
 import { ChekiSubButton } from "~/components/Cheki/SubButton";
+import { ChekiApp } from "~/containers/Cheki/App";
 import { ChekiTrimPreview } from "~/containers/Cheki/ChekiTrimPreview";
 import { ChekiNavigation } from "~/containers/Cheki/Navigation";
 import { ChekiShootButton } from "~/containers/Cheki/ShootButton";

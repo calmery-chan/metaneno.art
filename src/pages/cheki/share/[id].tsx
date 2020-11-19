@@ -2,7 +2,6 @@ import styled from "@emotion/styled";
 import { NextPage, NextPageContext } from "next";
 import { useRouter } from "next/router";
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { ChekiApp } from "~/components/Cheki/App";
 import { ChekiButton } from "~/components/Cheki/Button";
 import { ChekiColumn } from "~/components/Cheki/Column";
 import { ExternalLink } from "~/components/Cheki/ExternalLink";
@@ -11,6 +10,7 @@ import { ChekiFooter } from "~/components/Cheki/Footer";
 import { ChekiHashTag } from "~/components/Cheki/HashTag";
 import { ChekiNote } from "~/components/Cheki/Note";
 import { TWITTER_HASHTAG_URL } from "~/constants/cheki";
+import { ChekiApp } from "~/containers/Cheki/App";
 import { Spacing } from "~/styles/spacing";
 import { getShareImage } from "~/utils/cheki";
 
