@@ -3,11 +3,11 @@ import { DefaultSeoProps, NextSeo } from "next-seo";
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 import { ChekiHead } from "~/components/Cheki/Head";
+import { DEFAULT_SEO_PROPS } from "~/constants/cheki";
 import { selectors, useSelector } from "~/domains";
 import { GradientColors } from "~/styles/colors";
 import { Media } from "~/styles/media";
 import { Spacing } from "~/styles/spacing";
-import { defaultSeoProps } from "~/utils/cheki";
 
 export const Container = styled.div<{ margin?: boolean }>`
   background: ${GradientColors.page};
@@ -48,7 +48,7 @@ export const ChekiApp: React.FC<{
 
       <NextSeo
         {...{
-          ...defaultSeoProps,
+          ...DEFAULT_SEO_PROPS,
           ...seoProps,
         }}
       />

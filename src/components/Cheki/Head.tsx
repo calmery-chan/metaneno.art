@@ -1,7 +1,7 @@
 import Head from "next/head";
 import React from "react";
 import { DefaultHeadKeys } from "../DefaultHead";
-import { defaultSeoProps } from "~/utils/cheki";
+import { DEFAULT_SEO_PROPS } from "~/constants/cheki";
 
 export const ChekiHead: React.FC = ({ children }) => (
   <Head>
@@ -46,7 +46,7 @@ export const ChekiHead: React.FC = ({ children }) => (
 
     <meta name="viewport" content="initial-scale=1.0, width=device-width" />
 
-    <title>{defaultSeoProps.title}</title>
+    <title>{DEFAULT_SEO_PROPS.title}</title>
 
     {children}
   </Head>

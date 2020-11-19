@@ -1,3 +1,5 @@
+import { DefaultSeoProps } from "next-seo";
+
 export const CHEKI_FRAME_MARGIN_BOTTOM = 304;
 export const CHEKI_FRAME_MARGIN_LEFT = 64;
 export const CHEKI_FRAME_MARGIN_RIGHT = 64;
@@ -96,3 +98,37 @@ export const SHARE_RANDOM_HASHTAGS = [
 
 export const TWITTER_HASHTAG_URL =
   "https://twitter.com/hashtag/%E3%83%8E%E3%83%8D%E3%83%A1%E3%81%A1%E3%82%83%E3%82%93%E3%83%81%E3%82%A7%E3%82%AD";
+
+export const DEFAULT_SEO_PROPS: DefaultSeoProps = {
+  canonical: "https://metaneno.art/cheki",
+  description: "ノネメちゃんと一緒に写真を撮ろう！",
+  nofollow: true, // Top ページ以外は基本 nofollow にする
+  noindex: true, // Top ページ以外は基本 noindex にする
+  title: "ノネメちゃんチェキ | めたねのあーと",
+
+  // Twitter
+  twitter: {
+    cardType: "summary_large_image",
+    // @username for the content creator / author (outputs as `twitter:creator`)
+    handle: "@metanen0x0",
+    // @username for the website used in the card footer
+    site: "@metanen0x0",
+  },
+
+  // OGP
+  openGraph: {
+    description: "ノネメちゃんと一緒に写真を撮ろう！",
+    images: [
+      {
+        height: 630,
+        url: "https://metaneno.art/cheki/og.png",
+        width: 1200,
+      },
+    ],
+    locale: "ja_JP",
+    site_name: "ノネメチェキ",
+    title: "ノネメちゃんチェキ | めたねのあーと",
+    type: "website",
+    url: "https://metaneno.art/cheki",
+  },
+};
