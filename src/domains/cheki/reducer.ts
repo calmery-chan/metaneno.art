@@ -8,9 +8,9 @@ import { getImageSizeByDirection } from "~/utils/cheki";
 
 export type State = {
   frame: {
+    dataUrl: string;
     index: number;
     ready: boolean;
-    url: string;
   };
   image: ChekiRectangle & {
     direction: ChekiDirection;
@@ -41,9 +41,9 @@ export type State = {
 
 const initialState: State = {
   frame: {
+    dataUrl: "",
     index: 0,
     ready: false,
-    url: "",
   },
   image: {
     direction: "horizontal",
@@ -99,8 +99,8 @@ export const reducer = createReducer(initialState, (builder) => {
       ...state,
       splashed: true,
     }))
-    .addCase(actions.addFrame.fulfilled, (state, action) => {
-      const { index, url } = action.payload;
+    .addCase(actions.changeFrame.fulfilled, (state, action) => {
+      const { dataUrl, index } = action.payload;
 
       return {
         ...state,
@@ -108,7 +108,7 @@ export const reducer = createReducer(initialState, (builder) => {
           ...state.frame,
           index,
           ready: true,
-          url,
+          dataUrl,
         },
       };
     })

@@ -119,6 +119,9 @@ export const resizeFrameImage = (image: HTMLImageElement) => {
     }
   }
 
+  height = Math.floor(height);
+  width = Math.floor(width);
+
   const canvas = document.createElement("canvas");
   canvas.height = height;
   canvas.width = width;
@@ -127,7 +130,7 @@ export const resizeFrameImage = (image: HTMLImageElement) => {
   const context = canvas.getContext("2d")!;
   context.drawImage(image, 0, 0, width, height);
 
-  return { url: canvas.toDataURL("image/png") };
+  return canvas.toDataURL("image/png");
 };
 
 export const resizeImage = (image: HTMLImageElement) => {

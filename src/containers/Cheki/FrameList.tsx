@@ -36,7 +36,7 @@ export const ChekiFrameList: React.FC = () => {
   const { frame } = useSelector(selectors.cheki);
 
   const handleOnClickFrameImage = useCallback(
-    (index: number) => dispatch(actions.addFrame({ index })),
+    (index: number) => dispatch(actions.changeFrame({ index })),
     []
   );
 
