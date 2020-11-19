@@ -1,4 +1,4 @@
-import { styled } from "linaria/react";
+import styled from "@emotion/styled";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { ChekiCanvasFrameLayer } from "./ChekiCanvasFrameLayer";
 import { ChekiCanvasImageLayer } from "./ChekiCanvasImageLayer";
