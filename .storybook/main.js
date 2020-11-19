@@ -9,11 +9,6 @@ module.exports = {
       use: ["style-loader", "css-loader", "postcss-loader", "sass-loader"],
     });
 
-    config.module.rules.push({
-      test: /\.tsx$/,
-      use: "linaria/loader",
-    });
-
     config.resolve.alias["~"] = path.resolve(__dirname, "../src");
 
     return config;

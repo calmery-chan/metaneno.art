@@ -1,5 +1,5 @@
+import styled from "@emotion/styled";
 import classnames from "classnames";
-import { styled } from "linaria/react";
 import React, { useCallback, useRef } from "react";
 import { convertFileToUrl } from "~/utils/cheki";
 
