@@ -24,6 +24,8 @@ export const Cheki: NextPage = () => {
   const dispatch = useDispatch();
   const { shootingCondition } = useSelector(selectors.cheki);
 
+  // Events
+
   const handleOnLoadImage = useCallback((url: string) => {
     dispatch(actions.addImage({ url }));
     dispatch(
@@ -46,6 +48,8 @@ export const Cheki: NextPage = () => {
       ),
     []
   );
+
+  // Render
 
   return (
     <>
