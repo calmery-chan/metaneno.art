@@ -15,8 +15,7 @@ export type State = {
   image: ChekiRectangle & {
     direction: ChekiDirection;
     filter: ChekiFilter | null;
-    thumbnailUrl: string;
-    url: string;
+    dataUrl: string;
   };
   layout: {
     displayable: ChekiRectangle;
@@ -49,8 +48,7 @@ const initialState: State = {
     direction: "horizontal",
     filter: null,
     height: 0,
-    thumbnailUrl: "",
-    url: "",
+    dataUrl: "",
     width: 0,
     x: 0,
     y: 0,
@@ -92,7 +90,7 @@ const initialState: State = {
 export const reducer = createReducer(initialState, (builder) => {
   builder
     .addCase(actions.addImage.fulfilled, (state, action) => {
-      const { height, thumbnailUrl, url, width } = action.payload;
+      const { dataUrl, height, width } = action.payload;
       const { layout } = state;
 
       const direction = getDirection(height, width);
@@ -101,10 +99,9 @@ export const reducer = createReducer(initialState, (builder) => {
         ...state,
         image: {
           ...initialState.image,
+          dataUrl,
           direction,
           height,
-          thumbnailUrl,
-          url,
           width,
         },
         layout: {
@@ -114,6 +111,38 @@ export const reducer = createReducer(initialState, (builder) => {
         temporaries: initialState.temporaries,
       };
     })
+    .addCase(actions.changeFilter, (state, action) => ({
+      ...state,
+      image: {
+        ...state.image,
+        ...action.payload,
+      },
+    }))
+    .addCase(actions.changeFrame.fulfilled, (state, action) => ({
+      ...state,
+      frame: {
+        ...state.frame,
+        ...action.payload,
+        ready: true,
+      },
+    }))
+    .addCase(actions.complete, (state) => ({
+      ...state,
+      temporaries: initialState.temporaries,
+    }))
+    .addCase(actions.ready, (state, action) => ({
+      ...state,
+      ...action.payload,
+    }))
+    .addCase(actions.removeImage, (state, action) => ({
+      ...state,
+      image: initialState.image,
+      ready: false,
+    }))
+    .addCase(actions.splashed, (state) => ({
+      ...state,
+      splashed: true,
+    }))
     .addCase(actions.startImageDragging, (state, action) => {
       const { cursorPositions } = action.payload;
       const { image, layout } = state;
@@ -178,39 +207,6 @@ export const reducer = createReducer(initialState, (builder) => {
 
       return state;
     })
-    //
-    .addCase(actions.changeFilter, (state, action) => ({
-      ...state,
-      image: {
-        ...state.image,
-        ...action.payload,
-      },
-    }))
-    .addCase(actions.changeFrame.fulfilled, (state, action) => ({
-      ...state,
-      frame: {
-        ...state.frame,
-        ...action.payload,
-        ready: true,
-      },
-    }))
-    .addCase(actions.complete, (state) => ({
-      ...state,
-      temporaries: initialState.temporaries,
-    }))
-    .addCase(actions.ready, (state, action) => ({
-      ...state,
-      ...action.payload,
-    }))
-    .addCase(actions.removeImage, (state, action) => ({
-      ...state,
-      image: initialState.image,
-      ready: false,
-    }))
-    .addCase(actions.splashed, (state) => ({
-      ...state,
-      splashed: true,
-    }))
     .addCase(actions.updateDisplayable, (state, action) => {
       const { payload: displayable } = action;
       const {

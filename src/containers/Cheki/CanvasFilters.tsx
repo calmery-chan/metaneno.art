@@ -8,7 +8,7 @@ export const ChekiCanvasFilters: React.FC = () => {
 
   const { image, layout } = cheki;
   const { displayable, trim } = layout;
-  const { filter, height, width, url } = image;
+  const { dataUrl, filter, height, width } = image;
 
   return (
     <svg
@@ -33,7 +33,7 @@ export const ChekiCanvasFilters: React.FC = () => {
         <ChekiFilterImage
           filter={filter}
           height={height}
-          href={url}
+          href={dataUrl}
           width={width}
         />
       </svg>

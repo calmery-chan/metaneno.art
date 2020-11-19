@@ -65,7 +65,7 @@ export const ChekiCanvasImageLayer: React.FC = () => {
         <ChekiFilterImage
           filter={filter}
           height={image.height}
-          href={image.url}
+          href={image.dataUrl}
           width={image.width}
         />
       </svg>

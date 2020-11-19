@@ -12,7 +12,7 @@ export const ChekiFilterThumbnail: React.FC<ChekiFilterThumbnailProps> = ({
   filter,
 }) => {
   const { image } = useSelector(selectors.cheki);
-  const { thumbnailUrl } = image;
+  const { dataUrl } = image;
 
   return (
     <svg
@@ -26,7 +26,7 @@ export const ChekiFilterThumbnail: React.FC<ChekiFilterThumbnailProps> = ({
       <ChekiFilterImage
         filter={filter}
         height={CHEKI_THUMBNAIL_IMAGE_SIZE}
-        href={thumbnailUrl}
+        href={dataUrl}
         width={CHEKI_THUMBNAIL_IMAGE_SIZE}
       />
     </svg>

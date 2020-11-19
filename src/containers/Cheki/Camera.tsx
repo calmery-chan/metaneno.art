@@ -71,8 +71,8 @@ export const ChekiCamera: React.FC = () => {
 
   return (
     <>
-      {!image.url && <ChekiInputImage onLoad={handleOnLoadImage} />}
-      {image.url && (
+      {!image.dataUrl && <ChekiInputImage onLoad={handleOnLoadImage} />}
+      {image.dataUrl && (
         <>
           <ChekiTrim />
           <ChekiColumn className="relative" margin>

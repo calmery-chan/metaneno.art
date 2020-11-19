@@ -182,8 +182,8 @@ export const resizeImage = (image: HTMLImageElement) => {
   context.drawImage(image, 0, 0, width, height);
 
   return {
+    dataUrl: canvas.toDataURL("image/png"),
     height,
-    url: canvas.toDataURL("image/png"),
     width,
   };
 };

@@ -25,7 +25,7 @@ export const ChekiCanvasTrim: React.FC<ChekiTrimImageProps> = ({
       <image
         height={image.height}
         x={image.x}
-        xlinkHref={image.url}
+        xlinkHref={image.dataUrl}
         width={image.width}
         y={image.y}
       />
