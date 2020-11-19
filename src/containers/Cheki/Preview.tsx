@@ -111,7 +111,12 @@ export const ChekiPreview: React.FC<ChekiPreviewProps> = ({
           </svg>
         </Svg>
         {previewUrl && (
-          <img height={frame.height} src={previewUrl} width={frame.width} />
+          <img
+            className="absolute"
+            height={frame.height}
+            src={previewUrl}
+            width={frame.width}
+          />
         )}
       </Container>
     </div>
