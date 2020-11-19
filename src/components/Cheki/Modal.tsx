@@ -1,4 +1,3 @@
-import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 import React, { useState, useEffect } from "react";
 import { Colors, GradientColors } from "~/styles/colors";
@@ -115,6 +114,7 @@ export const ChekiModal: React.FC<ChekiModalProps> = ({
       () => setIsAnimationCompleted(true),
       Mixin.ANIMATION_DURATION.milliseconds
     );
+
     return () => clearTimeout(animationTimer);
   }, [visible]);
 
@@ -139,40 +139,28 @@ export const ChekiModal: React.FC<ChekiModalProps> = ({
   );
 };
 
-export const ChekiModalTitle: React.FC = ({ children }) => (
-  <div
-    css={css`
-      ${Typography.L};
-      color: ${Colors.black};
-      font-family: Roboto, sans-serif;
-      margin-bottom: ${Spacing.s}px;
-    `}
-  >
-    {children}
-  </div>
-);
+export const ChekiModalTitle = styled.div`
+  ${Typography.L};
+  color: ${Colors.black};
+  font-family: Roboto, sans-serif;
+  margin-bottom: ${Spacing.s}px;
+`;
 
-export const ChekiModalText: React.FC = ({ children }) => (
-  <div
-    css={css`
-      ${Typography.S};
+export const ChekiModalText = styled.div`
+  ${Typography.S};
 
-      color: ${Colors.black};
-      font-family: Roboto, sans-serif;
-      margin-bottom: ${Spacing.m}px;
+  color: ${Colors.black};
+  font-family: Roboto, sans-serif;
+  margin-bottom: ${Spacing.m}px;
 
-      a {
-        color: ${Colors.black};
-        font-family: Roboto, sans-serif;
-        font-weight: bold;
-        padding: 0 ${Spacing.xs}px;
-      }
+  a {
+    color: ${Colors.black};
+    font-family: Roboto, sans-serif;
+    font-weight: bold;
+    padding: 0 ${Spacing.xs}px;
+  }
 
-      img {
-        border-radius: 4px;
-      }
-    `}
-  >
-    {children}
-  </div>
-);
+  img {
+    border-radius: 4px;
+  }
+`;
