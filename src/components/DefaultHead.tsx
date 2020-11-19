@@ -33,12 +33,12 @@ export const DefaultHead: React.FC = ({ children }) => (
     />
 
     {/* Safari のピンで表示される SVG のアイコンを設定する、`color` で指定した色で表示されるので注意する */}
-    <link
+    {/* <link
       color="#fff"
       href="/mask-icon.svg"
       key={"mask-icon" as DefaultHeadKeys}
       rel="mask-icon"
-    />
+    /> */}
 
     <meta
       name="format-detection"
