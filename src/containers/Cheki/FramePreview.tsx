@@ -1,5 +1,5 @@
-import { css } from "linaria";
-import { styled } from "linaria/react";
+import { css } from "@emotion/react";
+import styled from "@emotion/styled";
 import React, { useCallback } from "react";
 import { ChekiCanvasFrameLayer } from "./CanvasFrameLayer";
 import { ChekiCanvasImageLayer } from "./CanvasImageLayer";
@@ -39,7 +39,7 @@ export const ChekiFramePreview: React.FC = () => {
 
   return (
     <div
-      className={css`
+      css={css`
         flex-grow: 1;
         height: fit-content;
       `}

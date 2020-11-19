@@ -1,4 +1,4 @@
-import { styled } from "linaria/react";
+import styled from "@emotion/styled";
 import { GradientColors } from "~/styles/colors";
 import { Media } from "~/styles/media";
 import { Spacing } from "~/styles/spacing";

@@ -1,5 +1,4 @@
-import classnames from "classnames";
-import { styled } from "linaria/react";
+import styled from "@emotion/styled";
 import React from "react";
 import { ExternalLink } from "./ExternalLink";
 import { Colors } from "~/styles/colors";
@@ -20,9 +19,7 @@ const Container = styled.div`
 `;
 
 export const ChekiFooter: React.FC = () => (
-  <Container
-    className={classnames("flex font-bold justify-center", Typography.XS)}
-  >
+  <Container className="flex font-bold justify-center" css={Typography.XS}>
     <a href="https://metaneno.art/">めたねのあーと</a>
     <a href="terms-of-service">利用規約</a>
     <ExternalLink href="https://forms.gle/37ucm5pkdZV7L4HAA">

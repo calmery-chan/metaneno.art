@@ -1,4 +1,4 @@
-import { styled } from "linaria/react";
+import styled from "@emotion/styled";
 import React, { useCallback } from "react";
 import { ChekiGradientText } from "../../components/Cheki/GradientText";
 import { ChekiHorizontal } from "../../components/Cheki/Horizontal";
@@ -49,7 +49,7 @@ export const ChekiFilterList: React.FC = () => {
           key={index}
           onClick={() => handleOnClickFilter(filter)}
         >
-          <FilterTitle className={Typography.XS}>
+          <FilterTitle css={Typography.XS}>
             {filter === selected ? (
               <ChekiGradientText>{filter}</ChekiGradientText>
             ) : (

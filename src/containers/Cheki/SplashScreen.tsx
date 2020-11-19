@@ -1,5 +1,4 @@
-import classnames from "classnames";
-import { styled } from "linaria/lib/react";
+import styled from "@emotion/styled";
 import React, { useEffect, useState } from "react";
 import { ChekiApp } from "../../components/Cheki/App";
 import { SPLASH_SCREEN_DURATION } from "~/constants/cheki";
@@ -58,14 +57,10 @@ export const SplashScreen: React.FC = () => {
   }
 
   return (
-    <Animation className={fire ? fadeOut : undefined}>
-      <ChekiApp
-        className={classnames(
-          "bottom-0 flex items-center justify-center left-0 right-0 top-0"
-        )}
-      >
+    <Animation css={fire ? fadeOut : undefined}>
+      <ChekiApp className="bottom-0 flex items-center justify-center left-0 right-0 top-0">
         <Image alt="ロゴ" src="" />
-        <Comment className={classnames("absolute font-bold", Typography.XS)}>
+        <Comment className="absolute font-bold" css={Typography.XS}>
           Made with <img src="/heart.svg" /> by めたねのおくすり
         </Comment>
       </ChekiApp>

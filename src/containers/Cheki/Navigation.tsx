@@ -1,6 +1,6 @@
+import { css } from "@emotion/react";
+import styled from "@emotion/styled";
 import classnames from "classnames";
-import { css } from "linaria";
-import { styled } from "linaria/react";
 import { useRouter } from "next/router";
 import React, { useCallback } from "react";
 import { selectors, useSelector } from "~/domains";
@@ -58,12 +58,16 @@ const NavigationIcon: React.FC<{
   return (
     <Image
       alt={alt}
-      className={classnames({
-        active: pathname === href,
-        [fadeIn]: !always && ready,
-        [fadeOut]: !always && !ready,
-        [disabled]: !always && !ready,
-      })}
+      className={classnames({ active: pathname === href })}
+      css={
+        !always &&
+        (ready
+          ? fadeIn
+          : css`
+              ${fadeOut};
+              ${disabled}
+            `)
+      }
       onClick={handleOnClick}
       src={src}
     />

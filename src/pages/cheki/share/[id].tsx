@@ -1,4 +1,4 @@
-import { styled } from "linaria/react";
+import styled from "@emotion/styled";
 import { NextPage, NextPageContext } from "next";
 import { useRouter } from "next/router";
 import React, { useCallback, useEffect, useRef, useState } from "react";

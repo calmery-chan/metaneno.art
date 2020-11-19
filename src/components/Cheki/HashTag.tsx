@@ -1,4 +1,4 @@
-import { css } from "linaria";
+import { css } from "@emotion/react";
 import React from "react";
 import { Colors, GradientColors } from "~/styles/colors";
 import { Spacing } from "~/styles/spacing";
@@ -15,4 +15,4 @@ const container = css`
 
 export const ChekiHashTag: React.FC<{
   children: string;
-}> = ({ children }) => <span className={container}>{children}</span>;
+}> = ({ children }) => <span css={container}>{children}</span>;

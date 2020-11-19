@@ -1,6 +1,5 @@
-import classnames from "classnames";
-import { css } from "linaria";
-import { styled } from "linaria/react";
+import { css } from "@emotion/react";
+import styled from "@emotion/styled";
 import React, { useState, useEffect } from "react";
 import { Colors, GradientColors } from "~/styles/colors";
 import { Media } from "~/styles/media";
@@ -127,9 +126,9 @@ export const ChekiModal: React.FC<ChekiModalProps> = ({
     <Container>
       <Background
         onClick={onClickCloseButton}
-        className={visible ? fadeIn : fadeOut}
+        css={visible ? fadeIn : fadeOut}
       />
-      <Body className={visible ? fadeInUp : fadeOutDown}>
+      <Body css={visible ? fadeInUp : fadeOutDown}>
         <CloseButton onClick={onClickCloseButton}>
           <img src="/close.svg" alt="閉じる" />
         </CloseButton>
@@ -142,14 +141,12 @@ export const ChekiModal: React.FC<ChekiModalProps> = ({
 
 export const ChekiModalTitle: React.FC = ({ children }) => (
   <div
-    className={classnames(
-      css`
-        color: ${Colors.black};
-        font-family: Roboto, sans-serif;
-        margin-bottom: ${Spacing.s}px;
-      `,
-      Typography.L
-    )}
+    css={css`
+      ${Typography.L};
+      color: ${Colors.black};
+      font-family: Roboto, sans-serif;
+      margin-bottom: ${Spacing.s}px;
+    `}
   >
     {children}
   </div>
@@ -157,25 +154,24 @@ export const ChekiModalTitle: React.FC = ({ children }) => (
 
 export const ChekiModalText: React.FC = ({ children }) => (
   <div
-    className={classnames(
-      css`
+    css={css`
+      ${Typography.S};
+
+      color: ${Colors.black};
+      font-family: Roboto, sans-serif;
+      margin-bottom: ${Spacing.m}px;
+
+      a {
         color: ${Colors.black};
         font-family: Roboto, sans-serif;
-        margin-bottom: ${Spacing.m}px;
+        font-weight: bold;
+        padding: 0 ${Spacing.xs}px;
+      }
 
-        a {
-          color: ${Colors.black};
-          font-family: Roboto, sans-serif;
-          font-weight: bold;
-          padding: 0 ${Spacing.xs}px;
-        }
-
-        img {
-          border-radius: 4px;
-        }
-      `,
-      Typography.S
-    )}
+      img {
+        border-radius: 4px;
+      }
+    `}
   >
     {children}
   </div>

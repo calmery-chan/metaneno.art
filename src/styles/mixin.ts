@@ -1,4 +1,4 @@
-import { css } from "linaria";
+import { css } from "@emotion/react";
 
 const ANIMATION_DURATION = {
   seconds: 0.4,

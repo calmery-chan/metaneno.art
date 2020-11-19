@@ -1,4 +1,4 @@
-import { css } from "linaria";
+import { css } from "@emotion/react";
 
 /** font-size: 10px / line-height: 14px */
 export const XS = css`

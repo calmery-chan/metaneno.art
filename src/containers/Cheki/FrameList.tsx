@@ -1,4 +1,4 @@
-import { styled } from "linaria/react";
+import styled from "@emotion/styled";
 import React, { useCallback } from "react";
 import { ChekiGradientText } from "../../components/Cheki/GradientText";
 import { ChekiHorizontal } from "../../components/Cheki/Horizontal";
@@ -44,7 +44,7 @@ export const ChekiFrameList: React.FC = () => {
     <ChekiHorizontal padding={Spacing.l}>
       {CHEKI_FRAME_IMAGE_URLS.map(({ name, url }, index) => (
         <Frame key={index}>
-          <FrameTitle className={Typography.XS}>
+          <FrameTitle css={Typography.XS}>
             {index === frame.index ? (
               <ChekiGradientText>{name}</ChekiGradientText>
             ) : (

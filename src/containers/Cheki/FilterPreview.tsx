@@ -1,4 +1,4 @@
-import { styled } from "linaria/react";
+import styled from "@emotion/styled";
 import React, { useCallback } from "react";
 import { ChekiFilterDefs } from "~/components/Cheki/FilterDefs";
 import { ChekiFilterImage } from "~/components/Cheki/FilterImage";

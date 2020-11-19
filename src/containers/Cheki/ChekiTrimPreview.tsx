@@ -1,4 +1,4 @@
-import { styled } from "linaria/react";
+import styled from "@emotion/styled";
 import React, { useCallback } from "react";
 import { ChekiTrimImage } from "./TrimImage";
 import { useDispatch, useSelector, selectors } from "~/domains";

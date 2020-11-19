@@ -1,5 +1,5 @@
-import { styled } from "linaria/react";
-import React, { useRef, useCallback } from "react";
+import styled from "@emotion/styled";
+import React, { useCallback, useState } from "react";
 import { ChekiSubButton } from "./SubButton";
 import { ChekiButton } from "~/components/Cheki/Button";
 import { Colors } from "~/styles/colors";
@@ -83,50 +83,46 @@ export const ChekiPopup: React.FC<PopupProps> = ({
   onEnter,
   onCancel,
 }) => {
-  const ref = useRef<HTMLDivElement>(null);
-  const backgroundRef = useRef<HTMLDivElement>(null);
+  const [popupTransition, setPopupTransition] = useState<
+    "bounceIn" | "bounceOut"
+  >("bounceIn");
+  const [backgroundTransition, setBackgroundTransition] = useState<
+    "fadeIn" | "fadeOut"
+  >("fadeIn");
 
   const handleOnClickCancel = useCallback(() => {
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const e = ref.current!;
-    e.classList.add(bounceOut);
+    setPopupTransition("bounceOut");
 
     setTimeout(() => {
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      const b = backgroundRef.current!;
-      b.classList.add(fadeOut);
+      setBackgroundTransition("fadeOut");
     }, 200);
 
     setTimeout(() => {
       onCancel && onCancel();
     }, 800);
-  }, [ref, onCancel]);
+  }, [onCancel]);
 
   const handleOnClickEnter = useCallback(() => {
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const e = ref.current!;
-    e.classList.add(bounceOut);
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const b = backgroundRef.current!;
-    b.classList.add(fadeOut);
+    setPopupTransition("bounceOut");
+    setBackgroundTransition("fadeOut");
 
     setTimeout(() => {
       onEnter();
     }, 800);
-  }, [ref, onEnter]);
+  }, [onEnter]);
 
   return (
     <Container>
       <Background
-        ref={backgroundRef}
-        className={fadeIn}
+        css={backgroundTransition === "fadeIn" ? fadeIn : fadeOut}
         onClick={handleOnClickCancel}
       />
       <PopupContainer>
-        <PopupInner ref={ref} key={children?.toString()} className={bounceIn}>
-          <PopupInnerMessage className={Typography.M}>
-            {children}
-          </PopupInnerMessage>
+        <PopupInner
+          key={children?.toString()}
+          css={popupTransition === "bounceIn" ? bounceIn : bounceOut}
+        >
+          <PopupInnerMessage css={Typography.M}>{children}</PopupInnerMessage>
           <PopupInnerButtons>
             {onCancel && (
               <ChekiButton onClick={handleOnClickCancel}>

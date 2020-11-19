@@ -1,4 +1,4 @@
-import { styled } from "linaria/react";
+import styled from "@emotion/styled";
 import { NextPage } from "next";
 import React, { useCallback } from "react";
 import { ChekiApp } from "~/components/Cheki/App";
