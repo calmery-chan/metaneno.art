@@ -10,15 +10,17 @@ import { getFrameSizeByDirection } from "~/utils/cheki";
 export const ChekiCanvasFrameLayer: React.FC = () => {
   const dispatch = useDispatch();
   const {
-    frame: { url },
+    frame: { ready, url },
     image: { direction },
   } = useSelector(selectors.cheki);
   const { height, width } = getFrameSizeByDirection(direction);
 
   // Dummy
   useEffect(() => {
-    dispatch(actions.addFrame({ index: 0 }));
-  }, []);
+    if (!ready) {
+      dispatch(actions.addFrame({ index: 0 }));
+    }
+  }, [ready]);
 
   return (
     <>
