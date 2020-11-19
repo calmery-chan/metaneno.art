@@ -47,16 +47,15 @@ const NavigationIcon: React.FC<{
   always?: boolean;
 }> = ({ always = false, href, src }) => {
   const { pathname, push } = useRouter();
-  const { shootingCondition } = useSelector(selectors.cheki);
-  const ready = shootingCondition === "complate";
+  const { ready } = useSelector(selectors.cheki);
 
   const handleOnClick = useCallback(() => {
-    if (shootingCondition !== "complate") {
+    if (!ready) {
       return;
     }
 
     push(href);
-  }, [shootingCondition]);
+  }, [ready]);
 
   return (
     <IconContainer

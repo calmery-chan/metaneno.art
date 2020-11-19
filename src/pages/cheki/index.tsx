@@ -22,30 +22,22 @@ const Container = styled.div`
 
 export const Cheki: NextPage = () => {
   const dispatch = useDispatch();
-  const { shootingCondition } = useSelector(selectors.cheki);
+  const { image, ready } = useSelector(selectors.cheki);
 
   // Events
 
   const handleOnLoadImage = useCallback((url: string) => {
     dispatch(actions.addImage({ url }));
-    dispatch(
-      actions.changeShootingCondition({ shootingCondition: "trimming" })
-    );
+    dispatch(actions.ready({ ready: false }));
   }, []);
 
   const handleOnClickShootButton = useCallback(
-    () =>
-      dispatch(
-        actions.changeShootingCondition({ shootingCondition: "complate" })
-      ),
+    () => dispatch(actions.ready({ ready: true })),
     []
   );
 
   const handleOnClickShootAgainButton = useCallback(
-    () =>
-      dispatch(
-        actions.changeShootingCondition({ shootingCondition: "trimming" })
-      ),
+    () => dispatch(actions.ready({ ready: false })),
     []
   );
 
@@ -61,10 +53,10 @@ export const Cheki: NextPage = () => {
       >
         <Container>
           <ChekiHeader />
-          {shootingCondition === "in-preparation" && (
+          {!ready && !image.url && (
             <ChekiInputImage onLoad={handleOnLoadImage} />
           )}
-          {shootingCondition === "trimming" && (
+          {!ready && image.url && (
             <>
               <ChekiTrim />
               <ChekiColumn margin>
@@ -72,7 +64,7 @@ export const Cheki: NextPage = () => {
               </ChekiColumn>
             </>
           )}
-          {shootingCondition === "complate" && (
+          {ready && (
             <>
               <ChekiTrimPreview />
               <ChekiColumn margin>
