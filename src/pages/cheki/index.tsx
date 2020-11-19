@@ -53,7 +53,12 @@ export const Cheki: NextPage = () => {
 
   return (
     <>
-      <ChekiApp>
+      <ChekiApp
+        seoProps={{
+          nofollow: false,
+          noindex: false,
+        }}
+      >
         <Container>
           <ChekiHeader />
           {shootingCondition === "in-preparation" && (

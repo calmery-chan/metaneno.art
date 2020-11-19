@@ -1,6 +1,7 @@
 import * as url from "url";
 import _axios from "axios";
 import blueimpLoadImage from "blueimp-load-image";
+import { DefaultSeoProps } from "next-seo";
 import { useCallback, useEffect, useRef } from "react";
 import {
   CHEKI_HORIZONTAL_IMAGE_HEIGHT,
@@ -248,4 +249,38 @@ export const useDisplayable = <T extends HTMLElement>(
   }, [ref]);
 
   return ref;
+};
+
+export const defaultSeoProps: DefaultSeoProps = {
+  canonical: "https://metaneno.art/cheki",
+  description: "ノネメちゃんと一緒に写真を撮ろう！",
+  nofollow: true, // Top ページ以外は基本 nofollow にする
+  noindex: true, // Top ページ以外は基本 noindex にする
+  title: "ノネメちゃんチェキ | めたねのあーと",
+
+  // Twitter
+  twitter: {
+    cardType: "summary_large_image",
+    // @username for the content creator / author (outputs as `twitter:creator`)
+    handle: "@metanen0x0",
+    // @username for the website used in the card footer
+    site: "@metanen0x0",
+  },
+
+  // OGP
+  openGraph: {
+    description: "ノネメちゃんと一緒に写真を撮ろう！",
+    images: [
+      {
+        height: 630,
+        url: "https://metaneno.art/cheki/og.png",
+        width: 1200,
+      },
+    ],
+    locale: "ja_JP",
+    site_name: "ノネメチェキ",
+    title: "ノネメちゃんチェキ | めたねのあーと",
+    type: "website",
+    url: "https://metaneno.art/cheki",
+  },
 };
