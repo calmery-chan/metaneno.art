@@ -1,60 +1,63 @@
 import { css } from "@emotion/react";
+import styled from "@emotion/styled";
 import React from "react";
 import { Colors, GradientColors } from "~/styles/colors";
 import { Mixin } from "~/styles/mixin";
 import { Spacing } from "~/styles/spacing";
 import { Typography } from "~/styles/typography";
 
-export const ChekiSubButton: React.FC<{
+const Container = styled.div<Pick<ChekiSubButtonProps, "disabled">>`
+  ${Typography.M};
+
+  background: ${GradientColors.pinkToOrange};
+  border-radius: 50vh;
+  box-sizing: border-box;
+  padding: 2px;
+  text-align: center;
+  width: 100%;
+  opacity: 0.48;
+  cursor: not-allowed;
+
+  ${({ disabled }) =>
+    !disabled &&
+    css`
+      ${Mixin.clickable};
+      opacity: 1;
+      cursor: pointer;
+    `};
+`;
+
+const Body = styled.div`
+  background: ${Colors.white};
+  border-radius: 50vh;
+  position: relative;
+`;
+
+const Text = styled.div`
+  -webkit-background-clip: text;
+  background-image: ${GradientColors.pinkToOrange};
+  background-clip: text;
+  color: transparent;
+  overflow: hidden;
+  padding: ${Spacing.m - 2}px ${Spacing.l - 2}px;
+  line-height: 14px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+`;
+
+type ChekiSubButtonProps = {
   disabled?: boolean;
   onClick?: () => void;
-}> = ({ children, disabled, onClick }) => (
-  <div
-    css={css`
-      ${Typography.M};
-      color: ${Colors.white};
-      display: flex;
-      justify-content: center;
-      height: ${Spacing.m * 2 + 14}px;
-      line-height: 14px;
-      width: 100%;
-    `}
-  >
-    <button
-      className="h-full rounded-full w-full"
-      css={css`
-        background: ${GradientColors.pinkToOrange};
-        box-sizing: border-box;
-        cursor: not-allowed;
-        font-weight: bold;
-        opacity: 0.48;
-        outline: none !important;
-        padding: ${Spacing.xs / 2}px;
+};
 
-        ${!disabled &&
-        css`
-          ${Mixin.clickable};
-          opacity: 1;
-          cursor: pointer;
-        `}
-      `}
-      onClick={disabled ? undefined : onClick}
-      style={{
-        maxWidth: "512px",
-      }}
-    >
-      <div className="bg-white h-full rounded-full w-full">
-        <div
-          className="flex h-full items-center justify-center rounded-full w-full"
-          css={css`
-            background: ${GradientColors.pinkToOrange};
-            background-clip: text;
-            color: transparent;
-          `}
-        >
-          {children}
-        </div>
-      </div>
-    </button>
-  </div>
+export const ChekiSubButton: React.FC<ChekiSubButtonProps> = ({
+  children,
+  disabled = false,
+  onClick,
+}) => (
+  <Container disabled={disabled}>
+    <Body onClick={disabled ? undefined : onClick}>
+      <Text className="font-bold">{children}</Text>
+    </Body>
+  </Container>
 );
