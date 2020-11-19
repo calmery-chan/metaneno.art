@@ -33,7 +33,10 @@ export const ChekiApp: React.FC<{
   const { ready } = useSelector(selectors.cheki);
 
   useEffect(() => {
-    if (!ready && pathname !== "/cheki") {
+    if (
+      !ready &&
+      !(pathname === "/cheki" || pathname.startsWith("/cheki/share"))
+    ) {
       push("/cheki");
     }
   }, [ready]);
