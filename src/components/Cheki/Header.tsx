@@ -36,7 +36,7 @@ const Contributor: React.FC<{
   name: string;
 }> = ({ contribution, icon, link, name }) => (
   <ExternalLink
-    className="flex flex-shrink-0 items-center"
+    className="flex-shrink-0"
     css={css`
       width: 50%;
       margin-top: ${Spacing.xs}px;
@@ -49,39 +49,46 @@ const Contributor: React.FC<{
     href={link}
   >
     <div
-      className="rounded-full"
+      className="flex items-center"
       css={css`
-        padding: 2px;
-        background: ${GradientColors.pinkToOrange};
-        height: 40px;
-        width: 40px;
+        ${Mixin.clickable};
       `}
     >
-      <img
-        alt={name}
+      <div
         className="rounded-full"
         css={css`
-          height: 100%;
-          width: 100%;
-        `}
-        src={icon}
-      />
-    </div>
-    <div
-      className="font-bold"
-      css={css`
-        color: ${Colors.black};
-        margin-left: ${Spacing.xs}px;
-      `}
-    >
-      {name}
-      <div
-        css={css`
-          ${Typography.XS};
-          color: ${Colors.gray};
+          padding: 2px;
+          background: ${GradientColors.pinkToOrange};
+          height: 40px;
+          width: 40px;
         `}
       >
-        {contribution}
+        <img
+          alt={name}
+          className="rounded-full"
+          css={css`
+            height: 100%;
+            width: 100%;
+          `}
+          src={icon}
+        />
+      </div>
+      <div
+        className="font-bold"
+        css={css`
+          color: ${Colors.black};
+          margin-left: ${Spacing.xs}px;
+        `}
+      >
+        {name}
+        <div
+          css={css`
+            ${Typography.XS};
+            color: ${Colors.gray};
+          `}
+        >
+          {contribution}
+        </div>
       </div>
     </div>
   </ExternalLink>
