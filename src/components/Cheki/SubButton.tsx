@@ -12,6 +12,8 @@ const Container = styled.div<Pick<ChekiSubButtonProps, "disabled">>`
   background: ${GradientColors.pinkToOrange};
   border-radius: 50vh;
   box-sizing: border-box;
+  margin: 0 auto;
+  max-width: 512px;
   padding: 2px;
   text-align: center;
   width: 100%;
