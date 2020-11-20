@@ -17,6 +17,7 @@ import { ChekiNavigation } from "~/containers/Cheki/Navigation";
 import { selectors, useSelector } from "~/domains";
 import { Spacing } from "~/styles/spacing";
 import { getShareUrlById, upload } from "~/utils/cheki";
+import * as GA from "~/utils/cheki/google-analytics";
 
 const ChekiSaveAndShare: NextPage = () => {
   const { layout } = useSelector(selectors.cheki);
@@ -45,6 +46,8 @@ const ChekiSaveAndShare: NextPage = () => {
     if (!shareId) {
       setShareId(await upload(previewUrl));
     }
+
+    GA.share();
   }, [previewUrl, shareId]);
 
   const handleOnCreatePreviewUrl = useCallback(setPreviewUrl, []);

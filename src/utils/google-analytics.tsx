@@ -13,13 +13,13 @@ const gtag = () => {
 };
 
 // https://developers.google.com/analytics/devguides/collection/gtagjs/events
-const event = (
+export const sendEvent = (
   action: string,
   {
     category,
     label,
     value,
-  }: { category: string; label: string; value?: string }
+  }: { category: string; label?: string; value?: string }
 ) => {
   gtag()("event", action, {
     event_category: category,
@@ -39,7 +39,7 @@ export const changeRoute = (url: string) => {
 };
 
 export const sendDummy = () => {
-  event("dummy", {
+  sendEvent("dummy", {
     category: "dummy-category",
     label: "dummy-label",
   });

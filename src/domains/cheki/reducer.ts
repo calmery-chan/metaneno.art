@@ -5,6 +5,7 @@ import { ChekiFilter } from "~/constants/cheki";
 import { ChekiDirection } from "~/types/ChekiDirection";
 import { ChekiRectangle } from "~/types/ChekiRectangle";
 import { getImageSizeByDirection } from "~/utils/cheki";
+import * as GA from "~/utils/cheki/google-analytics";
 
 export type State = {
   character: {
@@ -105,6 +106,8 @@ export const reducer = createReducer(initialState, (builder) => {
 
       const direction = getDirection(height, width);
 
+      GA.addImage(direction);
+
       return {
         ...state,
         image: {
@@ -121,33 +124,47 @@ export const reducer = createReducer(initialState, (builder) => {
         temporaries: initialState.temporaries,
       };
     })
-    .addCase(actions.changeFilter, (state, action) => ({
-      ...state,
-      image: {
-        ...state.image,
-        ...action.payload,
-      },
-    }))
-    .addCase(actions.changeFrame.fulfilled, (state, action) => ({
-      ...state,
-      frame: {
-        ...state.frame,
-        ...action.payload,
-        ready: true,
-      },
-    }))
-    .addCase(actions.complete, (state) => ({
-      ...state,
-      temporaries: initialState.temporaries,
-    }))
+    .addCase(actions.changeFilter, (state, action) => {
+      GA.changeFilter(action.payload.filter || "none");
+
+      return {
+        ...state,
+        image: {
+          ...state.image,
+          ...action.payload,
+        },
+      };
+    })
+    .addCase(actions.changeFrame.fulfilled, (state, action) => {
+      return {
+        ...state,
+        frame: {
+          ...state.frame,
+          ...action.payload,
+          ready: true,
+        },
+      };
+    })
+    .addCase(actions.complete, (state) => {
+      GA.trimmed();
+
+      return {
+        ...state,
+        temporaries: initialState.temporaries,
+      };
+    })
     .addCase(actions.ready, (state, action) => ({
       ...state,
       ...action.payload,
     }))
-    .addCase(actions.removeImage, () => ({
-      ...initialState,
-      splashed: true,
-    }))
+    .addCase(actions.removeImage, () => {
+      GA.removeImage();
+
+      return {
+        ...initialState,
+        splashed: true,
+      };
+    })
     .addCase(actions.splashed, (state) => ({
       ...state,
       splashed: true,

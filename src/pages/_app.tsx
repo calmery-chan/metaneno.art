@@ -15,10 +15,6 @@ const App = ({ Component, pageProps }: AppProps): JSX.Element => {
   const router = useRouter();
 
   useEffect(() => {
-    GA.changeRoute(router.pathname);
-  }, []);
-
-  useEffect(() => {
     router.events.on("routeChangeComplete", GA.changeRoute);
 
     return () => {

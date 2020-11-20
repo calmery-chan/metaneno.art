@@ -12,6 +12,7 @@ import {
   NONEME_IMAGES,
 } from "~/constants/cheki";
 import { CursorPosition } from "~/utils/cheki";
+import * as GA from "~/utils/cheki/google-analytics";
 
 export const addImage = createAsyncThunk<
   {
@@ -31,12 +32,16 @@ export const changeFilter = createAction<{ filter: ChekiFilter | null }>(
 export const changeFrame = createAsyncThunk<
   { dataUrl: string; index: number },
   { index: number }
->("CHEKI/ADD_FRAME", async ({ index }) => ({
-  dataUrl: resizeFrameImage(
-    await convertUrlToImage(CHEKI_FRAME_IMAGE_URLS[index].url)
-  ),
-  index,
-}));
+>("CHEKI/ADD_FRAME", async ({ index }) => {
+  GA.changeFrame(CHEKI_FRAME_IMAGE_URLS[index].name);
+
+  return {
+    dataUrl: resizeFrameImage(
+      await convertUrlToImage(CHEKI_FRAME_IMAGE_URLS[index].url)
+    ),
+    index,
+  };
+});
 
 export const complete = createAction("CHEKI/COMPLETE");
 
@@ -53,9 +58,11 @@ export const startImageDragging = createAction<{
 export const take = createAsyncThunk<{ character: Character }>(
   "CHEKI/TAKE",
   async () => {
-    const character =
-      NONEME_IMAGES[Math.floor(Math.random() * NONEME_IMAGES.length)];
+    const index = Math.floor(Math.random() * NONEME_IMAGES.length);
+    const character = NONEME_IMAGES[index];
     character.url = await convertUrlToDataUrl(character.url);
+
+    GA.takeAPhoto(index);
 
     return { character };
   }

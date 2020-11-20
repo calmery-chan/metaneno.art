@@ -14,6 +14,7 @@ import { selectors, useDispatch, useSelector } from "~/domains";
 import { actions } from "~/domains/cheki";
 import { fadeIn, fadeOut, Mixin } from "~/styles/mixin";
 import { Spacing } from "~/styles/spacing";
+import * as GA from "~/utils/cheki/google-analytics";
 
 const animationFadeIn = css`
   animation-fill-mode: forwards;
@@ -49,6 +50,9 @@ export const ChekiCamera: React.FC = () => {
 
   const handleOnClickShootAgainButton = useCallback(() => {
     setFlashAnimation(false);
+
+    GA.takeAPhotoAgain();
+
     dispatch(actions.ready({ ready: false }));
   }, []);
 
