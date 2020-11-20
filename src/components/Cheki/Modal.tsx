@@ -159,8 +159,4 @@ export const ChekiModalText = styled.div`
     font-weight: bold;
     padding: 0 ${Spacing.xs}px;
   }
-
-  img {
-    border-radius: 4px;
-  }
 `;

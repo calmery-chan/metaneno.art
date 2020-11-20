@@ -1,10 +1,14 @@
+import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 import { useRouter } from "next/router";
 import React, { useCallback, useState } from "react";
+import { ExternalLink } from "./ExternalLink";
 import { ChekiModal, ChekiModalText, ChekiModalTitle } from "./Modal";
 import { ChekiPopup } from "./Popup";
+import { Colors, GradientColors } from "~/styles/colors";
 import { Mixin } from "~/styles/mixin";
 import { Spacing } from "~/styles/spacing";
+import { Typography } from "~/styles/typography";
 
 const Container = styled.div`
   box-sizing: content-box;
@@ -24,6 +28,52 @@ const Container = styled.div`
     }
   }
 `;
+
+const Contributor: React.FC<{
+  contribution: string;
+  icon: string;
+  link: string;
+  name: string;
+}> = ({ contribution, icon, link, name }) => (
+  <ExternalLink className="flex items-center" href={link}>
+    <div
+      className="rounded-full"
+      css={css`
+        padding: 2px;
+        background: ${GradientColors.pinkToOrange};
+        height: 40px;
+        width: 40px;
+      `}
+    >
+      <img
+        alt={name}
+        className="rounded-full"
+        css={css`
+          height: 100%;
+          width: 100%;
+        `}
+        src={icon}
+      />
+    </div>
+    <div
+      className="font-bold"
+      css={css`
+        color: ${Colors.black};
+        margin-left: ${Spacing.xs}px;
+      `}
+    >
+      {name}
+      <div
+        css={css`
+          ${Typography.XS};
+          color: ${Colors.gray};
+        `}
+      >
+        {contribution}
+      </div>
+    </div>
+  </ExternalLink>
+);
 
 export const ChekiHeader: React.FC = () => {
   const { push } = useRouter();
@@ -67,6 +117,42 @@ export const ChekiHeader: React.FC = () => {
           setInformation(false);
         }}
       >
+        <ChekiModalTitle>クレジット</ChekiModalTitle>
+        <ChekiModalText>
+          <div
+            className="grid"
+            css={css`
+              gap: 4px;
+              grid-auto-flow: column;
+              grid-template-rows: 50% 50%;
+            `}
+          >
+            <Contributor
+              contribution="出演"
+              link="https://twitter.com/no0xe"
+              icon="/cheki/authors/no0xe.jpg"
+              name="ノネメ"
+            />
+            <Contributor
+              contribution="イラスト"
+              link="https://twitter.com/metanen0x0"
+              icon="/cheki/authors/metanen0x0.jpg"
+              name="めたねのおくすり"
+            />
+            <Contributor
+              contribution="ロゴデザイン"
+              link="https://twitter.com/metanen0x0"
+              icon="/cheki/authors/metanen0x0.jpg"
+              name="???"
+            />
+            <Contributor
+              contribution="開発/デザイン"
+              link="https://twitter.com/calmeryme"
+              icon="/cheki/authors/calmery.jpg"
+              name="Calmery"
+            />
+          </div>
+        </ChekiModalText>
         <ChekiModalTitle>利用規約</ChekiModalTitle>
         <ChekiModalText>
           利用規約は
