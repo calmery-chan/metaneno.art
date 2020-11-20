@@ -107,6 +107,10 @@ export const ChekiHeader: React.FC = () => {
     [information]
   );
   const handleOnClickOpenPopup = useCallback(() => setBackToTop(true), []);
+  const handleOnClickOpenTerms = useCallback(
+    () => push("/cheki/terms-of-service"),
+    []
+  );
 
   return (
     <>
@@ -181,7 +185,14 @@ export const ChekiHeader: React.FC = () => {
         <ChekiModalTitle>利用規約</ChekiModalTitle>
         <ChekiModalText>
           利用規約は
-          <a href="/cheki/terms-of-service">こちら</a>
+          <a
+            css={css`
+              cursor: pointer;
+            `}
+            onClick={handleOnClickOpenTerms}
+          >
+            こちら
+          </a>
           をご確認ください。
         </ChekiModalText>
       </ChekiModal>
