@@ -35,7 +35,19 @@ const Contributor: React.FC<{
   link: string;
   name: string;
 }> = ({ contribution, icon, link, name }) => (
-  <ExternalLink className="flex items-center" href={link}>
+  <ExternalLink
+    className="flex flex-shrink-0 items-center"
+    css={css`
+      width: 50%;
+      margin-top: ${Spacing.xs}px;
+      padding: 0 !important;
+      &:first-of-type,
+      &:nth-of-type(2) {
+        margin-top: 0;
+      }
+    `}
+    href={link}
+  >
     <div
       className="rounded-full"
       css={css`
@@ -119,16 +131,9 @@ export const ChekiHeader: React.FC = () => {
       >
         <ChekiModalTitle>クレジット</ChekiModalTitle>
         <ChekiModalText>
-          <div
-            className="grid"
-            css={css`
-              gap: 4px;
-              grid-auto-flow: column;
-              grid-template-rows: 50% 50%;
-            `}
-          >
+          <div className="flex flex-wrap">
             <Contributor
-              contribution="出演"
+              contribution="ノネメ役 出演"
               link="https://twitter.com/no0xe"
               icon="/cheki/authors/no0xe.jpg"
               name="ノネメ"
@@ -153,23 +158,23 @@ export const ChekiHeader: React.FC = () => {
             />
           </div>
         </ChekiModalText>
-        <ChekiModalTitle>利用規約</ChekiModalTitle>
-        <ChekiModalText>
-          利用規約は
-          <a href="/cheki/terms-of-service">こちら</a>
-          をご確認ください。
-        </ChekiModalText>
         <ChekiModalTitle>お問い合わせ</ChekiModalTitle>
         <ChekiModalText>
-          ご感想や不具合の報告は
+          ご感想や不具合の報告、その他お問い合わせは
           <a
             href="https://forms.gle/3snQ5xwAJJn86Mv69"
             target="_blank"
             rel="noopener noreferrer"
           >
-            Google フォーム
+            こちらの Google フォーム
           </a>
           までお願いします。
+        </ChekiModalText>
+        <ChekiModalTitle>利用規約</ChekiModalTitle>
+        <ChekiModalText>
+          利用規約は
+          <a href="/cheki/terms-of-service">こちら</a>
+          をご確認ください。
         </ChekiModalText>
       </ChekiModal>
 
