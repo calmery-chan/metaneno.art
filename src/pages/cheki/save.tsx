@@ -25,6 +25,7 @@ const ChekiSaveAndShare: NextPage = () => {
 
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [shareId, setShareId] = useState<string | null>(null);
+  const [isFetching, setFetching] = useState(false);
 
   // Side Effects
 
@@ -44,7 +45,9 @@ const ChekiSaveAndShare: NextPage = () => {
     }
 
     if (!shareId) {
+      setFetching(true);
       setShareId(await upload(previewUrl));
+      setFetching(false);
     }
 
     GA.share();
@@ -89,7 +92,7 @@ const ChekiSaveAndShare: NextPage = () => {
             を付けてシェアしよう
           </ChekiNote>
           <ChekiButton
-            disabled={!previewUrl}
+            disabled={!previewUrl || isFetching}
             onClick={handleOnClickShareButton}
           >
             <img
