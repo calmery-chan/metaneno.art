@@ -19,6 +19,7 @@ const Container = styled.div<Pick<ChekiSubButtonProps, "disabled">>`
   width: 100%;
   opacity: 0.48;
   cursor: not-allowed;
+  user-select: none;
 
   ${({ disabled }) =>
     !disabled &&

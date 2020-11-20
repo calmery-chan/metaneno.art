@@ -17,6 +17,7 @@ export const ChekiButton: React.FC<{
       justify-content: center;
       height: ${Spacing.m * 2 + 14}px;
       line-height: 14px;
+      user-select: none;
       width: 100%;
     `}
   >
