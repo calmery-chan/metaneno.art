@@ -2,9 +2,9 @@ import React from "react";
 import { selectors, useSelector } from "~/domains";
 
 export const ChekiCanvasCharacterLayer: React.FC = () => {
-  const { character } = useSelector(selectors.cheki);
+  const { character, ready } = useSelector(selectors.cheki);
 
-  if (!character) {
+  if (!character || !ready) {
     return null;
   }
 
@@ -19,17 +19,15 @@ export const ChekiCanvasCharacterLayer: React.FC = () => {
       xmlnsXlink="http://www.w3.org/1999/xlink"
       y={character.y}
     >
-      <g
-        transform={`rotate(${character.rotate} ${character.width / 2} ${
-          character.height / 2
-        })`}
-      >
+      <g transform={undefined}>
         <image
-          height={character.height * character.scale}
-          width={character.width * character.scale}
-          x={((character.width * character.scale - character.width) / 2) * -1}
+          height={character.height}
+          width={character.width}
+          // x={((character.width * character.scale - character.width) / 2) * -1}
           xlinkHref={character.dataUrl}
-          y={((character.height * character.scale - character.height) / 2) * -1}
+          // y={((character.height * character.scale - character.height) / 2) * -1}
+          x={0}
+          y={0}
         />
       </g>
     </svg>

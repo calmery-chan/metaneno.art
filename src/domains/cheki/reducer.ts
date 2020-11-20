@@ -1,7 +1,7 @@
 import { createReducer } from "@reduxjs/toolkit";
 import * as actions from "./actions";
 import { getDirection, random, updateFrame, updateTrim } from "./utils";
-import { ChekiFilter, NONEME_IMAGES } from "~/constants/cheki";
+import { ChekiFilter } from "~/constants/cheki";
 import { ChekiDirection } from "~/types/ChekiDirection";
 import { ChekiRectangle } from "~/types/ChekiRectangle";
 import { getImageSizeByDirection } from "~/utils/cheki";
@@ -169,12 +169,12 @@ export const reducer = createReducer(initialState, (builder) => {
         },
       };
     })
-    .addCase(actions.take, (state) => {
+    .addCase(actions.take.fulfilled, (state, action) => {
+      const { character } = action.payload;
       const { image } = state;
       const { height, width } = getImageSizeByDirection(image.direction);
 
-      const character =
-        NONEME_IMAGES[Math.floor(Math.random() * NONEME_IMAGES.length)];
+      console.log(character);
 
       return {
         ...state,

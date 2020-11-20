@@ -8,6 +8,7 @@ import {
   G3,
   HB1,
   HB2,
+  InternalImage,
   KK2,
   LV3,
   M3,
@@ -21,8 +22,9 @@ import { ChekiFilter } from "~/constants/cheki";
 export const ChekiFilterImage: React.FC<{
   filter: ChekiFilter | null;
   height: number;
-  href: string;
   width: number;
+  x?: number;
+  y?: number;
 }> = (props) => {
   const { filter } = props;
 
@@ -58,7 +60,7 @@ export const ChekiFilterImage: React.FC<{
     case "x1":
       return <X1 {...props} />;
     default: {
-      return <image {...props} filter={undefined} />;
+      return <InternalImage {...props} filter={undefined} />;
     }
   }
 };

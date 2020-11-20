@@ -133,19 +133,27 @@ export const DEFAULT_SEO_PROPS: DefaultSeoProps = {
   },
 };
 
+export type Character = {
+  height: number;
+  url: string;
+  rotate: { min: number; max: number };
+  scale: { min: number; max: number };
+  width: number;
+};
+
 export const NONEME_IMAGES = [
   {
     height: 370,
-    url: "https://camera.calmery.moe/images/stickers/3/1.png",
+    url: "/cheki/characters/1.png",
     rotate: { min: -45, max: 45 },
     scale: { min: 0.8, max: 1.6 },
     width: 370,
   },
   {
     height: 370,
-    url: "https://camera.calmery.moe/images/stickers/3/2.png",
+    url: "/cheki/characters/2.png",
     rotate: { min: -45, max: 45 },
     scale: { min: 0.8, max: 1.6 },
     width: 370,
   },
-];
+] as Character[];

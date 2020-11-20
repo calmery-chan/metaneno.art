@@ -37,6 +37,18 @@ const calculateCanvasPositionAndSize = (
   };
 };
 
+export const convertUrlToDataUrl = async (url: string): Promise<string> => {
+  const image = await convertUrlToImage(url);
+  const canvas = document.createElement("canvas");
+  const context = canvas.getContext("2d")!;
+
+  canvas.height = image.height;
+  canvas.width = image.width;
+  context.drawImage(image, 0, 0, canvas.width, canvas.height);
+
+  return canvas.toDataURL("image/png");
+};
+
 export const convertUrlToImage = (url: string): Promise<HTMLImageElement> =>
   new Promise((resolve, reject) => {
     const image = new Image();
