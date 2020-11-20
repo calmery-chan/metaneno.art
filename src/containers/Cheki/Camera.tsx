@@ -35,10 +35,10 @@ export const ChekiCamera: React.FC = () => {
     []
   );
 
-  const handleOnClickShootButton = useCallback(
-    () => dispatch(actions.ready({ ready: true })),
-    []
-  );
+  const handleOnClickShootButton = useCallback(() => {
+    dispatch(actions.take());
+    dispatch(actions.ready({ ready: true }));
+  }, []);
 
   const handleOnEnterRenew = useCallback(() => {
     setRenewConfirm(false);

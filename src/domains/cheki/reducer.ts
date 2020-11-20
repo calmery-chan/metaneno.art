@@ -1,12 +1,21 @@
 import { createReducer } from "@reduxjs/toolkit";
 import * as actions from "./actions";
-import { getDirection, updateFrame, updateTrim } from "./utils";
-import { ChekiFilter } from "~/constants/cheki";
+import { getDirection, random, updateFrame, updateTrim } from "./utils";
+import { ChekiFilter, NONEME_IMAGES } from "~/constants/cheki";
 import { ChekiDirection } from "~/types/ChekiDirection";
 import { ChekiRectangle } from "~/types/ChekiRectangle";
 import { getImageSizeByDirection } from "~/utils/cheki";
 
 export type State = {
+  character: {
+    dataUrl: string;
+    height: number;
+    rotate: number;
+    scale: number;
+    width: number;
+    x: number;
+    y: number;
+  } | null;
   frame: {
     dataUrl: string;
     index: number;
@@ -39,6 +48,7 @@ export type State = {
 };
 
 const initialState: State = {
+  character: null,
   frame: {
     dataUrl: "",
     index: 0,
@@ -156,6 +166,27 @@ export const reducer = createReducer(initialState, (builder) => {
           cursorOffsetX,
           cursorOffsetY,
           isImageDragging: true,
+        },
+      };
+    })
+    .addCase(actions.take, (state) => {
+      const { image } = state;
+      const { height, width } = getImageSizeByDirection(image.direction);
+
+      const character =
+        NONEME_IMAGES[Math.floor(Math.random() * NONEME_IMAGES.length)];
+
+      return {
+        ...state,
+        character: {
+          dataUrl: character.url,
+          height: character.height,
+          rotate: random(character.rotate.min, character.rotate.max),
+          scale:
+            random(character.scale.min * 10, character.scale.max * 10) / 10,
+          width: character.width,
+          x: random(0, width - character.width),
+          y: random(0, height - character.height),
         },
       };
     })
