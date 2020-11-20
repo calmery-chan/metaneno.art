@@ -1,6 +1,5 @@
 import React from "react";
-import { ChekiFilterDefs } from "~/components/Cheki/FilterDefs";
-import { ChekiFilterImage } from "~/components/Cheki/FilterImage";
+import { ChekiCanvasTrimedImage } from "./CanvasTrimedImage";
 import { ChekiFilter, CHEKI_THUMBNAIL_IMAGE_SIZE } from "~/constants/cheki";
 import { selectors, useSelector } from "~/domains";
 type ChekiFilterThumbnailProps = {
@@ -10,21 +9,18 @@ type ChekiFilterThumbnailProps = {
 export const ChekiFilterThumbnail: React.FC<ChekiFilterThumbnailProps> = ({
   filter,
 }) => {
-  const { image } = useSelector(selectors.cheki);
+  const {
+    layout: { trim },
+  } = useSelector(selectors.cheki);
 
   return (
     <svg
       height={CHEKI_THUMBNAIL_IMAGE_SIZE / 2}
-      viewBox={`0 0 ${image.width} ${image.height}`}
+      viewBox={`0 0 ${trim.width} ${trim.height}`}
       xmlns="http://www.w3.org/2000/svg"
       xmlnsXlink="http://www.w3.org/1999/xlink"
     >
-      <ChekiFilterDefs />
-      <ChekiFilterImage
-        filter={filter}
-        height={image.height}
-        width={image.width}
-      />
+      <ChekiCanvasTrimedImage filter={filter} />
     </svg>
   );
 };
