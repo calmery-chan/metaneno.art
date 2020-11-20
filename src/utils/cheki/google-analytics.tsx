@@ -42,6 +42,6 @@ export const takeAPhoto = (index: number) =>
 
 export const takeAPhotoAgain = () => sendChekiEvent("take_a_photo_again", {});
 
-export const trimmed = () => sendChekiEvent("trimmed", {});
+export const transform = () => sendChekiEvent("transform", {});
 
 export const share = () => sendChekiEvent("share", {});

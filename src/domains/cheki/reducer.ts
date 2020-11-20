@@ -146,7 +146,7 @@ export const reducer = createReducer(initialState, (builder) => {
       };
     })
     .addCase(actions.complete, (state) => {
-      GA.trimmed();
+      GA.transform();
 
       return {
         ...state,
