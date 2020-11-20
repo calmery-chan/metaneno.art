@@ -12,11 +12,27 @@ import { ChekiShootButton } from "~/containers/Cheki/ShootButton";
 import { ChekiTrim } from "~/containers/Cheki/Trim";
 import { selectors, useDispatch, useSelector } from "~/domains";
 import { actions } from "~/domains/cheki";
+import { fadeIn, fadeOut, Mixin } from "~/styles/mixin";
 import { Spacing } from "~/styles/spacing";
+
+const animationFadeIn = css`
+  animation-fill-mode: forwards;
+  animation-duration: ${Mixin.ANIMATION_DURATION.seconds / 2}s;
+
+  ${fadeIn};
+`;
+
+const animationFadeOut = css`
+  animation-fill-mode: forwards;
+  animation-duration: ${Mixin.ANIMATION_DURATION.seconds / 2}s;
+
+  ${fadeOut};
+`;
 
 export const ChekiCamera: React.FC = () => {
   const dispatch = useDispatch();
   const { image, ready } = useSelector(selectors.cheki);
+  const [flashAnimation, setFlashAnimation] = useState(false);
 
   // States
 
@@ -31,14 +47,18 @@ export const ChekiCamera: React.FC = () => {
     []
   );
 
-  const handleOnClickShootAgainButton = useCallback(
-    () => dispatch(actions.ready({ ready: false })),
-    []
-  );
+  const handleOnClickShootAgainButton = useCallback(() => {
+    setFlashAnimation(false);
+    dispatch(actions.ready({ ready: false }));
+  }, []);
 
   const handleOnClickShootButton = useCallback(() => {
+    setFlashAnimation(true);
     dispatch(actions.take());
-    dispatch(actions.ready({ ready: true }));
+
+    setTimeout(() => {
+      dispatch(actions.ready({ ready: true }));
+    }, Mixin.ANIMATION_DURATION.milliseconds / 2);
   }, []);
 
   const handleOnEnterRenew = useCallback(() => {
@@ -56,12 +76,12 @@ export const ChekiCamera: React.FC = () => {
   if (ready) {
     return (
       <>
-        <ChekiCanvasContainer>
+        <ChekiCanvasContainer emotion={animationFadeIn}>
           <ChekiCanvas>
             <ChekiCanvasTrim hidden />
           </ChekiCanvas>
         </ChekiCanvasContainer>
-        <ChekiColumn margin>
+        <ChekiColumn css={animationFadeIn} margin>
           <ChekiSubButton onClick={handleOnClickShootAgainButton}>
             もう一度撮影する
           </ChekiSubButton>
@@ -75,8 +95,12 @@ export const ChekiCamera: React.FC = () => {
       {!image.dataUrl && <ChekiInputImage onLoad={handleOnLoadImage} />}
       {image.dataUrl && (
         <>
-          <ChekiTrim />
-          <ChekiColumn className="relative" margin>
+          <ChekiTrim emotion={flashAnimation && animationFadeOut} />
+          <ChekiColumn
+            css={flashAnimation && animationFadeOut}
+            className="relative"
+            margin
+          >
             <ChekiShootButton onClick={handleOnClickShootButton} />
             <div
               className="absolute flex items-center"

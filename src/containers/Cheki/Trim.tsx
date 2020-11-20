@@ -1,4 +1,5 @@
-import styled from "@emotion/styled";
+import { Theme } from "@emotion/react";
+import styled, { Interpolation } from "@emotion/styled";
 import React, { useCallback, useEffect, useRef } from "react";
 import { ChekiCanvasTrim } from "./CanvasTrim";
 import { ChekiTrimGrid } from "./TrimGrid";
@@ -29,7 +30,9 @@ const ChekiTrimOverlay: React.FC = () => (
 
 // Main
 
-export const ChekiTrim: React.FC = () => {
+export const ChekiTrim: React.FC<{ emotion?: Interpolation<Theme> }> = ({
+  emotion,
+}) => {
   const cheki = useSelector(selectors.cheki);
   const dispatch = useDispatch();
 
@@ -87,7 +90,7 @@ export const ChekiTrim: React.FC = () => {
   // Render
 
   return (
-    <Container ref={containerRef}>
+    <Container ref={containerRef} css={emotion}>
       <Canvas
         height={displayable.height}
         onMouseLeave={handleOnComplete}
