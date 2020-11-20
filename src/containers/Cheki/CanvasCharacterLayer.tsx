@@ -19,15 +19,17 @@ export const ChekiCanvasCharacterLayer: React.FC = () => {
       xmlnsXlink="http://www.w3.org/1999/xlink"
       y={character.y}
     >
-      <g transform={undefined}>
+      <g
+        transform={`rotate(${character.rotate} ${character.width / 2} ${
+          character.height / 2
+        })`}
+      >
         <image
-          height={character.height}
-          width={character.width}
-          // x={((character.width * character.scale - character.width) / 2) * -1}
+          height={character.height * character.scale}
+          width={character.width * character.scale}
+          x={((character.width * character.scale - character.width) / 2) * -1}
           xlinkHref={character.dataUrl}
-          // y={((character.height * character.scale - character.height) / 2) * -1}
-          x={0}
-          y={0}
+          y={((character.height * character.scale - character.height) / 2) * -1}
         />
       </g>
     </svg>

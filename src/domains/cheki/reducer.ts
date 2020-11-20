@@ -177,6 +177,21 @@ export const reducer = createReducer(initialState, (builder) => {
       const { image } = state;
       const { height, width } = getImageSizeByDirection(image.direction);
 
+      let x = random(0, width - character.width);
+      let y = random(0, height - character.height);
+
+      if (character.fixed.bottom) {
+        y = height - character.height;
+      } else if (character.fixed.top) {
+        y = 0;
+      }
+
+      if (character.fixed.right) {
+        x = width - character.width;
+      } else if (character.fixed.left) {
+        x = 0;
+      }
+
       return {
         ...state,
         character: {
@@ -186,8 +201,8 @@ export const reducer = createReducer(initialState, (builder) => {
           scale:
             random(character.scale.min * 10, character.scale.max * 10) / 10,
           width: character.width,
-          x: random(0, width - character.width),
-          y: random(0, height - character.height),
+          x,
+          y,
         },
       };
     })

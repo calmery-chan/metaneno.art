@@ -134,6 +134,12 @@ export const DEFAULT_SEO_PROPS: DefaultSeoProps = {
 };
 
 export type Character = {
+  fixed: {
+    bottom: boolean;
+    left: boolean;
+    right: boolean;
+    top: boolean;
+  };
   height: number;
   url: string;
   rotate: { min: number; max: number };
@@ -143,17 +149,42 @@ export type Character = {
 
 export const NONEME_IMAGES = [
   {
-    height: 370,
+    fixed: {
+      bottom: true,
+      left: false,
+      right: false,
+      top: false,
+    },
+    height: 750,
     url: "/cheki/characters/1.png",
-    rotate: { min: -45, max: 45 },
-    scale: { min: 0.8, max: 1.6 },
-    width: 370,
+    rotate: { min: -8, max: 8 },
+    scale: { min: 1, max: 1 },
+    width: 734,
   },
   {
-    height: 370,
+    fixed: {
+      bottom: true,
+      left: false,
+      right: false,
+      top: false,
+    },
+    height: 800,
     url: "/cheki/characters/2.png",
-    rotate: { min: -45, max: 45 },
-    scale: { min: 0.8, max: 1.6 },
-    width: 370,
+    rotate: { min: -8, max: 8 },
+    scale: { min: 1, max: 1 },
+    width: 511,
+  },
+  {
+    fixed: {
+      bottom: false,
+      left: false,
+      right: false,
+      top: false,
+    },
+    height: 600,
+    url: "/cheki/characters/3.png",
+    rotate: { min: -24, max: 24 },
+    scale: { min: 0.4, max: 1 },
+    width: 422,
   },
 ] as Character[];
