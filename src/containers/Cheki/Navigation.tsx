@@ -32,6 +32,7 @@ const Icon = styled.object`
   filter: brightness(0) invert(63%);
   height: 32px;
   pointer-events: none;
+  user-select: none;
 
   &.active {
     filter: none;

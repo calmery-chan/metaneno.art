@@ -3,6 +3,7 @@ import styled from "@emotion/styled";
 import { useRouter } from "next/router";
 import React, { useCallback, useState } from "react";
 import { ExternalLink } from "./ExternalLink";
+import { Icon } from "./Icon";
 import { ChekiModal, ChekiModalText, ChekiModalTitle } from "./Modal";
 import { ChekiPopup } from "./Popup";
 import { Colors, GradientColors } from "~/styles/colors";
@@ -110,14 +111,14 @@ export const ChekiHeader: React.FC = () => {
   return (
     <>
       <Container>
-        <img
+        <Icon
           alt="閉じる"
           height="24px"
           onClick={handleOnClickOpenPopup}
           src="/cheki/close.svg"
           width="24px"
         />
-        <img
+        <Icon
           alt="インフォメーション"
           height="24px"
           onClick={handleOnClickInformation}

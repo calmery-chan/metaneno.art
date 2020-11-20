@@ -4,6 +4,7 @@ import { ChekiCanvas } from "./Canvas";
 import { ChekiCanvasContainer } from "./CanvasContainer";
 import { ChekiCanvasTrim } from "./CanvasTrim";
 import { ChekiColumn } from "~/components/Cheki/Column";
+import { Icon } from "~/components/Cheki/Icon";
 import { ChekiInputImage } from "~/components/Cheki/InputImage";
 import { ChekiPopup } from "~/components/Cheki/Popup";
 import { ChekiSubButton } from "~/components/Cheki/SubButton";
@@ -85,7 +86,7 @@ export const ChekiCamera: React.FC = () => {
                 left: ${Spacing.l}px;
               `}
             >
-              <img
+              <Icon
                 css={css`
                   height: 32px;
                   width: 32px;
