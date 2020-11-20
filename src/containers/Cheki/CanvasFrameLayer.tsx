@@ -5,10 +5,12 @@ import {
 } from "~/constants/cheki";
 import { selectors, useDispatch, useSelector } from "~/domains";
 import { actions } from "~/domains/cheki";
+import { getFrameSizeByDirection } from "~/utils/cheki";
 
 export const ChekiCanvasFrameLayer: React.FC = () => {
   const dispatch = useDispatch();
   const {
+    image: { direction },
     frame: { dataUrl, ready },
   } = useSelector(selectors.cheki);
 
@@ -18,11 +20,20 @@ export const ChekiCanvasFrameLayer: React.FC = () => {
     }
   }, [ready]);
 
+  const { height, width } = getFrameSizeByDirection(direction);
+
   return (
-    <image
-      height={CHEKI_VERTICAL_FRAME_HEIGHT}
-      width={CHEKI_HORIZONTAL_FRAME_WIDTH}
-      xlinkHref={dataUrl}
-    />
+    <>
+      <mask id="cheki-bordered-frame">
+        <rect height={height} width={width} fill="white" rx="8" />
+      </mask>
+
+      <image
+        height={CHEKI_VERTICAL_FRAME_HEIGHT}
+        mask="url(#cheki-bordered-frame)"
+        width={CHEKI_HORIZONTAL_FRAME_WIDTH}
+        xlinkHref={dataUrl}
+      />
+    </>
   );
 };

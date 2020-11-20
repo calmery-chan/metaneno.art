@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from "react";
+import { ChekiCanvasFrameEffectLayer } from "./CanvasFrameEffectLayer";
 import { ChekiCanvasFrameLayer } from "./CanvasFrameLayer";
 import { ChekiCanvasImageLayer } from "./CanvasImageLayer";
 import { selectors, useSelector } from "~/domains";
@@ -63,6 +64,7 @@ export const ChekiCanvasSave: React.FC<ChekiPreviewProps> = ({
     >
       <ChekiCanvasFrameLayer />
       <ChekiCanvasImageLayer />
+      <ChekiCanvasFrameEffectLayer />
     </svg>
   );
 };

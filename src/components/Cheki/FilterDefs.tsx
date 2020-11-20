@@ -279,7 +279,7 @@ export const InternalImage: React.FC<React.SVGProps<SVGSVGElement>> = (
       xmlns="http://www.w3.org/2000/svg"
       xmlnsXlink="http://www.w3.org/1999/xlink"
     >
-      <image height="100%" width="100%" xlinkHref={image.dataUrl} />
+      <image height="100%" width="100%" xlinkHref={image.dataUrl} rx="20" />
 
       <ChekiCanvasCharacterLayer />
     </svg>
