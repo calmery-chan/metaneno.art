@@ -43,7 +43,7 @@ export const ChekiFilterList: React.FC = () => {
 
   return (
     <ChekiHorizontal padding={Spacing.l}>
-      <Filter className="filter" onClick={() => handleOnClickFilter(null)}>
+      <Filter onClick={() => handleOnClickFilter(null)}>
         <FilterTitle css={Typography.XS}>
           {selected === null ? (
             <ChekiGradientText>None</ChekiGradientText>
@@ -54,11 +54,7 @@ export const ChekiFilterList: React.FC = () => {
         <ChekiFilterThumbnail filter={null} />
       </Filter>
       {CHEKI_FILTERS.map((filter, index) => (
-        <Filter
-          className="filter"
-          key={index}
-          onClick={() => handleOnClickFilter(filter)}
-        >
+        <Filter key={index} onClick={() => handleOnClickFilter(filter)}>
           <FilterTitle css={Typography.XS}>
             {filter === selected ? (
               <ChekiGradientText>{filter}</ChekiGradientText>
