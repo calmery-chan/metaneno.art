@@ -147,19 +147,19 @@ export const ChekiHeader: React.FC = () => {
             />
             <Contributor
               contribution="イラスト"
-              link="https://twitter.com/metanen0x0"
+              link="https://metaneno.net/"
               icon="/cheki/authors/metanen0x0.jpg"
               name="めたねのおくすり"
             />
             <Contributor
               contribution="ロゴデザイン"
-              link="https://twitter.com/metanen0x0"
-              icon="/cheki/authors/metanen0x0.jpg"
-              name="???"
+              link="https://touya-design.tumblr.com/"
+              icon="/cheki/authors/touya.png"
+              name="燈弥"
             />
             <Contributor
               contribution="開発/デザイン"
-              link="https://twitter.com/calmeryme"
+              link="https://calmery.me/"
               icon="/cheki/authors/calmery.jpg"
               name="Calmery"
             />
