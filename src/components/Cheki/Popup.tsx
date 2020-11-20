@@ -56,16 +56,10 @@ const PopupInnerMessage = styled.div`
 `;
 
 const PopupInnerButtons = styled.div`
-  display: flex;
-
-  > * {
-    margin-left: ${Spacing.m}px;
-    font-family: Roboto, sans-serif;
-
-    &:first-child {
-      margin-left: 0;
-    }
-  }
+  display: grid;
+  gap: ${Spacing.s}px;
+  grid-auto-flow: column;
+  grid-template-columns: 1fr 1fr;
 `;
 
 interface PopupProps {
