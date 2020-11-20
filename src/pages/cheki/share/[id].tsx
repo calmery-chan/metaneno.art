@@ -12,12 +12,15 @@ import { ChekiLogo } from "~/components/Cheki/Logo";
 import { ChekiNote } from "~/components/Cheki/Note";
 import { TWITTER_HASHTAG_URL } from "~/constants/cheki";
 import { ChekiApp } from "~/containers/Cheki/App";
+import { Colors } from "~/styles/colors";
 import { Spacing } from "~/styles/spacing";
+import { Typography } from "~/styles/typography";
 import { getShareImage, useDisplayable } from "~/utils/cheki";
+import { Sentry } from "~/utils/sentry";
 
 type ChekiShareProps = {
-  imageUrl: string;
-  ogImageUrl: string;
+  imageUrl: string | null;
+  ogImageUrl: string | null;
 };
 
 const ChekiShare: NextPage<ChekiShareProps> = ({ imageUrl, ogImageUrl }) => {
@@ -39,17 +42,21 @@ const ChekiShare: NextPage<ChekiShareProps> = ({ imageUrl, ogImageUrl }) => {
 
   return (
     <ChekiApp
-      seoProps={{
-        openGraph: {
-          images: [
-            {
-              height: 630,
-              url: ogImageUrl,
-              width: 1200,
-            },
-          ],
-        },
-      }}
+      seoProps={
+        ogImageUrl
+          ? {
+              openGraph: {
+                images: [
+                  {
+                    height: 630,
+                    url: ogImageUrl,
+                    width: 1200,
+                  },
+                ],
+              },
+            }
+          : {}
+      }
     >
       <ChekiFlexColumn>
         <div
@@ -72,14 +79,27 @@ const ChekiShare: NextPage<ChekiShareProps> = ({ imageUrl, ogImageUrl }) => {
           `}
           ref={ref}
         >
-          <img
-            src={imageUrl}
-            css={css`
-              height: ${size?.height || 0}px;
-              width: ${size?.width || 0}px;
-              object-fit: contain;
-            `}
-          />
+          {imageUrl && (
+            <img
+              src={imageUrl}
+              css={css`
+                height: ${size?.height || 0}px;
+                width: ${size?.width || 0}px;
+                object-fit: contain;
+              `}
+            />
+          )}
+          {!imageUrl && (
+            <div
+              className="font-bold mx-auto"
+              css={css`
+                ${Typography.S};
+                color: ${Colors.black};
+              `}
+            >
+              画像が見つかりませんでした
+            </div>
+          )}
         </div>
         <ChekiColumn margin>
           <ChekiNote>
@@ -100,12 +120,21 @@ const ChekiShare: NextPage<ChekiShareProps> = ({ imageUrl, ogImageUrl }) => {
 };
 
 ChekiShare.getInitialProps = async ({ query }: NextPageContext) => {
-  const { data } = await getShareImage(query.id as string);
+  try {
+    const { data } = await getShareImage(query.id as string);
 
-  return {
-    imageUrl: data.image_url,
-    ogImageUrl: data.og_image_url,
-  };
+    return {
+      imageUrl: data.image_url,
+      ogImageUrl: data.og_image_url,
+    };
+  } catch (error) {
+    Sentry.captureException(error);
+
+    return {
+      imageUrl: null,
+      ogImageUrl: null,
+    };
+  }
 };
 
 export default ChekiShare;
