@@ -1,6 +1,5 @@
 import styled from "@emotion/styled";
 import React from "react";
-import { Image } from "~/components/Image";
 
 const Container = styled.div<{ size: number }>`
   img {
@@ -11,6 +10,6 @@ const Container = styled.div<{ size: number }>`
 
 export const ChekiLogo: React.FC<{ size: number }> = ({ size }) => (
   <Container size={size}>
-    <Image src="/cheki/logo.png" webp />
+    <img alt="ロゴ" src="/cheki/logo.svg" />
   </Container>
 );
