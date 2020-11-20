@@ -1,4 +1,5 @@
 import "~/styles/globals.scss";
+import "~/utils/sentry";
 import { DefaultSeo } from "next-seo";
 import { AppProps } from "next/app";
 import { useRouter } from "next/router";
