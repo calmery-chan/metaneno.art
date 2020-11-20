@@ -2,7 +2,7 @@ import React from "react";
 import { selectors, useSelector } from "~/domains";
 
 export const ChekiCanvasCharacterLayer: React.FC = () => {
-  const { character, ready } = useSelector(selectors.cheki);
+  const { character, image, ready } = useSelector(selectors.cheki);
 
   if (!character || !ready) {
     return null;
@@ -14,10 +14,10 @@ export const ChekiCanvasCharacterLayer: React.FC = () => {
       overflow="visible"
       viewBox={`0 0 ${character.width} ${character.height}`}
       width={character.width}
-      x={character.x}
+      x={Math.abs(image.x) + character.x}
       xmlns="http://www.w3.org/2000/svg"
       xmlnsXlink="http://www.w3.org/1999/xlink"
-      y={character.y}
+      y={Math.abs(image.y) + character.y}
     >
       <g
         transform={`rotate(${character.rotate} ${character.width / 2} ${

@@ -1,5 +1,5 @@
 import React from "react";
-import { ChekiCanvasCharacterLayer } from "./CanvasCharacterLayer";
+import { ChekiFilterImage } from "~/components/Cheki/FilterImage";
 import { selectors, useSelector } from "~/domains";
 
 type ChekiTrimImageProps = {
@@ -23,15 +23,21 @@ export const ChekiCanvasTrim: React.FC<ChekiTrimImageProps> = ({
       y={trim.y - displayable.y}
       overflow={hidden ? "hidden" : "visible"}
     >
-      <image
+      <svg
         height={image.height}
-        x={image.x}
-        xlinkHref={image.dataUrl}
+        viewBox={`0 0 ${image.width} ${image.height}`}
         width={image.width}
+        x={image.x}
+        xmlns="http://www.w3.org/2000/svg"
+        xmlnsXlink="http://www.w3.org/1999/xlink"
         y={image.y}
-      />
-
-      <ChekiCanvasCharacterLayer />
+      >
+        <ChekiFilterImage
+          filter={null}
+          height={image.height}
+          width={image.width}
+        />
+      </svg>
     </svg>
   );
 };
