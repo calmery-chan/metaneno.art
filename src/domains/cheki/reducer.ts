@@ -144,7 +144,10 @@ export const reducer = createReducer(initialState, (builder) => {
       ...state,
       ...action.payload,
     }))
-    .addCase(actions.removeImage, () => initialState)
+    .addCase(actions.removeImage, () => ({
+      ...initialState,
+      splashed: true,
+    }))
     .addCase(actions.splashed, (state) => ({
       ...state,
       splashed: true,
@@ -173,8 +176,6 @@ export const reducer = createReducer(initialState, (builder) => {
       const { character } = action.payload;
       const { image } = state;
       const { height, width } = getImageSizeByDirection(image.direction);
-
-      console.log(character);
 
       return {
         ...state,
