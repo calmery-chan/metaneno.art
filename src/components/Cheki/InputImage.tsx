@@ -41,7 +41,7 @@ export const ChekiInputImage: React.FC<{
   return (
     <Container className="relative">
       <input
-        accept="image/jpg, image/png"
+        accept="image/*"
         className="absolute h-full opacity-0 w-full"
         onChange={handleOnChange}
         ref={ref}
