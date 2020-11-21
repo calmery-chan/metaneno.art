@@ -214,6 +214,3 @@ export const NONEME_IMAGES = [
     width: 577,
   },
 ] as Character[];
-
-export const CHEKI_FOCUS_SIZE = 96;
-export const CHEKI_FOCUS_RANGE = 64;

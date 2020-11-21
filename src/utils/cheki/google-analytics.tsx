@@ -23,11 +23,6 @@ export const addImage = (direction: ChekiDirection) =>
     label: direction,
   });
 
-export const focus = (isFocus: boolean) =>
-  sendChekiEvent("focus", {
-    label: `${!!isFocus}`,
-  });
-
 export const removeImage = () => sendChekiEvent("remove_image", {});
 
 export const changeFilter = (filter: ChekiFilter | "none") =>

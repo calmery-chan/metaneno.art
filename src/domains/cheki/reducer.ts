@@ -1,7 +1,7 @@
 import { createReducer } from "@reduxjs/toolkit";
 import * as actions from "./actions";
 import { getDirection, random, updateFrame, updateTrim } from "./utils";
-import { ChekiFilter, CHEKI_FOCUS_RANGE } from "~/constants/cheki";
+import { ChekiFilter } from "~/constants/cheki";
 import { ChekiDirection } from "~/types/ChekiDirection";
 import { ChekiRectangle } from "~/types/ChekiRectangle";
 import { getImageSizeByDirection } from "~/utils/cheki";
@@ -14,10 +14,6 @@ export type State = {
     rotate: number;
     scale: number;
     width: number;
-    x: number;
-    y: number;
-  } | null;
-  focus: {
     x: number;
     y: number;
   } | null;
@@ -54,7 +50,6 @@ export type State = {
 
 const initialState: State = {
   character: null,
-  focus: null,
   frame: {
     dataUrl: "",
     index: 0,
@@ -158,31 +153,6 @@ export const reducer = createReducer(initialState, (builder) => {
         temporaries: initialState.temporaries,
       };
     })
-    .addCase(actions.focus, (state, action) => {
-      const focus = action.payload;
-      const {
-        layout: { trim },
-      } = state;
-
-      GA.focus(!!focus);
-
-      if (focus) {
-        const { x, y } = focus;
-
-        return {
-          ...state,
-          focus: {
-            x: (x - trim.x) * trim.displayMagnification,
-            y: (y - trim.y) * trim.displayMagnification,
-          },
-        };
-      } else {
-        return {
-          ...state,
-          focus: null,
-        };
-      }
-    })
     .addCase(actions.ready, (state, action) => ({
       ...state,
       ...action.payload,
@@ -221,57 +191,22 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(actions.take.fulfilled, (state, action) => {
       const { character } = action.payload;
-      const { focus, image } = state;
+      const { image } = state;
       const { height, width } = getImageSizeByDirection(image.direction);
 
       let x = random(0, width - character.width);
       let y = random(0, height - character.height);
 
-      if (focus) {
-        let minX = focus.x - CHEKI_FOCUS_RANGE;
-        let minY = focus.y - CHEKI_FOCUS_RANGE;
+      if (character.fixed.bottom) {
+        y = height - character.height;
+      } else if (character.fixed.top) {
+        y = 0;
+      }
 
-        if (minX < 0) {
-          minX = 0;
-        }
-
-        if (minY < 0) {
-          minY = 0;
-        }
-
-        let maxX = focus.x + CHEKI_FOCUS_RANGE;
-        let maxY = focus.y + CHEKI_FOCUS_RANGE;
-
-        if (maxX > width - character.width) {
-          maxX = width - character.width;
-        }
-
-        if (minY > height - character.height) {
-          maxY = height - character.height;
-        }
-
-        if (minX > maxX) {
-          minX = maxX;
-        }
-
-        if (minY > maxY) {
-          minY = maxY;
-        }
-
-        x = random(minX, maxX);
-        y = random(minY, maxY);
-      } else {
-        if (character.fixed.bottom) {
-          y = height - character.height;
-        } else if (character.fixed.top) {
-          y = 0;
-        }
-
-        if (character.fixed.right) {
-          x = width - character.width;
-        } else if (character.fixed.left) {
-          x = 0;
-        }
+      if (character.fixed.right) {
+        x = width - character.width;
+      } else if (character.fixed.left) {
+        x = 0;
       }
 
       return {
