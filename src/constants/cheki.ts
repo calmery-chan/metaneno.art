@@ -126,7 +126,7 @@ export const DEFAULT_SEO_PROPS: DefaultSeoProps = {
       },
     ],
     locale: "ja_JP",
-    site_name: "ノネメちゃんチェキ",
+    site_name: "めたねのあーと",
     title: "ノネメちゃんチェキ | めたねのあーと",
     type: "website",
     url: "https://metaneno.art/cheki",
