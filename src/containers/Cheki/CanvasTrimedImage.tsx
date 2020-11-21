@@ -10,7 +10,7 @@ export const ChekiCanvasTrimedImage: React.FC<{
   const cheki = useSelector(selectors.cheki);
 
   const { image, layout } = cheki;
-  const { displayable, trim } = layout;
+  const { trim } = layout;
   const { height, width } = image;
 
   return (

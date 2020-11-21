@@ -40,6 +40,7 @@ const calculateCanvasPositionAndSize = (
 export const convertUrlToDataUrl = async (url: string): Promise<string> => {
   const image = await convertUrlToImage(url);
   const canvas = document.createElement("canvas");
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const context = canvas.getContext("2d")!;
 
   canvas.height = image.height;

@@ -24,11 +24,6 @@ const Comment = styled.div`
   }
 `;
 
-const Image = styled.img`
-  height: 196px;
-  width: 196px;
-`;
-
 export const SplashScreen: React.FC = () => {
   const dispatch = useDispatch();
   const { splashed } = useSelector(selectors.cheki);

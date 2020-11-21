@@ -37,7 +37,7 @@ const Icon = styled.object`
   &.active {
     filter: none;
   }
-` as any;
+` as any; // eslint-disable-line @typescript-eslint/no-explicit-any
 
 const disabled = css`
   cursor: auto;
