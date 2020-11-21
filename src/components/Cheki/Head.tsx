@@ -39,7 +39,7 @@ export const ChekiHead: React.FC = ({ children }) => (
     />
 
     <meta
-      content="#000"
+      content="#FFD74B"
       key={"theme-color" as DefaultHeadKeys}
       name="theme-color"
     />
