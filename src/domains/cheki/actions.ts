@@ -1,48 +1,72 @@
 import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
 import {
+  convertUrlToDataUrl,
   convertUrlToImage,
-  createThumbnailImage,
   resizeFrameImage,
   resizeImage,
 } from "./utils";
-import { ChekiFilter } from "~/constants/cheki";
+import {
+  Character,
+  ChekiFilter,
+  CHEKI_FRAME_IMAGE_URLS,
+  NONEME_IMAGES,
+} from "~/constants/cheki";
 import { CursorPosition } from "~/utils/cheki";
-import * as cocoSsd from "~/utils/coco-ssd";
-
-export const addFrame = createAsyncThunk<{ url: string }, { url: string }>(
-  "CHEKI/ADD_FRAME",
-  async ({ url }) => resizeFrameImage(await convertUrlToImage(url))
-);
+import * as GA from "~/utils/cheki/google-analytics";
 
 export const addImage = createAsyncThunk<
   {
-    detectedObjects: cocoSsd.DetectedObject[];
     height: number;
-    thumbnailUrl: string;
-    url: string;
+    dataUrl: string;
     width: number;
   },
   { url: string }
->("CHEKI/ADD_IMAGE", async ({ url }) => {
-  const image = await convertUrlToImage(url);
-  const { height, url: imageUrl, width } = resizeImage(image);
-  const { url: thumbnailUrl } = await createThumbnailImage(image);
-  const detectedObjects = await cocoSsd.detect(
-    await convertUrlToImage(imageUrl)
-  );
-
-  return { detectedObjects, height, thumbnailUrl, url: imageUrl, width };
-});
+>("CHEKI/ADD_IMAGE", async ({ url }) =>
+  resizeImage(await convertUrlToImage(url))
+);
 
 export const changeFilter = createAction<{ filter: ChekiFilter | null }>(
   "CHEKI/CHANGE_FILTER"
 );
 
+export const changeFrame = createAsyncThunk<
+  { dataUrl: string; index: number },
+  { index: number }
+>("CHEKI/ADD_FRAME", async ({ index }) => {
+  GA.changeFrame(CHEKI_FRAME_IMAGE_URLS[index].name);
+
+  return {
+    dataUrl: resizeFrameImage(
+      await convertUrlToImage(CHEKI_FRAME_IMAGE_URLS[index].url)
+    ),
+    index,
+  };
+});
+
 export const complete = createAction("CHEKI/COMPLETE");
+
+export const ready = createAction<{ ready: boolean }>("CHEKI/READY");
+
+export const removeImage = createAction("CHEKI/REMOVE_IMAGE");
+
+export const splashed = createAction("CHEKI/SPLASHED");
 
 export const startImageDragging = createAction<{
   cursorPositions: CursorPosition[];
 }>("CHEKI/START_IMAGE_DRAGGING");
+
+export const take = createAsyncThunk<{ character: Character }>(
+  "CHEKI/TAKE",
+  async () => {
+    const index = Math.floor(Math.random() * NONEME_IMAGES.length);
+    const character = NONEME_IMAGES[index];
+    character.url = await convertUrlToDataUrl(character.url);
+
+    GA.takeAPhoto(index);
+
+    return { character };
+  }
+);
 
 export const tick = createAction<{ cursorPositions: CursorPosition[] }>(
   "CHEKI/TICK"

@@ -8,7 +8,10 @@ import {
   CHEKI_VERTICAL_IMAGE_WIDTH,
 } from "~/constants/cheki";
 import { ChekiDirection } from "~/types/ChekiDirection";
-import { getFrameSizeByDirection } from "~/utils/cheki";
+import {
+  getFrameSizeByDirection,
+  getImageSizeByDirection,
+} from "~/utils/cheki";
 
 const calculateCanvasPositionAndSize = (
   displayable: { height: number; width: number; x: number; y: number },
@@ -32,6 +35,19 @@ const calculateCanvasPositionAndSize = (
     x,
     y,
   };
+};
+
+export const convertUrlToDataUrl = async (url: string): Promise<string> => {
+  const image = await convertUrlToImage(url);
+  const canvas = document.createElement("canvas");
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const context = canvas.getContext("2d")!;
+
+  canvas.height = image.height;
+  canvas.width = image.width;
+  context.drawImage(image, 0, 0, canvas.width, canvas.height);
+
+  return canvas.toDataURL("image/png");
 };
 
 export const convertUrlToImage = (url: string): Promise<HTMLImageElement> =>
@@ -67,6 +83,8 @@ export const createThumbnailImage = async (image: HTMLImageElement) => {
 
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const context2 = canvas2.getContext("2d")!;
+  context2.fillStyle = "white";
+  context2.fillRect(0, 0, canvas2.width, canvas2.height);
   context2.drawImage(
     resizedImage,
     0,
@@ -114,6 +132,9 @@ export const resizeFrameImage = (image: HTMLImageElement) => {
     }
   }
 
+  height = Math.floor(height);
+  width = Math.floor(width);
+
   const canvas = document.createElement("canvas");
   canvas.height = height;
   canvas.width = width;
@@ -122,7 +143,7 @@ export const resizeFrameImage = (image: HTMLImageElement) => {
   const context = canvas.getContext("2d")!;
   context.drawImage(image, 0, 0, width, height);
 
-  return { url: canvas.toDataURL("image/png") };
+  return canvas.toDataURL("image/png");
 };
 
 export const resizeImage = (image: HTMLImageElement) => {
@@ -158,17 +179,24 @@ export const resizeImage = (image: HTMLImageElement) => {
     }
   }
 
+  // 画像の上下左右に黒い線が入る問題を修正するため
+  // 小数点以下の値を削除する
+  height = Math.floor(height);
+  width = Math.floor(width);
+
   const canvas = document.createElement("canvas");
   canvas.height = height;
   canvas.width = width;
 
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const context = canvas.getContext("2d")!;
+  context.fillStyle = "white";
+  context.fillRect(0, 0, canvas.width, canvas.height);
   context.drawImage(image, 0, 0, width, height);
 
   return {
+    dataUrl: canvas.toDataURL("image/png"),
     height,
-    url: canvas.toDataURL("image/png"),
     width,
   };
 };
@@ -191,4 +219,35 @@ export const updateFrame = (
       viewBoxWidth: nextFrameViewBox.width,
     },
   };
+};
+
+export const updateTrim = (
+  displayable: {
+    height: number;
+    width: number;
+    x: number;
+    y: number;
+  },
+  direction: ChekiDirection
+) => {
+  const nextFrameViewBox = getImageSizeByDirection(direction);
+  const positionAndSize = calculateCanvasPositionAndSize(
+    displayable,
+    nextFrameViewBox
+  );
+
+  return {
+    trim: {
+      ...positionAndSize,
+      displayMagnification: nextFrameViewBox.width / positionAndSize.width,
+      viewBoxHeight: nextFrameViewBox.height,
+      viewBoxWidth: nextFrameViewBox.width,
+    },
+  };
+};
+
+export const random = (_min: number, _max: number) => {
+  const min = Math.ceil(_min);
+  const max = Math.floor(_max);
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 };

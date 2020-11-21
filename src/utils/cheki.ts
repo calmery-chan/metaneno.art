@@ -1,5 +1,7 @@
 import * as url from "url";
 import blueimpLoadImage from "blueimp-load-image";
+import { useCallback, useEffect, useRef } from "react";
+import { get, Response } from "./api";
 import {
   CHEKI_HORIZONTAL_IMAGE_HEIGHT,
   CHEKI_VERTICAL_IMAGE_HEIGHT,
@@ -9,8 +11,14 @@ import {
   CHEKI_HORIZONTAL_FRAME_WIDTH,
   CHEKI_VERTICAL_FRAME_HEIGHT,
   CHEKI_VERTICAL_FRAME_WIDTH,
+  SHARE_RANDOM_HASHTAGS,
 } from "~/constants/cheki";
 import { ChekiDirection } from "~/types/ChekiDirection";
+
+export const getShareImage = (id: string) =>
+  get<Response<{ image_url: string; og_image_url: string }>>(
+    `/cheki/images/${id}`
+  );
 
 const convertImageToDataUrl = (
   image: HTMLImageElement,
@@ -180,4 +188,56 @@ export const upload = async (imageUrl: string): Promise<string> => {
   const { data } = await response.json();
 
   return data.id;
+};
+
+export const getShareUrlById = (id: string) =>
+  `http://twitter.com/share?url=${`${window.location.origin}/cheki/share/${id}`}&related=metanen0x0&hashtags=%E3%83%8E%E3%83%8D%E3%83%A1%E3%81%A1%E3%82%83%E3%82%93%E3%83%81%E3%82%A7%E3%82%AD,${
+    SHARE_RANDOM_HASHTAGS[
+      Math.floor(Math.random() * SHARE_RANDOM_HASHTAGS.length)
+    ]
+  }`;
+
+// Hooks
+
+export const useDisplayable = <T extends HTMLElement>(
+  onUpdate: (rect: {
+    height: number;
+    width: number;
+    x: number;
+    y: number;
+  }) => void
+) => {
+  const ref = useRef<T>(null);
+
+  const handleOnUpdateDisplayable = useCallback(() => {
+    const { current } = ref;
+
+    if (!current) {
+      return;
+    }
+
+    const { height, width, x, y } = current.getBoundingClientRect();
+
+    onUpdate({ height, width, x, y });
+  }, [onUpdate]);
+
+  useEffect(() => {
+    const { current } = ref;
+
+    if (!current) {
+      return;
+    }
+
+    const resizeObserver = new ResizeObserver(handleOnUpdateDisplayable);
+
+    resizeObserver.observe(current);
+    handleOnUpdateDisplayable();
+
+    return () => {
+      resizeObserver.unobserve(current);
+      resizeObserver.disconnect();
+    };
+  }, [ref]);
+
+  return ref;
 };

@@ -1,4 +1,5 @@
 import "~/styles/globals.scss";
+import "~/utils/sentry";
 import { DefaultSeo } from "next-seo";
 import { AppProps } from "next/app";
 import { useRouter } from "next/router";
@@ -12,10 +13,6 @@ import { defaultSeoProps } from "~/utils/next-seo";
 
 const App = ({ Component, pageProps }: AppProps): JSX.Element => {
   const router = useRouter();
-
-  useEffect(() => {
-    GA.changeRoute(router.pathname);
-  }, []);
 
   useEffect(() => {
     router.events.on("routeChangeComplete", GA.changeRoute);

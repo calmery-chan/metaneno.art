@@ -1,35 +1,46 @@
 import { createReducer } from "@reduxjs/toolkit";
 import * as actions from "./actions";
-import { getDirection, updateFrame } from "./utils";
-import {
-  ChekiFilter,
-  CHEKI_FRAME_MARGIN_LEFT,
-  CHEKI_FRAME_MARGIN_TOP,
-} from "~/constants/cheki";
+import { getDirection, random, updateFrame, updateTrim } from "./utils";
+import { ChekiFilter } from "~/constants/cheki";
 import { ChekiDirection } from "~/types/ChekiDirection";
 import { ChekiRectangle } from "~/types/ChekiRectangle";
 import { getImageSizeByDirection } from "~/utils/cheki";
-import { DetectedObject } from "~/utils/coco-ssd";
+import * as GA from "~/utils/cheki/google-analytics";
 
 export type State = {
+  character: {
+    dataUrl: string;
+    height: number;
+    rotate: number;
+    scale: number;
+    width: number;
+    x: number;
+    y: number;
+  } | null;
   frame: {
-    url: string;
+    dataUrl: string;
+    index: number;
+    ready: boolean;
   };
   image: ChekiRectangle & {
-    detectedObjects: DetectedObject[];
     direction: ChekiDirection;
     filter: ChekiFilter | null;
-    thumbnailUrl: string;
-    url: string;
+    dataUrl: string;
   };
   layout: {
     displayable: ChekiRectangle;
-    displayMagnification: number;
     frame: ChekiRectangle & {
       viewBoxHeight: number;
       viewBoxWidth: number;
     };
+    trim: ChekiRectangle & {
+      displayMagnification: number;
+      viewBoxHeight: number;
+      viewBoxWidth: number;
+    };
   };
+  ready: boolean;
+  splashed: boolean;
   temporaries: {
     cursorOffsetX: number;
     cursorOffsetY: number;
@@ -38,16 +49,17 @@ export type State = {
 };
 
 const initialState: State = {
+  character: null,
   frame: {
-    url: "",
+    dataUrl: "",
+    index: 0,
+    ready: false,
   },
   image: {
-    detectedObjects: [],
     direction: "horizontal",
     filter: null,
     height: 0,
-    thumbnailUrl: "",
-    url: "",
+    dataUrl: "",
     width: 0,
     x: 0,
     y: 0,
@@ -59,7 +71,6 @@ const initialState: State = {
       x: 0,
       y: 0,
     },
-    displayMagnification: 1,
     frame: {
       height: 0,
       viewBoxHeight: 0,
@@ -68,7 +79,18 @@ const initialState: State = {
       x: 0,
       y: 0,
     },
+    trim: {
+      displayMagnification: 1,
+      height: 0,
+      viewBoxHeight: 0,
+      viewBoxWidth: 0,
+      width: 0,
+      x: 0,
+      y: 0,
+    },
   },
+  ready: false,
+  splashed: false,
   temporaries: {
     cursorOffsetX: 0,
     cursorOffsetY: 0,
@@ -78,38 +100,21 @@ const initialState: State = {
 
 export const reducer = createReducer(initialState, (builder) => {
   builder
-    .addCase(actions.addFrame.fulfilled, (state, action) => {
-      const { url } = action.payload;
-
-      return {
-        ...state,
-        frame: {
-          ...state.frame,
-          url,
-        },
-      };
-    })
     .addCase(actions.addImage.fulfilled, (state, action) => {
-      const {
-        detectedObjects,
-        height,
-        thumbnailUrl,
-        url,
-        width,
-      } = action.payload;
+      const { dataUrl, height, width } = action.payload;
       const { layout } = state;
 
       const direction = getDirection(height, width);
+
+      GA.addImage(direction);
 
       return {
         ...state,
         image: {
           ...initialState.image,
-          detectedObjects,
+          dataUrl,
           direction,
           height,
-          thumbnailUrl,
-          url,
           width,
         },
         layout: {
@@ -119,31 +124,60 @@ export const reducer = createReducer(initialState, (builder) => {
         temporaries: initialState.temporaries,
       };
     })
-    .addCase(actions.changeFilter, (state, action) => ({
+    .addCase(actions.changeFilter, (state, action) => {
+      GA.changeFilter(action.payload.filter || "none");
+
+      return {
+        ...state,
+        image: {
+          ...state.image,
+          ...action.payload,
+        },
+      };
+    })
+    .addCase(actions.changeFrame.fulfilled, (state, action) => {
+      return {
+        ...state,
+        frame: {
+          ...state.frame,
+          ...action.payload,
+          ready: true,
+        },
+      };
+    })
+    .addCase(actions.complete, (state) => {
+      GA.transform();
+
+      return {
+        ...state,
+        temporaries: initialState.temporaries,
+      };
+    })
+    .addCase(actions.ready, (state, action) => ({
       ...state,
-      image: {
-        ...state.image,
-        filter: action.payload.filter,
-      },
+      ...action.payload,
     }))
-    .addCase(actions.complete, (state) => ({
+    .addCase(actions.removeImage, () => {
+      GA.removeImage();
+
+      return {
+        ...initialState,
+        splashed: true,
+      };
+    })
+    .addCase(actions.splashed, (state) => ({
       ...state,
-      temporaries: initialState.temporaries,
+      splashed: true,
     }))
     .addCase(actions.startImageDragging, (state, action) => {
       const { cursorPositions } = action.payload;
       const { image, layout } = state;
+      const { trim } = layout;
 
       const [{ x, y }] = cursorPositions;
 
-      const cursorOffsetX =
-        (x - layout.frame.x) * layout.displayMagnification -
-        CHEKI_FRAME_MARGIN_LEFT -
-        image.x;
-      const cursorOffsetY =
-        (y - layout.frame.y) * layout.displayMagnification -
-        CHEKI_FRAME_MARGIN_TOP -
-        image.y;
+      const cursorOffsetX = (x - trim.x) * trim.displayMagnification - image.x;
+      const cursorOffsetY = (y - trim.y) * trim.displayMagnification - image.y;
 
       return {
         ...state,
@@ -155,19 +189,50 @@ export const reducer = createReducer(initialState, (builder) => {
         },
       };
     })
+    .addCase(actions.take.fulfilled, (state, action) => {
+      const { character } = action.payload;
+      const { image } = state;
+      const { height, width } = getImageSizeByDirection(image.direction);
+
+      let x = random(0, width - character.width);
+      let y = random(0, height - character.height);
+
+      if (character.fixed.bottom) {
+        y = height - character.height;
+      } else if (character.fixed.top) {
+        y = 0;
+      }
+
+      if (character.fixed.right) {
+        x = width - character.width;
+      } else if (character.fixed.left) {
+        x = 0;
+      }
+
+      return {
+        ...state,
+        character: {
+          dataUrl: character.url,
+          height: character.height,
+          rotate: random(character.rotate.min, character.rotate.max),
+          scale:
+            random(character.scale.min * 10, character.scale.max * 10) / 10,
+          width: character.width,
+          x,
+          y,
+        },
+      };
+    })
     .addCase(actions.tick, (state, action) => {
       const { cursorPositions } = action.payload;
       const { image, layout, temporaries } = state;
+      const { trim } = layout;
 
       const [{ x, y }] = cursorPositions;
 
       if (temporaries.isImageDragging) {
-        const cursorX =
-          (x - layout.frame.x) * layout.displayMagnification -
-          CHEKI_FRAME_MARGIN_LEFT;
-        const cursorY =
-          (y - layout.frame.y) * layout.displayMagnification -
-          CHEKI_FRAME_MARGIN_TOP;
+        const cursorX = (x - trim.x) * trim.displayMagnification;
+        const cursorY = (y - trim.y) * trim.displayMagnification;
 
         let nextX = cursorX - temporaries.cursorOffsetX;
         let nextY = cursorY - temporaries.cursorOffsetY;
@@ -208,15 +273,13 @@ export const reducer = createReducer(initialState, (builder) => {
         image: { direction },
       } = state;
 
-      const { frame } = updateFrame(action.payload, direction);
-
       return {
         ...state,
         layout: {
           ...state.layout,
+          ...updateFrame(displayable, direction),
+          ...updateTrim(displayable, direction),
           displayable,
-          displayMagnification: frame.viewBoxWidth / frame.width,
-          frame,
         },
       };
     });
