@@ -40,6 +40,11 @@ export const CHEKI_FRAME_IMAGE_URLS = [
   { name: "lightgray", url: "/cheki/frames/lightgray.png" },
   { name: "pink", url: "/cheki/frames/pink.png" },
   { name: "yellow", url: "/cheki/frames/yellow.png" },
+  { name: "candy", url: "/cheki/frames/candy.png" },
+  { name: "egg", url: "/cheki/frames/egg.png" },
+  { name: "flower", url: "/cheki/frames/flower.png" },
+  { name: "noise", url: "/cheki/frames/noise.png" },
+  { name: "noiseblue", url: "/cheki/frames/noiseblue.png" },
 ];
 
 export const CHEKI_FILTERS = [
