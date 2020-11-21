@@ -117,7 +117,7 @@ export const DEFAULT_SEO_PROPS: DefaultSeoProps = {
 
   // OGP
   openGraph: {
-    description: "ノネメちゃんと一緒に写真を撮ろう！",
+    description: "天使のノネメちゃんと一緒にチェキを撮ろう！",
     images: [
       {
         height: 630,
@@ -126,7 +126,7 @@ export const DEFAULT_SEO_PROPS: DefaultSeoProps = {
       },
     ],
     locale: "ja_JP",
-    site_name: "ノネメチェキ",
+    site_name: "ノネメちゃんチェキ",
     title: "ノネメちゃんチェキ | めたねのあーと",
     type: "website",
     url: "https://metaneno.art/cheki",
