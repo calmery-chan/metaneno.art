@@ -101,7 +101,7 @@ export const TWITTER_HASHTAG_URL =
 
 export const DEFAULT_SEO_PROPS: DefaultSeoProps = {
   canonical: "https://metaneno.art/cheki",
-  description: "ノネメちゃんと一緒に写真を撮ろう！",
+  description: "天使のノネメちゃんと一緒にチェキを撮ろう！",
   nofollow: true, // Top ページ以外は基本 nofollow にする
   noindex: true, // Top ページ以外は基本 noindex にする
   title: "ノネメちゃんチェキ | めたねのあーと",
