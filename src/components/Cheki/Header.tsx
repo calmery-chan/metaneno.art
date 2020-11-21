@@ -141,6 +141,19 @@ export const ChekiHeader: React.FC = () => {
           setInformation(false);
         }}
       >
+        <ChekiModalTitle>ノネメちゃんチェキとは？</ChekiModalTitle>
+        <ChekiModalText>
+          天使の女の子、ノネメちゃん。
+          <br />
+          <br />
+          ふわふわの綺麗な羽、うす黄色からピンクのグラデーションでくるくるふわふわの髪の毛、ぱっちり目だけど少しとろーんとしている金色の瞳が特徴。綺麗な景色やお花などの植物が好きで、よく人間界を散歩しているそうです。(本当は天界でのお仕事があるみたいだけど…)
+          <br />
+          <br />
+          たまたま通りかかった暇そうな人と一緒に会話したり、写真を撮ったりして一期一会を楽しんでいるときもあるとの噂です。
+          <br />
+          <br />
+          そんなノネメちゃんとのチェキをあなたも撮ってみませんか？
+        </ChekiModalText>
         <ChekiModalTitle>クレジット</ChekiModalTitle>
         <ChekiModalText>
           <div className="flex flex-wrap">
