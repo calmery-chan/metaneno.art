@@ -20,7 +20,7 @@ export default function Content() {
           description="3D キャラクターやアニメーション作品を AR 空間で眺めよう！"
         />
         <ContentItem
-          link=""
+          link="/cheki"
           thumb="/lp/goods/sample-thumb.jpg"
           title="ノネメちゃんチェキ"
           description="天使のノネメちゃんとチェキを撮れる写真加工アプリ！"
