@@ -15,7 +15,7 @@ export default function MainContentLink() {
       <Inner>
         <Message
           isIntersected={isIntersected}
-          src="/lp/main-content-link/message.svg"
+          src="/lp/main-content-link/text.svg"
         />
         <ButtonWrapper>
           <div>
@@ -107,7 +107,7 @@ const Inner = styled.div`
 
 const Message = styled.img<{ isIntersected: boolean }>`
   display: block;
-  height: 90px;
+  width: 950px;
   opacity: 0;
 
   ${({ isIntersected }) =>
