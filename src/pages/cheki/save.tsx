@@ -1,6 +1,6 @@
 import { css } from "@emotion/react";
 import { NextPage } from "next";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { ChekiButton } from "~/components/Cheki/Button";
 import { ChekiColumn } from "~/components/Cheki/Column";
 import { ExternalLink } from "~/components/Cheki/ExternalLink";
@@ -27,16 +27,6 @@ const ChekiSaveAndShare: NextPage = () => {
   const [shareId, setShareId] = useState<string | null>(null);
   const [isFetching, setFetching] = useState(false);
 
-  // Side Effects
-
-  useEffect(() => {
-    if (!shareId) {
-      return;
-    }
-
-    window.location.href = getShareUrlById(shareId);
-  }, [shareId]);
-
   // Events
 
   const handleOnClickShareButton = useCallback(async () => {
@@ -44,13 +34,17 @@ const ChekiSaveAndShare: NextPage = () => {
       return;
     }
 
-    if (!shareId) {
+    let nextShareId = shareId;
+
+    if (!nextShareId) {
       setFetching(true);
-      setShareId(await upload(previewUrl));
+      setShareId((nextShareId = await upload(previewUrl)));
       setFetching(false);
     }
 
     GA.share();
+
+    window.location.href = getShareUrlById(nextShareId);
   }, [previewUrl, shareId]);
 
   const handleOnCreatePreviewUrl = useCallback(setPreviewUrl, []);
