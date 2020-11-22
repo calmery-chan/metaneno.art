@@ -42,15 +42,7 @@ export const ChekiButton: React.FC<{
         maxWidth: "512px",
       }}
     >
-      <div
-        css={css`
-          display: flex;
-          margin: 0 auto;
-          width: fit-content;
-        `}
-      >
-        {children}
-      </div>
+      <div className="text-center">{children}</div>
     </button>
   </div>
 );
