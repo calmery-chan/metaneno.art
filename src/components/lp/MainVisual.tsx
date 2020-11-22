@@ -11,9 +11,9 @@ export default function MainVisual() {
         <Image />
         <Logo src="/lp/logo.svg" />
       </Wrapper>
-      <SectionWrapper>
+      <div>
         <Section />
-      </SectionWrapper>
+      </div>
     </>
   );
 }
@@ -83,8 +83,4 @@ const Logo = styled.img`
     left: 4%;
     width: 54%;
   }
-`;
-
-const SectionWrapper = styled.div`
-  overflow: hidden;
 `;
