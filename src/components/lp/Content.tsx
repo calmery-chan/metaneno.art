@@ -15,7 +15,7 @@ export default function Content() {
       <ContentTitle />
       <ContentWrapper>
         <ContentItem
-          link=""
+          link="https://gallery.styly.cc/scene/88f39662-06f9-451d-94e2-2b14889eaa8d"
           thumb="/lp/content/styly.jpg"
           title="STYLY"
           description="3D キャラクターやアニメーション作品を AR 空間で眺めよう！"
