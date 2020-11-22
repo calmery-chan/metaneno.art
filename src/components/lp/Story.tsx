@@ -29,15 +29,28 @@ export default function Story() {
         ref={descriptionRef}
         isIntersected={isDescriptionIntersected}
       >
-        <span>テキストテキストテキストテキストテキストテキストテキスト</span>
+        <span>深夜0時頃、主人公は誰かに呼ばれるように目が覚めて、</span>
         <br />
-        <span>テキストテキストテキストテ</span>
+        <span>チケットを手にして部屋を歩きだします。</span>
         <br />
-        <span>テキストテキストテキストテキストテキストテキスト</span>
         <br />
-        <span>テキストテキストテキテキストテ</span>
+        <span>その部屋はなぜだが奥に進むにつれて雰囲気が変わっていき、</span>
         <br />
-        <span>テキストテキストテキストテキスト</span>
+        <span>最奥に2つの光る怪しげなクリームソーダを見つけます。</span>
+        <br />
+        <br />
+        <span>既に自分が幻覚の中にいることに気付かぬまま、</span>
+        <br />
+        <span>
+          キラキラ光るクリームソーダをどちらか選択して飲んでしまいます。
+        </span>
+        <br />
+        <br />
+        <span>何だかシュワシュワキラキラぐにゃぐにゃしてきました！</span>
+        <br />
+        <span>なんて不思議な味！あれ、段々と目の前が…？</span>
+        <br />
+        <span>少女は何色のクリームソーダに飛び込むのでしょうか…</span>
       </Description>
       <div>
         <SubTitle
