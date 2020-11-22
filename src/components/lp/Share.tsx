@@ -6,7 +6,7 @@ import { useIntersectionObserver } from "./hooks";
 import { media } from "./variables";
 
 const fullTwitterShare = (text: string, url: string) =>
-  `https://twitter.com/intent/tweet?text=${text}&url=${url}`;
+  `https://twitter.com/intent/tweet?text=${text}&url=${url}&via=metanen0x0`;
 
 const fullFacebookShare = (url: string) =>
   `https://www.facebook.com/sharer/sharer.php?u=${url}`;
@@ -29,7 +29,7 @@ export default function Share() {
       <IconWrapper ref={iconWrapperRef}>
         <Anchor
           href={fullTwitterShare(
-            "めたねのおくすり個展 特設サイト%20%23めたねのあーと",
+            "めたねのおくすりWeb個展 2021年2月公開予定！ノネメちゃんチェキやARなど遊べるコンテンツもあるよ！",
             "https://metaneno.art"
           )}
           target="_blank"
