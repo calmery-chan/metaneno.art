@@ -47,7 +47,15 @@ export default function Share() {
       </IconWrapper>
       <TagWrapper ref={tagWrappertRef}>
         <Label isIntersected={isTagWrapperIntersected}>ハッシュタグ</Label>
-        <Tag isIntersected={isTagWrapperIntersected}>#めたねのあーと</Tag>
+        <Tag isIntersected={isTagWrapperIntersected}>
+          <a
+            href="https://twitter.com/hashtag/%E3%82%81%E3%81%9F%E3%81%AD%E3%81%AE%E3%81%82%E3%83%BC%E3%81%A8"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            #めたねのあーと
+          </a>
+        </Tag>
       </TagWrapper>
     </Wrapper>
   );

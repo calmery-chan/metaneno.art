@@ -3,7 +3,6 @@ import styled from "@emotion/styled";
 import React from "react";
 import CreditTitle from "./Title/CreditTitle";
 import { useIntersectionObserver } from "./hooks";
-import supporterList from "./supporterList";
 import { colors, media } from "./variables";
 
 export default function Credit() {
@@ -40,7 +39,7 @@ export default function Credit() {
           />
         </EditorWrapper>
       </div>
-      <div>
+      {/* <div>
         <SubTitle
           src="/lp/sub-title/supporter.svg"
           ref={subTitle2Ref}
@@ -51,7 +50,7 @@ export default function Credit() {
             <SupporterComponent link={link} name={name} key={i} />
           ))}
         </SupporterWrapper>
-      </div>
+      </div> */}
     </Wrapper>
   );
 }
