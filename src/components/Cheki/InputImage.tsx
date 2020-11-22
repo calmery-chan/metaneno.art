@@ -144,6 +144,7 @@ export const ChekiInputImage: React.FC<{
           onCancel={handleOnClickTermsCancelButton}
           enterText="同意する"
           cancalText="同意しない"
+          primary="right"
         >
           <ExternalLink className="font-bold" href="/cheki/terms-of-service">
             利用規約

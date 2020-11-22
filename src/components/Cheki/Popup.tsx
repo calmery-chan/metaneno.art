@@ -68,6 +68,7 @@ interface PopupProps {
   children: React.ReactNode;
   enterText?: string;
   cancalText?: string;
+  primary?: "left" | "right";
 }
 
 export const ChekiPopup: React.FC<PopupProps> = ({
@@ -76,6 +77,7 @@ export const ChekiPopup: React.FC<PopupProps> = ({
   children,
   onEnter,
   onCancel,
+  primary = "left",
 }) => {
   const [popupTransition, setPopupTransition] = useState<
     "bounceIn" | "bounceOut"
@@ -118,14 +120,25 @@ export const ChekiPopup: React.FC<PopupProps> = ({
         >
           <PopupInnerMessage css={Typography.M}>{children}</PopupInnerMessage>
           <PopupInnerButtons>
-            {onCancel && (
-              <ChekiButton onClick={handleOnClickCancel}>
-                {cancalText || "キャンセル"}
+            {onCancel &&
+              (primary === "left" ? (
+                <ChekiButton onClick={handleOnClickCancel}>
+                  {cancalText || "キャンセル"}
+                </ChekiButton>
+              ) : (
+                <ChekiSubButton onClick={handleOnClickCancel}>
+                  {cancalText || "キャンセル"}
+                </ChekiSubButton>
+              ))}
+            {primary === "right" || !onCancel ? (
+              <ChekiButton onClick={handleOnClickEnter}>
+                {enterText || "わかった"}
               </ChekiButton>
+            ) : (
+              <ChekiSubButton onClick={handleOnClickEnter}>
+                {enterText || "わかった"}
+              </ChekiSubButton>
             )}
-            <ChekiSubButton onClick={handleOnClickEnter}>
-              {enterText || "わかった"}
-            </ChekiSubButton>
           </PopupInnerButtons>
         </PopupInner>
       </PopupContainer>
