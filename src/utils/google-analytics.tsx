@@ -38,9 +38,26 @@ export const changeRoute = (url: string) => {
   });
 };
 
-export const sendDummy = () => {
-  sendEvent("dummy", {
-    category: "dummy-category",
-    label: "dummy-label",
+export const openGoods = (id: number) =>
+  sendEvent("open_goods", {
+    category: "lp",
+    label: `${id}`,
   });
-};
+
+export const openContent = (content: string) =>
+  sendEvent("open_content", {
+    category: "lp",
+    label: content,
+  });
+
+export const openIllust = (id: number) =>
+  sendEvent("open_illust", {
+    category: "lp",
+    label: `${id}`,
+  });
+
+export const share = (location: "facebook" | "twitter") =>
+  sendEvent("share", {
+    category: "lp",
+    label: location,
+  });

@@ -4,6 +4,7 @@ import GoodsItem from "./GoodsItem";
 import GoodsTitle from "./Title/GoodsTitle";
 import goodsList from "./goodsList";
 import { media } from "./variables";
+import * as GA from "~/utils/google-analytics";
 
 export default function Goods() {
   return (
@@ -14,8 +15,9 @@ export default function Goods() {
       </WaveWrapper>
       <GoodsTitle />
       <GoodsWrapper>
-        {goodsList.map(({ link, category, thumb, title, price }) => (
+        {goodsList.map(({ link, id, category, thumb, title, price }) => (
           <GoodsItem
+            onClick={() => GA.openGoods(id)}
             key={thumb}
             link={link}
             category={category}

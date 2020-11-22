@@ -3,6 +3,7 @@ import React from "react";
 import ContentItem from "./ContentItem";
 import ContentTitle from "./Title/ContentTitle";
 import { media } from "./variables";
+import * as GA from "~/utils/google-analytics";
 
 export default function Content() {
   return (
@@ -18,12 +19,14 @@ export default function Content() {
           thumb="/lp/goods/sample-thumb.jpg"
           title="STYLY"
           description="3D キャラクターやアニメーション作品を AR 空間で眺めよう！"
+          onClick={() => GA.openContent("styly")}
         />
         <ContentItem
           link="/cheki"
           thumb="/lp/goods/sample-thumb.jpg"
           title="ノネメちゃんチェキ"
           description="天使のノネメちゃんとチェキを撮れる写真加工アプリ！"
+          onClick={() => GA.openContent("cheki")}
         />
       </ContentWrapper>
     </Wrapper>

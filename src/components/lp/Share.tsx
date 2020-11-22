@@ -4,6 +4,7 @@ import React from "react";
 import ShareTitle from "./Title/ShareTitle";
 import { useIntersectionObserver } from "./hooks";
 import { media } from "./variables";
+import * as GA from "~/utils/google-analytics";
 
 const fullTwitterShare = (text: string, url: string) =>
   `https://twitter.com/intent/tweet?text=${text}&url=${url}&via=metanen0x0`;
@@ -35,14 +36,20 @@ export default function Share() {
           target="_blank"
           isIntersected={isIconWrapperIntersected}
         >
-          <Icon src="/lp/share/twitter.svg" />
+          <Icon
+            onClick={() => GA.share("twitter")}
+            src="/lp/share/twitter.svg"
+          />
         </Anchor>
         <Anchor
           href={fullFacebookShare("https://metaneno.art")}
           target="_blank"
           isIntersected={isIconWrapperIntersected}
         >
-          <Icon src="/lp/share/facebook.svg" />
+          <Icon
+            onClick={() => GA.share("facebook")}
+            src="/lp/share/facebook.svg"
+          />
         </Anchor>
       </IconWrapper>
       <TagWrapper ref={tagWrappertRef}>

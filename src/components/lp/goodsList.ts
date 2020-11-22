@@ -1,4 +1,5 @@
 const goodsList: {
+  id: number;
   link?: string;
   category: string;
   thumb: string;
@@ -6,6 +7,7 @@ const goodsList: {
   price: string;
 }[] = [
   {
+    id: 2394373,
     category: "アクリルブロック",
     thumb: "/lp/goods/2394373.jpg",
     title: "「深海の死麗」アクリルブロック",
@@ -13,6 +15,7 @@ const goodsList: {
     link: "https://metags-m.booth.pm/items/2394373",
   },
   {
+    id: 2394360,
     category: "アクリルブロック",
     thumb: "/lp/goods/2394360.jpg",
     title: "「この扉を開けますか？」アクリルブロック",
@@ -20,6 +23,7 @@ const goodsList: {
     link: "https://metags-m.booth.pm/items/2394360",
   },
   {
+    id: 2543383,
     category: "アクリルキーホルダー",
     thumb: "/lp/goods/2543383.jpg",
     title: "ノネメちゃんアクリルキーホルダー",

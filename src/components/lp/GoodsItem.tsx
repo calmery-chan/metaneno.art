@@ -5,6 +5,7 @@ import { useIntersectionObserver } from "./hooks";
 import { colors } from "./variables";
 
 interface Props {
+  onClick?: () => void;
   link?: string;
   title: string;
   category: string;
@@ -13,6 +14,7 @@ interface Props {
 }
 
 export default function GoodsItem({
+  onClick,
   link,
   title,
   category,
@@ -30,7 +32,7 @@ export default function GoodsItem({
       href={link}
       target="_blank"
     >
-      <Inner>
+      <Inner onClick={onClick}>
         <Thumb src={thumb} />
         <Category>{category}</Category>
         <Title>{title}</Title>

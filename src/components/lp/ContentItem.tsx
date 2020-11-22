@@ -8,6 +8,7 @@ interface Props {
   title: string;
   description: string;
   thumb: string;
+  onClick?: () => void;
 }
 
 export default function ContentItem({
@@ -15,13 +16,14 @@ export default function ContentItem({
   title,
   description,
   thumb,
+  onClick,
 }: Props) {
   const [targetRef, isIntersected] = useIntersectionObserver<HTMLDivElement>(
     {}
   );
 
   return (
-    <Wrapper ref={targetRef} isIntersected={isIntersected}>
+    <Wrapper ref={targetRef} onClick={onClick} isIntersected={isIntersected}>
       <Thumb src={thumb} />
       <Title>{title}</Title>
       <Description>{description}</Description>

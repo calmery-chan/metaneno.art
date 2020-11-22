@@ -5,6 +5,7 @@ import IllustTitle from "./Title/IllustTitle";
 import { useIntersectionObserver } from "./hooks";
 import illustList from "./illustList";
 import { media } from "./variables";
+import * as GA from "~/utils/google-analytics";
 
 export default function Illust() {
   return (
@@ -17,20 +18,20 @@ export default function Illust() {
       <IllustWrapper>
         <div>
           {illustList.map(
-            ({ thumb, link }, i) =>
+            ({ thumb, link, id }, i) =>
               i % 2 === 0 && (
                 <Anchor href={link} target="_blank" key={i}>
-                  <Thumb src={thumb} />
+                  <Thumb src={thumb} onClick={() => GA.openIllust(id)} />
                 </Anchor>
               )
           )}
         </div>
         <div>
           {illustList.map(
-            ({ thumb, link }, i) =>
+            ({ thumb, link, id }, i) =>
               i % 2 !== 0 && (
                 <Anchor href={link} target="_blank" key={i}>
-                  <Thumb src={thumb} />
+                  <Thumb src={thumb} onClick={() => GA.openIllust(id)} />
                 </Anchor>
               )
           )}
@@ -81,12 +82,19 @@ const IllustWrapper = styled.div`
   }
 `;
 
-function Thumb({ src }: { src: string }) {
+function Thumb({ src, onClick }: { src: string; onClick?: () => void }) {
   const [targetRef, isIntersected] = useIntersectionObserver<HTMLImageElement>(
     {}
   );
 
-  return <Image src={src} ref={targetRef} isIntersected={isIntersected} />;
+  return (
+    <Image
+      src={src}
+      onClick={onClick}
+      ref={targetRef}
+      isIntersected={isIntersected}
+    />
+  );
 }
 
 const slideIn = keyframes`
