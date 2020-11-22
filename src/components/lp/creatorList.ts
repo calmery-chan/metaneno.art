@@ -7,19 +7,17 @@ const creatorList: {
     iconUrl: "/lp/credit/metaneno.jpg",
     name: "めたねのおくすり",
     comment:
-      "テキストテキストテキストテキストテキステキストテキストテキストテキストテキステキストテキストテキストテキストテキステキストテキストテキストテキストテキス",
+      "めたねのおくすりの考える最強のかわいい世界創造中です。普段と違った見方で作品を楽しんでいただけるよう作り込んでいくので、この世界にトリップできる日を楽しみにしてください！",
   },
   {
-    iconUrl: "/lp/credit/calmery.jpg",
-    name: "Calmery",
-    comment:
-      "テキストテキストテキストテキストテキステキストテキストテキストテキストテキステキストテキストテキストテキストテキステキストテキストテキストテキストテキス",
-  },
-  {
-    iconUrl: "/lp/goods/sample-thumb.jpg",
+    iconUrl: "/lp/credit/noneme.jpg",
     name: "ノネメちゃん",
-    comment:
-      "テキストテキストテキストテキストテキステキストテキストテキストテキストテキステキストテキストテキストテキストテキステキストテキストテキストテキストテキス",
+    comment: "よろしくね～",
+  },
+  {
+    iconUrl: "/lp/credit/calmery-chan.jpg",
+    name: "かるめりちゃん",
+    comment: "おはよ...",
   },
 ];
 
