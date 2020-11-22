@@ -21,10 +21,10 @@ const goodsList: {
   },
   {
     category: "アクリルキーホルダー",
-    thumb: "/lp/goods/key.jpg",
+    thumb: "/lp/goods/2543383.jpg",
     title: "ノネメちゃんアクリルキーホルダー",
     price: "¥600",
-    link: "",
+    link: "https://metags-m.booth.pm/items/2543383",
   },
 ];
 
