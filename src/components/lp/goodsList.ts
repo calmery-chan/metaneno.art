@@ -6,34 +6,25 @@ const goodsList: {
   price: string;
 }[] = [
   {
-    category: "商品カテゴリ",
-    thumb: "/lp/goods/sample-thumb.jpg",
-    title: "商品名・商品名・商品名",
+    category: "アクリルブロック",
+    thumb: "/lp/goods/2394373.jpg",
+    title: "「深海の死麗」アクリルブロック",
     price: "¥4,290",
+    link: "https://metags-m.booth.pm/items/2394373",
   },
   {
-    category: "商品カテゴリ",
-    thumb: "/lp/goods/sample-thumb.jpg",
-    title: "商品名・商品名・商品名",
-    price: "¥4,290",
+    category: "アクリルブロック",
+    thumb: "/lp/goods/2394360.jpg",
+    title: "「この扉を開けますか？」アクリルブロック",
+    price: "¥4,900",
+    link: "https://metags-m.booth.pm/items/2394360",
   },
   {
-    category: "商品カテゴリ",
-    thumb: "/lp/goods/sample-thumb.jpg",
-    title: "商品名・商品名・商品名",
-    price: "¥4,290",
-  },
-  {
-    category: "商品カテゴリ",
-    thumb: "/lp/goods/sample-thumb.jpg",
-    title: "商品名・商品名・商品名",
-    price: "¥4,290",
-  },
-  {
-    category: "商品カテゴリ",
-    thumb: "/lp/goods/sample-thumb.jpg",
-    title: "商品名・商品名・商品名",
-    price: "¥4,290",
+    category: "アクリルキーホルダー",
+    thumb: "",
+    title: "ノネメちゃんアクリルキーホルダー",
+    price: "¥600",
+    link: "",
   },
 ];
 
