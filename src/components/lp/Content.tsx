@@ -13,15 +13,18 @@ export default function Content() {
       </WaveWrapper>
       <ContentTitle />
       <ContentWrapper>
-        {Array.from(Array(2)).map((_, i) => (
-          <ContentItem
-            key={i}
-            link=""
-            thumb="/lp/goods/sample-thumb.jpg"
-            title="タイトルタイトル"
-            description="説明文説明文説明文説明文説明文説説明文説明文説明文説明文説明文説説明文説明文説明文"
-          />
-        ))}
+        <ContentItem
+          link=""
+          thumb="/lp/goods/sample-thumb.jpg"
+          title="STYLY"
+          description="3D キャラクターやアニメーション作品を AR 空間で眺めよう！"
+        />
+        <ContentItem
+          link=""
+          thumb="/lp/goods/sample-thumb.jpg"
+          title="ノネメちゃんチェキ"
+          description="天使のノネメちゃんとチェキを撮れる写真加工アプリ！"
+        />
       </ContentWrapper>
     </Wrapper>
   );
