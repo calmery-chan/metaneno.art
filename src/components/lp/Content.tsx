@@ -1,11 +1,23 @@
 import styled from "@emotion/styled";
-import React from "react";
+import platform from "platform";
+import React, { useEffect, useState } from "react";
 import ContentItem from "./ContentItem";
 import ContentTitle from "./Title/ContentTitle";
 import { media } from "./variables";
 import * as GA from "~/utils/google-analytics";
 
 export default function Content() {
+  const [isMobile, setMobile] = useState(false);
+
+  useEffect(() => {
+    setMobile(
+      !!(
+        platform.os &&
+        (platform.os.family === "iOS" || platform.os.family === "Android")
+      )
+    );
+  }, []);
+
   return (
     <Wrapper>
       <WaveWrapper>
@@ -15,7 +27,11 @@ export default function Content() {
       <ContentTitle />
       <ContentWrapper>
         <ContentItem
-          link="https://gallery.styly.cc/scene/88f39662-06f9-451d-94e2-2b14889eaa8d"
+          link={
+            isMobile
+              ? "https://preview.page.link/stylymr.page.link?link=https://styly.cc/ja/mobile/?scene%3D88f39662-06f9-451d-94e2-2b14889eaa8d&apn=com.psychicvrlab.stylymr&isi=1477168256&ibi=com.psychicvrlab.stylymr"
+              : "https://gallery.styly.cc/scene/88f39662-06f9-451d-94e2-2b14889eaa8d"
+          }
           thumb="/lp/content/styly.jpg"
           title="STYLY"
           description="3D キャラクターやアニメーション作品を AR 空間で眺めよう！"
