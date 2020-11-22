@@ -9,9 +9,9 @@ export default function Credit() {
   const [subTitle1Ref, isSubTitle1Intersected] = useIntersectionObserver<
     HTMLImageElement
   >({});
-  const [subTitle2Ref, isSubTitle2Intersected] = useIntersectionObserver<
-    HTMLImageElement
-  >({});
+  // const [subTitle2Ref, isSubTitle2Intersected] = useIntersectionObserver<
+  //   HTMLImageElement
+  // >({});
 
   return (
     <Wrapper>
@@ -81,22 +81,22 @@ function EditorComponent({
   );
 }
 
-function SupporterComponent({ link, name }: { link: string; name: string }) {
-  const [targetRef, isIntersected] = useIntersectionObserver<HTMLAnchorElement>(
-    {}
-  );
+// function SupporterComponent({ link, name }: { link: string; name: string }) {
+//   const [targetRef, isIntersected] = useIntersectionObserver<HTMLAnchorElement>(
+//     {}
+//   );
 
-  return (
-    <Supporter
-      ref={targetRef}
-      href={link}
-      target="_blank"
-      isIntersected={isIntersected}
-    >
-      {name}
-    </Supporter>
-  );
-}
+//   return (
+//     <Supporter
+//       ref={targetRef}
+//       href={link}
+//       target="_blank"
+//       isIntersected={isIntersected}
+//     >
+//       {name}
+//     </Supporter>
+//   );
+// }
 
 const WaveWrapper = styled.div`
   position: absolute;
@@ -176,32 +176,32 @@ const Name = styled.div`
   text-align: center;
 `;
 
-const SupporterWrapper = styled.div`
-  display: grid;
-  grid-gap: 24px;
-  justify-items: center;
+// const SupporterWrapper = styled.div`
+//   display: grid;
+//   grid-gap: 24px;
+//   justify-items: center;
 
-  ${media.mediumUp} {
-    grid-template-columns: repeat(3, auto);
-  }
-`;
+//   ${media.mediumUp} {
+//     grid-template-columns: repeat(3, auto);
+//   }
+// `;
 
-const Supporter = styled.a<{ isIntersected: boolean }>`
-  display: block;
-  font-size: 20px;
-  color: ${colors.choco};
-  opacity: 0;
+// const Supporter = styled.a<{ isIntersected: boolean }>`
+//   display: block;
+//   font-size: 20px;
+//   color: ${colors.choco};
+//   opacity: 0;
 
-  &:hover {
-    text-decoration: underline;
-  }
+//   &:hover {
+//     text-decoration: underline;
+//   }
 
-  ${({ isIntersected }) =>
-    isIntersected &&
-    css`
-      animation: ${slideIn} 0.7s cubic-bezier(0, 0, 0.17, 0.99) 0s forwards;
-    `}
-`;
+//   ${({ isIntersected }) =>
+//     isIntersected &&
+//     css`
+//       animation: ${slideIn} 0.7s cubic-bezier(0, 0, 0.17, 0.99) 0s forwards;
+//     `}
+// `;
 
 const Wrapper = styled.div`
   position: relative;
