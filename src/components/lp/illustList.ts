@@ -1,4 +1,7 @@
-export default [
+const illustList: {
+  thumb: string;
+  link: string;
+}[] = [
   {
     thumb: "/lp/illust/1.min.png",
     link: "/lp/illust/1.png",
@@ -28,3 +31,5 @@ export default [
     link: "/lp/illust/7.png",
   },
 ];
+
+export default illustList;

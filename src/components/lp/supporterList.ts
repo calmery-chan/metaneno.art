@@ -1,4 +1,7 @@
-export default [
+const supporterList: {
+  name: string;
+  link: string;
+}[] = [
   {
     name: "ここに名前",
     link: "",
@@ -36,3 +39,5 @@ export default [
     link: "",
   },
 ];
+
+export default supporterList;

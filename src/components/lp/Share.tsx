@@ -29,7 +29,7 @@ export default function Share() {
       <IconWrapper ref={iconWrapperRef}>
         <Anchor
           href={fullTwitterShare(
-            "めたねのおくすり個展 特設サイト%20%23めたねのおくすり個展",
+            "めたねのおくすり個展 特設サイト%20%23めたねのあーと",
             "https://metaneno.art"
           )}
           target="_blank"
@@ -47,7 +47,7 @@ export default function Share() {
       </IconWrapper>
       <TagWrapper ref={tagWrappertRef}>
         <Label isIntersected={isTagWrapperIntersected}>ハッシュタグ</Label>
-        <Tag isIntersected={isTagWrapperIntersected}>#めたねのおくすり個展</Tag>
+        <Tag isIntersected={isTagWrapperIntersected}>#めたねのあーと</Tag>
       </TagWrapper>
     </Wrapper>
   );

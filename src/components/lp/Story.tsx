@@ -5,6 +5,7 @@ import Badge from "./Badge";
 import CreatorComment from "./CreatorComment";
 import MainContentLink from "./MainContentLink";
 import StoryTitle from "./Title/StoryTitle";
+import creatorList from "./creatorList";
 import { useIntersectionObserver } from "./hooks";
 import { colors, media } from "./variables";
 
@@ -45,12 +46,12 @@ export default function Story() {
           isIntersected={isSubTitleIntersected}
         />
         <CommentWrapper>
-          {Array.from(Array(3)).map((_, i) => (
+          {creatorList.map(({ name, iconUrl, comment }) => (
             <CreatorComment
-              key={i}
-              iconUrl="/lp/goods/sample-thumb.jpg"
-              name="めたねのおくすり"
-              comment="テキストテキストテキストテキストテキステキストテキストテキストテキストテキステキストテキストテキストテキストテキステキストテキストテキストテキストテキス"
+              key={iconUrl}
+              iconUrl={iconUrl}
+              name={name}
+              comment={comment}
             />
           ))}
         </CommentWrapper>

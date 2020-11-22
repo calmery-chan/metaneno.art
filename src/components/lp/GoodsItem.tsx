@@ -5,7 +5,7 @@ import { useIntersectionObserver } from "./hooks";
 import { colors } from "./variables";
 
 interface Props {
-  link: string;
+  link?: string;
   title: string;
   category: string;
   thumb: string;

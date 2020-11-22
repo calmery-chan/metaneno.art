@@ -2,6 +2,7 @@ import styled from "@emotion/styled";
 import React from "react";
 import GoodsItem from "./GoodsItem";
 import GoodsTitle from "./Title/GoodsTitle";
+import goodsList from "./goodsList";
 import { media } from "./variables";
 
 export default function Goods() {
@@ -13,14 +14,14 @@ export default function Goods() {
       </WaveWrapper>
       <GoodsTitle />
       <GoodsWrapper>
-        {Array.from(Array(6)).map((_, i) => (
+        {goodsList.map(({ link, category, thumb, title, price }) => (
           <GoodsItem
-            key={i}
-            link=""
-            category="商品カテゴリ"
-            thumb="/lp/goods/sample-thumb.jpg"
-            title="商品名・商品名・商品名"
-            price="¥4,290"
+            key={thumb}
+            link={link}
+            category={category}
+            thumb={thumb}
+            title={title}
+            price={price}
           />
         ))}
       </GoodsWrapper>
