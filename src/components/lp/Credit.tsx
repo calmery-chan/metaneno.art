@@ -1,6 +1,7 @@
 import { keyframes, css } from "@emotion/react";
 import styled from "@emotion/styled";
 import React from "react";
+import CreditTitle from "./Title/CreditTitle";
 import { useIntersectionObserver } from "./hooks";
 import supporterList from "./supporterList";
 import { colors, media } from "./variables";
@@ -19,7 +20,7 @@ export default function Credit() {
         <Wave1 src="/lp/credit/candy1.svg" />
         <Wave2 src="/lp/credit/candy2.svg" />
       </WaveWrapper>
-      <Title src="/lp/title/credit.svg" />
+      <CreditTitle />
       <div>
         <SubTitle
           src="/lp/sub-title/editor.svg"
@@ -219,15 +220,6 @@ const Wrapper = styled.div`
   ${media.smallDown} {
     grid-gap: 30px;
     padding: 120px 0 120px;
-  }
-`;
-
-const Title = styled.img`
-  display: block;
-  width: 420px;
-
-  ${media.smallDown} {
-    width: 280px;
   }
 `;
 

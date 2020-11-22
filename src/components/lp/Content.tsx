@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 import React from "react";
 import ContentItem from "./ContentItem";
+import ContentTitle from "./Title/ContentTitle";
 import { media } from "./variables";
 
 export default function Content() {
@@ -10,7 +11,7 @@ export default function Content() {
         <Wave1 src="/lp/content/wave1.svg" />
         <Wave2 src="/lp/content/wave2.svg" />
       </WaveWrapper>
-      <Title src="/lp/title/content.svg" />
+      <ContentTitle />
       <ContentWrapper>
         {Array.from(Array(2)).map((_, i) => (
           <ContentItem
@@ -82,15 +83,6 @@ const Wave2 = styled.img`
   top: 168px;
   right: 0;
   width: 222px;
-`;
-
-const Title = styled.img`
-  display: block;
-  width: 488px;
-
-  ${media.smallDown} {
-    width: 324px;
-  }
 `;
 
 const ContentWrapper = styled.div`

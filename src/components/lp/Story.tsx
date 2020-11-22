@@ -4,6 +4,7 @@ import React from "react";
 import Badge from "./Badge";
 import CreatorComment from "./CreatorComment";
 import MainContentLink from "./MainContentLink";
+import StoryTitle from "./Title/StoryTitle";
 import { useIntersectionObserver } from "./hooks";
 import { colors, media } from "./variables";
 
@@ -22,7 +23,7 @@ export default function Story() {
         <Wave1 src="/lp/story/wave1.svg" />
         <Wave2 src="/lp/story/wave2.svg" />
       </WaveWrapper>
-      <Title src="/lp/title/story.svg" />
+      <StoryTitle />
       <Description
         ref={descriptionRef}
         isIntersected={isDescriptionIntersected}
@@ -123,15 +124,6 @@ const Wave2 = styled.img`
   top: 260px;
   right: 0;
   width: 222px;
-`;
-
-const Title = styled.img`
-  display: block;
-  width: 420px;
-
-  ${media.smallDown} {
-    width: 280px;
-  }
 `;
 
 const slideIn = keyframes`

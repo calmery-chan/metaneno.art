@@ -1,6 +1,7 @@
 import { keyframes, css } from "@emotion/react";
 import styled from "@emotion/styled";
 import React from "react";
+import IllustTitle from "./Title/IllustTitle";
 import { useIntersectionObserver } from "./hooks";
 import illustList from "./illustList";
 import { media } from "./variables";
@@ -12,7 +13,7 @@ export default function Illust() {
         <Wave1 src="/lp/illust/wave1.svg" />
         <Wave2 src="/lp/illust/wave2.svg" />
       </WaveWrapper>
-      <Title src="/lp/title/illust.svg" />
+      <IllustTitle />
       <IllustWrapper>
         <div>
           {illustList.map(
@@ -160,14 +161,5 @@ const Wrapper = styled.div`
   &::after {
     bottom: 0;
     transform: translateY(100%) rotate(0.5turn);
-  }
-`;
-
-const Title = styled.img`
-  display: block;
-  width: 420px;
-
-  ${media.smallDown} {
-    width: 280px;
   }
 `;

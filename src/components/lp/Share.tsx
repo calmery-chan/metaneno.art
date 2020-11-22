@@ -1,6 +1,7 @@
 import { keyframes, css } from "@emotion/react";
 import styled from "@emotion/styled";
 import React from "react";
+import ShareTitle from "./Title/ShareTitle";
 import { useIntersectionObserver } from "./hooks";
 import { media } from "./variables";
 
@@ -24,7 +25,7 @@ export default function Share() {
         <Wave1 src="/lp/share/wave1.svg" />
         <Wave2 src="/lp/share/wave2.svg" />
       </WaveWrapper>
-      <Title src="/lp/title/share.svg" />
+      <ShareTitle />
       <IconWrapper ref={iconWrapperRef}>
         <Anchor
           href={fullTwitterShare(
@@ -107,15 +108,6 @@ const Wave2 = styled.img`
   top: 178px;
   right: 0;
   width: 222px;
-`;
-
-const Title = styled.img`
-  display: block;
-  width: 398px;
-
-  ${media.smallDown} {
-    width: 260px;
-  }
 `;
 
 const IconWrapper = styled.div`
