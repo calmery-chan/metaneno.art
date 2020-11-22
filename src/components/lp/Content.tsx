@@ -16,7 +16,7 @@ export default function Content() {
       <ContentWrapper>
         <ContentItem
           link=""
-          thumb="/lp/goods/sample-thumb.jpg"
+          thumb="/lp/content/styly.jpg"
           title="STYLY"
           description="3D キャラクターやアニメーション作品を AR 空間で眺めよう！"
           onClick={() => GA.openContent("styly")}
