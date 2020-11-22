@@ -30,12 +30,12 @@ export default function Credit() {
           <EditorComponent
             name="めたねのおくすり"
             iconUrl="/lp/credit/metaneno.jpg"
-            link="https://twitter.com/metanen0x0"
+            link="https://metaneno.net"
           />
           <EditorComponent
             name="Calmery"
             iconUrl="/lp/credit/calmery.jpg"
-            link="https://twitter.com/calmeryme"
+            link="https://calmery.me"
           />
         </EditorWrapper>
       </div>
