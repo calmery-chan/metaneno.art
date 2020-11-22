@@ -1,5 +1,5 @@
 import { css } from "@emotion/react";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { ChekiCanvas } from "./Canvas";
 import { ChekiCanvasContainer } from "./CanvasContainer";
 import { ChekiCanvasTrim } from "./CanvasTrim";
@@ -8,6 +8,7 @@ import { Icon } from "~/components/Cheki/Icon";
 import { ChekiInputImage } from "~/components/Cheki/InputImage";
 import { ChekiPopup } from "~/components/Cheki/Popup";
 import { ChekiSubButton } from "~/components/Cheki/SubButton";
+import { NONEME_IMAGES } from "~/constants/cheki";
 import { ChekiShootButton } from "~/containers/Cheki/ShootButton";
 import { ChekiTrim } from "~/containers/Cheki/Trim";
 import { selectors, useDispatch, useSelector } from "~/domains";
@@ -74,6 +75,13 @@ export const ChekiCamera: React.FC = () => {
     (url: string) => dispatch(actions.addImage({ url })),
     []
   );
+
+  useEffect(() => {
+    // 画像をキャッシュに乗せる
+    NONEME_IMAGES.map(({ url }) => {
+      new Image().src = url;
+    });
+  }, []);
 
   // Render
 
