@@ -263,13 +263,20 @@ export const ChekiFilterDefs: React.FC = () => (
 
 type ChekiFilterProps = {
   height: number | string;
+  noImage?: boolean;
   width: number | string;
 };
 
-export const InternalImage: React.FC<React.SVGProps<SVGSVGElement>> = (
-  props
-) => {
+export const InternalImage: React.FC<
+  React.SVGProps<SVGSVGElement> & {
+    noImage?: boolean;
+  }
+> = (props) => {
   const { image } = useSelector(selectors.cheki);
+
+  if (props.noImage) {
+    return null;
+  }
 
   return (
     <svg
@@ -288,284 +295,224 @@ export const InternalImage: React.FC<React.SVGProps<SVGSVGElement>> = (
 
 // Components
 
-export const C1: React.FC<ChekiFilterProps> = ({ height, width }) => {
-  const props = { height, width };
+export const C1: React.FC<ChekiFilterProps> = (props) => (
+  <>
+    <rect {...props} fill={`url(#${getGradientId("c1")})`} />
+    <InternalImage
+      {...props}
+      filter={`url(#${getFilterId("c1")})`}
+      style={{ mixBlendMode: "hard-light" }}
+    />
+    <rect {...props} fill="#58747b" style={{ mixBlendMode: "overlay" }} />
+  </>
+);
 
-  return (
-    <>
-      <rect {...props} fill={`url(#${getGradientId("c1")})`} />
-      <InternalImage
-        {...props}
-        filter={`url(#${getFilterId("c1")})`}
-        style={{ mixBlendMode: "hard-light" }}
-      />
-      <rect {...props} fill="#58747b" style={{ mixBlendMode: "overlay" }} />
-    </>
-  );
-};
+export const F2: React.FC<ChekiFilterProps> = (props) => (
+  <>
+    <rect {...props} fill={`url(#${getGradientId("f2")})`} />
+    <InternalImage
+      {...props}
+      filter={`url(#${getFilterId("f2")})`}
+      opacity="0.85"
+    />
+    <rect
+      {...props}
+      fill={`url(#${getGradientId("f2-after")})`}
+      style={{ mixBlendMode: "soft-light" }}
+    />
+  </>
+);
 
-export const F2: React.FC<ChekiFilterProps> = ({ height, width }) => {
-  const props = { height, width };
+export const G3: React.FC<ChekiFilterProps> = (props) => (
+  <>
+    <rect {...props} fill={`url(#${getGradientId("g3")})`} />
+    <InternalImage
+      {...props}
+      filter={`url(#${getFilterId("g3")})`}
+      style={{ mixBlendMode: "hard-light" }}
+    />
+  </>
+);
 
-  return (
-    <>
-      <rect {...props} fill={`url(#${getGradientId("f2")})`} />
-      <InternalImage
-        {...props}
-        filter={`url(#${getFilterId("f2")})`}
-        opacity="0.85"
-      />
-      <rect
-        {...props}
-        fill={`url(#${getGradientId("f2-after")})`}
-        style={{ mixBlendMode: "soft-light" }}
-      />
-    </>
-  );
-};
+export const P5: React.FC<ChekiFilterProps> = (props) => (
+  <>
+    <rect {...props} fill="#8facaf" />
+    <InternalImage
+      {...props}
+      filter={`url(#${getFilterId("p5")})`}
+      opacity="0.8"
+    />
+    <rect
+      {...props}
+      fill={`url(#${getGradientId("p5-after")})`}
+      style={{ mixBlendMode: "overlay" }}
+    />
+  </>
+);
 
-export const G3: React.FC<ChekiFilterProps> = ({ height, width }) => {
-  const props = { height, width };
+export const HB1: React.FC<ChekiFilterProps> = (props) => (
+  <>
+    <rect {...props} fill={`url(#${getGradientId("hb1")})`} />
+    <InternalImage
+      {...props}
+      filter={`url(#${getFilterId("hb1")})`}
+      style={{ mixBlendMode: "hard-light" }}
+    />
+    <rect
+      {...props}
+      fill="#294459"
+      opacity="0.5"
+      style={{ mixBlendMode: "lighten" }}
+    />
+  </>
+);
 
-  return (
-    <>
-      <rect {...props} fill={`url(#${getGradientId("g3")})`} />
-      <InternalImage
-        {...props}
-        filter={`url(#${getFilterId("g3")})`}
-        style={{ mixBlendMode: "hard-light" }}
-      />
-    </>
-  );
-};
+export const HB2: React.FC<ChekiFilterProps> = (props) => (
+  <>
+    <rect {...props} fill={`url(#${getGradientId("hb2")})`} />
+    <InternalImage
+      {...props}
+      filter={`url(#${getFilterId("hb2")})`}
+      style={{ mixBlendMode: "hard-light" }}
+    />
+    <rect
+      {...props}
+      fill="#315764"
+      opacity="0.25"
+      style={{ mixBlendMode: "overlay" }}
+    />
+  </>
+);
 
-export const P5: React.FC<ChekiFilterProps> = ({ height, width }) => {
-  const props = { height, width };
+export const ACG: React.FC<ChekiFilterProps> = (props) => (
+  <>
+    <rect {...props} fill="#eceedf" />
+    <InternalImage
+      {...props}
+      filter={`url(#${getFilterId("acg")})`}
+      opacity="0.85"
+      style={{ mixBlendMode: "darken" }}
+    />
+    <rect
+      {...props}
+      fill={`url(#${getGradientId("acg-after")})`}
+      style={{ mixBlendMode: "overlay" }}
+    />
+  </>
+);
 
-  return (
-    <>
-      <rect {...props} fill="#8facaf" />
-      <InternalImage
-        {...props}
-        filter={`url(#${getFilterId("p5")})`}
-        opacity="0.8"
-      />
-      <rect
-        {...props}
-        fill={`url(#${getGradientId("p5-after")})`}
-        style={{ mixBlendMode: "overlay" }}
-      />
-    </>
-  );
-};
+export const LV3: React.FC<ChekiFilterProps> = (props) => (
+  <>
+    <rect {...props} fill={`url(#${getGradientId("lv3")})`} />
+    <InternalImage
+      {...props}
+      filter={`url(#${getFilterId("lv3")})`}
+      style={{ mixBlendMode: "hard-light" }}
+    />
+  </>
+);
 
-export const HB1: React.FC<ChekiFilterProps> = ({ height, width }) => {
-  const props = { height, width };
+export const M5: React.FC<ChekiFilterProps> = (props) => (
+  <>
+    <rect {...props} fill={`url(#${getGradientId("m5")})`} />
+    <InternalImage
+      {...props}
+      filter={`url(#${getFilterId("m5")})`}
+      style={{ mixBlendMode: "hard-light" }}
+    />
+    <rect
+      {...props}
+      fill={`url(#${getGradientId("m5-after")})`}
+      opacity="0.5"
+      style={{ mixBlendMode: "soft-light" }}
+    />
+  </>
+);
 
-  return (
-    <>
-      <rect {...props} fill={`url(#${getGradientId("hb1")})`} />
-      <InternalImage
-        {...props}
-        filter={`url(#${getFilterId("hb1")})`}
-        style={{ mixBlendMode: "hard-light" }}
-      />
-      <rect
-        {...props}
-        fill="#294459"
-        opacity="0.5"
-        style={{ mixBlendMode: "lighten" }}
-      />
-    </>
-  );
-};
+export const A6: React.FC<ChekiFilterProps> = (props) => (
+  <>
+    <rect {...props} fill="#a9a499" />
+    <InternalImage
+      {...props}
+      filter={`url(#${getFilterId("a6")})`}
+      style={{ mixBlendMode: "hard-light" }}
+    />
+    <rect {...props} fill="#eaeae9" style={{ mixBlendMode: "multiply" }} />
+  </>
+);
 
-export const HB2: React.FC<ChekiFilterProps> = ({ height, width }) => {
-  const props = { height, width };
+export const KK2: React.FC<ChekiFilterProps> = (props) => (
+  <>
+    <rect {...props} fill={`url(#${getGradientId("kk2")})`} />
+    <InternalImage
+      {...props}
+      filter={`url(#${getFilterId("kk2")})`}
+      opacity="0.8"
+      style={{ mixBlendMode: "hard-light" }}
+    />
+    <rect
+      {...props}
+      fill="#dab66d"
+      opacity="0.15"
+      style={{ mixBlendMode: "darken" }}
+    />
+  </>
+);
 
-  return (
-    <>
-      <rect {...props} fill={`url(#${getGradientId("hb2")})`} />
-      <InternalImage
-        {...props}
-        filter={`url(#${getFilterId("hb2")})`}
-        style={{ mixBlendMode: "hard-light" }}
-      />
-      <rect
-        {...props}
-        fill="#315764"
-        opacity="0.25"
-        style={{ mixBlendMode: "overlay" }}
-      />
-    </>
-  );
-};
+export const M3: React.FC<ChekiFilterProps> = (props) => (
+  <>
+    <rect {...props} fill="#817e72" />
+    <InternalImage
+      {...props}
+      filter={`url(#${getFilterId("m3")})`}
+      opacity="0.75"
+      style={{ mixBlendMode: "hard-light" }}
+    />
+    <rect
+      {...props}
+      fill="#cce7de"
+      opacity="0.35"
+      style={{ mixBlendMode: "multiply" }}
+    />
+  </>
+);
 
-export const ACG: React.FC<ChekiFilterProps> = ({ height, width }) => {
-  const props = { height, width };
+export const T1: React.FC<ChekiFilterProps> = (props) => (
+  <>
+    <rect {...props} fill="#9d9990" />
+    <InternalImage
+      {...props}
+      filter={`url(#${getFilterId("t1")})`}
+      style={{ mixBlendMode: "hard-light" }}
+    />
+    <rect
+      {...props}
+      fill="#878787"
+      opacity="0.5"
+      style={{ mixBlendMode: "lighten" }}
+    />
+  </>
+);
 
-  return (
-    <>
-      <rect {...props} fill="#eceedf" />
-      <InternalImage
-        {...props}
-        filter={`url(#${getFilterId("acg")})`}
-        opacity="0.85"
-        style={{ mixBlendMode: "darken" }}
-      />
-      <rect
-        {...props}
-        fill={`url(#${getGradientId("acg-after")})`}
-        style={{ mixBlendMode: "overlay" }}
-      />
-    </>
-  );
-};
+export const B5: React.FC<ChekiFilterProps> = (props) => (
+  <>
+    <rect {...props} fill="#000000" />
+    <InternalImage
+      {...props}
+      filter={`url(#${getFilterId("b5")})`}
+      opacity="0.9"
+    />
+  </>
+);
 
-export const LV3: React.FC<ChekiFilterProps> = ({ height, width }) => {
-  const props = { height, width };
-
-  return (
-    <>
-      <rect {...props} fill={`url(#${getGradientId("lv3")})`} />
-      <InternalImage
-        {...props}
-        filter={`url(#${getFilterId("lv3")})`}
-        style={{ mixBlendMode: "hard-light" }}
-      />
-    </>
-  );
-};
-
-export const M5: React.FC<ChekiFilterProps> = ({ height, width }) => {
-  const props = { height, width };
-
-  return (
-    <>
-      <rect {...props} fill={`url(#${getGradientId("m5")})`} />
-      <InternalImage
-        {...props}
-        filter={`url(#${getFilterId("m5")})`}
-        style={{ mixBlendMode: "hard-light" }}
-      />
-      <rect
-        {...props}
-        fill={`url(#${getGradientId("m5-after")})`}
-        opacity="0.5"
-        style={{ mixBlendMode: "soft-light" }}
-      />
-    </>
-  );
-};
-
-export const A6: React.FC<ChekiFilterProps> = ({ height, width }) => {
-  const props = { height, width };
-
-  return (
-    <>
-      <rect {...props} fill="#a9a499" />
-      <InternalImage
-        {...props}
-        filter={`url(#${getFilterId("a6")})`}
-        style={{ mixBlendMode: "hard-light" }}
-      />
-      <rect {...props} fill="#eaeae9" style={{ mixBlendMode: "multiply" }} />
-    </>
-  );
-};
-
-export const KK2: React.FC<ChekiFilterProps> = ({ height, width }) => {
-  const props = { height, width };
-
-  return (
-    <>
-      <rect {...props} fill={`url(#${getGradientId("kk2")})`} />
-      <InternalImage
-        {...props}
-        filter={`url(#${getFilterId("kk2")})`}
-        opacity="0.8"
-        style={{ mixBlendMode: "hard-light" }}
-      />
-      <rect
-        {...props}
-        fill="#dab66d"
-        opacity="0.15"
-        style={{ mixBlendMode: "darken" }}
-      />
-    </>
-  );
-};
-
-export const M3: React.FC<ChekiFilterProps> = ({ height, width }) => {
-  const props = { height, width };
-
-  return (
-    <>
-      <rect {...props} fill="#817e72" />
-      <InternalImage
-        {...props}
-        filter={`url(#${getFilterId("m3")})`}
-        opacity="0.75"
-        style={{ mixBlendMode: "hard-light" }}
-      />
-      <rect
-        {...props}
-        fill="#cce7de"
-        opacity="0.35"
-        style={{ mixBlendMode: "multiply" }}
-      />
-    </>
-  );
-};
-
-export const T1: React.FC<ChekiFilterProps> = ({ height, width }) => {
-  const props = { height, width };
-
-  return (
-    <>
-      <rect {...props} fill="#9d9990" />
-      <InternalImage
-        {...props}
-        filter={`url(#${getFilterId("t1")})`}
-        style={{ mixBlendMode: "hard-light" }}
-      />
-      <rect
-        {...props}
-        fill="#878787"
-        opacity="0.5"
-        style={{ mixBlendMode: "lighten" }}
-      />
-    </>
-  );
-};
-
-export const B5: React.FC<ChekiFilterProps> = ({ height, width }) => {
-  const props = { height, width };
-
-  return (
-    <>
-      <rect {...props} fill="#000000" />
-      <InternalImage
-        {...props}
-        filter={`url(#${getFilterId("b5")})`}
-        opacity="0.9"
-      />
-    </>
-  );
-};
-
-export const X1: React.FC<ChekiFilterProps> = ({ height, width }) => {
-  const props = { height, width };
-
-  return (
-    <>
-      <rect {...props} fill="#444444" />
-      <InternalImage
-        {...props}
-        filter={`url(#${getFilterId("x1")})`}
-        opacity="0.75"
-      />
-      <rect {...props} fill="#333333" style={{ mixBlendMode: "lighten" }} />
-    </>
-  );
-};
+export const X1: React.FC<ChekiFilterProps> = (props) => (
+  <>
+    <rect {...props} fill="#444444" />
+    <InternalImage
+      {...props}
+      filter={`url(#${getFilterId("x1")})`}
+      opacity="0.75"
+    />
+    <rect {...props} fill="#333333" style={{ mixBlendMode: "lighten" }} />
+  </>
+);

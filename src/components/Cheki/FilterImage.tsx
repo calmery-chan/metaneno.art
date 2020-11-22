@@ -23,6 +23,7 @@ export const ChekiFilterImage: React.FC<{
   filter: ChekiFilter | null;
   height: number;
   width: number;
+  noImage?: boolean;
   x?: number;
   y?: number;
 }> = (props) => {

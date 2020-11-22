@@ -6,7 +6,8 @@ import { selectors, useSelector } from "~/domains";
 
 export const ChekiCanvasTrimedImage: React.FC<{
   filter: ChekiFilter | null;
-}> = ({ filter }) => {
+  noImage?: boolean;
+}> = ({ filter, noImage }) => {
   const cheki = useSelector(selectors.cheki);
 
   const { image, layout } = cheki;
@@ -31,7 +32,12 @@ export const ChekiCanvasTrimedImage: React.FC<{
         y={image.y}
       >
         <ChekiFilterDefs />
-        <ChekiFilterImage filter={filter} height={height} width={width} />
+        <ChekiFilterImage
+          noImage={noImage}
+          filter={filter}
+          height={height}
+          width={width}
+        />
       </svg>
     </svg>
   );
