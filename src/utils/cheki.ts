@@ -1,6 +1,7 @@
 import * as url from "url";
 import blueimpLoadImage from "blueimp-load-image";
 import { useCallback, useEffect, useRef } from "react";
+import ResizeObserver from "resize-observer-polyfill";
 import { get, Response } from "./api";
 import {
   CHEKI_HORIZONTAL_IMAGE_HEIGHT,
