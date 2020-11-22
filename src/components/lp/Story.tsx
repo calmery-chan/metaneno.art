@@ -29,28 +29,26 @@ export default function Story() {
         ref={descriptionRef}
         isIntersected={isDescriptionIntersected}
       >
-        <span>深夜0時頃、主人公は誰かに呼ばれるように目が覚めて、</span>
+        <span>月光が静かに光を刺す深夜の0時、</span>
         <br />
-        <span>チケットを手にして部屋を歩きだします。</span>
-        <br />
-        <br />
-        <span>その部屋はなぜだが奥に進むにつれて雰囲気が変わっていき、</span>
-        <br />
-        <span>最奥に2つの光る怪しげなクリームソーダを見つけます。</span>
+        <span>眠れない少女は怪しげな2つのクリームソーダを見つけました。</span>
         <br />
         <br />
-        <span>既に自分が幻覚の中にいることに気付かぬまま、</span>
+        <span>水の流れるクリームソーダと花香るクリームソーダ。</span>
+        <br />
         <br />
         <span>
-          キラキラ光るクリームソーダをどちらか選択して飲んでしまいます。
+          どちらかを選んで飲んでいたら、何だか視界がぐにゃぐにゃふわふわして……
+        </span>
+        <br />
+        <span>気が付いたら目の前に、</span>
+        <br />
+        <span>
+          幻想的なイラストや可愛いキャラクターがいる夢のような世界が広がっていました。
         </span>
         <br />
         <br />
-        <span>何だかシュワシュワキラキラぐにゃぐにゃしてきました！</span>
-        <br />
-        <span>なんて不思議な味！あれ、段々と目の前が…？</span>
-        <br />
-        <span>少女は何色のクリームソーダに飛び込むのでしょうか…</span>
+        <span>どうやら少女は幻想世界に飛び込んでしまったようです…！</span>
       </Description>
       <div>
         <SubTitle
