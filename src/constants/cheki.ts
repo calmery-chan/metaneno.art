@@ -86,12 +86,12 @@ export const SPLASH_SCREEN_DURATION = 1600;
 
 export const SHARE_RANDOM_HASHTAGS = [
   "ノネメしか勝たん",
-  "ノネメちゃんとチェキ撮ったよ！",
+  "ノネメちゃんとチェキ撮ったよ",
   "ノネメちゃんマジ天使",
   "秋のノネメちゃん展覧会",
   "ノネメちゃん可愛い",
   "ノネメちゃんが現れた",
-  "ノネメちゃんとエンカしたよ！",
+  "ノネメちゃんとエンカしたよ",
   "ノネメちゃん帝国",
   "天使見つけたよ",
 ].map(encodeURIComponent);
