@@ -98,8 +98,10 @@ const ChekiSaveAndShare: NextPage = () => {
             <img
               alt="Twitter"
               css={css`
+                display: inline-block;
                 height: 14px;
                 margin-right: ${Spacing.xs}px;
+                vertical-align: top;
               `}
               src="/cheki/twitter.svg"
             />
