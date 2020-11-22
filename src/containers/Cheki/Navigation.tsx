@@ -33,6 +33,7 @@ const Icon = styled.object`
   height: 32px;
   pointer-events: none;
   user-select: none;
+  max-width: 38px;
 
   &.active {
     filter: none;
