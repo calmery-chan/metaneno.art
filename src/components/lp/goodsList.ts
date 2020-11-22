@@ -21,7 +21,7 @@ const goodsList: {
   },
   {
     category: "アクリルキーホルダー",
-    thumb: "",
+    thumb: "/lp/goods/key.jpg",
     title: "ノネメちゃんアクリルキーホルダー",
     price: "¥600",
     link: "",
