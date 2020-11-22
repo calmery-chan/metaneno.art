@@ -29,9 +29,9 @@ export default function Story() {
         ref={descriptionRef}
         isIntersected={isDescriptionIntersected}
       >
-        <span>月光が静かに光を刺す深夜の0時、</span>
+        <span>月光が静かに光を射す深夜 24 時、</span>
         <br />
-        <span>眠れない少女は怪しげな2つのクリームソーダを見つけました。</span>
+        <span>眠れない少女は怪しげな 2 つのクリームソーダを見つけました。</span>
         <br />
         <br />
         <span>水の流れるクリームソーダと花香るクリームソーダ。</span>
