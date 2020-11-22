@@ -95,17 +95,23 @@ const ChekiSaveAndShare: NextPage = () => {
             disabled={!previewUrl || isFetching}
             onClick={handleOnClickShareButton}
           >
-            <img
-              alt="Twitter"
-              css={css`
-                display: inline-block;
-                height: 14px;
-                margin-right: ${Spacing.xs}px;
-                vertical-align: top;
-              `}
-              src="/cheki/twitter.svg"
-            />
-            Twitter にシェアする
+            {!isFetching && previewUrl && (
+              <>
+                <img
+                  alt="Twitter"
+                  css={css`
+                    display: inline-block;
+                    height: 14px;
+                    margin-right: ${Spacing.xs}px;
+                    vertical-align: top;
+                  `}
+                  src="/cheki/twitter.svg"
+                />
+                Twitter にシェアする
+              </>
+            )}
+            {!isFetching && !previewUrl && <>画像の準備中...</>}
+            {isFetching && <>シェア用の URL を取得中...</>}
           </ChekiButton>
         </ChekiColumn>
         <ChekiNavigation />
