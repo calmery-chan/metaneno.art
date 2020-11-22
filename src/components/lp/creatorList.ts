@@ -13,7 +13,7 @@ const creatorList: {
     iconUrl: "/lp/credit/calmery.jpg",
     name: "Calmery",
     comment:
-      "ノネメちゃんチェキや STYLY を使った AR など、開発周りのお手伝いさせていただいています！（今ノネメちゃんチェキめっちゃ重いです...ごめんなさい...そのうち...そのうち...）",
+      "ノネメちゃんチェキや STYLY を使った AR など、開発周りでお手伝いさせていただいています！（今ノネメちゃんチェキめっちゃ重いです...ごめんなさい...そのうち...そのうち...）",
   },
   {
     iconUrl: "/lp/credit/noneme.jpg",
