@@ -23,7 +23,7 @@ export default function Content() {
         />
         <ContentItem
           link="/cheki"
-          thumb="/lp/goods/sample-thumb.jpg"
+          thumb="/lp/content/cheki.jpg"
           title="ノネメちゃんチェキ"
           description="天使のノネメちゃんとチェキを撮れる写真加工アプリ！"
           onClick={() => GA.openContent("cheki")}
