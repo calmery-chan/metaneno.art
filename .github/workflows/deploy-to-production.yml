@@ -27,6 +27,10 @@ jobs:
       # https://github.com/actions/create-release/pull/11#issue-330958665
       - id: tag_name
         run: echo "::set-output name=body::$(date '+%Y%m%d-%H%M')"
+      - uses: actions/cache@v2
+        with:
+          key: ${{ runner.os }}-node_modules-${{ hashFiles('**/yarn.lock') }}
+          path: "**/node_modules"
       - run: yarn
       - run: yarn global add vercel
       - id: deployment-action
