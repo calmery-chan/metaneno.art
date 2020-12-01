@@ -10,7 +10,7 @@ jobs:
     strategy:
       matrix:
         node-version: [14.15.0]
-        os: [ubuntu-latest]
+        os: [ubuntu-20.04]
 
     runs-on: ${{ matrix.os }}
 
@@ -30,7 +30,7 @@ jobs:
     strategy:
       matrix:
         node-version: [14.15.0]
-        os: [ubuntu-latest]
+        os: [ubuntu-20.04]
 
     runs-on: ${{ matrix.os }}
 
