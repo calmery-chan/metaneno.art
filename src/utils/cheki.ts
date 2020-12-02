@@ -157,6 +157,24 @@ export const getImageSizeByDirection = (direction: ChekiDirection) => ({
       : CHEKI_VERTICAL_IMAGE_WIDTH,
 });
 
+export const uploadTemporaryImage = async (file: File): Promise<string> => {
+  const formData = new FormData();
+  formData.append("image", file);
+
+  const response = await fetch(getEndpointUrl("/cheki/temporary_images"), {
+    body: formData,
+    method: "POST",
+  });
+
+  if (!response.ok) {
+    throw new Error(response.statusText);
+  }
+
+  const { data } = await response.json();
+
+  return data.url;
+};
+
 export const upload = async (imageUrl: string): Promise<string> => {
   const dataUrl = convertImageToDataUrl(await convertUrlToImage(imageUrl));
   const formData = new FormData();
