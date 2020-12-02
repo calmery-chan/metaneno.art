@@ -6,7 +6,6 @@ import { ExternalLink } from "./ExternalLink";
 import { ChekiPopup } from "./Popup";
 import { Spacing } from "~/styles/spacing";
 import { Typography } from "~/styles/typography";
-import { convertFileToUrl } from "~/utils/cheki";
 
 const Container = styled.div`
   background: url("/cheki/background.png");
@@ -18,7 +17,7 @@ const Container = styled.div`
 `;
 
 export const ChekiInputImage: React.FC<{
-  onLoad: (imageUrl: string) => void;
+  onLoad: (file: File) => void;
 }> = ({ onLoad }) => {
   const ref = useRef<HTMLInputElement>(null);
   const [isTermsAgreed, setTermsAgreed] = useState(false);
@@ -48,7 +47,7 @@ export const ChekiInputImage: React.FC<{
         return;
       }
 
-      onLoad(await convertFileToUrl(files[0]));
+      onLoad(files[0]);
     },
     []
   );

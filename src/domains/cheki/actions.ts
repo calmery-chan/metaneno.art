@@ -11,7 +11,7 @@ import {
   CHEKI_FRAME_IMAGE_URLS,
   NONEME_IMAGES,
 } from "~/constants/cheki";
-import { CursorPosition } from "~/utils/cheki";
+import { CursorPosition, uploadTemporaryImage } from "~/utils/cheki";
 import * as GA from "~/utils/cheki/google-analytics";
 
 export const addImage = createAsyncThunk<
@@ -48,6 +48,13 @@ export const complete = createAction("CHEKI/COMPLETE");
 export const ready = createAction<{ ready: boolean }>("CHEKI/READY");
 
 export const removeImage = createAction("CHEKI/REMOVE_IMAGE");
+
+export const replaceTemporaryImage = createAsyncThunk<
+  { url: string },
+  { file: File }
+>("CHEKI/REPLACE_TEMPORARY_IMAGE", async ({ file }) => ({
+  url: await uploadTemporaryImage(file),
+}));
 
 export const splashed = createAction("CHEKI/SPLASHED");
 

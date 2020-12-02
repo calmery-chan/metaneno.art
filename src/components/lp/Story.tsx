@@ -10,12 +10,14 @@ import { useIntersectionObserver } from "./hooks";
 import { colors, media } from "./variables";
 
 export default function Story() {
-  const [descriptionRef, isDescriptionIntersected] = useIntersectionObserver<
-    HTMLDivElement
-  >({});
-  const [subTitleRef, isSubTitleIntersected] = useIntersectionObserver<
-    HTMLImageElement
-  >({});
+  const [
+    descriptionRef,
+    isDescriptionIntersected,
+  ] = useIntersectionObserver<HTMLDivElement>({});
+  const [
+    subTitleRef,
+    isSubTitleIntersected,
+  ] = useIntersectionObserver<HTMLImageElement>({});
 
   return (
     <Wrapper>

@@ -15,6 +15,7 @@ import { selectors, useDispatch, useSelector } from "~/domains";
 import { actions } from "~/domains/cheki";
 import { fadeIn, fadeOut, Mixin } from "~/styles/mixin";
 import { Spacing } from "~/styles/spacing";
+import { convertFileToUrl } from "~/utils/cheki";
 import * as GA from "~/utils/cheki/google-analytics";
 
 const animationFadeIn = css`
@@ -72,7 +73,12 @@ export const ChekiCamera: React.FC = () => {
   }, []);
 
   const handleOnLoadImage = useCallback(
-    (url: string) => dispatch(actions.addImage({ url })),
+    async (file: File) =>
+      dispatch(
+        actions.addImage({
+          url: await convertFileToUrl(file),
+        })
+      ),
     []
   );
 

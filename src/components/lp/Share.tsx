@@ -13,12 +13,14 @@ const fullFacebookShare = (url: string) =>
   `https://www.facebook.com/sharer/sharer.php?u=${url}`;
 
 export default function Share() {
-  const [iconWrapperRef, isIconWrapperIntersected] = useIntersectionObserver<
-    HTMLDivElement
-  >({});
-  const [tagWrappertRef, isTagWrapperIntersected] = useIntersectionObserver<
-    HTMLDivElement
-  >({});
+  const [
+    iconWrapperRef,
+    isIconWrapperIntersected,
+  ] = useIntersectionObserver<HTMLDivElement>({});
+  const [
+    tagWrappertRef,
+    isTagWrapperIntersected,
+  ] = useIntersectionObserver<HTMLDivElement>({});
 
   return (
     <Wrapper>
