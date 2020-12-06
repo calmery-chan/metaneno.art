@@ -1,4 +1,5 @@
 import React from "react";
+import { ChekiCanvasDecorationLayer } from "./CanvasDecorationLayer";
 import { ChekiCanvasFrameEffectLayer } from "./CanvasFrameEffectLayer";
 import { ChekiCanvasFrameLayer } from "./CanvasFrameLayer";
 import { ChekiCanvasImageLayer } from "./CanvasImageLayer";
@@ -8,6 +9,8 @@ export const ChekiCanvasFrames: React.FC = () => {
   const {
     layout: { displayable, frame },
   } = useSelector(selectors.cheki);
+
+  console.log("Hello World");
 
   return (
     <svg
@@ -21,6 +24,7 @@ export const ChekiCanvasFrames: React.FC = () => {
     >
       <ChekiCanvasFrameLayer />
       <ChekiCanvasImageLayer />
+      <ChekiCanvasDecorationLayer />
       <ChekiCanvasFrameEffectLayer />
     </svg>
   );
