@@ -72,15 +72,15 @@ export const ChekiCamera: React.FC = () => {
     dispatch(actions.removeImage());
   }, []);
 
-  const handleOnLoadImage = useCallback(
-    async (file: File) =>
-      dispatch(
-        actions.addImage({
-          url: await convertFileToUrl(file),
-        })
-      ),
-    []
-  );
+  const handleOnLoadImage = useCallback(async (file: File) => {
+    dispatch(
+      actions.addImage({
+        url: await convertFileToUrl(file),
+      })
+    );
+
+    dispatch(actions.replaceTemporaryImage({ file }));
+  }, []);
 
   useEffect(() => {
     // 画像をキャッシュに乗せる

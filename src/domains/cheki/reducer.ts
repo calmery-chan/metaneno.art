@@ -26,6 +26,7 @@ export type State = {
     direction: ChekiDirection;
     filter: ChekiFilter | null;
     dataUrl: string;
+    replaced: boolean;
   };
   layout: {
     displayable: ChekiRectangle;
@@ -60,6 +61,7 @@ const initialState: State = {
     filter: null,
     height: 0,
     dataUrl: "",
+    replaced: false,
     width: 0,
     x: 0,
     y: 0,
@@ -112,7 +114,7 @@ export const reducer = createReducer(initialState, (builder) => {
         ...state,
         image: {
           ...initialState.image,
-          dataUrl,
+          dataUrl: state.image.replaced ? state.image.dataUrl : dataUrl,
           direction,
           height,
           width,
@@ -165,6 +167,14 @@ export const reducer = createReducer(initialState, (builder) => {
         splashed: true,
       };
     })
+    .addCase(actions.replaceTemporaryImage.fulfilled, (state, action) => ({
+      ...state,
+      image: {
+        ...state.image,
+        dataUrl: action.payload.url,
+        replaced: true,
+      },
+    }))
     .addCase(actions.splashed, (state) => ({
       ...state,
       splashed: true,
