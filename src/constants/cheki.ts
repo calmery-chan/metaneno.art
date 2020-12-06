@@ -1,4 +1,5 @@
 import { DefaultSeoProps } from "next-seo";
+import { ChekiDecoration } from "~/types/ChekiDecoration";
 
 export const CHEKI_FRAME_MARGIN_BOTTOM = 304;
 export const CHEKI_FRAME_MARGIN_LEFT = 64;
@@ -146,6 +147,51 @@ export type Character = {
   scale: { min: number; max: number };
   width: number;
 };
+
+export const CHEKI_DECORATIONS: ChekiDecoration[] = [
+  {
+    direction: "horizontal",
+    layers: [
+      {
+        height: 400,
+        rotate: 0,
+        url: "/cheki/decorations/1.png",
+        width: 400,
+        x: 0,
+        y: 0,
+      },
+      {
+        height: 400,
+        rotate: 0,
+        url: "/cheki/decorations/2.png",
+        width: 400,
+        x: 850,
+        y: 900,
+      },
+    ],
+  },
+  {
+    direction: "vertical",
+    layers: [
+      {
+        height: 400,
+        rotate: 0,
+        url: "/cheki/decorations/1.png",
+        width: 400,
+        x: 0,
+        y: 0,
+      },
+      {
+        height: 400,
+        rotate: 0,
+        url: "/cheki/decorations/2.png",
+        width: 400,
+        x: 0,
+        y: 0,
+      },
+    ],
+  },
+];
 
 export const NONEME_IMAGES = [
   {

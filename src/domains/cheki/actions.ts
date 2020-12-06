@@ -25,6 +25,10 @@ export const addImage = createAsyncThunk<
   resizeImage(await convertUrlToImage(url))
 );
 
+export const changeDecoration = createAction<{ decoration: number | null }>(
+  "CHEKI/CHANGE_DECORATION"
+);
+
 export const changeFilter = createAction<{ filter: ChekiFilter | null }>(
   "CHEKI/CHANGE_FILTER"
 );
