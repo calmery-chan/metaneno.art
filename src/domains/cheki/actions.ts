@@ -1,16 +1,6 @@
 import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
-import {
-  convertUrlToDataUrl,
-  convertUrlToImage,
-  resizeFrameImage,
-  resizeImage,
-} from "./utils";
-import {
-  Character,
-  ChekiFilter,
-  CHEKI_FRAME_IMAGE_URLS,
-  NONEME_IMAGES,
-} from "~/constants/cheki";
+import { convertUrlToImage, resizeFrameImage, resizeImage } from "./utils";
+import { ChekiFilter, CHEKI_FRAME_IMAGE_URLS } from "~/constants/cheki";
 import { CursorPosition } from "~/utils/cheki";
 import * as GA from "~/utils/cheki/google-analytics";
 
@@ -55,18 +45,7 @@ export const startImageDragging = createAction<{
   cursorPositions: CursorPosition[];
 }>("CHEKI/START_IMAGE_DRAGGING");
 
-export const take = createAsyncThunk<{ character: Character }>(
-  "CHEKI/TAKE",
-  async () => {
-    const index = Math.floor(Math.random() * NONEME_IMAGES.length);
-    const character = NONEME_IMAGES[index];
-    character.url = await convertUrlToDataUrl(character.url);
-
-    GA.takeAPhoto(index);
-
-    return { character };
-  }
-);
+export const take = createAction("CHEKI/TAKE");
 
 export const tick = createAction<{ cursorPositions: CursorPosition[] }>(
   "CHEKI/TICK"

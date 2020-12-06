@@ -144,6 +144,7 @@ export type Character = {
   url: string;
   rotate: { min: number; max: number };
   scale: { min: number; max: number };
+  tags: string[];
   width: number;
 };
 
@@ -159,6 +160,7 @@ export const NONEME_IMAGES = [
     url: "/cheki/characters/1.png",
     rotate: { min: -24, max: 24 },
     scale: { min: 0.5, max: 1 },
+    tags: [],
     width: 385,
   },
   {
@@ -172,6 +174,7 @@ export const NONEME_IMAGES = [
     url: "/cheki/characters/2.png",
     rotate: { min: -8, max: 8 },
     scale: { min: 1.2, max: 1.4 },
+    tags: [],
     width: 624,
   },
   {
@@ -185,6 +188,7 @@ export const NONEME_IMAGES = [
     url: "/cheki/characters/3.png",
     rotate: { min: -4, max: 8 },
     scale: { min: 1.2, max: 1.4 },
+    tags: [],
     width: 577,
   },
   {
@@ -198,6 +202,7 @@ export const NONEME_IMAGES = [
     url: "/cheki/characters/4.png",
     rotate: { min: -4, max: 4 },
     scale: { min: 1.1, max: 1.3 },
+    tags: ["peace"],
     width: 577,
   },
   {
@@ -211,6 +216,7 @@ export const NONEME_IMAGES = [
     url: "/cheki/characters/5.png",
     rotate: { min: -4, max: 4 },
     scale: { min: 1.1, max: 1.4 },
+    tags: [],
     width: 577,
   },
 ] as Character[];
