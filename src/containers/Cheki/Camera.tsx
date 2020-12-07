@@ -8,7 +8,11 @@ import { Icon } from "~/components/Cheki/Icon";
 import { ChekiInputImage } from "~/components/Cheki/InputImage";
 import { ChekiPopup } from "~/components/Cheki/Popup";
 import { ChekiSubButton } from "~/components/Cheki/SubButton";
-import { NONEME_IMAGES } from "~/constants/cheki";
+import {
+  CharacterTags,
+  CHARACTER_TAGS,
+  NONEME_IMAGES,
+} from "~/constants/cheki";
 import { ChekiShootButton } from "~/containers/Cheki/ShootButton";
 import { ChekiTrim } from "~/containers/Cheki/Trim";
 import { selectors, useDispatch, useSelector } from "~/domains";
@@ -43,6 +47,12 @@ export const ChekiCamera: React.FC = () => {
   // Events
 
   const handleOnCancelRenew = useCallback(() => setRenewConfirm(false), []);
+
+  const handleOnClickCharacterTag = useCallback(
+    (tag: CharacterTags | null) =>
+      dispatch(actions.changeCharacterTag({ tag })),
+    []
+  );
 
   const handleOnClickRenewConfirmButton = useCallback(
     () => setRenewConfirm(true),
@@ -131,6 +141,14 @@ export const ChekiCamera: React.FC = () => {
                 src="/cheki/image.svg"
               />
             </div>
+            <button onClick={() => handleOnClickCharacterTag(null)}>
+              Default
+            </button>
+            {CHARACTER_TAGS.map((tag, key) => (
+              <button key={key} onClick={() => handleOnClickCharacterTag(tag)}>
+                {tag}
+              </button>
+            ))}
           </ChekiColumn>
 
           {renewConfirm && (

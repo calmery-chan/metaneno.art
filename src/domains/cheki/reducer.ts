@@ -7,7 +7,7 @@ import {
   updateFrame,
   updateTrim,
 } from "./utils";
-import { ChekiFilter, NONEME_IMAGES } from "~/constants/cheki";
+import { CharacterTags, ChekiFilter, NONEME_IMAGES } from "~/constants/cheki";
 import { ChekiDirection } from "~/types/ChekiDirection";
 import { ChekiRectangle } from "~/types/ChekiRectangle";
 import { getImageSizeByDirection } from "~/utils/cheki";
@@ -23,7 +23,7 @@ export type State = {
     x: number;
     y: number;
   } | null;
-  characterTag: "peace" | null;
+  characterTag: CharacterTags | null;
   frame: {
     dataUrl: string;
     index: number;
@@ -132,6 +132,10 @@ export const reducer = createReducer(initialState, (builder) => {
         temporaries: initialState.temporaries,
       };
     })
+    .addCase(actions.changeCharacterTag, (state, action) => ({
+      ...state,
+      characterTag: action.payload.tag,
+    }))
     .addCase(actions.changeFilter, (state, action) => {
       GA.changeFilter(action.payload.filter || "none");
 

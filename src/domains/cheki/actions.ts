@@ -1,6 +1,10 @@
 import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
 import { convertUrlToImage, resizeFrameImage, resizeImage } from "./utils";
-import { ChekiFilter, CHEKI_FRAME_IMAGE_URLS } from "~/constants/cheki";
+import {
+  CharacterTags,
+  ChekiFilter,
+  CHEKI_FRAME_IMAGE_URLS,
+} from "~/constants/cheki";
 import { CursorPosition } from "~/utils/cheki";
 import * as GA from "~/utils/cheki/google-analytics";
 
@@ -13,6 +17,10 @@ export const addImage = createAsyncThunk<
   { url: string }
 >("CHEKI/ADD_IMAGE", async ({ url }) =>
   resizeImage(await convertUrlToImage(url))
+);
+
+export const changeCharacterTag = createAction<{ tag: CharacterTags | null }>(
+  "CHEKI/CHANGE_CHARACTER_TAG"
 );
 
 export const changeFilter = createAction<{ filter: ChekiFilter | null }>(
