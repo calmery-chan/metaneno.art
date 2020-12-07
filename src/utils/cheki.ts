@@ -13,6 +13,9 @@ import {
   CHEKI_VERTICAL_FRAME_HEIGHT,
   CHEKI_VERTICAL_FRAME_WIDTH,
   SHARE_RANDOM_HASHTAGS,
+  CharacterTag,
+  Character,
+  NONEME_IMAGES,
 } from "~/constants/cheki";
 import { ChekiDirection } from "~/types/ChekiDirection";
 
@@ -241,4 +244,35 @@ export const useDisplayable = <T extends HTMLElement>(
   }, [ref]);
 
   return ref;
+};
+
+export const CHEKI_REFINE_CHARACTER: {
+  [key in CharacterTag]: (characters: Character[]) => Character[];
+} = {
+  peace(characters) {
+    return characters.filter((character) => character.tags.includes("peace"));
+  },
+  smile(characters) {
+    return characters.filter((character) => character.tags.includes("smile"));
+  },
+};
+
+export const getCharactersWithTags = (
+  characterTags: CharacterTag[]
+): Character[] => {
+  const helper = (
+    characters: Character[],
+    tags: CharacterTag[]
+  ): Character[] => {
+    if (!tags.length) {
+      return characters;
+    }
+
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const nextCharacters = CHEKI_REFINE_CHARACTER[tags.shift()!](characters);
+
+    return helper(nextCharacters.length ? nextCharacters : characters, tags);
+  };
+
+  return helper(NONEME_IMAGES, characterTags);
 };

@@ -1,16 +1,10 @@
 import { createReducer } from "@reduxjs/toolkit";
 import * as actions from "./actions";
-import {
-  CHEKI_REFINE_CHARACTER,
-  getDirection,
-  random,
-  updateFrame,
-  updateTrim,
-} from "./utils";
-import { CharacterTags, ChekiFilter, NONEME_IMAGES } from "~/constants/cheki";
+import { getDirection, random, updateFrame, updateTrim } from "./utils";
+import { CharacterTag, ChekiFilter } from "~/constants/cheki";
 import { ChekiDirection } from "~/types/ChekiDirection";
 import { ChekiRectangle } from "~/types/ChekiRectangle";
-import { getImageSizeByDirection } from "~/utils/cheki";
+import { getCharactersWithTags, getImageSizeByDirection } from "~/utils/cheki";
 import * as GA from "~/utils/cheki/google-analytics";
 
 export type State = {
@@ -23,7 +17,7 @@ export type State = {
     x: number;
     y: number;
   } | null;
-  characterTag: CharacterTags | null;
+  characterTags: CharacterTag[];
   frame: {
     dataUrl: string;
     index: number;
@@ -57,7 +51,7 @@ export type State = {
 
 const initialState: State = {
   character: null,
-  characterTag: "peace",
+  characterTags: [],
   frame: {
     dataUrl: "",
     index: 0,
@@ -132,9 +126,9 @@ export const reducer = createReducer(initialState, (builder) => {
         temporaries: initialState.temporaries,
       };
     })
-    .addCase(actions.changeCharacterTag, (state, action) => ({
+    .addCase(actions.addCharacterTag, (state, action) => ({
       ...state,
-      characterTag: action.payload.tag,
+      characterTags: [...state.characterTags, action.payload.tag],
     }))
     .addCase(actions.changeFilter, (state, action) => {
       GA.changeFilter(action.payload.filter || "none");
@@ -177,6 +171,10 @@ export const reducer = createReducer(initialState, (builder) => {
         splashed: true,
       };
     })
+    .addCase(actions.resetCharacterTags, (state) => ({
+      ...state,
+      characterTags: [],
+    }))
     .addCase(actions.splashed, (state) => ({
       ...state,
       splashed: true,
@@ -202,10 +200,7 @@ export const reducer = createReducer(initialState, (builder) => {
       };
     })
     .addCase(actions.take, (state) => {
-      const characters = state.characterTag
-        ? CHEKI_REFINE_CHARACTER[state.characterTag](NONEME_IMAGES)
-        : NONEME_IMAGES;
-
+      const characters = getCharactersWithTags(state.characterTags.concat());
       const index = Math.floor(Math.random() * characters.length);
       const character = characters[index];
 

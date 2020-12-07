@@ -144,13 +144,13 @@ export type Character = {
   url: string;
   rotate: { min: number; max: number };
   scale: { min: number; max: number };
-  tags: CharacterTags[];
+  tags: CharacterTag[];
   width: number;
 };
 
 export const CHARACTER_TAGS = ["peace", "smile"] as const;
 
-export type CharacterTags = typeof CHARACTER_TAGS[number];
+export type CharacterTag = typeof CHARACTER_TAGS[number];
 
 export const NONEME_IMAGES = [
   {

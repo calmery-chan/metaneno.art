@@ -1,6 +1,4 @@
 import {
-  Character,
-  CharacterTags,
   CHEKI_HORIZONTAL_FRAME_WIDTH,
   CHEKI_HORIZONTAL_IMAGE_HEIGHT,
   CHEKI_HORIZONTAL_IMAGE_WIDTH,
@@ -252,15 +250,4 @@ export const random = (_min: number, _max: number) => {
   const min = Math.ceil(_min);
   const max = Math.floor(_max);
   return Math.floor(Math.random() * (max - min + 1)) + min;
-};
-
-export const CHEKI_REFINE_CHARACTER: {
-  [key in CharacterTags]: (characters: Character[]) => Character[];
-} = {
-  peace(characters) {
-    return characters.filter((character) => character.tags.includes("peace"));
-  },
-  smile(characters) {
-    return characters.filter((character) => character.tags.includes("smile"));
-  },
 };
