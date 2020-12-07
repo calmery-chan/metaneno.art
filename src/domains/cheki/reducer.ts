@@ -126,10 +126,21 @@ export const reducer = createReducer(initialState, (builder) => {
         temporaries: initialState.temporaries,
       };
     })
-    .addCase(actions.addCharacterTag, (state, action) => ({
-      ...state,
-      characterTags: [...state.characterTags, action.payload.tag],
-    }))
+    .addCase(actions.changeCharacterTags, (state, action) => {
+      const { tag } = action.payload;
+
+      if (state.characterTags.includes(tag)) {
+        return {
+          ...state,
+          characterTags: state.characterTags.filter((t) => t !== tag).sort(),
+        };
+      }
+
+      return {
+        ...state,
+        characterTags: [...state.characterTags, action.payload.tag].sort(),
+      };
+    })
     .addCase(actions.changeFilter, (state, action) => {
       GA.changeFilter(action.payload.filter || "none");
 

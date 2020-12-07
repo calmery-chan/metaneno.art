@@ -33,7 +33,7 @@ const animationFadeOut = css`
 
 export const ChekiCamera: React.FC = () => {
   const dispatch = useDispatch();
-  const { image, ready } = useSelector(selectors.cheki);
+  const { image, ready, characterTags } = useSelector(selectors.cheki);
   const [flashAnimation, setFlashAnimation] = useState(false);
 
   // States
@@ -45,7 +45,7 @@ export const ChekiCamera: React.FC = () => {
   const handleOnCancelRenew = useCallback(() => setRenewConfirm(false), []);
 
   const handleOnClickCharacterTag = useCallback(
-    (tag: CharacterTag) => dispatch(actions.addCharacterTag({ tag })),
+    (tag: CharacterTag) => dispatch(actions.changeCharacterTags({ tag })),
     []
   );
 
@@ -146,7 +146,16 @@ export const ChekiCamera: React.FC = () => {
             </div>
             {CHARACTER_TAGS.map((tag, key) => (
               <div key={key}>
-                <button onClick={() => handleOnClickCharacterTag(tag)}>
+                <button
+                  onClick={() => handleOnClickCharacterTag(tag)}
+                  style={
+                    characterTags.includes(tag)
+                      ? {
+                          color: "red",
+                        }
+                      : {}
+                  }
+                >
                   {tag}
                 </button>
               </div>

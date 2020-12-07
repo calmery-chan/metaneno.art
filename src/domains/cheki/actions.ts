@@ -8,10 +8,6 @@ import {
 import { CursorPosition } from "~/utils/cheki";
 import * as GA from "~/utils/cheki/google-analytics";
 
-export const addCharacterTag = createAction<{ tag: CharacterTag }>(
-  "CHEKI/CHANGE_CHARACTER_TAG"
-);
-
 export const addImage = createAsyncThunk<
   {
     height: number;
@@ -21,6 +17,10 @@ export const addImage = createAsyncThunk<
   { url: string }
 >("CHEKI/ADD_IMAGE", async ({ url }) =>
   resizeImage(await convertUrlToImage(url))
+);
+
+export const changeCharacterTags = createAction<{ tag: CharacterTag }>(
+  "CHEKI/CHANGE_CHARACTER_TAG"
 );
 
 export const changeFilter = createAction<{ filter: ChekiFilter | null }>(
