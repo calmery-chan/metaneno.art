@@ -13,7 +13,6 @@ import {
   CHEKI_VERTICAL_FRAME_HEIGHT,
   CHEKI_VERTICAL_FRAME_WIDTH,
   SHARE_RANDOM_HASHTAGS,
-  Character,
 } from "~/constants/cheki";
 import { ChekiDirection } from "~/types/ChekiDirection";
 
@@ -242,12 +241,4 @@ export const useDisplayable = <T extends HTMLElement>(
   }, [ref]);
 
   return ref;
-};
-
-export const CHEKI_REFINE_CHARACTER: {
-  [key: string]: (characters: Character[]) => Character[];
-} = {
-  peace(characters) {
-    return characters.filter((character) => character.tags.includes("peace"));
-  },
 };

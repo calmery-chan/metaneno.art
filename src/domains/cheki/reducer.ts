@@ -1,14 +1,19 @@
 import { createReducer } from "@reduxjs/toolkit";
 import * as actions from "./actions";
-import { getDirection, random, updateFrame, updateTrim } from "./utils";
+import {
+  CHEKI_REFINE_CHARACTER,
+  getDirection,
+  random,
+  updateFrame,
+  updateTrim,
+} from "./utils";
 import { ChekiFilter, NONEME_IMAGES } from "~/constants/cheki";
 import { ChekiDirection } from "~/types/ChekiDirection";
 import { ChekiRectangle } from "~/types/ChekiRectangle";
-import { CHEKI_REFINE_CHARACTER, getImageSizeByDirection } from "~/utils/cheki";
+import { getImageSizeByDirection } from "~/utils/cheki";
 import * as GA from "~/utils/cheki/google-analytics";
 
 export type State = {
-  refine: "peace" | null;
   character: {
     dataUrl: string;
     height: number;
@@ -18,6 +23,7 @@ export type State = {
     x: number;
     y: number;
   } | null;
+  characterTag: "peace" | null;
   frame: {
     dataUrl: string;
     index: number;
@@ -50,8 +56,8 @@ export type State = {
 };
 
 const initialState: State = {
-  refine: "peace",
   character: null,
+  characterTag: "peace",
   frame: {
     dataUrl: "",
     index: 0,
@@ -192,8 +198,8 @@ export const reducer = createReducer(initialState, (builder) => {
       };
     })
     .addCase(actions.take, (state) => {
-      const characters = state.refine
-        ? CHEKI_REFINE_CHARACTER[state.refine](NONEME_IMAGES)
+      const characters = state.characterTag
+        ? CHEKI_REFINE_CHARACTER[state.characterTag](NONEME_IMAGES)
         : NONEME_IMAGES;
 
       const index = Math.floor(Math.random() * characters.length);

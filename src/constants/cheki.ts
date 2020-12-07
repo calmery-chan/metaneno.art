@@ -148,7 +148,7 @@ export type Character = {
   width: number;
 };
 
-export const CHARACTER_TAGS = ["peace"] as const;
+export const CHARACTER_TAGS = ["peace", "smile"] as const;
 
 export type CharacterTags = typeof CHARACTER_TAGS[number];
 
@@ -164,7 +164,7 @@ export const NONEME_IMAGES = [
     url: "/cheki/characters/1.png",
     rotate: { min: -24, max: 24 },
     scale: { min: 0.5, max: 1 },
-    tags: [],
+    tags: ["smile"],
     width: 385,
   },
   {
@@ -220,7 +220,7 @@ export const NONEME_IMAGES = [
     url: "/cheki/characters/5.png",
     rotate: { min: -4, max: 4 },
     scale: { min: 1.1, max: 1.4 },
-    tags: [],
+    tags: ["smile"],
     width: 577,
   },
 ] as Character[];
