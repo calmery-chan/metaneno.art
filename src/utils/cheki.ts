@@ -250,11 +250,17 @@ export const useDisplayable = <T extends HTMLElement>(
 export const CHEKI_REFINE_CHARACTER: {
   [key in CharacterTag]: (characters: Character[]) => Character[];
 } = {
+  front(characters) {
+    return characters.filter((character) => character.tags.includes("front"));
+  },
   peace(characters) {
     return characters.filter((character) => character.tags.includes("peace"));
   },
   smile(characters) {
     return characters.filter((character) => character.tags.includes("smile"));
+  },
+  side(characters) {
+    return characters.filter((character) => character.tags.includes("side"));
   },
 };
 

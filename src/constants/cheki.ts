@@ -148,7 +148,7 @@ export type Character = {
   width: number;
 };
 
-export const CHARACTER_TAGS = ["peace", "smile"] as const;
+export const CHARACTER_TAGS = ["front", "peace", "smile", "side"] as const;
 
 export type CharacterTag = typeof CHARACTER_TAGS[number];
 
@@ -164,7 +164,7 @@ export const NONEME_IMAGES = [
     url: "/cheki/characters/1.png",
     rotate: { min: -24, max: 24 },
     scale: { min: 0.5, max: 1 },
-    tags: ["smile", "peace", "example"],
+    tags: ["front", "smile"],
     width: 385,
   },
   {
@@ -178,7 +178,7 @@ export const NONEME_IMAGES = [
     url: "/cheki/characters/2.png",
     rotate: { min: -8, max: 8 },
     scale: { min: 1.2, max: 1.4 },
-    tags: [],
+    tags: ["front"],
     width: 624,
   },
   {
@@ -192,7 +192,7 @@ export const NONEME_IMAGES = [
     url: "/cheki/characters/3.png",
     rotate: { min: -4, max: 8 },
     scale: { min: 1.2, max: 1.4 },
-    tags: [],
+    tags: ["side"],
     width: 577,
   },
   {
@@ -206,7 +206,7 @@ export const NONEME_IMAGES = [
     url: "/cheki/characters/4.png",
     rotate: { min: -4, max: 4 },
     scale: { min: 1.1, max: 1.3 },
-    tags: ["peace", "smile", "dummy", "asd"],
+    tags: ["front", "peace"],
     width: 577,
   },
   {
@@ -220,7 +220,7 @@ export const NONEME_IMAGES = [
     url: "/cheki/characters/5.png",
     rotate: { min: -4, max: 4 },
     scale: { min: 1.1, max: 1.4 },
-    tags: ["smile"],
+    tags: ["front", "smile"],
     width: 577,
   },
 ] as Character[];

@@ -13,6 +13,7 @@ import { ChekiShootButton } from "~/containers/Cheki/ShootButton";
 import { ChekiTrim } from "~/containers/Cheki/Trim";
 import { selectors, useDispatch, useSelector } from "~/domains";
 import { actions } from "~/domains/cheki";
+import { selectableCharacterTagsSelector } from "~/domains/cheki/selectors";
 import { fadeIn, fadeOut, Mixin } from "~/styles/mixin";
 import { Spacing } from "~/styles/spacing";
 import * as GA from "~/utils/cheki/google-analytics";
@@ -33,8 +34,11 @@ const animationFadeOut = css`
 
 export const ChekiCamera: React.FC = () => {
   const dispatch = useDispatch();
-  const { image, ready, characterTags } = useSelector(selectors.cheki);
+  const cheki = useSelector(selectors.cheki);
   const [flashAnimation, setFlashAnimation] = useState(false);
+
+  const { image, ready, characterTags } = cheki;
+  const selectableCharacterTags = selectableCharacterTagsSelector(cheki);
 
   // States
 
@@ -142,19 +146,34 @@ export const ChekiCamera: React.FC = () => {
               />
             </div>
             <div>
-              <button onClick={handleOnClickResetCharacterTags}>Reset</button>
+              <button
+                onClick={handleOnClickResetCharacterTags}
+                style={{
+                  width: "200px",
+                }}
+              >
+                Reset
+              </button>
             </div>
             {CHARACTER_TAGS.map((tag, key) => (
               <div key={key}>
                 <button
-                  onClick={() => handleOnClickCharacterTag(tag)}
-                  style={
+                  onClick={
+                    selectableCharacterTags.includes(tag) ||
                     characterTags.includes(tag)
+                      ? () => handleOnClickCharacterTag(tag)
+                      : undefined
+                  }
+                  style={{
+                    width: "200px",
+                    ...(characterTags.includes(tag)
                       ? {
                           color: "red",
                         }
-                      : {}
-                  }
+                      : selectableCharacterTags.includes(tag)
+                      ? {}
+                      : { color: "lightgray" }),
+                  }}
                 >
                   {tag}
                 </button>
