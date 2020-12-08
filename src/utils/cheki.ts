@@ -16,6 +16,7 @@ import {
   CharacterTag,
   Character,
   NONEME_IMAGES,
+  NONEME_IMAGE_TAGS,
 } from "~/constants/cheki";
 import { ChekiDirection } from "~/types/ChekiDirection";
 
@@ -275,4 +276,32 @@ export const getCharactersWithTags = (
   };
 
   return helper(NONEME_IMAGES, characterTags);
+};
+
+const unique = <T>(array: T[]) =>
+  array.filter((elem, index, self) => self.indexOf(elem) === index);
+
+export const getSelectableCharacterTags = (characterTags: CharacterTag[]) => {
+  const helper = (
+    characterTags: CharacterTag[],
+    selectableTagCombinations: CharacterTag[][]
+  ): CharacterTag[][] => {
+    if (!characterTags.length) {
+      return selectableTagCombinations;
+    }
+
+    const nextCharacterTags = characterTags.slice(1);
+    const nextSelectableTagCombinations = selectableTagCombinations.filter(
+      (ts) => ts.includes(characterTags[0]) && ts.length > 1
+    );
+
+    return helper(
+      nextCharacterTags,
+      nextSelectableTagCombinations.map((ts) =>
+        ts.filter((t) => t !== characterTags[0])
+      )
+    );
+  };
+
+  return unique(helper(characterTags, NONEME_IMAGE_TAGS).flat());
 };

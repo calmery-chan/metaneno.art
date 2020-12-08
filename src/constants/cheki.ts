@@ -164,7 +164,7 @@ export const NONEME_IMAGES = [
     url: "/cheki/characters/1.png",
     rotate: { min: -24, max: 24 },
     scale: { min: 0.5, max: 1 },
-    tags: ["smile"],
+    tags: ["smile", "peace", "example"],
     width: 385,
   },
   {
@@ -206,7 +206,7 @@ export const NONEME_IMAGES = [
     url: "/cheki/characters/4.png",
     rotate: { min: -4, max: 4 },
     scale: { min: 1.1, max: 1.3 },
-    tags: ["peace"],
+    tags: ["peace", "smile", "dummy", "asd"],
     width: 577,
   },
   {
@@ -224,3 +224,5 @@ export const NONEME_IMAGES = [
     width: 577,
   },
 ] as Character[];
+
+export const NONEME_IMAGE_TAGS = NONEME_IMAGES.map(({ tags }) => tags);
