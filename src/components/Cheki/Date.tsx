@@ -34,7 +34,7 @@ export const ChekiDate: React.FC<ChekiDateProps> = ({ date: maybeDate }) => {
     <svg>
       {[].slice.call(date).map((d, i) => {
         return (
-          <g key={i} transform={`translate(${8 * i}, 0)`}>
+          <g key={i} transform={`translate(${18 * i}, 0)`}>
             {(() => {
               switch (d) {
                 case "0":
