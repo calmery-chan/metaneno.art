@@ -38,7 +38,7 @@ export const ChekiApp: React.FC<{
       !ready &&
       !(pathname === "/cheki" || pathname.startsWith("/cheki/share"))
     ) {
-      push("/cheki");
+      // push("/cheki");
     }
   }, [ready]);
 

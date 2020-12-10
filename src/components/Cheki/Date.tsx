@@ -31,43 +31,49 @@ export const ChekiDate: React.FC<ChekiDateProps> = ({ date: maybeDate }) => {
   }
 
   return (
-    <div>
-      {[].slice.call(date).map((d) => {
-        switch (d) {
-          case "0":
-            return <ChekiDateZero />;
+    <svg>
+      {[].slice.call(date).map((d, i) => {
+        return (
+          <g key={i} transform={`translate(${8 * i}, 0)`}>
+            {(() => {
+              switch (d) {
+                case "0":
+                  return <ChekiDateZero />;
 
-          case "1":
-            return <ChekiDateOne />;
+                case "1":
+                  return <ChekiDateOne />;
 
-          case "2":
-            return <ChekiDateTwo />;
+                case "2":
+                  return <ChekiDateTwo />;
 
-          case "3":
-            return <ChekiDateThree />;
+                case "3":
+                  return <ChekiDateThree />;
 
-          case "4":
-            return <ChekiDateFour />;
+                case "4":
+                  return <ChekiDateFour />;
 
-          case "5":
-            return <ChekiDateFive />;
+                case "5":
+                  return <ChekiDateFive />;
 
-          case "6":
-            return <ChekiDateSix />;
+                case "6":
+                  return <ChekiDateSix />;
 
-          case "7":
-            return <ChekiDateSeven />;
+                case "7":
+                  return <ChekiDateSeven />;
 
-          case "8":
-            return <ChekiDateEight />;
+                case "8":
+                  return <ChekiDateEight />;
 
-          case "9":
-            return <ChekiDateNine />;
+                case "9":
+                  return <ChekiDateNine />;
 
-          default:
-            return null;
-        }
+                default:
+                  return null;
+              }
+            })()}
+          </g>
+        );
       })}
-    </div>
+    </svg>
   );
 };
