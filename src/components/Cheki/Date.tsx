@@ -9,13 +9,22 @@ import { ChekiDateSix } from "./Date/Six";
 import { ChekiDateThree } from "./Date/Three";
 import { ChekiDateTwo } from "./Date/Two";
 import { ChekiDateZero } from "./Date/Zero";
+import {
+  CHEKI_FRAME_MARGIN_LEFT,
+  CHEKI_FRAME_MARGIN_TOP,
+} from "~/constants/cheki";
+import { selectors, useSelector } from "~/domains";
+import { getImageSizeByDirection } from "~/utils/cheki";
 
 type ChekiDateProps = {
   date: string;
 };
 
 export const ChekiDate: React.FC<ChekiDateProps> = ({ date: maybeDate }) => {
+  const cheki = useSelector(selectors.cheki);
   const [date, setDate] = useState<string | null>(null);
+  const { direction } = cheki.image;
+  const { height, width } = getImageSizeByDirection(direction);
 
   // Side Effects
 
@@ -31,10 +40,16 @@ export const ChekiDate: React.FC<ChekiDateProps> = ({ date: maybeDate }) => {
   }
 
   return (
-    <svg>
+    <svg
+      height="40"
+      width="160"
+      x={width + CHEKI_FRAME_MARGIN_LEFT - 160 - 24}
+      y={height + CHEKI_FRAME_MARGIN_TOP - 40 - 24}
+    >
+      <rect fill="#000" height="100%" width="100%" />
       {[].slice.call(date).map((d, i) => {
         return (
-          <g key={i} transform={`translate(${18 * i}, 0)`}>
+          <g key={i} transform={`translate(${8 + 18 * i}, 8)`}>
             {(() => {
               switch (d) {
                 case "0":
