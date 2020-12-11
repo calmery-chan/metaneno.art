@@ -1,14 +1,6 @@
-import { ChekiDirection } from "./ChekiDirection";
-import { ChekiFilter, ChekiFrame } from "~/constants/cheki";
-
-export type ChekiDynamicDecoration<T> = {
-  component: React.FC<T>;
-  id: number;
-  props: (props: {
-    direction: ChekiDirection;
-    filter: ChekiFilter;
-    frame: ChekiFrame;
-  }) => T;
+export type ChekiDynamicDecoration = {
+  component: React.FC;
+  id: string;
 };
 
 type ChekiStaticDecorationLayer = {
@@ -21,6 +13,8 @@ type ChekiStaticDecorationLayer = {
 
 export type ChekiStaticDecoration = {
   horizontal: ChekiStaticDecorationLayer[];
-  id: number;
+  id: string;
   vertical: ChekiStaticDecorationLayer[];
 };
+
+export type ChekiDecoration = ChekiDynamicDecoration | ChekiStaticDecoration;

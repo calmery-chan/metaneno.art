@@ -16,15 +16,12 @@ import {
 import { selectors, useSelector } from "~/domains";
 import { getImageSizeByDirection } from "~/utils/cheki";
 
-type ChekiDateProps = {
-  date: string;
-};
-
-export const ChekiDate: React.FC<ChekiDateProps> = ({ date: maybeDate }) => {
+export const ChekiDate: React.FC = () => {
   const cheki = useSelector(selectors.cheki);
   const [date, setDate] = useState<string | null>(null);
   const { direction } = cheki.image;
   const { height, width } = getImageSizeByDirection(direction);
+  const maybeDate = "2020/12/10";
 
   // Side Effects
 
