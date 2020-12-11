@@ -7,7 +7,14 @@ export const ChekiColorPicker: React.FC<{
   colors: Hex[];
   onChange: (color: Hex) => void;
 }> = ({ colors, onChange }) => (
-  <>
+  <div
+    className="flex"
+    css={css`
+      *:not(:first-child) {
+        margin-left: 4px;
+      }
+    `}
+  >
     {colors.map((color, key) => (
       <div
         css={css`
@@ -22,5 +29,5 @@ export const ChekiColorPicker: React.FC<{
         onClick={() => onChange(color)}
       />
     ))}
-  </>
+  </div>
 );

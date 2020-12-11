@@ -1,4 +1,3 @@
-import { css } from "@emotion/react";
 import { NextPage } from "next";
 import React, { useCallback, useState } from "react";
 import { ChekiColorPicker } from "~/components/Cheki/ColorPicker";
@@ -16,19 +15,10 @@ const Decoration: NextPage = () => {
 
   return (
     <div>
-      <div
-        css={css`
-          display: flex;
-          *:not(:first-child) {
-            margin-left: 4px;
-          }
-        `}
-      >
-        <ChekiColorPicker
-          colors={CHEKI_DECORATION_COLORS}
-          onChange={handleOnChangeColor}
-        />
-      </div>
+      <ChekiColorPicker
+        colors={CHEKI_DECORATION_COLORS}
+        onChange={handleOnChangeColor}
+      />
       <div>Current: {hex}</div>
     </div>
   );
