@@ -60,18 +60,44 @@ const isTouchRelatedEvent = (
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
 ): event is TouchRelatedEvent => !!(event as any).touches;
 
-export const convertFileToUrl = (file: File): Promise<string> =>
+export const convertFileToUrl = (
+  file: File
+): Promise<{
+  dataUrl: string;
+  createdDate: string;
+}> =>
   new Promise((resolve, reject) => {
     blueimpLoadImage(
       file,
-      async (canvas) => {
+      async (canvas, meta) => {
         if (canvas instanceof Event && canvas.type === "error") {
           return reject(canvas);
         }
 
-        resolve((canvas as HTMLCanvasElement).toDataURL("image/png"));
+        let createdDate = new Date();
+
+        // 34665 は Exif IFD を指していて
+        // Exif IFD 内の 36867 はオリジナル画像の生成日時を表している
+        if (meta && meta.exif) {
+          const date = (meta.exif as any)["34665"]?.["36867"];
+          // 2020:01:01 00:00:00 という形式で取得できる、日付だけを取り出して `:` を `/` に置き換える
+          createdDate = date
+            ? new Date(date.slice(0, 10).replace(":", "/"))
+            : createdDate;
+        }
+
+        const year = createdDate.getFullYear();
+        const month = createdDate.getMonth() + 1;
+        const date = createdDate.getDate();
+
+        resolve({
+          dataUrl: (canvas as HTMLCanvasElement).toDataURL("image/png"),
+          createdDate: `${year}.${month < 10 ? `0${month}` : month}.${
+            date < 10 ? `0${date}` : date
+          }`,
+        });
       },
-      { canvas: true, orientation: true }
+      { canvas: true, meta: true, orientation: true }
     );
   });
 

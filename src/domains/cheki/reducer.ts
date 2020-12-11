@@ -23,6 +23,7 @@ export type State = {
     ready: boolean;
   };
   image: ChekiRectangle & {
+    createdDate: string | null;
     direction: ChekiDirection;
     filter: ChekiFilter | null;
     dataUrl: string;
@@ -56,6 +57,7 @@ const initialState: State = {
     ready: false,
   },
   image: {
+    createdDate: null,
     direction: "horizontal",
     filter: null,
     height: 0,
@@ -101,7 +103,7 @@ const initialState: State = {
 export const reducer = createReducer(initialState, (builder) => {
   builder
     .addCase(actions.addImage.fulfilled, (state, action) => {
-      const { dataUrl, height, width } = action.payload;
+      const { createdDate, dataUrl, height, width } = action.payload;
       const { layout } = state;
 
       const direction = getDirection(height, width);
@@ -112,6 +114,7 @@ export const reducer = createReducer(initialState, (builder) => {
         ...state,
         image: {
           ...initialState.image,
+          createdDate,
           dataUrl,
           direction,
           height,

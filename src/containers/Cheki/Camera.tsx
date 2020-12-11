@@ -72,7 +72,8 @@ export const ChekiCamera: React.FC = () => {
   }, []);
 
   const handleOnLoadImage = useCallback(
-    (url: string) => dispatch(actions.addImage({ url })),
+    ({ dataUrl, createdDate }: { dataUrl: string; createdDate: string }) =>
+      dispatch(actions.addImage({ url: dataUrl, createdDate })),
     []
   );
 

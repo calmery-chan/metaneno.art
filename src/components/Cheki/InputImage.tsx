@@ -18,7 +18,13 @@ const Container = styled.div`
 `;
 
 export const ChekiInputImage: React.FC<{
-  onLoad: (imageUrl: string) => void;
+  onLoad: ({
+    dataUrl,
+    createdDate,
+  }: {
+    dataUrl: string;
+    createdDate: string;
+  }) => void;
 }> = ({ onLoad }) => {
   const ref = useRef<HTMLInputElement>(null);
   const [isTermsAgreed, setTermsAgreed] = useState(false);

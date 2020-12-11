@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { ChekiDateEight } from "./Date/Eight";
 import { ChekiDateFive } from "./Date/Five";
 import { ChekiDateFour } from "./Date/Four";
@@ -18,36 +18,28 @@ import { getImageSizeByDirection } from "~/utils/cheki";
 
 export const ChekiDate: React.FC = () => {
   const cheki = useSelector(selectors.cheki);
-  const [date, setDate] = useState<string | null>(null);
-  const { direction } = cheki.image;
+  const { createdDate, direction } = cheki.image;
   const { height, width } = getImageSizeByDirection(direction);
-  const maybeDate = "2020/12/10";
 
-  // Side Effects
-
-  useEffect(() => {
-    const d = new Date(maybeDate);
-    setDate(`${d.getFullYear()}${d.getMonth() + 1}${d.getDate()}`);
-  }, [maybeDate]);
-
-  // Render
-
-  if (!date) {
+  if (createdDate === null) {
     return null;
   }
+
+  console.log(createdDate);
 
   return (
     <svg
       height="40"
-      width="160"
-      x={width + CHEKI_FRAME_MARGIN_LEFT - 160 - 24}
+      width="196"
+      x={width + CHEKI_FRAME_MARGIN_LEFT - 196 - 24}
       y={height + CHEKI_FRAME_MARGIN_TOP - 40 - 24}
     >
       <rect fill="#000" height="100%" width="100%" />
-      {[].slice.call(date).map((d, i) => {
+      {[].slice.call(createdDate).map((d, i) => {
         return (
           <g key={i} transform={`translate(${8 + 18 * i}, 8)`}>
             {(() => {
+              console.log(d);
               switch (d) {
                 case "0":
                   return <ChekiDateZero />;

@@ -16,14 +16,16 @@ import * as GA from "~/utils/cheki/google-analytics";
 
 export const addImage = createAsyncThunk<
   {
+    createdDate: string;
     height: number;
     dataUrl: string;
     width: number;
   },
-  { url: string }
->("CHEKI/ADD_IMAGE", async ({ url }) =>
-  resizeImage(await convertUrlToImage(url))
-);
+  { url: string; createdDate: string }
+>("CHEKI/ADD_IMAGE", async ({ url, createdDate }) => ({
+  ...resizeImage(await convertUrlToImage(url)),
+  createdDate,
+}));
 
 export const changeFilter = createAction<{ filter: ChekiFilter | null }>(
   "CHEKI/CHANGE_FILTER"
