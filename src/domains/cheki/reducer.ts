@@ -1,7 +1,8 @@
 import { createReducer } from "@reduxjs/toolkit";
 import * as actions from "./actions";
+import { Hex } from "./models";
 import { getDirection, random, updateFrame, updateTrim } from "./utils";
-import { ChekiFilter } from "~/constants/cheki";
+import { ChekiFilter, CHEKI_DECORATION_COLORS } from "~/constants/cheki";
 import { ChekiDirection } from "~/types/ChekiDirection";
 import { ChekiRectangle } from "~/types/ChekiRectangle";
 import { getImageSizeByDirection } from "~/utils/cheki";
@@ -17,6 +18,10 @@ export type State = {
     x: number;
     y: number;
   } | null;
+  decoration: {
+    hex: Hex;
+    id: string | null;
+  };
   frame: {
     dataUrl: string;
     index: number;
@@ -51,6 +56,10 @@ export type State = {
 
 const initialState: State = {
   character: null,
+  decoration: {
+    hex: CHEKI_DECORATION_COLORS[0],
+    id: null,
+  },
   frame: {
     dataUrl: "",
     index: 0,
@@ -127,6 +136,13 @@ export const reducer = createReducer(initialState, (builder) => {
         temporaries: initialState.temporaries,
       };
     })
+    .addCase(actions.changeDecorationColor, (state, actions) => ({
+      ...state,
+      decoration: {
+        ...state.decoration,
+        ...actions.payload,
+      },
+    }))
     .addCase(actions.changeFilter, (state, action) => {
       GA.changeFilter(action.payload.filter || "none");
 

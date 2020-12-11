@@ -14,6 +14,7 @@ import {
   CHEKI_VERTICAL_FRAME_WIDTH,
   SHARE_RANDOM_HASHTAGS,
 } from "~/constants/cheki";
+import { Hex } from "~/domains/cheki/models";
 import { ChekiDirection } from "~/types/ChekiDirection";
 
 export const getShareImage = (id: string) =>
@@ -267,4 +268,34 @@ export const useDisplayable = <T extends HTMLElement>(
   }, [ref]);
 
   return ref;
+};
+
+export const getBlackOrWhiteByHex = (hex: Hex): Hex => {
+  const h = hex.slice(1);
+
+  let red = 0;
+  let green = 0;
+  let blue = 0;
+
+  if (h.length === 3) {
+    red = parseInt(`${h[0]}${h[0]}`, 16);
+    green = parseInt(`${h[1]}${h[1]}`, 16);
+    blue = parseInt(`${h[2]}${h[2]}`, 16);
+  }
+
+  if (h.length === 6) {
+    red = parseInt(`${h[0]}${h[1]}`, 16);
+    green = parseInt(`${h[2]}${h[3]}`, 16);
+    blue = parseInt(`${h[4]}${h[5]}`, 16);
+  }
+
+  const r = red / 255;
+  const g = green / 255;
+  const b = blue / 255;
+
+  if ((Math.max(r, g, b) + Math.min(r, g, b)) / 2 >= 0.5) {
+    return "#000" as Hex;
+  }
+
+  return "#FFF" as Hex;
 };

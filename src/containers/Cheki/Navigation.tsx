@@ -98,6 +98,11 @@ export const ChekiNavigation = () => (
       src="/cheki/frames.svg"
     />
     <NavigationIcon
+      alt="デコレーション"
+      href="/cheki/decoration"
+      src="/cheki/frames.svg"
+    />
+    <NavigationIcon
       alt="保存・シェア"
       href="/cheki/save"
       src="/cheki/save.svg"

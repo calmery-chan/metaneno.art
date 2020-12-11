@@ -1,4 +1,5 @@
 import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
+import { Hex } from "./models";
 import {
   convertUrlToDataUrl,
   convertUrlToImage,
@@ -26,6 +27,10 @@ export const addImage = createAsyncThunk<
   ...resizeImage(await convertUrlToImage(url)),
   createdDate,
 }));
+
+export const changeDecorationColor = createAction<{ hex: Hex }>(
+  "CHEKI/CHANGE_DECORATION_COLOR"
+);
 
 export const changeFilter = createAction<{ filter: ChekiFilter | null }>(
   "CHEKI/CHANGE_FILTER"

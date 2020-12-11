@@ -1,6 +1,7 @@
 import React from "react";
+import { Hex } from "~/domains/cheki/models";
 
-export const ChekiDateNine: React.FC = () => (
+export const ChekiDateNine: React.FC<{ color: Hex }> = ({ color }) => (
   <svg
     fill="none"
     height="24"
@@ -10,7 +11,7 @@ export const ChekiDateNine: React.FC = () => (
   >
     <path
       d="M12.692 10.512L14.06 12.024L12.452 13.488H4.268L2.9 12L4.532 10.512H12.692ZM2.588 11.64L2.468 11.76H1.1L1.964 1.824L2.78 1.08L4.796 3.312L4.196 10.176L2.588 11.64ZM3.14 0.743999L3.956 0H15.116L15.812 0.743999L13.388 2.976H5.18L3.14 0.743999ZM14.372 12.36L14.492 12.264H15.884L15.02 22.176L14.204 22.92L12.188 20.688L12.788 13.824L14.372 12.36ZM16.124 1.08L16.796 1.824L15.932 11.76H14.54L14.444 11.664L13.1 10.2L13.7 3.312L16.124 1.08ZM13.844 23.256L13.028 24H1.868L1.172 23.256L3.596 21.024H11.804L13.844 23.256Z"
-      fill="#fff"
+      fill={color}
     />
   </svg>
 );

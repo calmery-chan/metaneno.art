@@ -16,18 +16,18 @@ import {
   CHEKI_FRAME_MARGIN_TOP,
 } from "~/constants/cheki";
 import { selectors, useSelector } from "~/domains";
-import { getImageSizeByDirection } from "~/utils/cheki";
+import { getImageSizeByDirection, getBlackOrWhiteByHex } from "~/utils/cheki";
 
 export const ChekiDate: React.FC = () => {
   const cheki = useSelector(selectors.cheki);
+  const { hex: backgroundColor } = cheki.decoration;
+  const fontColor = getBlackOrWhiteByHex(backgroundColor);
   const { createdDate, direction } = cheki.image;
   const { height, width } = getImageSizeByDirection(direction);
 
   if (createdDate === null) {
     return null;
   }
-
-  console.log(createdDate);
 
   return (
     <svg
@@ -36,48 +36,47 @@ export const ChekiDate: React.FC = () => {
       x={width + CHEKI_FRAME_MARGIN_LEFT - 216 - 24}
       y={height + CHEKI_FRAME_MARGIN_TOP - 40 - 24}
     >
-      <rect fill="#000" height="100%" width="100%" />
+      <rect fill={backgroundColor} height="100%" width="100%" />
       {[].slice.call(createdDate).map((d, i) => {
         return (
           <g key={i} transform={`translate(${8 + (18 + 2) * i}, 8)`}>
             {(() => {
-              console.log(d);
               switch (d) {
                 case "0":
-                  return <ChekiDateZero />;
+                  return <ChekiDateZero color={fontColor} />;
 
                 case "1":
-                  return <ChekiDateOne />;
+                  return <ChekiDateOne color={fontColor} />;
 
                 case "2":
-                  return <ChekiDateTwo />;
+                  return <ChekiDateTwo color={fontColor} />;
 
                 case "3":
-                  return <ChekiDateThree />;
+                  return <ChekiDateThree color={fontColor} />;
 
                 case "4":
-                  return <ChekiDateFour />;
+                  return <ChekiDateFour color={fontColor} />;
 
                 case "5":
-                  return <ChekiDateFive />;
+                  return <ChekiDateFive color={fontColor} />;
 
                 case "6":
-                  return <ChekiDateSix />;
+                  return <ChekiDateSix color={fontColor} />;
 
                 case "7":
-                  return <ChekiDateSeven />;
+                  return <ChekiDateSeven color={fontColor} />;
 
                 case "8":
-                  return <ChekiDateEight />;
+                  return <ChekiDateEight color={fontColor} />;
 
                 case "9":
-                  return <ChekiDateNine />;
+                  return <ChekiDateNine color={fontColor} />;
 
                 case " ":
                   return <ChekiDateSpace />;
 
                 case ".":
-                  return <ChekiDateDot />;
+                  return <ChekiDateDot color={fontColor} />;
 
                 default:
                   return null;
