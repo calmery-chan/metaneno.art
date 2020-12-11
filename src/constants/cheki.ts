@@ -32,7 +32,10 @@ export const CHEKI_VERTICAL_FRAME_WIDTH =
   CHEKI_VERTICAL_IMAGE_WIDTH +
   CHEKI_FRAME_MARGIN_RIGHT;
 
-export const CHEKI_FRAME_IMAGE_URLS = [
+export const CHEKI_FRAME_IMAGE_URLS: {
+  name: ChekiFrame;
+  url: string;
+}[] = [
   { name: "white", url: "/cheki/frames/white.png" },
   { name: "black", url: "/cheki/frames/black.png" },
   { name: "blue", url: "/cheki/frames/blue.png" },
@@ -46,6 +49,20 @@ export const CHEKI_FRAME_IMAGE_URLS = [
   { name: "noise", url: "/cheki/frames/noise.png" },
   { name: "noiseblue", url: "/cheki/frames/noiseblue.png" },
 ];
+
+export type ChekiFrame =
+  | "white"
+  | "black"
+  | "blue"
+  | "gray"
+  | "lightgray"
+  | "pink"
+  | "yellow"
+  | "candy"
+  | "egg"
+  | "flower"
+  | "noise"
+  | "noiseblue";
 
 export const CHEKI_FILTERS = [
   "c1",
