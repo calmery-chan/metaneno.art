@@ -1,4 +1,5 @@
 import { DefaultSeoProps } from "next-seo";
+import { Hex } from "~/domains/cheki/models";
 
 export const CHEKI_FRAME_MARGIN_BOTTOM = 304;
 export const CHEKI_FRAME_MARGIN_LEFT = 64;
@@ -31,6 +32,8 @@ export const CHEKI_VERTICAL_FRAME_WIDTH =
   CHEKI_FRAME_MARGIN_LEFT +
   CHEKI_VERTICAL_IMAGE_WIDTH +
   CHEKI_FRAME_MARGIN_RIGHT;
+
+export const CHEKI_DECORATION_COLORS = ["#000", "#F00", "#0F0"] as Hex[];
 
 export const CHEKI_FRAME_IMAGE_URLS: {
   name: ChekiFrame;
