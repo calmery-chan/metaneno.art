@@ -3,25 +3,27 @@ import { CHEKI_DECORATIONS } from "~/constants/cheki";
 import { selectors, useSelector } from "~/domains";
 
 export const ChekiCanvasDecorationLayer: React.FC = () => {
-  const { decoration } = useSelector(selectors.cheki);
-
-  if (decoration === null) {
-    return null;
-  }
-
-  const { layers } = CHEKI_DECORATIONS[decoration];
+  const { decorations: decorationIds } = useSelector(selectors.cheki);
+  const decorations = decorationIds.map(
+    (decorationId) =>
+      CHEKI_DECORATIONS[
+        CHEKI_DECORATIONS.findIndex(({ id }) => decorationId === id)
+      ]!
+  );
 
   return (
     <>
-      {layers.map(({ height, rotate, url, width, x, y }, key) => (
-        <image
-          key={key}
-          transform={`rotate(${rotate}, ${width / 2}, ${height / 2})`}
-          x={x}
-          xlinkHref={url}
-          y={y}
-        />
-      ))}
+      {decorations.map(({ layers }) =>
+        layers.map(({ height, rotate, url, width, x, y }, key) => (
+          <image
+            key={key}
+            transform={`rotate(${rotate}, ${width / 2}, ${height / 2})`}
+            x={x}
+            xlinkHref={url}
+            y={y}
+          />
+        ))
+      )}
     </>
   );
 };
