@@ -151,6 +151,7 @@ export type Character = {
 export const CHEKI_DECORATIONS: ChekiDecoration[] = [
   {
     direction: "horizontal",
+    id: "example-1",
     layers: [
       {
         height: 400,
@@ -169,9 +170,11 @@ export const CHEKI_DECORATIONS: ChekiDecoration[] = [
         y: 900,
       },
     ],
+    thumbnail: "/cheki/decorations/1.png",
   },
   {
     direction: "vertical",
+    id: "example-2",
     layers: [
       {
         height: 400,
@@ -190,6 +193,7 @@ export const CHEKI_DECORATIONS: ChekiDecoration[] = [
         y: 0,
       },
     ],
+    thumbnail: "/cheki/decorations/2.png",
   },
 ];
 

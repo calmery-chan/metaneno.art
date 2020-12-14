@@ -17,7 +17,7 @@ export type State = {
     x: number;
     y: number;
   } | null;
-  decoration: number | null;
+  decorations: string[];
   frame: {
     dataUrl: string;
     index: number;
@@ -51,7 +51,7 @@ export type State = {
 
 const initialState: State = {
   character: null,
-  decoration: 0,
+  decorations: [],
   frame: {
     dataUrl: "",
     index: 0,
@@ -102,6 +102,10 @@ const initialState: State = {
 
 export const reducer = createReducer(initialState, (builder) => {
   builder
+    .addCase(actions.addDecoration, (state, action) => ({
+      ...state,
+      decorations: [...state.decorations, action.payload.decorationId],
+    }))
     .addCase(actions.addImage.fulfilled, (state, action) => {
       const { dataUrl, height, width } = action.payload;
       const { layout } = state;
@@ -126,10 +130,6 @@ export const reducer = createReducer(initialState, (builder) => {
         temporaries: initialState.temporaries,
       };
     })
-    .addCase(actions.changeDecoration, (state, action) => ({
-      ...state,
-      ...action.payload,
-    }))
     .addCase(actions.changeFilter, (state, action) => {
       GA.changeFilter(action.payload.filter || "none");
 

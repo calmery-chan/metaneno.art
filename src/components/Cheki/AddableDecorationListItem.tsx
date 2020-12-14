@@ -18,8 +18,9 @@ const Thumbnail = styled.img`
 
 export const AddableDecorationListItem: React.FC<{
   onClick: () => void;
-}> = () => (
-  <Container>
-    <Thumbnail src="/cheki/characters/3.png" />
+  thumbnail: string;
+}> = ({ onClick, thumbnail }) => (
+  <Container onClick={onClick}>
+    <Thumbnail src={thumbnail} alt="デコレーション素材" />
   </Container>
 );

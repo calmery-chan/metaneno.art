@@ -14,6 +14,10 @@ import {
 import { CursorPosition } from "~/utils/cheki";
 import * as GA from "~/utils/cheki/google-analytics";
 
+export const addDecoration = createAction<{ decorationId: string }>(
+  "CHEKI/CHANGE_DECORATION"
+);
+
 export const addImage = createAsyncThunk<
   {
     height: number;
@@ -23,10 +27,6 @@ export const addImage = createAsyncThunk<
   { url: string }
 >("CHEKI/ADD_IMAGE", async ({ url }) =>
   resizeImage(await convertUrlToImage(url))
-);
-
-export const changeDecoration = createAction<{ decoration: number | null }>(
-  "CHEKI/CHANGE_DECORATION"
 );
 
 export const changeFilter = createAction<{ filter: ChekiFilter | null }>(

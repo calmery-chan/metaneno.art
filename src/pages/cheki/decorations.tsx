@@ -1,7 +1,7 @@
 import { NextPage } from "next";
 import React, { useState } from "react";
-import { AddableDecorationList } from "~/components/Cheki/AddableDecorationList";
 import { ChekiModal } from "~/components/Cheki/Modal";
+import { AddableDecorationList } from "~/containers/Cheki/AddableDecorationList";
 import { ChekiApp } from "~/containers/Cheki/App";
 
 const Decorations: NextPage = () => {

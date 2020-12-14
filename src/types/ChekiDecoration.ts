@@ -11,5 +11,7 @@ type ChekiDecorationLayer = {
 
 export type ChekiDecoration = {
   direction: ChekiDirection;
+  id: string;
   layers: ChekiDecorationLayer[];
+  thumbnail: string;
 };
