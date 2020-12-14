@@ -6,9 +6,10 @@ import { useIntersectionObserver } from "./hooks";
 import { colors, media } from "./variables";
 
 export default function Credit() {
-  const [subTitle1Ref, isSubTitle1Intersected] = useIntersectionObserver<
-    HTMLImageElement
-  >({});
+  const [
+    subTitle1Ref,
+    isSubTitle1Intersected,
+  ] = useIntersectionObserver<HTMLImageElement>({});
   // const [subTitle2Ref, isSubTitle2Intersected] = useIntersectionObserver<
   //   HTMLImageElement
   // >({});
