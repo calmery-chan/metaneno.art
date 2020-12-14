@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import React, { useCallback } from "react";
 import { AddableDecorationListItem } from "../../components/Cheki/AddableDecorationListItem";
 import { CHEKI_DECORATIONS } from "~/constants/cheki";
-import { useDispatch } from "~/domains";
+import { useDispatch, useSelector, selectors } from "~/domains";
 import { actions } from "~/domains/cheki";
 
 const Container = styled.div`
@@ -15,6 +15,10 @@ const Container = styled.div`
 `;
 
 export const AddableDecorationList: React.FC = () => {
+  const {
+    decorations,
+    image: { direction },
+  } = useSelector(selectors.cheki);
   const dispatch = useDispatch();
 
   const handleOnClickItem = useCallback((decorationId: string) => {
@@ -23,7 +27,11 @@ export const AddableDecorationList: React.FC = () => {
 
   return (
     <Container>
-      {CHEKI_DECORATIONS.map((decoration, key) => (
+      {CHEKI_DECORATIONS.filter(
+        (decoration) =>
+          direction === decoration.direction &&
+          !decorations.includes(decoration.id)
+      ).map((decoration, key) => (
         <AddableDecorationListItem
           key={key}
           onClick={() => handleOnClickItem(decoration.id)}
