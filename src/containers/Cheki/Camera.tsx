@@ -8,7 +8,6 @@ import { ChekiInputImage } from "~/components/Cheki/InputImage";
 import { ChekiPopup } from "~/components/Cheki/Popup";
 import { ChekiSubButton } from "~/components/Cheki/SubButton";
 import { NONEME_IMAGES } from "~/constants/cheki";
-import { ChekiShootButton } from "~/containers/Cheki/ShootButton";
 import { ChekiTrim } from "~/containers/Cheki/Trim";
 import { selectors, useDispatch, useSelector } from "~/domains";
 import { actions } from "~/domains/cheki";
@@ -28,6 +27,12 @@ const animationFadeOut = css`
   animation-duration: ${Mixin.ANIMATION_DURATION.seconds / 2}s;
 
   ${fadeOut};
+`;
+
+const shoot = css`
+  display: flex;
+  height: max-content;
+  justify-content: center;
 `;
 
 export const ChekiCamera: React.FC = () => {
@@ -111,7 +116,13 @@ export const ChekiCamera: React.FC = () => {
             className="relative"
             margin
           >
-            <ChekiShootButton onClick={handleOnClickShootButton} />
+            <div css={shoot}>
+              <Icon
+                alt="撮影する"
+                onClick={handleOnClickShootButton}
+                src="/cheki/shoot.svg"
+              />
+            </div>
             <div
               className="absolute flex items-center"
               css={css`
