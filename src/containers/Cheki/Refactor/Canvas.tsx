@@ -20,8 +20,7 @@ const container = css`
 
 export const ChekiCanvas: React.FC = ({ children }) => {
   const dispatch = useDispatch();
-  const height = useSelector(selectors.displayableHeight);
-  const width = useSelector(selectors.displayableWidth);
+  const { height, width } = useSelector(selectors.displayable);
 
   // Events
 

@@ -2,24 +2,18 @@ import { useSelector } from "~/domains";
 import { selectors } from "~/domains/cheki";
 
 export const ChekiCanvasTrimedImage: React.FC = ({ children }) => {
-  const displayableX = useSelector(selectors.displayableX);
-  const displayableY = useSelector(selectors.displayableY);
-  const trimHeight = useSelector(selectors.trimHeight);
-  const trimWidth = useSelector(selectors.trimWidth);
-  const trimViewBoxHeight = useSelector(selectors.trimViewBoxHeight);
-  const trimViewBoxWidth = useSelector(selectors.trimViewBoxWidth);
-  const trimX = useSelector(selectors.trimX);
-  const trimY = useSelector(selectors.trimY);
+  const displayable = useSelector(selectors.displayable);
+  const trim = useSelector(selectors.trim);
 
   return (
     <svg
-      height={trimHeight}
-      viewBox={`0 0 ${trimViewBoxWidth} ${trimViewBoxHeight}`}
-      width={trimWidth}
-      x={trimX - displayableX}
+      height={trim.height}
+      viewBox={`0 0 ${trim.viewBoxWidth} ${trim.viewBoxHeight}`}
+      width={trim.width}
+      x={trim.x - displayable.x}
       xmlns="http://www.w3.org/2000/svg"
       xmlnsXlink="http://www.w3.org/1999/xlink"
-      y={trimY - displayableY}
+      y={trim.y - displayable.y}
     >
       {children}
     </svg>

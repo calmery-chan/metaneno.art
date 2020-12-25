@@ -49,7 +49,7 @@ const label = css`
 
 export const ChekiFrames: NextPage = () => {
   const dispatch = useDispatch();
-  const selectedFrame = useSelector(selectors.frame);
+  const selectedFrame = useSelector(selectors.frameIndex);
 
   // Events
 

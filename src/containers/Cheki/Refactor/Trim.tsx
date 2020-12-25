@@ -3,7 +3,7 @@ import styled, { Interpolation } from "@emotion/styled";
 import { useCallback, useEffect, useRef } from "react";
 import { ChekiCanvasTrim } from "~/containers/Cheki/CanvasTrim";
 import { useDispatch, useSelector } from "~/domains";
-import { actions, selectors as chekiSelectors } from "~/domains/cheki";
+import { actions, selectors } from "~/domains/cheki";
 import {
   convertEventToCursorPositions,
   MouseRelatedEvent,
@@ -32,19 +32,8 @@ export const ChekiTrim: React.FC<{ emotion?: Interpolation<Theme> }> = ({
   emotion,
 }) => {
   const dispatch = useDispatch();
-  const displayableHeight = useSelector(chekiSelectors.displayableHeight);
-  const displayableWidth = useSelector(chekiSelectors.displayableWidth);
-  const displayableX = useSelector(chekiSelectors.displayableX);
-  const displayableY = useSelector(chekiSelectors.displayableY);
-  const trimDisplayMagnification = useSelector(
-    chekiSelectors.trimDisplayMagnification
-  );
-  const trimHeight = useSelector(chekiSelectors.trimHeight);
-  const trimWidth = useSelector(chekiSelectors.trimWidth);
-  const trimViewBoxHeight = useSelector(chekiSelectors.trimViewBoxHeight);
-  const trimViewBoxWidth = useSelector(chekiSelectors.trimViewBoxWidth);
-  const trimX = useSelector(chekiSelectors.trimX);
-  const trimY = useSelector(chekiSelectors.trimY);
+  const displayable = useSelector(selectors.displayable);
+  const trim = useSelector(selectors.trim);
 
   // Refs
 
@@ -111,14 +100,14 @@ export const ChekiTrim: React.FC<{ emotion?: Interpolation<Theme> }> = ({
     <Container css={emotion} ref={containerRef}>
       <svg
         css={canvas}
-        height={displayableHeight}
+        height={displayable.height}
         onMouseLeave={handleOnComplete}
         onMouseMove={handleOnTick}
         onMouseUp={handleOnComplete}
         onTouchEnd={handleOnComplete}
         ref={canvasRef}
-        viewBox={`0 0 ${displayableWidth} ${displayableHeight}`}
-        width={displayableWidth}
+        viewBox={`0 0 ${displayable.width} ${displayable.height}`}
+        width={displayable.width}
         xmlns="http://www.w3.org/2000/svg"
         xmlnsXlink="http://www.w3.org/1999/xlink"
       >
@@ -127,20 +116,20 @@ export const ChekiTrim: React.FC<{ emotion?: Interpolation<Theme> }> = ({
         <ChekiCanvasTrim hidden />
 
         <svg
-          height={trimHeight}
-          viewBox={`0 0 ${trimViewBoxWidth} ${trimViewBoxHeight}`}
-          width={trimWidth}
-          x={trimX - displayableX}
+          height={trim.height}
+          viewBox={`0 0 ${trim.viewBoxWidth} ${trim.viewBoxHeight}`}
+          width={trim.width}
+          x={trim.x - displayable.x}
           xmlns="http://www.w3.org/2000/svg"
           xmlnsXlink="http://www.w3.org/1999/xlink"
-          y={trimY - displayableY}
+          y={trim.y - displayable.y}
         >
           <rect
             fill="#fff"
             fillOpacity="0.48"
             height="100%"
-            width={1 * trimDisplayMagnification}
-            x={trimViewBoxWidth / 3}
+            width={1 * trim.displayMagnification}
+            x={trim.viewBoxWidth / 3}
             y="0"
           />
 
@@ -148,27 +137,27 @@ export const ChekiTrim: React.FC<{ emotion?: Interpolation<Theme> }> = ({
             fill="#fff"
             fillOpacity="0.48"
             height="100%"
-            width={1 * trimDisplayMagnification}
-            x={(trimViewBoxWidth / 3) * 2}
+            width={1 * trim.displayMagnification}
+            x={(trim.viewBoxWidth / 3) * 2}
             y="0"
           />
 
           <rect
             fill="#fff"
             fillOpacity="0.48"
-            height={trimDisplayMagnification}
+            height={trim.displayMagnification}
             width="100%"
             x="0"
-            y={trimViewBoxHeight / 3}
+            y={trim.viewBoxHeight / 3}
           />
 
           <rect
             fill="#fff"
             fillOpacity="0.48"
-            height={trimDisplayMagnification}
+            height={trim.displayMagnification}
             width="100%"
             x="0"
-            y={(trimViewBoxHeight / 3) * 2}
+            y={(trim.viewBoxHeight / 3) * 2}
           />
 
           {/* Border */}
@@ -176,7 +165,7 @@ export const ChekiTrim: React.FC<{ emotion?: Interpolation<Theme> }> = ({
           <rect
             fill="#fff"
             fillOpacity="0.48"
-            height={trimDisplayMagnification}
+            height={trim.displayMagnification}
             width="100%"
             x="0"
             y="0"
@@ -185,17 +174,17 @@ export const ChekiTrim: React.FC<{ emotion?: Interpolation<Theme> }> = ({
           <rect
             fill="#fff"
             fillOpacity="0.48"
-            height={trimDisplayMagnification}
+            height={trim.displayMagnification}
             width="100%"
             x="0"
-            y={trimViewBoxHeight - trimDisplayMagnification}
+            y={trim.viewBoxHeight - trim.displayMagnification}
           />
 
           <rect
             fill="#fff"
             fillOpacity="0.48"
             height="100%"
-            width={trimDisplayMagnification}
+            width={trim.displayMagnification}
             x="0"
             y="0"
           />
@@ -204,8 +193,8 @@ export const ChekiTrim: React.FC<{ emotion?: Interpolation<Theme> }> = ({
             fill="#fff"
             fillOpacity="0.48"
             height="100%"
-            width={trimDisplayMagnification}
-            x={trimViewBoxWidth - trimDisplayMagnification}
+            width={trim.displayMagnification}
+            x={trim.viewBoxWidth - trim.displayMagnification}
             y="0"
           />
 
@@ -213,15 +202,15 @@ export const ChekiTrim: React.FC<{ emotion?: Interpolation<Theme> }> = ({
 
           <rect
             fill="#fff"
-            height={2 * trimDisplayMagnification}
-            width={16 * trimDisplayMagnification}
+            height={2 * trim.displayMagnification}
+            width={16 * trim.displayMagnification}
             x="0"
             y="0"
           />
           <rect
             fill="#fff"
-            height={16 * trimDisplayMagnification}
-            width={2 * trimDisplayMagnification}
+            height={16 * trim.displayMagnification}
+            width={2 * trim.displayMagnification}
             x="0"
             y="0"
           />
@@ -230,16 +219,16 @@ export const ChekiTrim: React.FC<{ emotion?: Interpolation<Theme> }> = ({
 
           <rect
             fill="#fff"
-            height={2 * trimDisplayMagnification}
-            width={16 * trimDisplayMagnification}
-            x={trimViewBoxWidth - 16 * trimDisplayMagnification}
+            height={2 * trim.displayMagnification}
+            width={16 * trim.displayMagnification}
+            x={trim.viewBoxWidth - 16 * trim.displayMagnification}
             y="0"
           />
           <rect
             fill="#fff"
-            height={16 * trimDisplayMagnification}
-            width={2 * trimDisplayMagnification}
-            x={trimViewBoxWidth - 2 * trimDisplayMagnification}
+            height={16 * trim.displayMagnification}
+            width={2 * trim.displayMagnification}
+            x={trim.viewBoxWidth - 2 * trim.displayMagnification}
             y="0"
           />
 
@@ -247,46 +236,46 @@ export const ChekiTrim: React.FC<{ emotion?: Interpolation<Theme> }> = ({
 
           <rect
             fill="#fff"
-            height={2 * trimDisplayMagnification}
-            width={16 * trimDisplayMagnification}
+            height={2 * trim.displayMagnification}
+            width={16 * trim.displayMagnification}
             x="0"
-            y={trimViewBoxHeight - 2 * trimDisplayMagnification}
+            y={trim.viewBoxHeight - 2 * trim.displayMagnification}
           />
           <rect
             fill="#fff"
-            height={16 * trimDisplayMagnification}
-            width={2 * trimDisplayMagnification}
+            height={16 * trim.displayMagnification}
+            width={2 * trim.displayMagnification}
             x="0"
-            y={trimViewBoxHeight - 16 * trimDisplayMagnification}
+            y={trim.viewBoxHeight - 16 * trim.displayMagnification}
           />
 
           {/* Bottom - Right */}
 
           <rect
             fill="#fff"
-            height={2 * trimDisplayMagnification}
-            width={16 * trimDisplayMagnification}
-            x={trimViewBoxWidth - 16 * trimDisplayMagnification}
-            y={trimViewBoxHeight - 2 * trimDisplayMagnification}
+            height={2 * trim.displayMagnification}
+            width={16 * trim.displayMagnification}
+            x={trim.viewBoxWidth - 16 * trim.displayMagnification}
+            y={trim.viewBoxHeight - 2 * trim.displayMagnification}
           />
           <rect
             fill="#fff"
-            height={16 * trimDisplayMagnification}
-            width={2 * trimDisplayMagnification}
-            x={trimViewBoxWidth - 2 * trimDisplayMagnification}
-            y={trimViewBoxHeight - 16 * trimDisplayMagnification}
+            height={16 * trim.displayMagnification}
+            width={2 * trim.displayMagnification}
+            x={trim.viewBoxWidth - 2 * trim.displayMagnification}
+            y={trim.viewBoxHeight - 16 * trim.displayMagnification}
           />
         </svg>
 
         <rect
           css={move}
           fillOpacity="0"
-          height={trimHeight}
+          height={trim.height}
           onMouseDown={handleOnStartDragging}
           onTouchStart={handleOnStartDragging}
-          width={trimWidth}
-          x={trimX - displayableX}
-          y={trimY - displayableY}
+          width={trim.width}
+          x={trim.x - displayable.x}
+          y={trim.y - displayable.y}
         />
       </svg>
     </Container>

@@ -12,22 +12,50 @@ export const characterWidth = ({ cheki }: State) => cheki.character!.width;
 export const characterX = ({ cheki }: State) => cheki.character!.x;
 export const characterY = ({ cheki }: State) => cheki.character!.y;
 
-export const displayableHeight = ({ cheki }: State) =>
-  cheki.layout.displayable.height;
-export const displayableWidth = ({ cheki }: State) =>
-  cheki.layout.displayable.width;
-export const displayableX = ({ cheki }: State) => cheki.layout.displayable.x;
-export const displayableY = ({ cheki }: State) => cheki.layout.displayable.y;
+// Displayable
 
-export const frame = ({ cheki }: State) => cheki.frame.index;
-export const frameHeight = ({ cheki }: State) => cheki.layout.frame.height;
-export const frameWidth = ({ cheki }: State) => cheki.layout.frame.width;
-export const frameViewBoxHeight = ({ cheki }: State) =>
+const displayableHeight = ({ cheki }: State) => cheki.layout.displayable.height;
+const displayableWidth = ({ cheki }: State) => cheki.layout.displayable.width;
+const displayableX = ({ cheki }: State) => cheki.layout.displayable.x;
+const displayableY = ({ cheki }: State) => cheki.layout.displayable.y;
+
+export const displayable = createSelector(
+  displayableHeight,
+  displayableWidth,
+  displayableX,
+  displayableY,
+  (height, width, x, y) => ({ height, width, x, y })
+);
+
+// Frame
+
+const frameHeight = ({ cheki }: State) => cheki.layout.frame.height;
+const frameWidth = ({ cheki }: State) => cheki.layout.frame.width;
+const frameViewBoxHeight = ({ cheki }: State) =>
   cheki.layout.frame.viewBoxHeight;
-export const frameViewBoxWidth = ({ cheki }: State) =>
-  cheki.layout.frame.viewBoxWidth;
-export const frameX = ({ cheki }: State) => cheki.layout.frame.x;
-export const frameY = ({ cheki }: State) => cheki.layout.frame.y;
+const frameViewBoxWidth = ({ cheki }: State) => cheki.layout.frame.viewBoxWidth;
+const frameX = ({ cheki }: State) => cheki.layout.frame.x;
+const frameY = ({ cheki }: State) => cheki.layout.frame.y;
+
+export const frameDataUrl = ({ cheki }: State) => cheki.frame.dataUrl;
+export const frameIndex = ({ cheki }: State) => cheki.frame.index;
+
+export const frame = createSelector(
+  frameHeight,
+  frameWidth,
+  frameViewBoxHeight,
+  frameViewBoxWidth,
+  frameX,
+  frameY,
+  (height, width, viewBoxHeight, viewBoxWidth, x, y) => ({
+    height,
+    width,
+    viewBoxHeight,
+    viewBoxWidth,
+    x,
+    y,
+  })
+);
 
 // Image
 
@@ -53,25 +81,25 @@ export const splashed = ({ cheki }: State) => cheki.splashed;
 
 // Trim
 
-export const trimDisplayMagnification = ({ cheki }: State) =>
+const trimDisplayMagnification = ({ cheki }: State) =>
   cheki.layout.trim.displayMagnification;
-export const trimHeight = ({ cheki }: State) => cheki.layout.trim.height;
-export const trimWidth = ({ cheki }: State) => cheki.layout.trim.width;
-export const trimViewBoxHeight = ({ cheki }: State) =>
-  cheki.layout.trim.viewBoxHeight;
-export const trimViewBoxWidth = ({ cheki }: State) =>
-  cheki.layout.trim.viewBoxWidth;
-export const trimX = ({ cheki }: State) => cheki.layout.trim.x;
-export const trimY = ({ cheki }: State) => cheki.layout.trim.y;
+const trimHeight = ({ cheki }: State) => cheki.layout.trim.height;
+const trimWidth = ({ cheki }: State) => cheki.layout.trim.width;
+const trimViewBoxHeight = ({ cheki }: State) => cheki.layout.trim.viewBoxHeight;
+const trimViewBoxWidth = ({ cheki }: State) => cheki.layout.trim.viewBoxWidth;
+const trimX = ({ cheki }: State) => cheki.layout.trim.x;
+const trimY = ({ cheki }: State) => cheki.layout.trim.y;
 
 export const trim = createSelector(
+  trimDisplayMagnification,
   trimHeight,
   trimWidth,
   trimViewBoxHeight,
   trimViewBoxWidth,
   trimX,
   trimY,
-  (height, width, viewBoxHeight, viewBoxWidth, x, y) => ({
+  (displayMagnification, height, width, viewBoxHeight, viewBoxWidth, x, y) => ({
+    displayMagnification,
     height,
     width,
     viewBoxHeight,
