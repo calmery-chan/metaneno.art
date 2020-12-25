@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { ChekiFilterDefs } from "~/components/Cheki/FilterDefs";
 import { ChekiFilterImage } from "~/components/Cheki/FilterImage";
 import {
   CHEKI_FRAME_MARGIN_LEFT,
@@ -91,7 +90,6 @@ export const ChekiCanvasImageLayer: React.FC = () => {
         y={CHEKI_FRAME_MARGIN_TOP}
         mask="url(#cheki-bordered-image)"
       >
-        <ChekiFilterDefs />
         <rect fill="#fff" width="100%" height="100%" />
         <svg
           height={image.height}
