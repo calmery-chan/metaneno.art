@@ -39,6 +39,7 @@ const frameY = ({ cheki }: State) => cheki.layout.frame.y;
 
 export const frameDataUrl = ({ cheki }: State) => cheki.frame.dataUrl;
 export const frameIndex = ({ cheki }: State) => cheki.frame.index;
+export const frameReady = ({ cheki }: State) => cheki.frame.ready;
 
 export const frame = createSelector(
   frameHeight,
