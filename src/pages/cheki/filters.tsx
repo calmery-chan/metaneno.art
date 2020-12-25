@@ -5,9 +5,9 @@ import { ChekiFlexColumn } from "~/components/Cheki/FlexColumn";
 import { ChekiHeader } from "~/components/Cheki/Header";
 import { ChekiApp } from "~/containers/Cheki/App";
 import { ChekiCanvasFilters } from "~/containers/Cheki/CanvasFilters";
-import { ChekiFilterList } from "~/containers/Cheki/FilterList";
 import { ChekiNavigation } from "~/containers/Cheki/Navigation";
 import { ChekiCanvas } from "~/containers/Cheki/Refactor/Canvas";
+import { ChekiFilterList } from "~/containers/Cheki/Refactor/FilterList";
 
 export const ChekiFilters: NextPage = () => (
   <ChekiApp>
