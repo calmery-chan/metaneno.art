@@ -1,5 +1,5 @@
 import React from "react";
-import { ChekiCanvasCharacterLayer } from "~/containers/Cheki/Refactor/CanvasCharacterLayer";
+import { ChekiCanvasLayerCharacter } from "~/containers/Cheki/Refactor/CanvasLayerCharacter";
 import { selectors, useSelector } from "~/domains";
 
 export const getFilterId = (name: string) =>
@@ -288,7 +288,7 @@ export const InternalImage: React.FC<
     >
       <image height="100%" width="100%" xlinkHref={image.dataUrl} rx="20" />
 
-      <ChekiCanvasCharacterLayer />
+      <ChekiCanvasLayerCharacter />
     </svg>
   );
 };

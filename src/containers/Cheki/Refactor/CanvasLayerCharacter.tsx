@@ -3,7 +3,7 @@
 import { useSelector } from "~/domains";
 import { selectors } from "~/domains/cheki";
 
-export const ChekiCanvasCharacterLayer: React.FC = () => {
+export const ChekiCanvasLayerCharacter: React.FC = () => {
   const characterReady = useSelector(selectors.characterReady);
   const imageX = useSelector(selectors.imageX);
   const imageY = useSelector(selectors.imageY);
