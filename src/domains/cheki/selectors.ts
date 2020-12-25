@@ -16,6 +16,13 @@ export const frameViewBoxWidth = ({ cheki }: State) =>
 export const frameX = ({ cheki }: State) => cheki.layout.frame.x;
 export const frameY = ({ cheki }: State) => cheki.layout.frame.y;
 
+export const imageDataUrl = ({ cheki }: State) => cheki.image.dataUrl;
+export const imageDirection = ({ cheki }: State) => cheki.image.direction;
+export const imageHeight = ({ cheki }: State) => cheki.image.height;
+export const imageWidth = ({ cheki }: State) => cheki.image.width;
+export const imageX = ({ cheki }: State) => cheki.image.x;
+export const imageY = ({ cheki }: State) => cheki.image.y;
+
 export const trimHeight = ({ cheki }: State) => cheki.layout.trim.height;
 export const trimWidth = ({ cheki }: State) => cheki.layout.trim.width;
 export const trimViewBoxHeight = ({ cheki }: State) =>
