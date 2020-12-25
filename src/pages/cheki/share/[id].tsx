@@ -11,7 +11,7 @@ import { ChekiHashTag } from "~/components/Cheki/HashTag";
 import { ChekiLogo } from "~/components/Cheki/Logo";
 import { ChekiNote } from "~/components/Cheki/Note";
 import { TWITTER_HASHTAG_URL } from "~/constants/cheki";
-import { ChekiApp } from "~/containers/Cheki/App";
+import { ChekiApp } from "~/containers/Cheki/Refactor/App";
 import { Colors } from "~/styles/colors";
 import { Spacing } from "~/styles/spacing";
 import { Typography } from "~/styles/typography";

@@ -5,9 +5,9 @@ import { ChekiFlexColumn } from "~/components/Cheki/FlexColumn";
 import { ChekiHeader } from "~/components/Cheki/Header";
 import { ChekiLogo } from "~/components/Cheki/Logo";
 import { SPLASH_SCREEN_DURATION } from "~/constants/cheki";
-import { ChekiApp } from "~/containers/Cheki/App";
 import { ChekiCamera } from "~/containers/Cheki/Camera";
 import { ChekiNavigation } from "~/containers/Cheki/Navigation";
+import { ChekiApp } from "~/containers/Cheki/Refactor/App";
 
 import { useDispatch, useSelector } from "~/domains";
 import { actions, selectors } from "~/domains/cheki";

@@ -4,10 +4,13 @@ import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 import { ChekiHead } from "~/components/Cheki/Head";
 import { DEFAULT_SEO_PROPS } from "~/constants/cheki";
-import { selectors, useSelector } from "~/domains";
+import { useSelector } from "~/domains";
+import { selectors } from "~/domains/cheki";
 import { GradientColors } from "~/styles/colors";
 import { Media } from "~/styles/media";
 import { Spacing } from "~/styles/spacing";
+
+// Styles
 
 export const Container = styled.div<{ margin?: boolean }>`
   background: ${GradientColors.page};
@@ -26,12 +29,16 @@ export const Container = styled.div<{ margin?: boolean }>`
   }
 `;
 
+// Components
+
 export const ChekiApp: React.FC<{
   className?: string;
   seoProps?: DefaultSeoProps;
 }> = ({ children, className, seoProps }) => {
   const { pathname, push } = useRouter();
-  const { ready } = useSelector(selectors.cheki);
+  const ready = useSelector(selectors.ready);
+
+  // Side Effects
 
   useEffect(() => {
     if (
@@ -41,6 +48,8 @@ export const ChekiApp: React.FC<{
       push("/cheki");
     }
   }, [ready]);
+
+  // Render
 
   return (
     <>
