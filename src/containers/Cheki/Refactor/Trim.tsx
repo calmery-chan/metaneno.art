@@ -1,7 +1,7 @@
 import { css, Theme } from "@emotion/react";
 import styled, { Interpolation } from "@emotion/styled";
-import { useCallback, useEffect, useRef } from "react";
-import { ChekiCanvasTrim } from "~/containers/Cheki/CanvasTrim";
+import React, { useCallback, useEffect, useRef } from "react";
+import { ChekiCanvasTrimedImage } from "./CanvasTrimedImage";
 import { useDispatch, useSelector } from "~/domains";
 import { actions, selectors } from "~/domains/cheki";
 import {
@@ -111,9 +111,9 @@ export const ChekiTrim: React.FC<{ emotion?: Interpolation<Theme> }> = ({
         xmlns="http://www.w3.org/2000/svg"
         xmlnsXlink="http://www.w3.org/1999/xlink"
       >
-        <ChekiCanvasTrim />
+        <ChekiCanvasTrimedImage visible />
         <rect fill="#000" fillOpacity="0.48" height="100%" width="100%" />
-        <ChekiCanvasTrim hidden />
+        <ChekiCanvasTrimedImage />
 
         <svg
           height={trim.height}

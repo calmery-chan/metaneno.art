@@ -83,9 +83,7 @@ export const ChekiFilters: NextPage = () => {
       <ChekiFlexColumn>
         <ChekiHeader />
         <ChekiCanvas>
-          <ChekiCanvasTrimedImage>
-            <ChekiCanvasImage filter={imageFilter} />
-          </ChekiCanvasTrimedImage>
+          <ChekiCanvasTrimedImage />
         </ChekiCanvas>
         <ChekiColumn>
           <ChekiHorizontal>
