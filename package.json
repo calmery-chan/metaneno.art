@@ -76,7 +76,7 @@
     "fix:eslint": "eslint --ext .js,.ts,.tsx --fix --ignore-path .gitignore .",
     "fix:prettier": "prettier --write .",
     "fix:stylelint": "stylelint --fix --ignore-path .gitignore **/*.scss",
-    "fix:svgo": "svgo **/*.svg",
+    "fix:svgo": "svgo -f public -r",
     "start": "next dev",
     "start:analyze": "ANALYZE=true npm start",
     "start:storybook": "start-storybook -p 6006 -s public"
