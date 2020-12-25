@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 
+import { createSelector } from "@reduxjs/toolkit";
 import { State } from "../";
 
 export const characterDataUrl = ({ cheki }: State) => cheki.character!.dataUrl;
@@ -28,6 +29,8 @@ export const frameViewBoxWidth = ({ cheki }: State) =>
 export const frameX = ({ cheki }: State) => cheki.layout.frame.x;
 export const frameY = ({ cheki }: State) => cheki.layout.frame.y;
 
+// Image
+
 export const imageDataUrl = ({ cheki }: State) => cheki.image.dataUrl;
 export const imageDirection = ({ cheki }: State) => cheki.image.direction;
 export const imageFilter = ({ cheki }: State) => cheki.image.filter;
@@ -36,9 +39,19 @@ export const imageWidth = ({ cheki }: State) => cheki.image.width;
 export const imageX = ({ cheki }: State) => cheki.image.x;
 export const imageY = ({ cheki }: State) => cheki.image.y;
 
+export const image = createSelector(
+  imageHeight,
+  imageWidth,
+  imageX,
+  imageY,
+  (height, width, x, y) => ({ height, width, x, y })
+);
+
 export const ready = ({ cheki }: State) => cheki.ready;
 
 export const splashed = ({ cheki }: State) => cheki.splashed;
+
+// Trim
 
 export const trimDisplayMagnification = ({ cheki }: State) =>
   cheki.layout.trim.displayMagnification;
@@ -50,3 +63,20 @@ export const trimViewBoxWidth = ({ cheki }: State) =>
   cheki.layout.trim.viewBoxWidth;
 export const trimX = ({ cheki }: State) => cheki.layout.trim.x;
 export const trimY = ({ cheki }: State) => cheki.layout.trim.y;
+
+export const trim = createSelector(
+  trimHeight,
+  trimWidth,
+  trimViewBoxHeight,
+  trimViewBoxWidth,
+  trimX,
+  trimY,
+  (height, width, viewBoxHeight, viewBoxWidth, x, y) => ({
+    height,
+    width,
+    viewBoxHeight,
+    viewBoxWidth,
+    x,
+    y,
+  })
+);

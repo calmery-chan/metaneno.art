@@ -1,15 +1,18 @@
 import { css } from "@emotion/react";
 import { NextPage } from "next";
+import platform from "platform";
 import React, { useCallback } from "react";
 import { ChekiColumn } from "~/components/Cheki/Column";
-import { ChekiFilterDefs } from "~/components/Cheki/FilterDefs";
 import { ChekiFilterImage } from "~/components/Cheki/FilterImage";
 import { ChekiFlexColumn } from "~/components/Cheki/FlexColumn";
 import { ChekiGradientText } from "~/components/Cheki/GradientText";
 import { ChekiHeader } from "~/components/Cheki/Header";
 import { ChekiHorizontal } from "~/components/Cheki/Horizontal";
-import { ChekiFilter, CHEKI_FILTERS } from "~/constants/cheki";
-import { ChekiFilterThumbnail } from "~/containers/Cheki/FilterThumbnail";
+import {
+  ChekiFilter,
+  CHEKI_FILTERS,
+  CHEKI_THUMBNAIL_IMAGE_SIZE,
+} from "~/constants/cheki";
 import { ChekiApp } from "~/containers/Cheki/Refactor/App";
 import { ChekiCanvas } from "~/containers/Cheki/Refactor/Canvas";
 import { ChekiCanvasTrimedImage } from "~/containers/Cheki/Refactor/CanvasTrimedImage";
@@ -22,7 +25,7 @@ import { Typography } from "~/styles/typography";
 
 // Styles
 
-const filter = css`
+const item = css`
   cursor: pointer;
 
   &:not(:last-child) {
@@ -41,6 +44,39 @@ const label = css`
 `;
 
 // Components
+
+const Thumbnail: React.FC<{
+  filter: ChekiFilter | null;
+}> = ({ filter }) => {
+  const image = useSelector(selectors.image);
+  const trim = useSelector(selectors.trim);
+
+  const isFirefox = !!platform.name && platform.name === "Firefox";
+
+  return (
+    <svg
+      height={CHEKI_THUMBNAIL_IMAGE_SIZE / 2}
+      viewBox={`0 0 ${trim.viewBoxWidth} ${trim.viewBoxHeight}`}
+    >
+      <svg
+        height={image.height}
+        viewBox={`0 0 ${image.width} ${image.height}`}
+        width={image.width}
+        x={image.x}
+        y={image.y}
+      >
+        <ChekiFilterImage
+          filter={filter}
+          noImage={isFirefox}
+          height={image.height}
+          width={image.width}
+          y={image.y}
+          x={image.x}
+        />
+      </svg>
+    </svg>
+  );
+};
 
 export const ChekiFilters: NextPage = () => {
   const dispatch = useDispatch();
@@ -75,7 +111,6 @@ export const ChekiFilters: NextPage = () => {
               xmlnsXlink="http://www.w3.org/1999/xlink"
               y={imageY}
             >
-              <ChekiFilterDefs />
               <ChekiFilterImage
                 filter={imageFilter}
                 height={imageHeight}
@@ -86,7 +121,7 @@ export const ChekiFilters: NextPage = () => {
         </ChekiCanvas>
         <ChekiColumn>
           <ChekiHorizontal>
-            <div css={filter} onClick={() => handleOnClickFilter(null)}>
+            <div css={item} onClick={() => handleOnClickFilter(null)}>
               <div css={label}>
                 {selectedFilter === null ? (
                   <ChekiGradientText>none</ChekiGradientText>
@@ -94,12 +129,12 @@ export const ChekiFilters: NextPage = () => {
                   <>none</>
                 )}
               </div>
-              <ChekiFilterThumbnail filter={null} />
+              <Thumbnail filter={null} />
             </div>
 
             {CHEKI_FILTERS.map((filter, key) => (
               <div
-                css={filter}
+                css={item}
                 key={key}
                 onClick={() => handleOnClickFilter(filter)}
               >
@@ -110,7 +145,7 @@ export const ChekiFilters: NextPage = () => {
                     filter
                   )}
                 </div>
-                <ChekiFilterThumbnail filter={filter} />
+                <Thumbnail filter={filter} />
               </div>
             ))}
           </ChekiHorizontal>
