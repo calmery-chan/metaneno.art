@@ -1,4 +1,14 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+
 import { State } from "../";
+
+export const characterDataUrl = ({ cheki }: State) => cheki.character!.dataUrl;
+export const characterHeight = ({ cheki }: State) => cheki.character!.height;
+export const characterRotate = ({ cheki }: State) => cheki.character!.rotate;
+export const characterScale = ({ cheki }: State) => cheki.character!.scale;
+export const characterWidth = ({ cheki }: State) => cheki.character!.width;
+export const characterX = ({ cheki }: State) => cheki.character!.x;
+export const characterY = ({ cheki }: State) => cheki.character!.y;
 
 export const displayableHeight = ({ cheki }: State) =>
   cheki.layout.displayable.height;

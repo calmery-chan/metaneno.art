@@ -1,5 +1,5 @@
 import React from "react";
-import { ChekiCanvasCharacterLayer } from "~/containers/Cheki/CanvasCharacterLayer";
+import { ChekiCanvasCharacterLayer } from "~/containers/Cheki/Refactor/CanvasCharacterLayer";
 import { selectors, useSelector } from "~/domains";
 
 export const getFilterId = (name: string) =>
