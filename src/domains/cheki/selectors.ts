@@ -18,6 +18,7 @@ export const frameY = ({ cheki }: State) => cheki.layout.frame.y;
 
 export const imageDataUrl = ({ cheki }: State) => cheki.image.dataUrl;
 export const imageDirection = ({ cheki }: State) => cheki.image.direction;
+export const imageFilter = ({ cheki }: State) => cheki.image.filter;
 export const imageHeight = ({ cheki }: State) => cheki.image.height;
 export const imageWidth = ({ cheki }: State) => cheki.image.width;
 export const imageX = ({ cheki }: State) => cheki.image.x;
