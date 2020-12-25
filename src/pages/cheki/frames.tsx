@@ -7,12 +7,12 @@ import { ChekiGradientText } from "~/components/Cheki/GradientText";
 import { ChekiHeader } from "~/components/Cheki/Header";
 import { ChekiHorizontal } from "~/components/Cheki/Horizontal";
 import { CHEKI_FRAME_IMAGE_URLS } from "~/constants/cheki";
-import { ChekiCanvasImageLayer } from "~/containers/Cheki/CanvasImageLayer";
 import { ChekiApp } from "~/containers/Cheki/Refactor/App";
 import { ChekiCanvas } from "~/containers/Cheki/Refactor/Canvas";
 import { ChekiCanvasFramedImage } from "~/containers/Cheki/Refactor/CanvasFramedImage";
 import { ChekiCanvasLayerFrameImage } from "~/containers/Cheki/Refactor/CanvasLayerFrameImage";
-import { ChekiCanvasLayerFrameShadow } from "~/containers/Cheki/Refactor/CanvasLayerFrameShadow";
+import { ChekiCanvasLayerImage } from "~/containers/Cheki/Refactor/CanvasLayerImage";
+import { ChekiCanvasLayerShadow } from "~/containers/Cheki/Refactor/CanvasLayerShadow";
 import { ChekiNavigation } from "~/containers/Cheki/Refactor/Navigation";
 import { useDispatch, useSelector } from "~/domains";
 import { actions, selectors } from "~/domains/cheki";
@@ -67,8 +67,8 @@ export const ChekiFrames: NextPage = () => {
         <ChekiCanvas>
           <ChekiCanvasFramedImage>
             <ChekiCanvasLayerFrameImage />
-            <ChekiCanvasImageLayer />
-            <ChekiCanvasLayerFrameShadow />
+            <ChekiCanvasLayerImage />
+            <ChekiCanvasLayerShadow />
           </ChekiCanvasFramedImage>
         </ChekiCanvas>
         <ChekiColumn>

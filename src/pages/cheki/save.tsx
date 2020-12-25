@@ -9,11 +9,11 @@ import { ChekiHashTag } from "~/components/Cheki/HashTag";
 import { ChekiHeader } from "~/components/Cheki/Header";
 import { ChekiNote } from "~/components/Cheki/Note";
 import { TWITTER_HASHTAG_URL } from "~/constants/cheki";
-import { ChekiCanvasImageLayer } from "~/containers/Cheki/CanvasImageLayer";
 import { ChekiApp } from "~/containers/Cheki/Refactor/App";
 import { ChekiCanvas } from "~/containers/Cheki/Refactor/Canvas";
 import { ChekiCanvasLayerFrameImage } from "~/containers/Cheki/Refactor/CanvasLayerFrameImage";
-import { ChekiCanvasLayerFrameShadow } from "~/containers/Cheki/Refactor/CanvasLayerFrameShadow";
+import { ChekiCanvasLayerImage } from "~/containers/Cheki/Refactor/CanvasLayerImage";
+import { ChekiCanvasLayerShadow } from "~/containers/Cheki/Refactor/CanvasLayerShadow";
 import { ChekiNavigation } from "~/containers/Cheki/Refactor/Navigation";
 import { selectors, useSelector } from "~/domains";
 import { Spacing } from "~/styles/spacing";
@@ -105,8 +105,8 @@ const ChekiSaveAndShare: NextPage = () => {
             y={frame.y - displayable.y}
           >
             <ChekiCanvasLayerFrameImage />
-            <ChekiCanvasImageLayer />
-            <ChekiCanvasLayerFrameShadow />
+            <ChekiCanvasLayerImage />
+            <ChekiCanvasLayerShadow />
           </svg>
         </ChekiCanvas>
         <div
