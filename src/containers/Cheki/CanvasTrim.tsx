@@ -1,5 +1,5 @@
 import React from "react";
-import { ChekiFilterImage } from "~/components/Cheki/FilterImage";
+import { ChekiCanvasImage } from "~/containers/Cheki/Refactor/CanvasImage";
 import { selectors, useSelector } from "~/domains";
 
 type ChekiTrimImageProps = {
@@ -23,7 +23,7 @@ export const ChekiCanvasTrim: React.FC<ChekiTrimImageProps> = ({
       y={trim.y - displayable.y}
       overflow={hidden ? "hidden" : "visible"}
     >
-      <ChekiFilterImage filter={null} />
+      <ChekiCanvasImage filter={null} />
     </svg>
   );
 };

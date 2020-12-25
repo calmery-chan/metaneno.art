@@ -1,9 +1,9 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { ChekiFilterImage } from "~/components/Cheki/FilterImage";
 import {
   CHEKI_FRAME_MARGIN_LEFT,
   CHEKI_FRAME_MARGIN_TOP,
 } from "~/constants/cheki";
+import { ChekiCanvasImage } from "~/containers/Cheki/Refactor/CanvasImage";
 import { selectors, useDispatch, useSelector } from "~/domains";
 import { actions } from "~/domains/cheki";
 import {
@@ -91,7 +91,7 @@ export const ChekiCanvasImageLayer: React.FC = () => {
         mask="url(#cheki-bordered-image)"
       >
         <rect fill="#fff" width="100%" height="100%" />
-        <ChekiFilterImage filter={filter} />
+        <ChekiCanvasImage filter={filter} />
         <g filter="url(#cheki-shadowed-image)">
           <rect fill="#fff" width="100%" height="100%" fillOpacity="0.1" />
         </g>

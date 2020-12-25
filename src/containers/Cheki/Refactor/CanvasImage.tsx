@@ -73,28 +73,20 @@ const RadialGradient: React.FC<
 
 // Components
 
-export const InternalImage: React.FC<React.SVGProps<SVGSVGElement>> = (
-  props
-) => {
+export const InternalImage: React.FC<React.SVGProps<SVGGElement>> = (props) => {
   const dataUrl = useSelector(selectors.imageDataUrl);
-  const { height, width, x, y } = useSelector(selectors.image);
 
   return (
-    <svg
-      {...props}
-      height={height}
-      viewBox={`0 0 ${width} ${height}`}
-      width={width}
-      x={x}
-      xmlns="http://www.w3.org/2000/svg"
-      xmlnsXlink="http://www.w3.org/1999/xlink"
-      y={y}
-    >
+    <g {...props}>
       <image height="100%" width="100%" xlinkHref={dataUrl} />
       <ChekiCanvasLayerCharacter />
-    </svg>
+    </g>
   );
 };
+
+const Rect: React.FC<React.SVGProps<SVGRectElement>> = (props) => (
+  <rect {...props} height="100%" width="100%" />
+);
 
 export const C1: React.FC = () => (
   <>
@@ -112,12 +104,12 @@ export const C1: React.FC = () => (
       </Filter>
     </defs>
 
-    <rect fill={`url(#${getGradientId("c1")})`} />
+    <Rect fill={`url(#${getGradientId("c1")})`} />
     <InternalImage
       filter={`url(#${getFilterId("c1")})`}
       style={{ mixBlendMode: "hard-light" }}
     />
-    <rect fill="#58747b" style={{ mixBlendMode: "overlay" }} />
+    <Rect fill="#58747b" style={{ mixBlendMode: "overlay" }} />
   </>
 );
 
@@ -139,7 +131,7 @@ export const F2: React.FC = () => (
       </Filter>
     </defs>
 
-    <rect fill={`url(#${getGradientId("f2")})`} />
+    <Rect fill={`url(#${getGradientId("f2")})`} />
     <InternalImage filter={`url(#${getFilterId("f2")})`} opacity="0.85" />
     <rect
       fill={`url(#${getGradientId("f2-after")})`}
@@ -162,7 +154,7 @@ export const G3: React.FC = () => (
       </Filter>
     </defs>
 
-    <rect fill={`url(#${getGradientId("g3")})`} />
+    <Rect fill={`url(#${getGradientId("g3")})`} />
     <InternalImage
       filter={`url(#${getFilterId("g3")})`}
       style={{ mixBlendMode: "hard-light" }}
@@ -185,7 +177,7 @@ export const P5: React.FC = () => (
         <Grayscale amount={0.15} />
       </Filter>
     </defs>
-    <rect fill="#8facaf" />
+    <Rect fill="#8facaf" />
     <InternalImage filter={`url(#${getFilterId("p5")})`} opacity="0.8" />
     <rect
       fill={`url(#${getGradientId("p5-after")})`}
@@ -211,12 +203,12 @@ export const HB1: React.FC = () => (
         <Contrast amount={1.3} />
       </Filter>
     </defs>
-    <rect fill={`url(#${getGradientId("hb1")})`} />
+    <Rect fill={`url(#${getGradientId("hb1")})`} />
     <InternalImage
       filter={`url(#${getFilterId("hb1")})`}
       style={{ mixBlendMode: "hard-light" }}
     />
-    <rect fill="#294459" opacity="0.5" style={{ mixBlendMode: "lighten" }} />
+    <Rect fill="#294459" opacity="0.5" style={{ mixBlendMode: "lighten" }} />
   </>
 );
 
@@ -236,12 +228,12 @@ export const HB2: React.FC = () => (
         <Contrast amount={1.3} />
       </Filter>
     </defs>
-    <rect fill={`url(#${getGradientId("hb2")})`} />
+    <Rect fill={`url(#${getGradientId("hb2")})`} />
     <InternalImage
       filter={`url(#${getFilterId("hb2")})`}
       style={{ mixBlendMode: "hard-light" }}
     />
-    <rect fill="#315764" opacity="0.25" style={{ mixBlendMode: "overlay" }} />
+    <Rect fill="#315764" opacity="0.25" style={{ mixBlendMode: "overlay" }} />
   </>
 );
 
@@ -261,7 +253,7 @@ export const ACG: React.FC = () => (
         <HueRotate amount={-5} />
       </Filter>
     </defs>
-    <rect fill="#eceedf" />
+    <Rect fill="#eceedf" />
     <InternalImage
       filter={`url(#${getFilterId("acg")})`}
       opacity="0.85"
@@ -289,7 +281,7 @@ export const LV3: React.FC = () => (
         <Contrast amount={1.3} />
       </Filter>
     </defs>
-    <rect fill={`url(#${getGradientId("lv3")})`} />
+    <Rect fill={`url(#${getGradientId("lv3")})`} />
     <InternalImage
       filter={`url(#${getFilterId("lv3")})`}
       style={{ mixBlendMode: "hard-light" }}
@@ -315,7 +307,7 @@ export const M5: React.FC = () => (
         <Contrast amount={1.1} />
       </Filter>
     </defs>
-    <rect fill={`url(#${getGradientId("m5")})`} />
+    <Rect fill={`url(#${getGradientId("m5")})`} />
     <InternalImage
       filter={`url(#${getFilterId("m5")})`}
       style={{ mixBlendMode: "hard-light" }}
@@ -337,12 +329,12 @@ export const A6: React.FC = () => (
         <HueRotate amount={-1} />
       </Filter>
     </defs>
-    <rect fill="#a9a499" />
+    <Rect fill="#a9a499" />
     <InternalImage
       filter={`url(#${getFilterId("a6")})`}
       style={{ mixBlendMode: "hard-light" }}
     />
-    <rect fill="#eaeae9" style={{ mixBlendMode: "multiply" }} />
+    <Rect fill="#eaeae9" style={{ mixBlendMode: "multiply" }} />
   </>
 );
 
@@ -361,13 +353,13 @@ export const KK2: React.FC = () => (
       </Filter>
     </defs>
 
-    <rect fill={`url(#${getGradientId("kk2")})`} />
+    <Rect fill={`url(#${getGradientId("kk2")})`} />
     <InternalImage
       filter={`url(#${getFilterId("kk2")})`}
       opacity="0.8"
       style={{ mixBlendMode: "hard-light" }}
     />
-    <rect fill="#dab66d" opacity="0.15" style={{ mixBlendMode: "darken" }} />
+    <Rect fill="#dab66d" opacity="0.15" style={{ mixBlendMode: "darken" }} />
   </>
 );
 
@@ -379,13 +371,13 @@ export const M3: React.FC = () => (
         <Contrast amount={1.55} />
       </Filter>
     </defs>
-    <rect fill="#817e72" />
+    <Rect fill="#817e72" />
     <InternalImage
       filter={`url(#${getFilterId("m3")})`}
       opacity="0.75"
       style={{ mixBlendMode: "hard-light" }}
     />
-    <rect fill="#cce7de" opacity="0.35" style={{ mixBlendMode: "multiply" }} />
+    <Rect fill="#cce7de" opacity="0.35" style={{ mixBlendMode: "multiply" }} />
   </>
 );
 
@@ -397,12 +389,12 @@ export const T1: React.FC = () => (
         <Contrast amount={1.4} />
       </Filter>
     </defs>
-    <rect fill="#9d9990" />
+    <Rect fill="#9d9990" />
     <InternalImage
       filter={`url(#${getFilterId("t1")})`}
       style={{ mixBlendMode: "hard-light" }}
     />
-    <rect fill="#878787" opacity="0.5" style={{ mixBlendMode: "lighten" }} />
+    <Rect fill="#878787" opacity="0.5" style={{ mixBlendMode: "lighten" }} />
   </>
 );
 
@@ -415,7 +407,7 @@ export const B5: React.FC = () => (
         <Brightness amount={0.95} />
       </Filter>
     </defs>
-    <rect fill="#000000" />
+    <Rect fill="#000000" />
     <InternalImage filter={`url(#${getFilterId("b5")})`} opacity="0.9" />
   </>
 );
@@ -430,49 +422,63 @@ export const X1: React.FC = () => (
       </Filter>
     </defs>
 
-    <rect fill="#444444" />
+    <Rect fill="#444444" />
     <InternalImage filter={`url(#${getFilterId("x1")})`} opacity="0.75" />
-    <rect fill="#333333" style={{ mixBlendMode: "lighten" }} />
+    <Rect fill="#333333" style={{ mixBlendMode: "lighten" }} />
   </>
 );
 
-export const ChekiFilterImage: React.FC<{
+export const ChekiCanvasImage: React.FC<{
   filter: ChekiFilter | null;
-}> = (props) => {
-  const { filter } = props;
+}> = ({ filter }) => {
+  const { height, width, x, y } = useSelector(selectors.image);
 
-  switch (filter) {
-    case "c1":
-      return <C1 />;
-    case "f2":
-      return <F2 />;
-    case "g3":
-      return <G3 />;
-    case "p5":
-      return <P5 />;
-    case "hb1":
-      return <HB1 />;
-    case "hb2":
-      return <HB2 />;
-    case "acg":
-      return <ACG />;
-    case "lv3":
-      return <LV3 />;
-    case "m5":
-      return <M5 />;
-    case "a6":
-      return <A6 />;
-    case "kk2":
-      return <KK2 />;
-    case "m3":
-      return <M3 />;
-    case "t1":
-      return <T1 />;
-    case "b5":
-      return <B5 />;
-    case "x1":
-      return <X1 />;
-    case null:
-      return <InternalImage />;
-  }
+  return (
+    <svg
+      height={height}
+      viewBox={`0 0 ${width} ${height}`}
+      width={width}
+      x={x}
+      xmlns="http://www.w3.org/2000/svg"
+      xmlnsXlink="http://www.w3.org/1999/xlink"
+      y={y}
+    >
+      {(() => {
+        switch (filter) {
+          case "c1":
+            return <C1 />;
+          case "f2":
+            return <F2 />;
+          case "g3":
+            return <G3 />;
+          case "p5":
+            return <P5 />;
+          case "hb1":
+            return <HB1 />;
+          case "hb2":
+            return <HB2 />;
+          case "acg":
+            return <ACG />;
+          case "lv3":
+            return <LV3 />;
+          case "m5":
+            return <M5 />;
+          case "a6":
+            return <A6 />;
+          case "kk2":
+            return <KK2 />;
+          case "m3":
+            return <M3 />;
+          case "t1":
+            return <T1 />;
+          case "b5":
+            return <B5 />;
+          case "x1":
+            return <X1 />;
+          case null:
+            return <InternalImage />;
+        }
+      })()}
+    </svg>
+  );
 };

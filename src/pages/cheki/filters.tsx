@@ -2,7 +2,6 @@ import { css } from "@emotion/react";
 import { NextPage } from "next";
 import React, { useCallback } from "react";
 import { ChekiColumn } from "~/components/Cheki/Column";
-import { ChekiFilterImage } from "~/components/Cheki/FilterImage";
 import { ChekiFlexColumn } from "~/components/Cheki/FlexColumn";
 import { ChekiGradientText } from "~/components/Cheki/GradientText";
 import { ChekiHeader } from "~/components/Cheki/Header";
@@ -14,6 +13,7 @@ import {
 } from "~/constants/cheki";
 import { ChekiApp } from "~/containers/Cheki/Refactor/App";
 import { ChekiCanvas } from "~/containers/Cheki/Refactor/Canvas";
+import { ChekiCanvasImage } from "~/containers/Cheki/Refactor/CanvasImage";
 import { ChekiCanvasTrimedImage } from "~/containers/Cheki/Refactor/CanvasTrimedImage";
 import { ChekiNavigation } from "~/containers/Cheki/Refactor/Navigation";
 import { useDispatch, useSelector } from "~/domains";
@@ -55,7 +55,7 @@ const Thumbnail: React.FC<{
       height={CHEKI_THUMBNAIL_IMAGE_SIZE / 2}
       viewBox={`0 0 ${trim.viewBoxWidth} ${trim.viewBoxHeight}`}
     >
-      <ChekiFilterImage filter={filter} />
+      <ChekiCanvasImage filter={filter} />
     </svg>
   );
 };
@@ -84,7 +84,7 @@ export const ChekiFilters: NextPage = () => {
         <ChekiHeader />
         <ChekiCanvas>
           <ChekiCanvasTrimedImage>
-            <ChekiFilterImage filter={imageFilter} />
+            <ChekiCanvasImage filter={imageFilter} />
           </ChekiCanvasTrimedImage>
         </ChekiCanvas>
         <ChekiColumn>
