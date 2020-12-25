@@ -41,7 +41,7 @@ export const ChekiFrameList: React.FC = () => {
   );
 
   return (
-    <ChekiHorizontal padding={Spacing.l}>
+    <ChekiHorizontal>
       {CHEKI_FRAME_IMAGE_URLS.map(({ name, url }, index) => (
         <Frame key={index}>
           <FrameTitle css={Typography.XS}>
