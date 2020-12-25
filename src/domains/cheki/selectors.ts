@@ -7,6 +7,7 @@ export const displayableWidth = ({ cheki }: State) =>
 export const displayableX = ({ cheki }: State) => cheki.layout.displayable.x;
 export const displayableY = ({ cheki }: State) => cheki.layout.displayable.y;
 
+export const frame = ({ cheki }: State) => cheki.frame.index;
 export const frameHeight = ({ cheki }: State) => cheki.layout.frame.height;
 export const frameWidth = ({ cheki }: State) => cheki.layout.frame.width;
 export const frameViewBoxHeight = ({ cheki }: State) =>

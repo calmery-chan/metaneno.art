@@ -4,10 +4,10 @@ import { ChekiColumn } from "~/components/Cheki/Column";
 import { ChekiFlexColumn } from "~/components/Cheki/FlexColumn";
 import { ChekiHeader } from "~/components/Cheki/Header";
 import { ChekiCanvasFrames } from "~/containers/Cheki/CanvasFrames";
-import { ChekiFrameList } from "~/containers/Cheki/FrameList";
 import { ChekiNavigation } from "~/containers/Cheki/Navigation";
 import { ChekiApp } from "~/containers/Cheki/Refactor/App";
 import { ChekiCanvas } from "~/containers/Cheki/Refactor/Canvas";
+import { ChekiFrameList } from "~/containers/Cheki/Refactor/FrameList";
 
 export const ChekiFrames: NextPage = () => (
   <ChekiApp>
