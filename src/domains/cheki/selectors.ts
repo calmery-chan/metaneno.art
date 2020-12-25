@@ -24,6 +24,8 @@ export const imageWidth = ({ cheki }: State) => cheki.image.width;
 export const imageX = ({ cheki }: State) => cheki.image.x;
 export const imageY = ({ cheki }: State) => cheki.image.y;
 
+export const splashed = ({ cheki }: State) => cheki.splashed;
+
 export const trimHeight = ({ cheki }: State) => cheki.layout.trim.height;
 export const trimWidth = ({ cheki }: State) => cheki.layout.trim.width;
 export const trimViewBoxHeight = ({ cheki }: State) =>
