@@ -4,21 +4,18 @@ import { ChekiColumn } from "~/components/Cheki/Column";
 import { ChekiFlexColumn } from "~/components/Cheki/FlexColumn";
 import { ChekiHeader } from "~/components/Cheki/Header";
 import { ChekiApp } from "~/containers/Cheki/App";
-import { ChekiCanvas } from "~/containers/Cheki/Canvas";
-import { ChekiCanvasContainer } from "~/containers/Cheki/CanvasContainer";
 import { ChekiCanvasFilters } from "~/containers/Cheki/CanvasFilters";
 import { ChekiFilterList } from "~/containers/Cheki/FilterList";
 import { ChekiNavigation } from "~/containers/Cheki/Navigation";
+import { ChekiCanvas } from "~/containers/Cheki/Refactor/Canvas";
 
 export const ChekiFilters: NextPage = () => (
   <ChekiApp>
     <ChekiFlexColumn>
       <ChekiHeader />
-      <ChekiCanvasContainer>
-        <ChekiCanvas>
-          <ChekiCanvasFilters />
-        </ChekiCanvas>
-      </ChekiCanvasContainer>
+      <ChekiCanvas>
+        <ChekiCanvasFilters />
+      </ChekiCanvas>
       <ChekiColumn>
         <ChekiFilterList />
       </ChekiColumn>

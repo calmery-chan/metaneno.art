@@ -10,10 +10,9 @@ import { ChekiHeader } from "~/components/Cheki/Header";
 import { ChekiNote } from "~/components/Cheki/Note";
 import { TWITTER_HASHTAG_URL } from "~/constants/cheki";
 import { ChekiApp } from "~/containers/Cheki/App";
-import { ChekiCanvas } from "~/containers/Cheki/Canvas";
-import { ChekiCanvasContainer } from "~/containers/Cheki/CanvasContainer";
 import { ChekiCanvasSave } from "~/containers/Cheki/CanvasSave";
 import { ChekiNavigation } from "~/containers/Cheki/Navigation";
+import { ChekiCanvas } from "~/containers/Cheki/Refactor/Canvas";
 import { selectors, useSelector } from "~/domains";
 import { Spacing } from "~/styles/spacing";
 import { getShareUrlById, upload } from "~/utils/cheki";
@@ -55,29 +54,29 @@ const ChekiSaveAndShare: NextPage = () => {
     <ChekiApp>
       <ChekiFlexColumn>
         <ChekiHeader />
-        <ChekiCanvasContainer>
-          <ChekiCanvas>
-            <ChekiCanvasSave onCreatePreviewUrl={handleOnCreatePreviewUrl} />
-          </ChekiCanvas>
-          <div
-            className="absolute"
-            css={css`
-              height: ${displayable.height}px;
-              width: ${displayable.width}px;
-            `}
-          >
-            {previewUrl && (
-              <img
-                css={css`
-                  height: 100%;
-                  width: 100%;
-                  object-fit: contain;
-                `}
-                src={previewUrl}
-              />
-            )}
-          </div>
-        </ChekiCanvasContainer>
+
+        <ChekiCanvas>
+          <ChekiCanvasSave onCreatePreviewUrl={handleOnCreatePreviewUrl} />
+        </ChekiCanvas>
+        <div
+          className="absolute"
+          css={css`
+            height: ${displayable.height}px;
+            width: ${displayable.width}px;
+          `}
+        >
+          {previewUrl && (
+            <img
+              css={css`
+                height: 100%;
+                width: 100%;
+                object-fit: contain;
+              `}
+              src={previewUrl}
+            />
+          )}
+        </div>
+
         <ChekiColumn margin>
           <ChekiNote>
             <ExternalLink href={TWITTER_HASHTAG_URL}>

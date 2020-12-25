@@ -1,8 +1,7 @@
 import { css } from "@emotion/react";
 import React, { useCallback, useEffect, useState } from "react";
-import { ChekiCanvas } from "./Canvas";
-import { ChekiCanvasContainer } from "./CanvasContainer";
 import { ChekiCanvasTrim } from "./CanvasTrim";
+import { ChekiCanvas } from "./Refactor/Canvas";
 import { ChekiColumn } from "~/components/Cheki/Column";
 import { Icon } from "~/components/Cheki/Icon";
 import { ChekiInputImage } from "~/components/Cheki/InputImage";
@@ -88,11 +87,10 @@ export const ChekiCamera: React.FC = () => {
   if (ready) {
     return (
       <>
-        <ChekiCanvasContainer emotion={animationFadeIn}>
-          <ChekiCanvas>
-            <ChekiCanvasTrim hidden />
-          </ChekiCanvas>
-        </ChekiCanvasContainer>
+        <ChekiCanvas>
+          <ChekiCanvasTrim hidden />
+        </ChekiCanvas>
+
         <ChekiColumn css={animationFadeIn} margin>
           <ChekiSubButton onClick={handleOnClickShootAgainButton}>
             もう一度撮影する
