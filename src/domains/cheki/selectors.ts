@@ -29,6 +29,8 @@ export const ready = ({ cheki }: State) => cheki.ready;
 
 export const splashed = ({ cheki }: State) => cheki.splashed;
 
+export const trimDisplayMagnification = ({ cheki }: State) =>
+  cheki.layout.trim.displayMagnification;
 export const trimHeight = ({ cheki }: State) => cheki.layout.trim.height;
 export const trimWidth = ({ cheki }: State) => cheki.layout.trim.width;
 export const trimViewBoxHeight = ({ cheki }: State) =>

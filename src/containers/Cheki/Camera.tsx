@@ -1,14 +1,14 @@
 import { css } from "@emotion/react";
 import React, { useCallback, useEffect, useState } from "react";
-import { ChekiCanvasTrim } from "./CanvasTrim";
-import { ChekiCanvas } from "./Refactor/Canvas";
 import { ChekiColumn } from "~/components/Cheki/Column";
 import { Icon } from "~/components/Cheki/Icon";
 import { ChekiInputImage } from "~/components/Cheki/InputImage";
 import { ChekiPopup } from "~/components/Cheki/Popup";
 import { ChekiSubButton } from "~/components/Cheki/SubButton";
 import { NONEME_IMAGES } from "~/constants/cheki";
-import { ChekiTrim } from "~/containers/Cheki/Trim";
+import { ChekiCanvasTrim } from "~/containers/Cheki/CanvasTrim";
+import { ChekiCanvas } from "~/containers/Cheki/Refactor/Canvas";
+import { ChekiTrim } from "~/containers/Cheki/Refactor/Trim";
 import { selectors, useDispatch, useSelector } from "~/domains";
 import { actions } from "~/domains/cheki";
 import { fadeIn, fadeOut, Mixin } from "~/styles/mixin";
