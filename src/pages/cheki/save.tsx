@@ -1,6 +1,6 @@
 import { css } from "@emotion/react";
 import { NextPage } from "next";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { ChekiButton } from "~/components/Cheki/Button";
 import { ChekiColumn } from "~/components/Cheki/Column";
 import { ExternalLink } from "~/components/Cheki/ExternalLink";
@@ -9,18 +9,20 @@ import { ChekiHashTag } from "~/components/Cheki/HashTag";
 import { ChekiHeader } from "~/components/Cheki/Header";
 import { ChekiNote } from "~/components/Cheki/Note";
 import { TWITTER_HASHTAG_URL } from "~/constants/cheki";
-import { ChekiCanvasSave } from "~/containers/Cheki/CanvasSave";
+import { ChekiCanvasFrameLayer } from "~/containers/Cheki/CanvasFrameLayer";
+import { ChekiCanvasImageLayer } from "~/containers/Cheki/CanvasImageLayer";
 import { ChekiApp } from "~/containers/Cheki/Refactor/App";
 import { ChekiCanvas } from "~/containers/Cheki/Refactor/Canvas";
+import { ChekiCanvasLayerFrameShadow } from "~/containers/Cheki/Refactor/CanvasLayerFrameShadow";
 import { ChekiNavigation } from "~/containers/Cheki/Refactor/Navigation";
 import { selectors, useSelector } from "~/domains";
 import { Spacing } from "~/styles/spacing";
-import { getShareUrlById, upload } from "~/utils/cheki";
+import { convertSvgToDataUrl, getShareUrlById, upload } from "~/utils/cheki";
 import * as GA from "~/utils/cheki/google-analytics";
 
 const ChekiSaveAndShare: NextPage = () => {
   const { layout } = useSelector(selectors.cheki);
-  const { displayable } = layout;
+  const { displayable, frame } = layout;
 
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [shareId, setShareId] = useState<string | null>(null);
@@ -48,6 +50,42 @@ const ChekiSaveAndShare: NextPage = () => {
 
   const handleOnCreatePreviewUrl = useCallback(setPreviewUrl, []);
 
+  const canvasRef = useRef<SVGSVGElement>(null);
+
+  useEffect(() => {
+    const { current } = canvasRef;
+
+    if (!current) {
+      return;
+    }
+
+    const { parentElement } = current;
+
+    if (!parentElement) {
+      return;
+    }
+
+    (async () => {
+      const div = document.createElement("div");
+      div.innerHTML = parentElement.innerHTML;
+
+      const svg = div.querySelector("svg") as SVGSVGElement;
+
+      svg.setAttribute("width", `${frame.viewBoxWidth}`);
+      svg.setAttribute("height", `${frame.viewBoxHeight}`);
+      svg.removeAttribute("x");
+      svg.removeAttribute("y");
+
+      const previewUrl = await convertSvgToDataUrl(
+        div.innerHTML,
+        frame.viewBoxWidth,
+        frame.viewBoxHeight
+      );
+
+      handleOnCreatePreviewUrl(previewUrl);
+    })();
+  }, [canvasRef, frame, handleOnCreatePreviewUrl]);
+
   // Render
 
   return (
@@ -56,7 +94,20 @@ const ChekiSaveAndShare: NextPage = () => {
         <ChekiHeader />
 
         <ChekiCanvas>
-          <ChekiCanvasSave onCreatePreviewUrl={handleOnCreatePreviewUrl} />
+          <svg
+            height={frame.height}
+            ref={canvasRef}
+            viewBox={`0 0 ${frame.viewBoxWidth} ${frame.viewBoxHeight}`}
+            width={frame.width}
+            x={frame.x - displayable.x}
+            xmlns="http://www.w3.org/2000/svg"
+            xmlnsXlink="http://www.w3.org/1999/xlink"
+            y={frame.y - displayable.y}
+          >
+            <ChekiCanvasFrameLayer />
+            <ChekiCanvasImageLayer />
+            <ChekiCanvasLayerFrameShadow />
+          </svg>
         </ChekiCanvas>
         <div
           className="absolute"
