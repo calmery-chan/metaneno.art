@@ -1,15 +1,18 @@
 import { css } from "@emotion/react";
 import { NextPage } from "next";
-import { useCallback } from "react";
+import React, { useCallback } from "react";
 import { ChekiColumn } from "~/components/Cheki/Column";
 import { ChekiFlexColumn } from "~/components/Cheki/FlexColumn";
 import { ChekiGradientText } from "~/components/Cheki/GradientText";
 import { ChekiHeader } from "~/components/Cheki/Header";
 import { ChekiHorizontal } from "~/components/Cheki/Horizontal";
 import { CHEKI_FRAME_IMAGE_URLS } from "~/constants/cheki";
-import { ChekiCanvasFrames } from "~/containers/Cheki/CanvasFrames";
+import { ChekiCanvasFrameEffectLayer } from "~/containers/Cheki/CanvasFrameEffectLayer";
+import { ChekiCanvasFrameLayer } from "~/containers/Cheki/CanvasFrameLayer";
+import { ChekiCanvasImageLayer } from "~/containers/Cheki/CanvasImageLayer";
 import { ChekiApp } from "~/containers/Cheki/Refactor/App";
 import { ChekiCanvas } from "~/containers/Cheki/Refactor/Canvas";
+import { ChekiCanvasFramedImage } from "~/containers/Cheki/Refactor/CanvasFramedImage";
 import { ChekiNavigation } from "~/containers/Cheki/Refactor/Navigation";
 import { useDispatch, useSelector } from "~/domains";
 import { actions, selectors } from "~/domains/cheki";
@@ -62,7 +65,11 @@ export const ChekiFrames: NextPage = () => {
       <ChekiFlexColumn>
         <ChekiHeader />
         <ChekiCanvas>
-          <ChekiCanvasFrames />
+          <ChekiCanvasFramedImage>
+            <ChekiCanvasFrameLayer />
+            <ChekiCanvasImageLayer />
+            <ChekiCanvasFrameEffectLayer />
+          </ChekiCanvasFramedImage>
         </ChekiCanvas>
         <ChekiColumn>
           <ChekiHorizontal>

@@ -2,15 +2,17 @@ import { css } from "@emotion/react";
 import { NextPage } from "next";
 import React, { useCallback } from "react";
 import { ChekiColumn } from "~/components/Cheki/Column";
+import { ChekiFilterDefs } from "~/components/Cheki/FilterDefs";
+import { ChekiFilterImage } from "~/components/Cheki/FilterImage";
 import { ChekiFlexColumn } from "~/components/Cheki/FlexColumn";
 import { ChekiGradientText } from "~/components/Cheki/GradientText";
 import { ChekiHeader } from "~/components/Cheki/Header";
 import { ChekiHorizontal } from "~/components/Cheki/Horizontal";
 import { ChekiFilter, CHEKI_FILTERS } from "~/constants/cheki";
-import { ChekiCanvasFilters } from "~/containers/Cheki/CanvasFilters";
 import { ChekiFilterThumbnail } from "~/containers/Cheki/FilterThumbnail";
 import { ChekiApp } from "~/containers/Cheki/Refactor/App";
 import { ChekiCanvas } from "~/containers/Cheki/Refactor/Canvas";
+import { ChekiCanvasTrimedImage } from "~/containers/Cheki/Refactor/CanvasTrimedImage";
 import { ChekiNavigation } from "~/containers/Cheki/Refactor/Navigation";
 import { useDispatch, useSelector } from "~/domains";
 import { actions, selectors } from "~/domains/cheki";
@@ -43,6 +45,11 @@ const label = css`
 export const ChekiFilters: NextPage = () => {
   const dispatch = useDispatch();
   const selectedFilter = useSelector(selectors.imageFilter);
+  const imageFilter = useSelector(selectors.imageFilter);
+  const imageHeight = useSelector(selectors.imageHeight);
+  const imageWidth = useSelector(selectors.imageWidth);
+  const imageX = useSelector(selectors.imageX);
+  const imageY = useSelector(selectors.imageY);
 
   // Events
 
@@ -58,7 +65,24 @@ export const ChekiFilters: NextPage = () => {
       <ChekiFlexColumn>
         <ChekiHeader />
         <ChekiCanvas>
-          <ChekiCanvasFilters />
+          <ChekiCanvasTrimedImage>
+            <svg
+              height={imageHeight}
+              viewBox={`0 0 ${imageWidth} ${imageHeight}`}
+              width={imageWidth}
+              x={imageX}
+              xmlns="http://www.w3.org/2000/svg"
+              xmlnsXlink="http://www.w3.org/1999/xlink"
+              y={imageY}
+            >
+              <ChekiFilterDefs />
+              <ChekiFilterImage
+                filter={imageFilter}
+                height={imageHeight}
+                width={imageWidth}
+              />
+            </svg>
+          </ChekiCanvasTrimedImage>
         </ChekiCanvas>
         <ChekiColumn>
           <ChekiHorizontal>
