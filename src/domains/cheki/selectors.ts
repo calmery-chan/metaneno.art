@@ -4,6 +4,7 @@ import { State } from "../";
 
 export const characterDataUrl = ({ cheki }: State) => cheki.character!.dataUrl;
 export const characterHeight = ({ cheki }: State) => cheki.character!.height;
+export const characterReady = ({ cheki }: State) => !!cheki.character;
 export const characterRotate = ({ cheki }: State) => cheki.character!.rotate;
 export const characterScale = ({ cheki }: State) => cheki.character!.scale;
 export const characterWidth = ({ cheki }: State) => cheki.character!.width;
