@@ -23,21 +23,7 @@ export const ChekiCanvasTrim: React.FC<ChekiTrimImageProps> = ({
       y={trim.y - displayable.y}
       overflow={hidden ? "hidden" : "visible"}
     >
-      <svg
-        height={image.height}
-        viewBox={`0 0 ${image.width} ${image.height}`}
-        width={image.width}
-        x={image.x}
-        xmlns="http://www.w3.org/2000/svg"
-        xmlnsXlink="http://www.w3.org/1999/xlink"
-        y={image.y}
-      >
-        <ChekiFilterImage
-          filter={null}
-          height={image.height}
-          width={image.width}
-        />
-      </svg>
+      <ChekiFilterImage filter={null} />
     </svg>
   );
 };

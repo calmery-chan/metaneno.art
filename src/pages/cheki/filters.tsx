@@ -1,6 +1,5 @@
 import { css } from "@emotion/react";
 import { NextPage } from "next";
-import platform from "platform";
 import React, { useCallback } from "react";
 import { ChekiColumn } from "~/components/Cheki/Column";
 import { ChekiFilterImage } from "~/components/Cheki/FilterImage";
@@ -51,29 +50,12 @@ const Thumbnail: React.FC<{
   const image = useSelector(selectors.image);
   const trim = useSelector(selectors.trim);
 
-  const isFirefox = !!platform.name && platform.name === "Firefox";
-
   return (
     <svg
       height={CHEKI_THUMBNAIL_IMAGE_SIZE / 2}
       viewBox={`0 0 ${trim.viewBoxWidth} ${trim.viewBoxHeight}`}
     >
-      <svg
-        height={image.height}
-        viewBox={`0 0 ${image.width} ${image.height}`}
-        width={image.width}
-        x={image.x}
-        y={image.y}
-      >
-        <ChekiFilterImage
-          filter={filter}
-          noImage={isFirefox}
-          height={image.height}
-          width={image.width}
-          y={image.y}
-          x={image.x}
-        />
-      </svg>
+      <ChekiFilterImage filter={filter} />
     </svg>
   );
 };
@@ -102,21 +84,7 @@ export const ChekiFilters: NextPage = () => {
         <ChekiHeader />
         <ChekiCanvas>
           <ChekiCanvasTrimedImage>
-            <svg
-              height={imageHeight}
-              viewBox={`0 0 ${imageWidth} ${imageHeight}`}
-              width={imageWidth}
-              x={imageX}
-              xmlns="http://www.w3.org/2000/svg"
-              xmlnsXlink="http://www.w3.org/1999/xlink"
-              y={imageY}
-            >
-              <ChekiFilterImage
-                filter={imageFilter}
-                height={imageHeight}
-                width={imageWidth}
-              />
-            </svg>
+            <ChekiFilterImage filter={imageFilter} />
           </ChekiCanvasTrimedImage>
         </ChekiCanvas>
         <ChekiColumn>

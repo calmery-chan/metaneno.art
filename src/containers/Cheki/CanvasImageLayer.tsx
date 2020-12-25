@@ -91,21 +91,7 @@ export const ChekiCanvasImageLayer: React.FC = () => {
         mask="url(#cheki-bordered-image)"
       >
         <rect fill="#fff" width="100%" height="100%" />
-        <svg
-          height={image.height}
-          viewBox={`0 0 ${image.width} ${image.height}`}
-          width={image.width}
-          x={image.x}
-          xmlns="http://www.w3.org/2000/svg"
-          xmlnsXlink="http://www.w3.org/1999/xlink"
-          y={image.y}
-        >
-          <ChekiFilterImage
-            filter={filter}
-            height={image.height}
-            width={image.width}
-          />
-        </svg>
+        <ChekiFilterImage filter={filter} />
         <g filter="url(#cheki-shadowed-image)">
           <rect fill="#fff" width="100%" height="100%" fillOpacity="0.1" />
         </g>
