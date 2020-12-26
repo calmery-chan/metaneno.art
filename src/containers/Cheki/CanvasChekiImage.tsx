@@ -5,7 +5,7 @@ import {
   CHEKI_HORIZONTAL_FRAME_WIDTH,
   CHEKI_VERTICAL_FRAME_HEIGHT,
 } from "~/constants/cheki";
-import { ChekiCanvasLayerImage } from "~/containers/Cheki/CanvasLayerImage";
+import { ChekiCanvasImage } from "~/containers/Cheki/CanvasImage";
 import { useDispatch, useSelector } from "~/domains";
 import { selectors, actions } from "~/domains/cheki";
 import {
@@ -43,6 +43,26 @@ const FrameImage: React.FC = () => {
         xlinkHref={frameDataUrl}
       />
     </>
+  );
+};
+
+const Image: React.FC = () => {
+  const direction = useSelector(selectors.imageDirection);
+  const filter = useSelector(selectors.imageFilter);
+  const { height, width } = getImageSizeByDirection(direction);
+
+  return (
+    <svg
+      height={height}
+      viewBox={`0 0 ${width} ${height}`}
+      width={width}
+      x={CHEKI_FRAME_MARGIN_LEFT}
+      xmlns="http://www.w3.org/2000/svg"
+      xmlnsXlink="http://www.w3.org/1999/xlink"
+      y={CHEKI_FRAME_MARGIN_TOP}
+    >
+      <ChekiCanvasImage filter={filter} />
+    </svg>
   );
 };
 
@@ -154,6 +174,8 @@ const Shadow: React.FC = () => {
   );
 };
 
+// Exports
+
 export const ChekiCanvasChekiImage: React.FC = ({ children }) => {
   const displayable = useSelector(selectors.displayable);
   const frame = useSelector(selectors.frame);
@@ -169,7 +191,7 @@ export const ChekiCanvasChekiImage: React.FC = ({ children }) => {
       y={frame.y - displayable.y}
     >
       <FrameImage />
-      <ChekiCanvasLayerImage />
+      <Image />
       <Shadow />
     </svg>
   );
