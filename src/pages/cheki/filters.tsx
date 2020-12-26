@@ -1,5 +1,6 @@
 import { css } from "@emotion/react";
 import { NextPage } from "next";
+import platform from "platform";
 import React, { useCallback } from "react";
 import { ChekiColumn } from "~/components/Cheki/Column";
 import { ChekiFlexColumn } from "~/components/Cheki/FlexColumn";
@@ -50,7 +51,8 @@ const label = css`
 
 const Thumbnail: React.FC<{
   filter: ChekiFilter | null;
-}> = ({ filter }) => {
+  isFirefox: boolean;
+}> = ({ filter, isFirefox }) => {
   const { viewBoxHeight, viewBoxWidth } = useSelector(selectors.trim);
 
   return (
@@ -58,7 +60,7 @@ const Thumbnail: React.FC<{
       height={CHEKI_THUMBNAIL_IMAGE_SIZE / 2}
       viewBox={`0 0 ${viewBoxWidth} ${viewBoxHeight}`}
     >
-      <ChekiCanvasImage filter={filter} />
+      <ChekiCanvasImage filter={filter} noImage={isFirefox} />
     </svg>
   );
 };
@@ -75,6 +77,8 @@ export const ChekiFilters: NextPage = () => {
   );
 
   // Render
+
+  const isFirefox = !!platform.name && platform.name === "Firefox";
 
   return (
     <ChekiApp>
@@ -93,7 +97,7 @@ export const ChekiFilters: NextPage = () => {
                   <>none</>
                 )}
               </div>
-              <Thumbnail filter={null} />
+              <Thumbnail filter={null} isFirefox={isFirefox} />
             </div>
 
             {CHEKI_FILTERS.map((filter, key) => (
@@ -109,7 +113,7 @@ export const ChekiFilters: NextPage = () => {
                     filter
                   )}
                 </div>
-                <Thumbnail filter={filter} />
+                <Thumbnail filter={filter} isFirefox={isFirefox} />
               </div>
             ))}
           </ChekiHorizontal>
