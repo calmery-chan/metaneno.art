@@ -10,7 +10,11 @@ import { ChekiInputImage } from "~/components/Cheki/InputImage";
 import { ChekiLogo } from "~/components/Cheki/Logo";
 import { ChekiPopup } from "~/components/Cheki/Popup";
 import { ChekiSubButton } from "~/components/Cheki/SubButton";
-import { SPLASH_SCREEN_DURATION, NONEME_IMAGES } from "~/constants/cheki";
+import {
+  SPLASH_SCREEN_DURATION,
+  NONEME_IMAGES,
+  CHEKI_FRAME_IMAGE_URLS,
+} from "~/constants/cheki";
 import { ChekiApp } from "~/containers/Cheki/App";
 import { ChekiCanvas } from "~/containers/Cheki/Canvas";
 import { ChekiCanvasTrimedImage } from "~/containers/Cheki/CanvasTrimedImage";
@@ -338,11 +342,11 @@ export const ChekiCamera: React.FC = () => {
 
   // Side Effects
 
+  // 画像を先に読み込んでキャッシュさせる
   useEffect(() => {
-    // 画像をキャッシュに乗せる
-    NONEME_IMAGES.map(({ url }) => {
-      new Image().src = url;
-    });
+    [...NONEME_IMAGES, ...CHEKI_FRAME_IMAGE_URLS].map(
+      ({ url }) => (new Image().src = url)
+    );
   }, []);
 
   // Render
