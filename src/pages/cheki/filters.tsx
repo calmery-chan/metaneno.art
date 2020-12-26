@@ -11,11 +11,11 @@ import {
   CHEKI_FILTERS,
   CHEKI_THUMBNAIL_IMAGE_SIZE,
 } from "~/constants/cheki";
-import { ChekiApp } from "~/containers/Cheki/Refactor/App";
-import { ChekiCanvas } from "~/containers/Cheki/Refactor/Canvas";
-import { ChekiCanvasImage } from "~/containers/Cheki/Refactor/CanvasImage";
-import { ChekiCanvasTrimedImage } from "~/containers/Cheki/Refactor/CanvasTrimedImage";
-import { ChekiNavigation } from "~/containers/Cheki/Refactor/Navigation";
+import { ChekiApp } from "~/containers/Cheki/App";
+import { ChekiCanvas } from "~/containers/Cheki/Canvas";
+import { ChekiCanvasImage } from "~/containers/Cheki/CanvasImage";
+import { ChekiCanvasTrimedImage } from "~/containers/Cheki/CanvasTrimedImage";
+import { ChekiNavigation } from "~/containers/Cheki/Navigation";
 import { useDispatch, useSelector } from "~/domains";
 import { actions, selectors } from "~/domains/cheki";
 import { Colors } from "~/styles/colors";

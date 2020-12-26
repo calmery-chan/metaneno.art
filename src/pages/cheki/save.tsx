@@ -9,12 +9,13 @@ import { ChekiHashTag } from "~/components/Cheki/HashTag";
 import { ChekiHeader } from "~/components/Cheki/Header";
 import { ChekiNote } from "~/components/Cheki/Note";
 import { TWITTER_HASHTAG_URL } from "~/constants/cheki";
-import { ChekiApp } from "~/containers/Cheki/Refactor/App";
-import { ChekiCanvas } from "~/containers/Cheki/Refactor/Canvas";
-import { ChekiCanvasLayerFrameImage } from "~/containers/Cheki/Refactor/CanvasLayerFrameImage";
-import { ChekiCanvasLayerImage } from "~/containers/Cheki/Refactor/CanvasLayerImage";
-import { ChekiCanvasLayerShadow } from "~/containers/Cheki/Refactor/CanvasLayerShadow";
-import { ChekiNavigation } from "~/containers/Cheki/Refactor/Navigation";
+import { ChekiApp } from "~/containers/Cheki/App";
+import { ChekiCanvas } from "~/containers/Cheki/Canvas";
+import { ChekiCanvasFramedImage } from "~/containers/Cheki/CanvasFramedImage";
+import { ChekiCanvasLayerFrameImage } from "~/containers/Cheki/CanvasLayerFrameImage";
+import { ChekiCanvasLayerImage } from "~/containers/Cheki/CanvasLayerImage";
+import { ChekiCanvasLayerShadow } from "~/containers/Cheki/CanvasLayerShadow";
+import { ChekiNavigation } from "~/containers/Cheki/Navigation";
 import { selectors, useSelector } from "~/domains";
 import { Spacing } from "~/styles/spacing";
 import { convertSvgToDataUrl, getShareUrlById, upload } from "~/utils/cheki";
@@ -94,20 +95,11 @@ const ChekiSaveAndShare: NextPage = () => {
         <ChekiHeader />
 
         <ChekiCanvas>
-          <svg
-            height={frame.height}
-            ref={canvasRef}
-            viewBox={`0 0 ${frame.viewBoxWidth} ${frame.viewBoxHeight}`}
-            width={frame.width}
-            x={frame.x - displayable.x}
-            xmlns="http://www.w3.org/2000/svg"
-            xmlnsXlink="http://www.w3.org/1999/xlink"
-            y={frame.y - displayable.y}
-          >
+          <ChekiCanvasFramedImage>
             <ChekiCanvasLayerFrameImage />
             <ChekiCanvasLayerImage />
             <ChekiCanvasLayerShadow />
-          </svg>
+          </ChekiCanvasFramedImage>
         </ChekiCanvas>
         <div
           className="absolute"

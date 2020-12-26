@@ -1,6 +1,6 @@
 import React from "react";
 import { ChekiFilter } from "~/constants/cheki";
-import { ChekiCanvasLayerCharacter } from "~/containers/Cheki/Refactor/CanvasLayerCharacter";
+import { ChekiCanvasLayerCharacter } from "~/containers/Cheki/CanvasLayerCharacter";
 import { useSelector } from "~/domains";
 import { selectors } from "~/domains/cheki";
 

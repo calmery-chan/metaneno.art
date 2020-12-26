@@ -3,7 +3,7 @@ import {
   CHEKI_FRAME_MARGIN_LEFT,
   CHEKI_FRAME_MARGIN_TOP,
 } from "~/constants/cheki";
-import { ChekiCanvasImage } from "~/containers/Cheki/Refactor/CanvasImage";
+import { ChekiCanvasImage } from "~/containers/Cheki/CanvasImage";
 import { useSelector } from "~/domains";
 import { selectors } from "~/domains/cheki";
 import { getImageSizeByDirection } from "~/utils/cheki";

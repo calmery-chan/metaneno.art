@@ -1,5 +1,5 @@
 import React from "react";
-import { ChekiCanvasImage } from "~/containers/Cheki/Refactor/CanvasImage";
+import { ChekiCanvasImage } from "~/containers/Cheki/CanvasImage";
 import { useSelector } from "~/domains";
 import { selectors } from "~/domains/cheki";
 
