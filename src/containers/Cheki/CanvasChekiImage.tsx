@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import {
   CHEKI_FRAME_MARGIN_LEFT,
   CHEKI_FRAME_MARGIN_TOP,
@@ -9,6 +9,7 @@ import { ChekiCanvasImage } from "~/containers/Cheki/CanvasImage";
 import { useDispatch, useSelector } from "~/domains";
 import { selectors, actions } from "~/domains/cheki";
 import {
+  convertSvgToDataUrl,
   getFrameSizeByDirection,
   getImageSizeByDirection,
 } from "~/utils/cheki";
@@ -176,13 +177,51 @@ const Shadow: React.FC = () => {
 
 // Exports
 
-export const ChekiCanvasChekiImage: React.FC = ({ children }) => {
+export const ChekiCanvasChekiImage: React.FC<{
+  onCreatePreviewUrl?: (dataUrl: string) => void;
+}> = ({ onCreatePreviewUrl }) => {
   const displayable = useSelector(selectors.displayable);
   const frame = useSelector(selectors.frame);
+
+  // Refs
+
+  const ref = useRef<SVGSVGElement>(null);
+
+  // Side Effects
+
+  useEffect(() => {
+    const e = ref.current;
+
+    if (!e || !onCreatePreviewUrl) {
+      return;
+    }
+
+    const div = document.createElement("div");
+    div.innerHTML = e.parentElement!.innerHTML;
+
+    const svg = div.querySelector("svg") as SVGSVGElement;
+    svg.setAttribute("width", `${frame.viewBoxWidth}`);
+    svg.setAttribute("height", `${frame.viewBoxHeight}`);
+    svg.removeAttribute("x");
+    svg.removeAttribute("y");
+
+    (async () => {
+      const previewUrl = await convertSvgToDataUrl(
+        div.innerHTML,
+        frame.viewBoxWidth,
+        frame.viewBoxHeight
+      );
+
+      onCreatePreviewUrl(previewUrl);
+    })();
+  }, [frame, onCreatePreviewUrl, ref]);
+
+  // Render
 
   return (
     <svg
       height={frame.height}
+      ref={ref}
       viewBox={`0 0 ${frame.viewBoxWidth} ${frame.viewBoxHeight}`}
       width={frame.width}
       x={frame.x - displayable.x}

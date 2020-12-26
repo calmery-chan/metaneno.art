@@ -1,6 +1,6 @@
 import { css } from "@emotion/react";
 import { NextPage } from "next";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { ChekiButton } from "~/components/Cheki/Button";
 import { ChekiColumn } from "~/components/Cheki/Column";
 import { ExternalLink } from "~/components/Cheki/ExternalLink";
@@ -13,15 +13,31 @@ import { ChekiApp } from "~/containers/Cheki/App";
 import { ChekiCanvas } from "~/containers/Cheki/Canvas";
 import { ChekiCanvasChekiImage } from "~/containers/Cheki/CanvasChekiImage";
 import { ChekiNavigation } from "~/containers/Cheki/Navigation";
-import { selectors, useSelector } from "~/domains";
+import { useSelector } from "~/domains";
+import { selectors } from "~/domains/cheki";
 import { Spacing } from "~/styles/spacing";
-import { convertSvgToDataUrl, getShareUrlById, upload } from "~/utils/cheki";
+import { getShareUrlById, upload } from "~/utils/cheki";
 import * as GA from "~/utils/cheki/google-analytics";
 
-const ChekiSaveAndShare: NextPage = () => {
-  const { layout } = useSelector(selectors.cheki);
-  const { displayable, frame } = layout;
+// Styles
 
+const preview = css`
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+`;
+
+const twitter = css`
+  display: inline-block;
+  height: 14px;
+  margin-right: ${Spacing.xs}px;
+  vertical-align: top;
+`;
+
+// Components
+
+const ChekiSaveAndShare: NextPage = () => {
+  const displayable = useSelector(selectors.displayable);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [shareId, setShareId] = useState<string | null>(null);
   const [isFetching, setFetching] = useState(false);
@@ -46,44 +62,6 @@ const ChekiSaveAndShare: NextPage = () => {
     window.location.href = getShareUrlById(nextShareId);
   }, [previewUrl, shareId]);
 
-  const handleOnCreatePreviewUrl = useCallback(setPreviewUrl, []);
-
-  const canvasRef = useRef<SVGSVGElement>(null);
-
-  useEffect(() => {
-    const { current } = canvasRef;
-
-    if (!current) {
-      return;
-    }
-
-    const { parentElement } = current;
-
-    if (!parentElement) {
-      return;
-    }
-
-    (async () => {
-      const div = document.createElement("div");
-      div.innerHTML = parentElement.innerHTML;
-
-      const svg = div.querySelector("svg") as SVGSVGElement;
-
-      svg.setAttribute("width", `${frame.viewBoxWidth}`);
-      svg.setAttribute("height", `${frame.viewBoxHeight}`);
-      svg.removeAttribute("x");
-      svg.removeAttribute("y");
-
-      const previewUrl = await convertSvgToDataUrl(
-        div.innerHTML,
-        frame.viewBoxWidth,
-        frame.viewBoxHeight
-      );
-
-      handleOnCreatePreviewUrl(previewUrl);
-    })();
-  }, [canvasRef, frame, handleOnCreatePreviewUrl]);
-
   // Render
 
   return (
@@ -92,25 +70,16 @@ const ChekiSaveAndShare: NextPage = () => {
         <ChekiHeader />
 
         <ChekiCanvas>
-          <ChekiCanvasChekiImage />
+          <ChekiCanvasChekiImage onCreatePreviewUrl={setPreviewUrl} />
         </ChekiCanvas>
         <div
-          className="absolute"
-          css={css`
-            height: ${displayable.height}px;
-            width: ${displayable.width}px;
-          `}
+          className="absolute w-full"
+          style={{
+            height: `${displayable.height}px`,
+            top: `${displayable.y}px`,
+          }}
         >
-          {previewUrl && (
-            <img
-              css={css`
-                height: 100%;
-                width: 100%;
-                object-fit: contain;
-              `}
-              src={previewUrl}
-            />
-          )}
+          {previewUrl && <img css={preview} src={previewUrl} />}
         </div>
 
         <ChekiColumn margin>
@@ -126,16 +95,7 @@ const ChekiSaveAndShare: NextPage = () => {
           >
             {!isFetching && previewUrl && (
               <>
-                <img
-                  alt="Twitter"
-                  css={css`
-                    display: inline-block;
-                    height: 14px;
-                    margin-right: ${Spacing.xs}px;
-                    vertical-align: top;
-                  `}
-                  src="/cheki/twitter.svg"
-                />
+                <img alt="Twitter" css={twitter} src="/cheki/twitter.svg" />
                 Twitter にシェアする
               </>
             )}
