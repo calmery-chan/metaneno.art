@@ -11,10 +11,7 @@ import { ChekiNote } from "~/components/Cheki/Note";
 import { TWITTER_HASHTAG_URL } from "~/constants/cheki";
 import { ChekiApp } from "~/containers/Cheki/App";
 import { ChekiCanvas } from "~/containers/Cheki/Canvas";
-import { ChekiCanvasFramedImage } from "~/containers/Cheki/CanvasFramedImage";
-import { ChekiCanvasLayerFrameImage } from "~/containers/Cheki/CanvasLayerFrameImage";
-import { ChekiCanvasLayerImage } from "~/containers/Cheki/CanvasLayerImage";
-import { ChekiCanvasLayerShadow } from "~/containers/Cheki/CanvasLayerShadow";
+import { ChekiCanvasChekiImage } from "~/containers/Cheki/CanvasChekiImage";
 import { ChekiNavigation } from "~/containers/Cheki/Navigation";
 import { selectors, useSelector } from "~/domains";
 import { Spacing } from "~/styles/spacing";
@@ -95,11 +92,7 @@ const ChekiSaveAndShare: NextPage = () => {
         <ChekiHeader />
 
         <ChekiCanvas>
-          <ChekiCanvasFramedImage>
-            <ChekiCanvasLayerFrameImage />
-            <ChekiCanvasLayerImage />
-            <ChekiCanvasLayerShadow />
-          </ChekiCanvasFramedImage>
+          <ChekiCanvasChekiImage />
         </ChekiCanvas>
         <div
           className="absolute"

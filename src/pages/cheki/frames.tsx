@@ -9,10 +9,7 @@ import { ChekiHorizontal } from "~/components/Cheki/Horizontal";
 import { CHEKI_FRAME_IMAGE_URLS } from "~/constants/cheki";
 import { ChekiApp } from "~/containers/Cheki/App";
 import { ChekiCanvas } from "~/containers/Cheki/Canvas";
-import { ChekiCanvasFramedImage } from "~/containers/Cheki/CanvasFramedImage";
-import { ChekiCanvasLayerFrameImage } from "~/containers/Cheki/CanvasLayerFrameImage";
-import { ChekiCanvasLayerImage } from "~/containers/Cheki/CanvasLayerImage";
-import { ChekiCanvasLayerShadow } from "~/containers/Cheki/CanvasLayerShadow";
+import { ChekiCanvasChekiImage } from "~/containers/Cheki/CanvasChekiImage";
 import { ChekiNavigation } from "~/containers/Cheki/Navigation";
 import { useDispatch, useSelector } from "~/domains";
 import { actions, selectors } from "~/domains/cheki";
@@ -65,11 +62,7 @@ export const ChekiFrames: NextPage = () => {
       <ChekiFlexColumn>
         <ChekiHeader />
         <ChekiCanvas>
-          <ChekiCanvasFramedImage>
-            <ChekiCanvasLayerFrameImage />
-            <ChekiCanvasLayerImage />
-            <ChekiCanvasLayerShadow />
-          </ChekiCanvasFramedImage>
+          <ChekiCanvasChekiImage />
         </ChekiCanvas>
         <ChekiColumn>
           <ChekiHorizontal>

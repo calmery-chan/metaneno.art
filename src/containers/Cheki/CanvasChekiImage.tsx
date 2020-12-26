@@ -1,16 +1,52 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   CHEKI_FRAME_MARGIN_LEFT,
   CHEKI_FRAME_MARGIN_TOP,
+  CHEKI_HORIZONTAL_FRAME_WIDTH,
+  CHEKI_VERTICAL_FRAME_HEIGHT,
 } from "~/constants/cheki";
-import { useSelector } from "~/domains";
-import { selectors } from "~/domains/cheki";
+import { ChekiCanvasLayerImage } from "~/containers/Cheki/CanvasLayerImage";
+import { useDispatch, useSelector } from "~/domains";
+import { selectors, actions } from "~/domains/cheki";
 import {
   getFrameSizeByDirection,
   getImageSizeByDirection,
 } from "~/utils/cheki";
 
-export const ChekiCanvasLayerShadow: React.FC = () => {
+// Components
+
+const FrameImage: React.FC = () => {
+  const dispatch = useDispatch();
+  const frameDataUrl = useSelector(selectors.frameDataUrl);
+  const frameReady = useSelector(selectors.frameReady);
+  const imageDirection = useSelector(selectors.imageDirection);
+  const { height, width } = getFrameSizeByDirection(imageDirection);
+
+  // Side Effects
+
+  useEffect(() => {
+    if (!frameReady) dispatch(actions.changeFrame({ index: 0 }));
+  }, [frameReady]);
+
+  // Render
+
+  return (
+    <>
+      <mask id="cheki-bordered-frame">
+        <rect height={height} width={width} fill="white" rx="8" />
+      </mask>
+
+      <image
+        height={CHEKI_VERTICAL_FRAME_HEIGHT}
+        mask="url(#cheki-bordered-frame)"
+        width={CHEKI_HORIZONTAL_FRAME_WIDTH}
+        xlinkHref={frameDataUrl}
+      />
+    </>
+  );
+};
+
+const Shadow: React.FC = () => {
   const direction = useSelector(selectors.imageDirection);
   const frame = getFrameSizeByDirection(direction);
   const image = getImageSizeByDirection(direction);
@@ -115,5 +151,26 @@ export const ChekiCanvasLayerShadow: React.FC = () => {
         />
       </g>
     </>
+  );
+};
+
+export const ChekiCanvasChekiImage: React.FC = ({ children }) => {
+  const displayable = useSelector(selectors.displayable);
+  const frame = useSelector(selectors.frame);
+
+  return (
+    <svg
+      height={frame.height}
+      viewBox={`0 0 ${frame.viewBoxWidth} ${frame.viewBoxHeight}`}
+      width={frame.width}
+      x={frame.x - displayable.x}
+      xmlns="http://www.w3.org/2000/svg"
+      xmlnsXlink="http://www.w3.org/1999/xlink"
+      y={frame.y - displayable.y}
+    >
+      <FrameImage />
+      <ChekiCanvasLayerImage />
+      <Shadow />
+    </svg>
   );
 };
