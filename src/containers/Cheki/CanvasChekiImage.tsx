@@ -197,6 +197,8 @@ export const ChekiCanvasChekiImage: React.FC<{
     }
 
     const div = document.createElement("div");
+
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     div.innerHTML = e.parentElement!.innerHTML;
 
     const svg = div.querySelector("svg") as SVGSVGElement;
