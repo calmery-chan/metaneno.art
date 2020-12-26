@@ -60,13 +60,14 @@ export const frame = createSelector(
 
 // Image
 
+const imageHeight = ({ cheki }: State) => cheki.image.height;
+const imageWidth = ({ cheki }: State) => cheki.image.width;
+const imageX = ({ cheki }: State) => cheki.image.x;
+const imageY = ({ cheki }: State) => cheki.image.y;
+
 export const imageDataUrl = ({ cheki }: State) => cheki.image.dataUrl;
 export const imageDirection = ({ cheki }: State) => cheki.image.direction;
 export const imageFilter = ({ cheki }: State) => cheki.image.filter;
-export const imageHeight = ({ cheki }: State) => cheki.image.height;
-export const imageWidth = ({ cheki }: State) => cheki.image.width;
-export const imageX = ({ cheki }: State) => cheki.image.x;
-export const imageY = ({ cheki }: State) => cheki.image.y;
 
 export const image = createSelector(
   imageHeight,

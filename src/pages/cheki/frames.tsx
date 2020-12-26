@@ -19,7 +19,7 @@ import { Typography } from "~/styles/typography";
 
 // Styles
 
-const frame = css`
+const item = css`
   cursor: pointer;
 
   &:not(:last-child) {
@@ -67,7 +67,7 @@ export const ChekiFrames: NextPage = () => {
         <ChekiColumn>
           <ChekiHorizontal>
             {CHEKI_FRAME_IMAGE_URLS.map(({ name, url }, index) => (
-              <div css={frame} key={index}>
+              <div css={item} key={index}>
                 <div css={label}>
                   {index === selectedFrame ? (
                     <ChekiGradientText>{name}</ChekiGradientText>

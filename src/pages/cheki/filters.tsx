@@ -47,13 +47,12 @@ const label = css`
 const Thumbnail: React.FC<{
   filter: ChekiFilter | null;
 }> = ({ filter }) => {
-  const image = useSelector(selectors.image);
-  const trim = useSelector(selectors.trim);
+  const { viewBoxHeight, viewBoxWidth } = useSelector(selectors.trim);
 
   return (
     <svg
       height={CHEKI_THUMBNAIL_IMAGE_SIZE / 2}
-      viewBox={`0 0 ${trim.viewBoxWidth} ${trim.viewBoxHeight}`}
+      viewBox={`0 0 ${viewBoxWidth} ${viewBoxHeight}`}
     >
       <ChekiCanvasImage filter={filter} />
     </svg>
@@ -63,11 +62,6 @@ const Thumbnail: React.FC<{
 export const ChekiFilters: NextPage = () => {
   const dispatch = useDispatch();
   const selectedFilter = useSelector(selectors.imageFilter);
-  const imageFilter = useSelector(selectors.imageFilter);
-  const imageHeight = useSelector(selectors.imageHeight);
-  const imageWidth = useSelector(selectors.imageWidth);
-  const imageX = useSelector(selectors.imageX);
-  const imageY = useSelector(selectors.imageY);
 
   // Events
 

@@ -76,8 +76,7 @@ const RadialGradient: React.FC<
 
 export const Character: React.FC = () => {
   const characterReady = useSelector(selectors.characterReady);
-  const imageX = useSelector(selectors.imageX);
-  const imageY = useSelector(selectors.imageY);
+  const { x, y } = useSelector(selectors.image);
   const ready = useSelector(selectors.ready);
 
   if (!characterReady || !ready) {
@@ -98,10 +97,10 @@ export const Character: React.FC = () => {
       overflow="visible"
       viewBox={`0 0 ${characterWidth} ${characterHeight}`}
       width={characterWidth}
-      x={Math.abs(imageX) + characterX}
+      x={Math.abs(x) + characterX}
       xmlns="http://www.w3.org/2000/svg"
       xmlnsXlink="http://www.w3.org/1999/xlink"
-      y={Math.abs(imageY) + characterY}
+      y={Math.abs(y) + characterY}
     >
       <g
         transform={`rotate(${characterRotate} ${characterWidth / 2} ${
