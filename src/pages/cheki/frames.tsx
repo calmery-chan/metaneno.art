@@ -19,6 +19,10 @@ import { Typography } from "~/styles/typography";
 
 // Styles
 
+const items = css`
+  height: 114px;
+`;
+
 const item = css`
   cursor: pointer;
 
@@ -64,7 +68,7 @@ export const ChekiFrames: NextPage = () => {
         <ChekiCanvas>
           <ChekiCanvasChekiImage />
         </ChekiCanvas>
-        <ChekiColumn>
+        <ChekiColumn css={items}>
           <ChekiHorizontal>
             {CHEKI_FRAME_IMAGE_URLS.map(({ name, url }, index) => (
               <div css={item} key={index}>

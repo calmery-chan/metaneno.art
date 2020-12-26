@@ -24,6 +24,10 @@ import { Typography } from "~/styles/typography";
 
 // Styles
 
+const items = css`
+  height: 114px;
+`;
+
 const item = css`
   cursor: pointer;
 
@@ -79,7 +83,7 @@ export const ChekiFilters: NextPage = () => {
         <ChekiCanvas>
           <ChekiCanvasTrimedImage />
         </ChekiCanvas>
-        <ChekiColumn>
+        <ChekiColumn css={items}>
           <ChekiHorizontal>
             <div css={item} onClick={() => handleOnClickFilter(null)}>
               <div css={label}>
