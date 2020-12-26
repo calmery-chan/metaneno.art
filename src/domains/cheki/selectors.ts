@@ -3,14 +3,32 @@
 import { createSelector } from "@reduxjs/toolkit";
 import { State } from "../";
 
+const characterHeight = ({ cheki }: State) => cheki.character!.height;
+const characterRotate = ({ cheki }: State) => cheki.character!.rotate;
+const characterScale = ({ cheki }: State) => cheki.character!.scale;
+const characterWidth = ({ cheki }: State) => cheki.character!.width;
+const characterX = ({ cheki }: State) => cheki.character!.x;
+const characterY = ({ cheki }: State) => cheki.character!.y;
+
 export const characterDataUrl = ({ cheki }: State) => cheki.character!.dataUrl;
-export const characterHeight = ({ cheki }: State) => cheki.character!.height;
 export const characterReady = ({ cheki }: State) => !!cheki.character;
-export const characterRotate = ({ cheki }: State) => cheki.character!.rotate;
-export const characterScale = ({ cheki }: State) => cheki.character!.scale;
-export const characterWidth = ({ cheki }: State) => cheki.character!.width;
-export const characterX = ({ cheki }: State) => cheki.character!.x;
-export const characterY = ({ cheki }: State) => cheki.character!.y;
+
+export const character = createSelector(
+  characterHeight,
+  characterRotate,
+  characterScale,
+  characterWidth,
+  characterX,
+  characterY,
+  (height, rotate, scale, width, x, y) => ({
+    height,
+    rotate,
+    scale,
+    width,
+    x,
+    y,
+  })
+);
 
 // Displayable
 

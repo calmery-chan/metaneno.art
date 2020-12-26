@@ -83,36 +83,31 @@ export const Character: React.FC = () => {
     return null;
   }
 
+  const character = useSelector(selectors.character);
   const characterDataUrl = useSelector(selectors.characterDataUrl)!;
-  const characterHeight = useSelector(selectors.characterHeight)!;
-  const characterRotate = useSelector(selectors.characterRotate)!;
-  const characterScale = useSelector(selectors.characterScale)!;
-  const characterWidth = useSelector(selectors.characterWidth)!;
-  const characterX = useSelector(selectors.characterX)!;
-  const characterY = useSelector(selectors.characterY)!;
 
   return (
     <svg
-      height={characterHeight}
+      height={character.height}
       overflow="visible"
-      viewBox={`0 0 ${characterWidth} ${characterHeight}`}
-      width={characterWidth}
-      x={Math.abs(x) + characterX}
+      viewBox={`0 0 ${character.width} ${character.height}`}
+      width={character.width}
+      x={Math.abs(x) + character.x}
       xmlns="http://www.w3.org/2000/svg"
       xmlnsXlink="http://www.w3.org/1999/xlink"
-      y={Math.abs(y) + characterY}
+      y={Math.abs(y) + character.y}
     >
       <g
-        transform={`rotate(${characterRotate} ${characterWidth / 2} ${
-          characterHeight / 2
+        transform={`rotate(${character.rotate} ${character.width / 2} ${
+          character.height / 2
         })`}
       >
         <image
-          height={characterHeight * characterScale}
-          width={characterWidth * characterScale}
-          x={((characterWidth * characterScale - characterWidth) / 2) * -1}
+          height={character.height * character.scale}
+          width={character.width * character.scale}
+          x={((character.width * character.scale - character.width) / 2) * -1}
           xlinkHref={characterDataUrl}
-          y={((characterHeight * characterScale - characterHeight) / 2) * -1}
+          y={((character.height * character.scale - character.height) / 2) * -1}
         />
       </g>
     </svg>
