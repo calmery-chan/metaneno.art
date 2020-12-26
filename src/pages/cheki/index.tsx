@@ -460,13 +460,13 @@ export const Index: NextPage = () => {
 
       {!splashed && (
         <div css={fire ? splashAnimation : undefined}>
-          <ChekiApp className="bottom-0 flex items-center justify-center left-0 right-0 top-0">
+          <div className="bg-white bottom-0 fixed flex h-full items-center justify-center left-0 right-0 top-0 w-full">
             <ChekiLogo size={256} />
             <div className="absolute font-bold" css={splashComment}>
               Made with <img css={splashHeart} src="/cheki/heart.svg" /> by
               めたねのおくすり
             </div>
-          </ChekiApp>
+          </div>
         </div>
       )}
     </>
