@@ -1,4 +1,5 @@
-import { css } from "@emotion/react";
+import { css, Interpolation, Theme } from "@emotion/react";
+import styled from "@emotion/styled";
 import { useCallback } from "react";
 import { useDispatch, useSelector } from "~/domains";
 import { actions, selectors } from "~/domains/cheki";
@@ -10,14 +11,17 @@ const canvas = css`
   position: absolute;
 `;
 
-const container = css`
+const Container = styled.div`
   flex-grow: 1;
   height: fit-content;
 `;
 
 // Components
 
-export const ChekiCanvas: React.FC = ({ children }) => {
+export const ChekiCanvas: React.FC<{ emotion?: Interpolation<Theme> }> = ({
+  children,
+  emotion,
+}) => {
   const dispatch = useDispatch();
   const { height, width } = useSelector(selectors.displayable);
 
@@ -36,7 +40,7 @@ export const ChekiCanvas: React.FC = ({ children }) => {
   // Render
 
   return (
-    <div css={container} ref={ref}>
+    <Container css={emotion} ref={ref}>
       <svg
         css={canvas}
         height={height}
@@ -47,6 +51,6 @@ export const ChekiCanvas: React.FC = ({ children }) => {
       >
         {children}
       </svg>
-    </div>
+    </Container>
   );
 };
