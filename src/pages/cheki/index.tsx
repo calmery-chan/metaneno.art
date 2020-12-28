@@ -37,6 +37,41 @@ import * as GA from "~/utils/cheki/google-analytics";
 
 // Styles
 
+const animationFadeIn = css`
+  animation-fill-mode: forwards;
+  animation-duration: ${Mixin.ANIMATION_DURATION.seconds / 2}s;
+
+  ${fadeIn};
+`;
+
+const animationFadeOut = css`
+  animation-fill-mode: forwards;
+  animation-duration: ${Mixin.ANIMATION_DURATION.seconds / 2}s;
+
+  ${fadeOut};
+`;
+
+const move = css`
+  cursor: move;
+`;
+
+const splashAnimation = css`
+  ${Mixin.animation};
+  ${fadeOut};
+`;
+
+const splashComment = css`
+  ${Typography.XS};
+
+  bottom: ${Spacing.l}px;
+  color: ${Colors.black};
+`;
+
+const splashHeart = css`
+  display: inline-block;
+  vertical-align: middle;
+`;
+
 const Tag = styled.div<{ selected: boolean; disabled: boolean }>`
   ${Mixin.clickable};
   ${Typography.S};
@@ -65,47 +100,6 @@ const Tag = styled.div<{ selected: boolean; disabled: boolean }>`
     css`
       opacity: 0.48;
     `}
-`;
-
-const move = css`
-  cursor: move;
-`;
-
-const splashAnimation = css`
-  ${Mixin.animation};
-  ${fadeOut};
-`;
-
-const splashComment = css`
-  ${Typography.XS};
-
-  bottom: ${Spacing.l}px;
-  color: ${Colors.black};
-`;
-
-const splashHeart = css`
-  display: inline-block;
-  vertical-align: middle;
-`;
-
-const animationFadeIn = css`
-  animation-fill-mode: forwards;
-  animation-duration: ${Mixin.ANIMATION_DURATION.seconds / 2}s;
-
-  ${fadeIn};
-`;
-
-const animationFadeOut = css`
-  animation-fill-mode: forwards;
-  animation-duration: ${Mixin.ANIMATION_DURATION.seconds / 2}s;
-
-  ${fadeOut};
-`;
-
-const shoot = css`
-  display: flex;
-  height: max-content;
-  justify-content: center;
 `;
 
 // Components
@@ -344,17 +338,12 @@ export const ChekiCamera: React.FC = () => {
 
   // Events
 
+  const handleOnCancelRenew = useCallback(() => setRenewConfirm(false), []);
+
   const handleOnClickCharacterTag = useCallback(
     (tag: CharacterTag) => dispatch(actions.changeCharacterTags({ tag })),
     []
   );
-
-  const handleOnClickResetCharacterTags = useCallback(
-    () => dispatch(actions.resetCharacterTags()),
-    []
-  );
-
-  const handleOnCancelRenew = useCallback(() => setRenewConfirm(false), []);
 
   const handleOnClickShowTagsButton = useCallback(() => setShowTags(true), []);
 
