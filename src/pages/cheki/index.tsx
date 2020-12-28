@@ -8,6 +8,7 @@ import { ChekiHeader } from "~/components/Cheki/Header";
 import { Icon } from "~/components/Cheki/Icon";
 import { ChekiInputImage } from "~/components/Cheki/InputImage";
 import { ChekiLogo } from "~/components/Cheki/Logo";
+import { ChekiModal } from "~/components/Cheki/Modal";
 import { ChekiPopup } from "~/components/Cheki/Popup";
 import { ChekiSubButton } from "~/components/Cheki/SubButton";
 import {
@@ -309,6 +310,7 @@ export const ChekiCamera: React.FC = () => {
 
   const [flashAnimation, setFlashAnimation] = useState(false);
   const [renewConfirm, setRenewConfirm] = useState(false);
+  const [showTags, setShowTags] = useState(false);
 
   // Events
 
@@ -323,6 +325,8 @@ export const ChekiCamera: React.FC = () => {
   );
 
   const handleOnCancelRenew = useCallback(() => setRenewConfirm(false), []);
+
+  const handleOnClickShowTagsButton = useCallback(() => setShowTags(true), []);
 
   const handleOnClickRenewConfirmButton = useCallback(
     () => setRenewConfirm(true),
@@ -395,18 +399,11 @@ export const ChekiCamera: React.FC = () => {
       <ChekiCanvasTrim emotion={flashAnimation && animationFadeOut} />
       <ChekiColumn
         css={flashAnimation && animationFadeOut}
-        className="relative"
+        className="flex justify-between"
         margin
       >
-        <div css={shoot}>
-          <Icon
-            alt="撮影する"
-            onClick={handleOnClickShootButton}
-            src="/cheki/shoot.svg"
-          />
-        </div>
         <div
-          className="absolute flex items-center"
+          className="flex items-center"
           css={css`
             height: 100%;
             top: 0;
@@ -422,6 +419,51 @@ export const ChekiCamera: React.FC = () => {
             src="/cheki/image.svg"
           />
         </div>
+        <div>
+          <Icon
+            alt="撮影する"
+            onClick={handleOnClickShootButton}
+            src="/cheki/shoot.svg"
+          />
+        </div>
+        <div
+          className="flex items-center"
+          css={css`
+            height: 100%;
+            top: 0;
+            left: ${Spacing.l}px;
+          `}
+        >
+          <Icon
+            css={css`
+              height: 32px;
+              width: 32px;
+            `}
+            onClick={handleOnClickShowTagsButton}
+            src="/cheki/filter.svg"
+          />
+        </div>
+      </ChekiColumn>
+
+      {renewConfirm && (
+        <ChekiPopup
+          cancalText="いいえ"
+          enterText="はい"
+          onCancel={handleOnCancelRenew}
+          onEnter={handleOnEnterRenew}
+        >
+          画像を読み込み直しますか？
+          <br />
+          編集中の内容は全て失われます！
+        </ChekiPopup>
+      )}
+
+      <ChekiModal
+        visible={showTags}
+        onClickCloseButton={() => {
+          setShowTags(false);
+        }}
+      >
         <div>
           <button
             onClick={handleOnClickResetCharacterTags}
@@ -456,20 +498,7 @@ export const ChekiCamera: React.FC = () => {
             </button>
           </div>
         ))}
-      </ChekiColumn>
-
-      {renewConfirm && (
-        <ChekiPopup
-          cancalText="いいえ"
-          enterText="はい"
-          onCancel={handleOnCancelRenew}
-          onEnter={handleOnEnterRenew}
-        >
-          画像を読み込み直しますか？
-          <br />
-          編集中の内容は全て失われます！
-        </ChekiPopup>
-      )}
+      </ChekiModal>
     </>
   );
 };
