@@ -2,12 +2,15 @@ import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 import classnames from "classnames";
 import { useRouter } from "next/router";
-import React, { useCallback } from "react";
-import { selectors, useSelector } from "~/domains";
+import { useCallback } from "react";
+import { useSelector } from "~/domains";
+import { selectors } from "~/domains/cheki";
 import { fadeIn, fadeOut, Mixin } from "~/styles/mixin";
 import { Spacing } from "~/styles/spacing";
 
-const Container = styled.div`
+// Styles
+
+const container = css`
   box-sizing: content-box;
   display: flex;
   height: 32px;
@@ -41,8 +44,12 @@ const Icon = styled.object`
 ` as any; // eslint-disable-line @typescript-eslint/no-explicit-any
 
 const disabled = css`
+  ${fadeOut};
+
   cursor: auto;
 `;
+
+// Components
 
 const NavigationIcon: React.FC<{
   alt: string;
@@ -51,7 +58,9 @@ const NavigationIcon: React.FC<{
   always?: boolean;
 }> = ({ alt, always = false, href, src }) => {
   const { pathname, push } = useRouter();
-  const { ready } = useSelector(selectors.cheki);
+  const ready = useSelector(selectors.ready);
+
+  // Events
 
   const handleOnClick = useCallback(() => {
     if (!ready) {
@@ -61,18 +70,12 @@ const NavigationIcon: React.FC<{
     push(href);
   }, [ready]);
 
+  // Render
+
   return (
     <IconContainer
       onClick={handleOnClick}
-      css={
-        !always &&
-        (ready
-          ? fadeIn
-          : css`
-              ${fadeOut};
-              ${disabled}
-            `)
-      }
+      css={!always && (ready ? fadeIn : disabled)}
     >
       <Icon
         alt={alt}
@@ -85,7 +88,7 @@ const NavigationIcon: React.FC<{
 };
 
 export const ChekiNavigation = () => (
-  <Container>
+  <div css={container}>
     <NavigationIcon alt="カメラ" always href="/cheki" src="/cheki/camera.svg" />
     <NavigationIcon
       alt="フィルター"
@@ -102,5 +105,5 @@ export const ChekiNavigation = () => (
       href="/cheki/save"
       src="/cheki/save.svg"
     />
-  </Container>
+  </div>
 );
