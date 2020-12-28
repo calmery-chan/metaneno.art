@@ -1,5 +1,5 @@
 import { css, Theme } from "@emotion/react";
-import { Interpolation } from "@emotion/styled";
+import styled, { Interpolation } from "@emotion/styled";
 import { NextPage } from "next";
 import React, { useEffect, useState, useCallback } from "react";
 import { ChekiColumn } from "~/components/Cheki/Column";
@@ -24,7 +24,7 @@ import { ChekiCanvasTrimedImage } from "~/containers/Cheki/CanvasTrimedImage";
 import { ChekiNavigation } from "~/containers/Cheki/Navigation";
 import { useDispatch, useSelector } from "~/domains";
 import { actions, selectors } from "~/domains/cheki";
-import { Colors } from "~/styles/colors";
+import { Colors, GradientColors } from "~/styles/colors";
 import { fadeIn, fadeOut, Mixin } from "~/styles/mixin";
 import { Spacing } from "~/styles/spacing";
 import { Typography } from "~/styles/typography";
@@ -36,6 +36,36 @@ import {
 import * as GA from "~/utils/cheki/google-analytics";
 
 // Styles
+
+const Tag = styled.div<{ selected: boolean; disabled: boolean }>`
+  ${Mixin.clickable};
+  ${Typography.S};
+
+  border: 1px solid ${Colors.gray};
+  border-radius: 4px;
+  color: ${Colors.black};
+  cursor: pointer;
+  font-weight: bold;
+  margin-bottom: ${Spacing.s}px;
+  margin-left: ${Spacing.s}px;
+  padding: ${Spacing.m}px 0;
+  text-align: center;
+  width: 100px;
+
+  ${({ selected }) =>
+    selected &&
+    css`
+      background: ${GradientColors.pinkToOrange};
+      border: 0;
+      color: ${Colors.white};
+    `}
+
+  ${({ disabled }) =>
+    disabled &&
+    css`
+      opacity: 0.48;
+    `}
+`;
 
 const move = css`
   cursor: move;
@@ -464,40 +494,25 @@ export const ChekiCamera: React.FC = () => {
           setShowTags(false);
         }}
       >
-        <div>
-          <button
-            onClick={handleOnClickResetCharacterTags}
-            style={{
-              width: "200px",
-            }}
-          >
-            Reset
-          </button>
+        <div className="flex">
+          {CHARACTER_TAGS.map(({ name, id }, key) => {
+            const selected = characterTags.includes(id);
+            const disabled = !selected && !selectableCharacterTags.includes(id);
+
+            return (
+              <Tag
+                key={key}
+                onClick={
+                  !disabled ? () => handleOnClickCharacterTag(id) : undefined
+                }
+                selected={selected}
+                disabled={disabled}
+              >
+                {name}
+              </Tag>
+            );
+          })}
         </div>
-        {CHARACTER_TAGS.map((tag, key) => (
-          <div key={key}>
-            <button
-              onClick={
-                selectableCharacterTags.includes(tag) ||
-                characterTags.includes(tag)
-                  ? () => handleOnClickCharacterTag(tag)
-                  : undefined
-              }
-              style={{
-                width: "200px",
-                ...(characterTags.includes(tag)
-                  ? {
-                      color: "red",
-                    }
-                  : selectableCharacterTags.includes(tag)
-                  ? {}
-                  : { color: "lightgray" }),
-              }}
-            >
-              {tag}
-            </button>
-          </div>
-        ))}
       </ChekiModal>
     </>
   );

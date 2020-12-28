@@ -148,9 +148,26 @@ export type Character = {
   width: number;
 };
 
-export const CHARACTER_TAGS = ["front", "peace", "smile", "side"] as const;
+export const CHARACTER_TAGS = [
+  {
+    id: "front",
+    name: "正面",
+  },
+  {
+    id: "peace",
+    name: "ピース",
+  },
+  {
+    id: "smile",
+    name: "笑顔",
+  },
+  {
+    id: "side",
+    name: "横向き",
+  },
+] as const;
 
-export type CharacterTag = typeof CHARACTER_TAGS[number];
+export type CharacterTag = typeof CHARACTER_TAGS[number]["id"];
 
 export const NONEME_IMAGES = [
   {
