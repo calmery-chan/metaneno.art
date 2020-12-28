@@ -1,4 +1,5 @@
 import { DefaultSeoProps } from "next-seo";
+import { getTutorialElementId } from "~/utils/cheki";
 
 export const CHEKI_FRAME_MARGIN_BOTTOM = 304;
 export const CHEKI_FRAME_MARGIN_LEFT = 64;
@@ -243,3 +244,10 @@ export const NONEME_IMAGES = [
 ] as Character[];
 
 export const NONEME_IMAGE_TAGS = NONEME_IMAGES.map(({ tags }) => tags);
+
+export const FILTERS_PAGE_SCENARIO = [
+  {
+    emphasisElementId: getTutorialElementId("filters"),
+    message: "ここにはフィルターが表示されているよ",
+  },
+];

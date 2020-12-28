@@ -18,8 +18,10 @@ const items = css`
   width: fit-content;
 `;
 
-export const ChekiHorizontal: React.FC = ({ children }) => (
-  <div css={container}>
+export const ChekiHorizontal: React.FC<{
+  id?: string;
+}> = ({ children, id }) => (
+  <div css={container} id={id}>
     <div css={items}>{children}</div>
   </div>
 );

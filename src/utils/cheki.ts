@@ -311,3 +311,5 @@ export const getSelectableCharacterTags = (characterTags: CharacterTag[]) => {
 
   return unique(helper(characterTags, NONEME_IMAGE_TAGS).flat());
 };
+
+export const getTutorialElementId = (id: string) => `cheki-tutorial-${id}`;

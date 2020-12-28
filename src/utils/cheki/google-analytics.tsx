@@ -45,3 +45,13 @@ export const takeAPhotoAgain = () => sendChekiEvent("take_a_photo_again", {});
 export const transform = () => sendChekiEvent("transform", {});
 
 export const share = () => sendChekiEvent("share", {});
+
+export const stopTutorial = (url: string) =>
+  sendChekiEvent("stop_tutorial", {
+    label: url,
+  });
+
+export const completeTutorial = (url: string) =>
+  sendChekiEvent("complete_tutorial", {
+    label: url,
+  });
