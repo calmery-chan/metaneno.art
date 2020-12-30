@@ -1,4 +1,4 @@
-import { ChekiFilter } from "~/constants/cheki";
+import { CharacterTag, ChekiFilter } from "~/constants/cheki";
 import { ChekiDirection } from "~/types/ChekiDirection";
 import { sendEvent } from "~/utils/google-analytics";
 
@@ -59,4 +59,9 @@ export const stopTutorial = (url: string) =>
 export const completeTutorial = (url: string) =>
   sendChekiEvent("complete_tutorial", {
     label: url,
+  });
+
+export const changeCharacterFilter = (characterTags: CharacterTag[]) =>
+  sendChekiEvent("filter_by_character_tag", {
+    label: characterTags.sort().join(","),
   });

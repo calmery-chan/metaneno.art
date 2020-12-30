@@ -129,16 +129,17 @@ export const reducer = createReducer(initialState, (builder) => {
     .addCase(actions.changeCharacterTags, (state, action) => {
       const { tag } = action.payload;
 
+      let nextTags = [...state.characterTags, action.payload.tag].sort();
+
       if (state.characterTags.includes(tag)) {
-        return {
-          ...state,
-          characterTags: state.characterTags.filter((t) => t !== tag).sort(),
-        };
+        nextTags = state.characterTags.filter((t) => t !== tag).sort();
       }
+
+      GA.changeCharacterFilter(nextTags);
 
       return {
         ...state,
-        characterTags: [...state.characterTags, action.payload.tag].sort(),
+        characterTags: nextTags,
       };
     })
     .addCase(actions.changeFilter, (state, action) => {
