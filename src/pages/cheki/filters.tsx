@@ -11,7 +11,6 @@ import {
   ChekiFilter,
   CHEKI_FILTERS,
   CHEKI_THUMBNAIL_IMAGE_SIZE,
-  FILTERS_PAGE_SCENARIO,
 } from "~/constants/cheki";
 import { ChekiApp } from "~/containers/Cheki/App";
 import { ChekiCanvas } from "~/containers/Cheki/Canvas";
@@ -86,7 +85,7 @@ export const ChekiFilters: NextPage = () => {
     <>
       <ChekiApp>
         <ChekiFlexColumn>
-          <ChekiHeader scenario={FILTERS_PAGE_SCENARIO} />
+          <ChekiHeader />
           <ChekiCanvas>
             <ChekiCanvasTrimedImage />
           </ChekiCanvas>
