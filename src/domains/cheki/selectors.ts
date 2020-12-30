@@ -2,6 +2,7 @@
 
 import { createSelector } from "@reduxjs/toolkit";
 import { State } from "../";
+import { CHEKI_DECORATIONS } from "~/constants/cheki";
 import { getSelectableCharacterTags } from "~/utils/cheki";
 
 const characterHeight = ({ cheki }: State) => cheki.character!.height;
@@ -36,10 +37,6 @@ export const character = createSelector(
     y,
   })
 );
-
-// Decorations
-
-export const decorations = ({ cheki }: State) => cheki.decorations;
 
 // Displayable
 
@@ -138,4 +135,19 @@ export const trim = createSelector(
     x,
     y,
   })
+);
+
+// Decorations
+
+export const decorations = ({ cheki }: State) => cheki.decorations;
+
+export const addableDecorations = createSelector(
+  decorations,
+  imageDirection,
+  (decorations, direction) =>
+    CHEKI_DECORATIONS.filter(
+      (decoration) =>
+        direction === decoration.direction &&
+        !decorations.includes(decoration.id)
+    )
 );
