@@ -103,7 +103,7 @@ export const ChekiNavigation = () => (
     <NavigationIcon
       alt="デコレーション"
       href="/cheki/decorations"
-      src="/cheki/frames.svg"
+      src="/cheki/decorations.svg"
     />
     <NavigationIcon
       alt="保存・シェア"
