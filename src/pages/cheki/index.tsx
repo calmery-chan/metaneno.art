@@ -362,12 +362,12 @@ export const ChekiCamera: React.FC = () => {
 
   const handleOnClickShootButton = useCallback(() => {
     setFlashAnimation(true);
-    dispatch(actions.take());
+    dispatch(actions.take({ characterTags }));
 
     setTimeout(() => {
       dispatch(actions.ready({ ready: true }));
     }, Mixin.ANIMATION_DURATION.milliseconds / 2);
-  }, []);
+  }, [characterTags]);
 
   const handleOnEnterRenew = useCallback(() => {
     setRenewConfirm(false);
