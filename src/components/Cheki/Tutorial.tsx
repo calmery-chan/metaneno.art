@@ -31,8 +31,8 @@ const Container = styled.div`
 `;
 
 const CloseButton = styled.img`
-  width: 16px;
-  height: 16px;
+  width: 24px;
+  height: 24px;
   top: ${Spacing.l}px;
   left: ${Spacing.l}px;
   filter: brightness(0) invert(1);
@@ -277,7 +277,7 @@ export const Tutorial: React.FC<TutorialProps> = ({
 
   return (
     <Container ref={displayableRef} onClick={handleOnClickSpeechBubble}>
-      <CloseButton src="/images/close.svg" onClick={onStop} alt="閉じる" />
+      <CloseButton src="/cheki/close.svg" onClick={onStop} alt="閉じる" />
       <svg
         width={displayableRect.width}
         height={displayableRect.height}
