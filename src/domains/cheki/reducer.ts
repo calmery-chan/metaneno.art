@@ -225,7 +225,7 @@ export const reducer = createReducer(initialState, (builder) => {
         },
       };
     })
-    .addCase(actions.take, (state) => {
+    .addCase(actions.take.fulfilled, (state) => {
       const characters = getCharactersWithTags(state.characterTags.concat());
       const index = Math.floor(Math.random() * characters.length);
       const character = characters[index];
