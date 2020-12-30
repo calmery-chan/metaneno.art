@@ -83,6 +83,7 @@ export const convertFileToUrl = (
         // 34665 は Exif IFD を指していて
         // Exif IFD 内の 36867 はオリジナル画像の生成日時を表している
         if (meta && meta.exif) {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           const date = (meta.exif as any)["34665"]?.["36867"];
           // 2020:01:01 00:00:00 という形式で取得できる、日付だけを取り出して `:` を `/` に置き換える
           createdDate = date
