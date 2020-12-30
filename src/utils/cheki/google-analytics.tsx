@@ -46,6 +46,11 @@ export const transform = () => sendChekiEvent("transform", {});
 
 export const share = () => sendChekiEvent("share", {});
 
+export const startTutorial = (url: string) =>
+  sendChekiEvent("start_tutorial", {
+    label: url,
+  });
+
 export const stopTutorial = (url: string) =>
   sendChekiEvent("stop_tutorial", {
     label: url,

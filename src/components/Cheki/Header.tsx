@@ -112,10 +112,10 @@ export const ChekiHeader: React.FC<{ scenario?: ChekiScenario[] }> = ({
 
   const handleOnClickBackToTop = useCallback(() => push("/"), []);
   const handleOnClickClosePopup = useCallback(() => setBackToTop(false), []);
-  const handleOnClickTutorialButton = useCallback(
-    () => setIsTutorial(true),
-    []
-  );
+  const handleOnClickTutorialButton = useCallback(() => {
+    setIsTutorial(true);
+    GA.startTutorial(pathname);
+  }, [pathname]);
   const handleOnClickInformation = useCallback(
     () => setInformation(!information),
     [information]
