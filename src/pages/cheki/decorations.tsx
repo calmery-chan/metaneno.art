@@ -7,6 +7,7 @@ import { ChekiColumn } from "~/components/Cheki/Column";
 import { ChekiFlexColumn } from "~/components/Cheki/FlexColumn";
 import { ChekiHeader } from "~/components/Cheki/Header";
 import { ChekiHorizontal } from "~/components/Cheki/Horizontal";
+import { Icon } from "~/components/Cheki/Icon";
 import { ChekiModal } from "~/components/Cheki/Modal";
 import { ChekiApp } from "~/containers/Cheki/App";
 import { ChekiCanvas } from "~/containers/Cheki/Canvas";
@@ -85,22 +86,22 @@ const Decorations: NextPage = () => {
                     className="h-full w-full"
                     src={addedDecoration.thumbnail}
                   />
-                  <img
+                  <Icon
                     className="absolute cursor-pointer"
                     css={removeButton}
                     onClick={() =>
                       handleOnClickItemRemoveButton(addedDecoration.id)
                     }
-                    src="/cheki/remove.svg"
+                    src="/cheki/decorations/remove.svg"
                   />
                 </div>
               ))}
               <div
-                className="align-center cursor-pointer flex justify-center"
+                className="cursor-pointer flex items-center justify-center"
                 css={openModal}
                 onClick={handleOnClickOpenModalButton}
               >
-                <img src="/cheki/decoration-add.svg" />
+                <Icon src="/cheki/decorations/add.svg" />
               </div>
             </ChekiHorizontal>
           </ChekiColumn>
