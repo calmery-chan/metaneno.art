@@ -1,5 +1,7 @@
 import { DefaultSeoProps } from "next-seo";
 import { Hex } from "~/domains/cheki/models";
+import { ChekiDecoration } from "~/types/ChekiDecoration";
+import { getTutorialElementId } from "~/utils/cheki";
 
 export const CHEKI_FRAME_MARGIN_BOTTOM = 304;
 export const CHEKI_FRAME_MARGIN_LEFT = 64;
@@ -164,8 +166,79 @@ export type Character = {
   url: string;
   rotate: { min: number; max: number };
   scale: { min: number; max: number };
+  tags: CharacterTag[];
   width: number;
 };
+
+export const CHEKI_DECORATIONS: ChekiDecoration[] = [
+  {
+    direction: "horizontal",
+    id: "example-1",
+    layers: [
+      {
+        height: 400,
+        rotate: 0,
+        url: "/cheki/decorations/1.png",
+        width: 400,
+        x: 0,
+        y: 0,
+      },
+      {
+        height: 400,
+        rotate: 0,
+        url: "/cheki/decorations/2.png",
+        width: 400,
+        x: 850,
+        y: 900,
+      },
+    ],
+    thumbnail: "/cheki/decorations/1.png",
+  },
+  {
+    direction: "vertical",
+    id: "example-2",
+    layers: [
+      {
+        height: 400,
+        rotate: 0,
+        url: "/cheki/decorations/1.png",
+        width: 400,
+        x: 0,
+        y: 0,
+      },
+      {
+        height: 400,
+        rotate: 0,
+        url: "/cheki/decorations/2.png",
+        width: 400,
+        x: 0,
+        y: 0,
+      },
+    ],
+    thumbnail: "/cheki/decorations/2.png",
+  },
+];
+
+export const CHARACTER_TAGS = [
+  {
+    id: "front",
+    name: "正面",
+  },
+  {
+    id: "peace",
+    name: "ピース",
+  },
+  {
+    id: "smile",
+    name: "笑顔",
+  },
+  {
+    id: "side",
+    name: "横向き",
+  },
+] as const;
+
+export type CharacterTag = typeof CHARACTER_TAGS[number]["id"];
 
 export const NONEME_IMAGES = [
   {
@@ -179,6 +252,7 @@ export const NONEME_IMAGES = [
     url: "/cheki/characters/1.png",
     rotate: { min: -24, max: 24 },
     scale: { min: 0.5, max: 1 },
+    tags: ["front", "smile"],
     width: 385,
   },
   {
@@ -192,6 +266,7 @@ export const NONEME_IMAGES = [
     url: "/cheki/characters/2.png",
     rotate: { min: -8, max: 8 },
     scale: { min: 1.2, max: 1.4 },
+    tags: ["front"],
     width: 624,
   },
   {
@@ -205,6 +280,7 @@ export const NONEME_IMAGES = [
     url: "/cheki/characters/3.png",
     rotate: { min: -4, max: 8 },
     scale: { min: 1.2, max: 1.4 },
+    tags: ["side"],
     width: 577,
   },
   {
@@ -218,6 +294,7 @@ export const NONEME_IMAGES = [
     url: "/cheki/characters/4.png",
     rotate: { min: -4, max: 4 },
     scale: { min: 1.1, max: 1.3 },
+    tags: ["front", "peace"],
     width: 577,
   },
   {
@@ -231,6 +308,19 @@ export const NONEME_IMAGES = [
     url: "/cheki/characters/5.png",
     rotate: { min: -4, max: 4 },
     scale: { min: 1.1, max: 1.4 },
+    tags: ["front", "smile"],
     width: 577,
   },
 ] as Character[];
+
+export const NONEME_IMAGE_TAGS = NONEME_IMAGES.map(({ tags }) => tags);
+
+export const FILTERS_PAGE_SCENARIO = [
+  {
+    emphasisElementId: getTutorialElementId("filters"),
+    message: "ここにはフィルターが表示されているよ",
+  },
+  {
+    message: "ここにはフィルターが表示されているよ",
+  },
+];

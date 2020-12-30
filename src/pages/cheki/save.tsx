@@ -11,18 +11,33 @@ import { ChekiNote } from "~/components/Cheki/Note";
 import { TWITTER_HASHTAG_URL } from "~/constants/cheki";
 import { ChekiApp } from "~/containers/Cheki/App";
 import { ChekiCanvas } from "~/containers/Cheki/Canvas";
-import { ChekiCanvasContainer } from "~/containers/Cheki/CanvasContainer";
-import { ChekiCanvasSave } from "~/containers/Cheki/CanvasSave";
+import { ChekiCanvasChekiImage } from "~/containers/Cheki/CanvasChekiImage";
 import { ChekiNavigation } from "~/containers/Cheki/Navigation";
-import { selectors, useSelector } from "~/domains";
+import { useSelector } from "~/domains";
+import { selectors } from "~/domains/cheki";
 import { Spacing } from "~/styles/spacing";
 import { getShareUrlById, upload } from "~/utils/cheki";
 import * as GA from "~/utils/cheki/google-analytics";
 
-const ChekiSaveAndShare: NextPage = () => {
-  const { layout } = useSelector(selectors.cheki);
-  const { displayable } = layout;
+// Styles
 
+const preview = css`
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+`;
+
+const twitter = css`
+  display: inline-block;
+  height: 14px;
+  margin-right: ${Spacing.xs}px;
+  vertical-align: top;
+`;
+
+// Components
+
+const ChekiSaveAndShare: NextPage = () => {
+  const displayable = useSelector(selectors.displayable);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [shareId, setShareId] = useState<string | null>(null);
   const [isFetching, setFetching] = useState(false);
@@ -47,37 +62,26 @@ const ChekiSaveAndShare: NextPage = () => {
     window.location.href = getShareUrlById(nextShareId);
   }, [previewUrl, shareId]);
 
-  const handleOnCreatePreviewUrl = useCallback(setPreviewUrl, []);
-
   // Render
 
   return (
     <ChekiApp>
       <ChekiFlexColumn>
         <ChekiHeader />
-        <ChekiCanvasContainer>
-          <ChekiCanvas>
-            <ChekiCanvasSave onCreatePreviewUrl={handleOnCreatePreviewUrl} />
-          </ChekiCanvas>
-          <div
-            className="absolute"
-            css={css`
-              height: ${displayable.height}px;
-              width: ${displayable.width}px;
-            `}
-          >
-            {previewUrl && (
-              <img
-                css={css`
-                  height: 100%;
-                  width: 100%;
-                  object-fit: contain;
-                `}
-                src={previewUrl}
-              />
-            )}
-          </div>
-        </ChekiCanvasContainer>
+
+        <ChekiCanvas>
+          <ChekiCanvasChekiImage onCreatePreviewUrl={setPreviewUrl} />
+        </ChekiCanvas>
+        <div
+          className="absolute w-full"
+          style={{
+            height: `${displayable.height}px`,
+            top: `${displayable.y}px`,
+          }}
+        >
+          {previewUrl && <img css={preview} src={previewUrl} />}
+        </div>
+
         <ChekiColumn margin>
           <ChekiNote>
             <ExternalLink href={TWITTER_HASHTAG_URL}>
@@ -91,16 +95,7 @@ const ChekiSaveAndShare: NextPage = () => {
           >
             {!isFetching && previewUrl && (
               <>
-                <img
-                  alt="Twitter"
-                  css={css`
-                    display: inline-block;
-                    height: 14px;
-                    margin-right: ${Spacing.xs}px;
-                    vertical-align: top;
-                  `}
-                  src="/cheki/twitter.svg"
-                />
+                <img alt="Twitter" css={twitter} src="/cheki/twitter.svg" />
                 Twitter にシェアする
               </>
             )}

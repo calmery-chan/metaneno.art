@@ -13,6 +13,10 @@ import {
   CHEKI_VERTICAL_FRAME_HEIGHT,
   CHEKI_VERTICAL_FRAME_WIDTH,
   SHARE_RANDOM_HASHTAGS,
+  CharacterTag,
+  Character,
+  NONEME_IMAGES,
+  NONEME_IMAGE_TAGS,
 } from "~/constants/cheki";
 import { Hex } from "~/domains/cheki/models";
 import { ChekiDirection } from "~/types/ChekiDirection";
@@ -299,3 +303,70 @@ export const getBlackOrWhiteByHex = (hex: Hex): Hex => {
 
   return "#FFF" as Hex;
 };
+
+export const CHEKI_REFINE_CHARACTER: {
+  [key in CharacterTag]: (characters: Character[]) => Character[];
+} = {
+  front(characters) {
+    return characters.filter((character) => character.tags.includes("front"));
+  },
+  peace(characters) {
+    return characters.filter((character) => character.tags.includes("peace"));
+  },
+  smile(characters) {
+    return characters.filter((character) => character.tags.includes("smile"));
+  },
+  side(characters) {
+    return characters.filter((character) => character.tags.includes("side"));
+  },
+};
+
+export const getCharactersWithTags = (
+  characterTags: CharacterTag[]
+): Character[] => {
+  const helper = (
+    characters: Character[],
+    tags: CharacterTag[]
+  ): Character[] => {
+    if (!tags.length) {
+      return characters;
+    }
+
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const nextCharacters = CHEKI_REFINE_CHARACTER[tags.shift()!](characters);
+
+    return helper(nextCharacters.length ? nextCharacters : characters, tags);
+  };
+
+  return helper(NONEME_IMAGES, characterTags);
+};
+
+const unique = <T>(array: T[]) =>
+  array.filter((elem, index, self) => self.indexOf(elem) === index);
+
+export const getSelectableCharacterTags = (characterTags: CharacterTag[]) => {
+  const helper = (
+    characterTags: CharacterTag[],
+    selectableTagCombinations: CharacterTag[][]
+  ): CharacterTag[][] => {
+    if (!characterTags.length) {
+      return selectableTagCombinations;
+    }
+
+    const nextCharacterTags = characterTags.slice(1);
+    const nextSelectableTagCombinations = selectableTagCombinations.filter(
+      (ts) => ts.includes(characterTags[0]) && ts.length > 1
+    );
+
+    return helper(
+      nextCharacterTags,
+      nextSelectableTagCombinations.map((ts) =>
+        ts.filter((t) => t !== characterTags[0])
+      )
+    );
+  };
+
+  return unique(helper(characterTags, NONEME_IMAGE_TAGS).flat());
+};
+
+export const getTutorialElementId = (id: string) => `cheki-tutorial-${id}`;

@@ -2,7 +2,12 @@ import { createReducer } from "@reduxjs/toolkit";
 import * as actions from "./actions";
 import { Hex } from "./models";
 import { getDirection, random, updateFrame, updateTrim } from "./utils";
-import { ChekiFilter, CHEKI_DECORATION_COLORS } from "~/constants/cheki";
+import {
+  ChekiFilter,
+  CHEKI_DECORATION_COLORS,
+  CharacterTag,
+} from "~/constants/cheki";
+import { ChekiDecoration } from "~/types/ChekiDecoration";
 import { ChekiDirection } from "~/types/ChekiDirection";
 import { ChekiRectangle } from "~/types/ChekiRectangle";
 import { getImageSizeByDirection } from "~/utils/cheki";
@@ -22,6 +27,8 @@ export type State = {
     hex: Hex;
     id: string | null;
   };
+  decorations: ChekiDecoration[];
+  characterTags: CharacterTag[];
   frame: {
     dataUrl: string;
     index: number;
@@ -60,6 +67,8 @@ const initialState: State = {
     hex: CHEKI_DECORATION_COLORS[0],
     id: null,
   },
+  decorations: [],
+  characterTags: [],
   frame: {
     dataUrl: "",
     index: 0,
@@ -111,6 +120,14 @@ const initialState: State = {
 
 export const reducer = createReducer(initialState, (builder) => {
   builder
+    .addCase(actions.addDecoration.fulfilled, (state, action) => {
+      GA.addDecoration(action.payload.decoration.id);
+
+      return {
+        ...state,
+        decorations: [...state.decorations, action.payload.decoration],
+      };
+    })
     .addCase(actions.addImage.fulfilled, (state, action) => {
       const { createdDate, dataUrl, height, width } = action.payload;
       const { layout } = state;
@@ -143,6 +160,22 @@ export const reducer = createReducer(initialState, (builder) => {
         ...actions.payload,
       },
     }))
+    .addCase(actions.changeCharacterTags, (state, action) => {
+      const { tag } = action.payload;
+
+      let nextTags = [...state.characterTags, action.payload.tag].sort();
+
+      if (state.characterTags.includes(tag)) {
+        nextTags = state.characterTags.filter((t) => t !== tag).sort();
+      }
+
+      GA.changeCharacterFilter(nextTags);
+
+      return {
+        ...state,
+        characterTags: nextTags,
+      };
+    })
     .addCase(actions.changeFilter, (state, action) => {
       GA.changeFilter(action.payload.filter || "none");
 
@@ -176,6 +209,16 @@ export const reducer = createReducer(initialState, (builder) => {
       ...state,
       ...action.payload,
     }))
+    .addCase(actions.removeDecoration, (state, action) => {
+      GA.removeDecoration(action.payload.decorationId);
+
+      return {
+        ...state,
+        decorations: state.decorations.filter(
+          (decoration) => decoration.id !== action.payload.decorationId
+        ),
+      };
+    })
     .addCase(actions.removeImage, () => {
       GA.removeImage();
 
@@ -184,6 +227,10 @@ export const reducer = createReducer(initialState, (builder) => {
         splashed: true,
       };
     })
+    .addCase(actions.resetCharacterTags, (state) => ({
+      ...state,
+      characterTags: [],
+    }))
     .addCase(actions.splashed, (state) => ({
       ...state,
       splashed: true,

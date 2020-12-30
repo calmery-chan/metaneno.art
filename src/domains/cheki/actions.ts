@@ -8,12 +8,29 @@ import {
 } from "./utils";
 import {
   Character,
+  CharacterTag,
   ChekiFilter,
   CHEKI_FRAME_IMAGE_URLS,
-  NONEME_IMAGES,
 } from "~/constants/cheki";
-import { CursorPosition } from "~/utils/cheki";
+import { ChekiDecoration } from "~/types/ChekiDecoration";
+import { CursorPosition, getCharactersWithTags } from "~/utils/cheki";
 import * as GA from "~/utils/cheki/google-analytics";
+
+export const addDecoration = createAsyncThunk<
+  { decoration: ChekiDecoration },
+  { decoration: ChekiDecoration }
+>("CHEKI/ADD_DECORATION", async ({ decoration }) => {
+  const dataUrls = await Promise.all(
+    decoration.layers.map((layer) => convertUrlToDataUrl(layer.url))
+  );
+
+  decoration.layers = decoration.layers.map((decoration, index) => ({
+    ...decoration,
+    url: dataUrls[index],
+  }));
+
+  return { decoration };
+});
 
 export const addImage = createAsyncThunk<
   {
@@ -30,6 +47,10 @@ export const addImage = createAsyncThunk<
 
 export const changeDecorationColor = createAction<{ hex: Hex }>(
   "CHEKI/CHANGE_DECORATION_COLOR"
+);
+
+export const changeCharacterTags = createAction<{ tag: CharacterTag }>(
+  "CHEKI/CHANGE_CHARACTER_TAG"
 );
 
 export const changeFilter = createAction<{ filter: ChekiFilter | null }>(
@@ -54,7 +75,13 @@ export const complete = createAction("CHEKI/COMPLETE");
 
 export const ready = createAction<{ ready: boolean }>("CHEKI/READY");
 
+export const removeDecoration = createAction<{ decorationId: string }>(
+  "CHEKI/REMOVE_DECORATION"
+);
+
 export const removeImage = createAction("CHEKI/REMOVE_IMAGE");
+
+export const resetCharacterTags = createAction("CHEKI/RESET_CHARACTER_TAGS");
 
 export const splashed = createAction("CHEKI/SPLASHED");
 
@@ -62,18 +89,19 @@ export const startImageDragging = createAction<{
   cursorPositions: CursorPosition[];
 }>("CHEKI/START_IMAGE_DRAGGING");
 
-export const take = createAsyncThunk<{ character: Character }>(
-  "CHEKI/TAKE",
-  async () => {
-    const index = Math.floor(Math.random() * NONEME_IMAGES.length);
-    const character = NONEME_IMAGES[index];
-    character.url = await convertUrlToDataUrl(character.url);
+export const take = createAsyncThunk<
+  { character: Character },
+  { characterTags: CharacterTag[] }
+>("CHEKI/TAKE", async ({ characterTags }) => {
+  const characters = getCharactersWithTags(characterTags.concat());
+  const index = Math.floor(Math.random() * characters.length);
+  const character = characters[index];
+  character.url = await convertUrlToDataUrl(character.url);
 
-    GA.takeAPhoto(index);
+  GA.takeAPhoto(index);
 
-    return { character };
-  }
-);
+  return { character };
+});
 
 export const tick = createAction<{ cursorPositions: CursorPosition[] }>(
   "CHEKI/TICK"

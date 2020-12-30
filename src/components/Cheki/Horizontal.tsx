@@ -1,7 +1,7 @@
-import styled from "@emotion/styled";
-import React from "react";
+import { css } from "@emotion/react";
+import { Spacing } from "~/styles/spacing";
 
-const Container = styled.div`
+const container = css`
   width: 100%;
   overflow-x: scroll;
   scrollbar-width: none;
@@ -12,22 +12,16 @@ const Container = styled.div`
   }
 `;
 
-const Children = styled.div`
-  width: fit-content;
+const items = css`
   display: flex;
+  padding: 0 ${Spacing.l}px;
+  width: fit-content;
 `;
 
-export const ChekiHorizontal: React.FC<{ padding?: number }> = ({
-  children,
-  padding,
-}) => (
-  <Container>
-    <Children
-      style={{
-        padding: `0 ${padding}px`,
-      }}
-    >
-      {children}
-    </Children>
-  </Container>
+export const ChekiHorizontal: React.FC<{
+  id?: string;
+}> = ({ children, id }) => (
+  <div css={container} id={id}>
+    <div css={items}>{children}</div>
+  </div>
 );

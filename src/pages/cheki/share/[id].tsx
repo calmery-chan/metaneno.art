@@ -1,7 +1,7 @@
 import { css } from "@emotion/react";
 import { NextPage, NextPageContext } from "next";
 import { useRouter } from "next/router";
-import React, { useCallback, useState } from "react";
+import { useCallback, useState } from "react";
 import { ChekiButton } from "~/components/Cheki/Button";
 import { ChekiColumn } from "~/components/Cheki/Column";
 import { ExternalLink } from "~/components/Cheki/ExternalLink";
@@ -18,25 +18,48 @@ import { Typography } from "~/styles/typography";
 import { getShareImage, useDisplayable } from "~/utils/cheki";
 import { Sentry } from "~/utils/sentry";
 
-type ChekiShareProps = {
+// Styles
+
+const errorMessage = css`
+  ${Typography.S};
+  color: ${Colors.black};
+`;
+
+const image = css`
+  align-items: center;
+  display: flex;
+  flex-grow: 1;
+  height: fit-content;
+  width: 100%;
+`;
+
+const logo = css`
+  height: 96px;
+  margin-bottom: ${Spacing.m}px;
+  margin-top: ${Spacing.l}px;
+`;
+
+// Components
+
+const ChekiShare: NextPage<{
   imageUrl: string | null;
   ogImageUrl: string | null;
-};
-
-const ChekiShare: NextPage<ChekiShareProps> = ({ imageUrl, ogImageUrl }) => {
+}> = ({ imageUrl, ogImageUrl }) => {
   const { push } = useRouter();
   const [size, setSize] = useState<{ width: number; height: number }>();
+
+  // Events
 
   const handleOnUpdateDisplayable = useCallback(
     ({ height, width }) => setSize({ height, width }),
     []
   );
 
-  const ref = useDisplayable<HTMLDivElement>(handleOnUpdateDisplayable);
-
-  // Events
-
   const handleOnClickStartButton = useCallback(() => push("/cheki"), []);
+
+  // Refs
+
+  const ref = useDisplayable<HTMLDivElement>(handleOnUpdateDisplayable);
 
   // Render
 
@@ -59,44 +82,22 @@ const ChekiShare: NextPage<ChekiShareProps> = ({ imageUrl, ogImageUrl }) => {
       }
     >
       <ChekiFlexColumn>
-        <div
-          className="flex justify-center"
-          css={css`
-            height: 96px;
-            margin-bottom: ${Spacing.m}px;
-            margin-top: ${Spacing.l}px;
-          `}
-        >
+        <div className="flex justify-center" css={logo}>
           <ChekiLogo size={96} />
         </div>
-        <div
-          css={css`
-            align-items: center;
-            display: flex;
-            width: 100%;
-            flex-grow: 1;
-            height: fit-content;
-          `}
-          ref={ref}
-        >
+        <div css={image} ref={ref}>
           {imageUrl && (
             <img
               src={imageUrl}
-              css={css`
-                height: ${size?.height || 0}px;
-                width: ${size?.width || 0}px;
-                object-fit: contain;
-              `}
+              className="object-contain"
+              style={{
+                height: `${size?.height || 0}px`,
+                width: `${size?.width || 0}px`,
+              }}
             />
           )}
           {!imageUrl && (
-            <div
-              className="font-bold mx-auto"
-              css={css`
-                ${Typography.S};
-                color: ${Colors.black};
-              `}
-            >
+            <div className="font-bold mx-auto" css={errorMessage}>
               画像が見つかりませんでした
             </div>
           )}

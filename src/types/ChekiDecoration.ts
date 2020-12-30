@@ -1,20 +1,17 @@
-export type ChekiDynamicDecoration = {
-  component: React.FC;
-  id: string;
-};
+import { ChekiDirection } from "./ChekiDirection";
 
-type ChekiStaticDecorationLayer = {
+type ChekiDecorationLayer = {
   height: number;
+  rotate: number;
   url: string;
   width: number;
   x: number;
   y: number;
 };
 
-export type ChekiStaticDecoration = {
-  horizontal: ChekiStaticDecorationLayer[];
+export type ChekiDecoration = {
+  direction: ChekiDirection;
   id: string;
-  vertical: ChekiStaticDecorationLayer[];
+  layers: ChekiDecorationLayer[];
+  thumbnail: string;
 };
-
-export type ChekiDecoration = ChekiDynamicDecoration | ChekiStaticDecoration;
