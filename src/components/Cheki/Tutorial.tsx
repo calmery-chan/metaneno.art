@@ -78,19 +78,22 @@ const SpeechBubbleMessage = styled.div`
 const SpeechBubblePetalImage = styled.img`
   @keyframes petal {
     0% {
-      transform: rotate(0deg);
+      transform: translateY(-2px) rotate(-4deg);
+    }
+    50% {
+      transform: translateY(2px) rotate(8deg);
     }
     100% {
-      transform: rotate(360deg);
+      transform: translateY(-2px) rotate(-4deg);
     }
   }
 
-  width: 16px;
-  height: 16px;
+  width: 24px;
+  height: 24px;
   margin: ${Spacing.m}px;
   margin-top: auto;
   margin-left: ${Spacing.s}px;
-  animation: petal 4s linear infinite;
+  animation: petal 1.2s linear infinite;
 `;
 
 const ProgressBarContainer = styled.div`
@@ -317,10 +320,7 @@ export const Tutorial: React.FC<TutorialProps> = ({
           <SpeechBubbleMessage>
             {scenario.message.slice(0, characterCount)}
           </SpeechBubbleMessage>
-          <SpeechBubblePetalImage
-            src="/images/components/tutorial/petal.svg"
-            alt="花弁"
-          />
+          <SpeechBubblePetalImage src="/cheki/wing.png" alt="羽" />
         </SpeechBubble>
       </SpeechBubbleContainer>
       <ProgressBarContainer>
