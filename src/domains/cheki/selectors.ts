@@ -37,6 +37,10 @@ export const character = createSelector(
   })
 );
 
+// Decorations
+
+export const decorations = ({ cheki }: State) => cheki.decorations;
+
 // Displayable
 
 const displayableHeight = ({ cheki }: State) => cheki.layout.displayable.height;

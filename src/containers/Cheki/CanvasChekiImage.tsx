@@ -4,10 +4,12 @@ import {
   CHEKI_FRAME_MARGIN_TOP,
   CHEKI_HORIZONTAL_FRAME_WIDTH,
   CHEKI_VERTICAL_FRAME_HEIGHT,
+  CHEKI_DECORATIONS,
 } from "~/constants/cheki";
 import { ChekiCanvasImage } from "~/containers/Cheki/CanvasImage";
 import { useDispatch, useSelector } from "~/domains";
 import { selectors, actions } from "~/domains/cheki";
+
 import {
   convertSvgToDataUrl,
   getFrameSizeByDirection,
@@ -15,6 +17,32 @@ import {
 } from "~/utils/cheki";
 
 // Components
+
+export const Decorations: React.FC = () => {
+  const decorationIds = useSelector(selectors.decorations);
+  const decorations = decorationIds.map(
+    (decorationId) =>
+      CHEKI_DECORATIONS[
+        CHEKI_DECORATIONS.findIndex(({ id }) => decorationId === id)
+      ]!
+  );
+
+  return (
+    <>
+      {decorations.map(({ layers }) =>
+        layers.map(({ height, rotate, url, width, x, y }, key) => (
+          <image
+            key={key}
+            transform={`rotate(${rotate}, ${width / 2}, ${height / 2})`}
+            x={x}
+            xlinkHref={url}
+            y={y}
+          />
+        ))
+      )}
+    </>
+  );
+};
 
 const FrameImage: React.FC = () => {
   const dispatch = useDispatch();
@@ -233,6 +261,7 @@ export const ChekiCanvasChekiImage: React.FC<{
     >
       <FrameImage />
       <Image />
+      <Decorations />
       <Shadow />
     </svg>
   );
