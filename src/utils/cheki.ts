@@ -18,8 +18,7 @@ import {
   NONEME_IMAGES,
   NONEME_IMAGE_TAGS,
 } from "~/constants/cheki";
-import { Hex } from "~/domains/cheki/models";
-import { ChekiDirection } from "~/types/ChekiDirection";
+import { Hex, ChekiDirection } from "~/domains/cheki/models";
 
 export const getShareImage = (id: string) =>
   get<Response<{ image_url: string; og_image_url: string }>>(

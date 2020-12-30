@@ -416,7 +416,9 @@ export const ChekiCamera: React.FC = () => {
   // 画像の読み込みは完了しているが、画像の切り取りが完了していない
   return (
     <>
-      <ChekiCanvasTrim emotion={flashAnimation && animationFadeOut} />
+      <ChekiCanvasTrim
+        emotion={flashAnimation ? animationFadeOut : undefined}
+      />
       <ChekiColumn
         css={flashAnimation && animationFadeOut}
         className="flex justify-between"

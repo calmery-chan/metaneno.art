@@ -1,4 +1,3 @@
-import { ChekiDirection } from "~/types/ChekiDirection";
 import { PhantomType } from "~/types/PhantomType";
 
 export type Hex = PhantomType<string, "Hex">;
@@ -34,3 +33,18 @@ export const isDynamicDecoration = (
   decoration: ChekiDecoration
 ): decoration is ChekiDynamicDecoration =>
   Object.prototype.hasOwnProperty.call(decoration, "component");
+
+export type ChekiDirection = "horizontal" | "vertical";
+
+export type ChekiRectangle = {
+  height: number;
+  width: number;
+  x: number;
+  y: number;
+};
+
+export type ChekiScenario = {
+  characterImageUrl?: string;
+  emphasisElementId?: string;
+  message: string;
+};

@@ -1,11 +1,11 @@
 import styled from "@emotion/styled";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import ResizeObserver from "resize-observer-polyfill";
+import { ChekiScenario } from "~/domains/cheki/models";
 import { Colors, GradientColors } from "~/styles/colors";
 import { bounceIn, Mixin } from "~/styles/mixin";
 import { Spacing } from "~/styles/spacing";
 import { Typography, TypographyLineHeight } from "~/styles/typography";
-import { ChekiScenario } from "~/types/ChekiScenario";
 
 // Constants
 

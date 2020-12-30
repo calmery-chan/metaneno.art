@@ -7,11 +7,11 @@ import { Icon } from "./Icon";
 import { ChekiModal, ChekiModalText, ChekiModalTitle } from "./Modal";
 import { ChekiPopup } from "./Popup";
 import { Tutorial } from "./Tutorial";
+import { ChekiScenario } from "~/domains/cheki/models";
 import { Colors, GradientColors } from "~/styles/colors";
 import { Mixin } from "~/styles/mixin";
 import { Spacing } from "~/styles/spacing";
 import { Typography } from "~/styles/typography";
-import { ChekiScenario } from "~/types/ChekiScenario";
 import * as GA from "~/utils/cheki/google-analytics";
 
 const Container = styled.div`

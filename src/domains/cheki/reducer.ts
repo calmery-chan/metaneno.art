@@ -1,6 +1,6 @@
 import { createReducer } from "@reduxjs/toolkit";
 import * as actions from "./actions";
-import { Hex, ChekiDecoration } from "./models";
+import { Hex, ChekiDecoration, ChekiDirection, ChekiRectangle } from "./models";
 import { getDirection, random, updateFrame, updateTrim } from "./utils";
 import {
   ChekiFilter,
@@ -8,8 +8,6 @@ import {
   CharacterTag,
 } from "~/constants/cheki";
 
-import { ChekiDirection } from "~/types/ChekiDirection";
-import { ChekiRectangle } from "~/types/ChekiRectangle";
 import { getImageSizeByDirection } from "~/utils/cheki";
 import * as GA from "~/utils/cheki/google-analytics";
 

@@ -8,7 +8,7 @@ import {
   CHEKI_VERTICAL_IMAGE_WIDTH,
 } from "~/constants/cheki";
 
-import { ChekiDirection } from "~/types/ChekiDirection";
+import { ChekiDirection } from "~/domains/cheki/models";
 import {
   getFrameSizeByDirection,
   getImageSizeByDirection,

@@ -1,5 +1,5 @@
 import { CharacterTag, ChekiFilter } from "~/constants/cheki";
-import { ChekiDirection } from "~/types/ChekiDirection";
+import { ChekiDirection } from "~/domains/cheki/models";
 import { sendEvent } from "~/utils/google-analytics";
 
 const sendChekiEvent = (
