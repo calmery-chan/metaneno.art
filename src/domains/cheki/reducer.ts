@@ -4,7 +4,7 @@ import { getDirection, random, updateFrame, updateTrim } from "./utils";
 import { CharacterTag, ChekiFilter } from "~/constants/cheki";
 import { ChekiDirection } from "~/types/ChekiDirection";
 import { ChekiRectangle } from "~/types/ChekiRectangle";
-import { getCharactersWithTags, getImageSizeByDirection } from "~/utils/cheki";
+import { getImageSizeByDirection } from "~/utils/cheki";
 import * as GA from "~/utils/cheki/google-analytics";
 
 export type State = {
@@ -225,11 +225,8 @@ export const reducer = createReducer(initialState, (builder) => {
         },
       };
     })
-    .addCase(actions.take.fulfilled, (state) => {
-      const characters = getCharactersWithTags(state.characterTags.concat());
-      const index = Math.floor(Math.random() * characters.length);
-      const character = characters[index];
-
+    .addCase(actions.take.fulfilled, (state, action) => {
+      const { character } = action.payload;
       const { image } = state;
       const { height, width } = getImageSizeByDirection(image.direction);
 
