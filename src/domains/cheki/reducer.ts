@@ -105,10 +105,14 @@ const initialState: State = {
 
 export const reducer = createReducer(initialState, (builder) => {
   builder
-    .addCase(actions.addDecoration.fulfilled, (state, action) => ({
-      ...state,
-      decorations: [...state.decorations, action.payload.decoration],
-    }))
+    .addCase(actions.addDecoration.fulfilled, (state, action) => {
+      GA.addDecoration(action.payload.decoration.id);
+
+      return {
+        ...state,
+        decorations: [...state.decorations, action.payload.decoration],
+      };
+    })
     .addCase(actions.addImage.fulfilled, (state, action) => {
       const { dataUrl, height, width } = action.payload;
       const { layout } = state;
@@ -183,6 +187,8 @@ export const reducer = createReducer(initialState, (builder) => {
       ...action.payload,
     }))
     .addCase(actions.removeDecoration, (state, action) => {
+      GA.removeDecoration(action.payload.decorationId);
+
       return {
         ...state,
         decorations: state.decorations.filter(

@@ -65,3 +65,13 @@ export const changeCharacterFilter = (characterTags: CharacterTag[]) =>
   sendChekiEvent("filter_by_character_tag", {
     label: characterTags.sort().join(","),
   });
+
+export const addDecoration = (decorationId: string) =>
+  sendChekiEvent("add_decoration", {
+    label: decorationId,
+  });
+
+export const removeDecoration = (decorationId: string) =>
+  sendChekiEvent("remove_decoration", {
+    label: decorationId,
+  });
