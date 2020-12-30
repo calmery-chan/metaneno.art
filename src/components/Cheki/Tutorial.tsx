@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import ResizeObserver from "resize-observer-polyfill";
 import { Colors, GradientColors } from "~/styles/colors";
-import { Mixin } from "~/styles/mixin";
+import { bounceIn, Mixin } from "~/styles/mixin";
 import { Spacing } from "~/styles/spacing";
 import { Typography, TypographyLineHeight } from "~/styles/typography";
 
@@ -50,6 +50,9 @@ const SpeechBubbleContainer = styled.div`
 `;
 
 const SpeechBubble = styled.div`
+  ${Mixin.animation};
+  ${bounceIn};
+
   width: 100%;
   max-width: ${SPEECH_BUBBLE_MAX_WIDTH}px;
   height: ${Spacing.m * 2 + TypographyLineHeight.S * 3}px;
@@ -312,10 +315,7 @@ export const Tutorial: React.FC<TutorialProps> = ({
           top: `${speechBubbleY}px`,
         }}
       >
-        <SpeechBubble
-          className="animate__bounceIn"
-          key={scenario.emphasisElementId}
-        >
+        <SpeechBubble key={scenario.emphasisElementId}>
           <SpeechBubbleNoCharacterImage />
           <SpeechBubbleMessage>
             {scenario.message.slice(0, characterCount)}

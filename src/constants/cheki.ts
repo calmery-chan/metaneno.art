@@ -250,4 +250,7 @@ export const FILTERS_PAGE_SCENARIO = [
     emphasisElementId: getTutorialElementId("filters"),
     message: "ここにはフィルターが表示されているよ",
   },
+  {
+    message: "ここにはフィルターが表示されているよ",
+  },
 ];
