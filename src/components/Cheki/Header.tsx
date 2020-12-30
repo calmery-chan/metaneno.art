@@ -33,6 +33,10 @@ const Container = styled.div`
   }
 `;
 
+const help = css`
+  margin-right: ${Spacing.l}px;
+`;
+
 const Contributor: React.FC<{
   contribution: string;
   icon: string;
@@ -137,11 +141,21 @@ export const ChekiHeader: React.FC<{ scenario?: ChekiScenario[] }> = ({
           src="/cheki/close.svg"
           width="24px"
         />
-        {scenario && (
+        <div className="flex ml-auto">
+          {scenario && (
+            <Icon
+              alt="ヘルプ"
+              css={help}
+              height="24px"
+              onClick={handleOnClickHelpButton}
+              src={isTutorial ? "/cheki/help.selected.svg" : "/cheki/help.svg"}
+              width="24px"
+            />
+          )}
           <Icon
-            alt="ヘルプ"
+            alt="インフォメーション"
             height="24px"
-            onClick={handleOnClickHelpButton}
+            onClick={handleOnClickInformation}
             src={
               information
                 ? "/cheki/information.selected.svg"
@@ -149,18 +163,7 @@ export const ChekiHeader: React.FC<{ scenario?: ChekiScenario[] }> = ({
             }
             width="24px"
           />
-        )}
-        <Icon
-          alt="インフォメーション"
-          height="24px"
-          onClick={handleOnClickInformation}
-          src={
-            information
-              ? "/cheki/information.selected.svg"
-              : "/cheki/information.svg"
-          }
-          width="24px"
-        />
+        </div>
       </Container>
 
       <ChekiModal
