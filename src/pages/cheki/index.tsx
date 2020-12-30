@@ -420,6 +420,7 @@ export const ChekiCamera: React.FC = () => {
         css={flashAnimation && animationFadeOut}
         className="flex justify-between"
         margin
+        style={{ height: "max-content" }}
       >
         <div
           className="flex items-center"
