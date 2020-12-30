@@ -11,12 +11,25 @@ import {
   ChekiFilter,
   CHEKI_FRAME_IMAGE_URLS,
 } from "~/constants/cheki";
+import { ChekiDecoration } from "~/types/ChekiDecoration";
 import { CursorPosition, getCharactersWithTags } from "~/utils/cheki";
 import * as GA from "~/utils/cheki/google-analytics";
 
-export const addDecoration = createAction<{ decorationId: string }>(
-  "CHEKI/ADD_DECORATION"
-);
+export const addDecoration = createAsyncThunk<
+  { decoration: ChekiDecoration },
+  { decoration: ChekiDecoration }
+>("CHEKI/ADD_DECORATION", async ({ decoration }) => {
+  const dataUrls = await Promise.all(
+    decoration.layers.map((layer) => convertUrlToDataUrl(layer.url))
+  );
+
+  decoration.layers = decoration.layers.map((decoration, index) => ({
+    ...decoration,
+    url: dataUrls[index],
+  }));
+
+  return { decoration };
+});
 
 export const addImage = createAsyncThunk<
   {

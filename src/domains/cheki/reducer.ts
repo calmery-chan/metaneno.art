@@ -2,6 +2,7 @@ import { createReducer } from "@reduxjs/toolkit";
 import * as actions from "./actions";
 import { getDirection, random, updateFrame, updateTrim } from "./utils";
 import { CharacterTag, ChekiFilter } from "~/constants/cheki";
+import { ChekiDecoration } from "~/types/ChekiDecoration";
 import { ChekiDirection } from "~/types/ChekiDirection";
 import { ChekiRectangle } from "~/types/ChekiRectangle";
 import { getImageSizeByDirection } from "~/utils/cheki";
@@ -17,7 +18,7 @@ export type State = {
     x: number;
     y: number;
   } | null;
-  decorations: string[];
+  decorations: ChekiDecoration[];
   characterTags: CharacterTag[];
   frame: {
     dataUrl: string;
@@ -104,9 +105,9 @@ const initialState: State = {
 
 export const reducer = createReducer(initialState, (builder) => {
   builder
-    .addCase(actions.addDecoration, (state, action) => ({
+    .addCase(actions.addDecoration.fulfilled, (state, action) => ({
       ...state,
-      decorations: [...state.decorations, action.payload.decorationId],
+      decorations: [...state.decorations, action.payload.decoration],
     }))
     .addCase(actions.addImage.fulfilled, (state, action) => {
       const { dataUrl, height, width } = action.payload;
@@ -185,7 +186,7 @@ export const reducer = createReducer(initialState, (builder) => {
       return {
         ...state,
         decorations: state.decorations.filter(
-          (decorationId) => decorationId !== action.payload.decorationId
+          (decoration) => decoration.id !== action.payload.decorationId
         ),
       };
     })

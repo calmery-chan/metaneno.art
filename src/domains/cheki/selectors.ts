@@ -144,16 +144,21 @@ export const decorations = ({ cheki }: State) => cheki.decorations;
 export const addableDecorations = createSelector(
   decorations,
   imageDirection,
-  (decorations, direction) =>
-    CHEKI_DECORATIONS.filter(
+  (decorations, direction) => {
+    const decorationIds = decorations.map(({ id }) => id);
+
+    return CHEKI_DECORATIONS.filter(
       (decoration) =>
         direction === decoration.direction &&
-        !decorations.includes(decoration.id)
-    )
+        !decorationIds.includes(decoration.id)
+    );
+  }
 );
 
 export const addedDecorations = createSelector(decorations, (decorations) =>
-  CHEKI_DECORATIONS.filter((decoration) => decorations.includes(decoration.id))
+  CHEKI_DECORATIONS.filter((decoration) =>
+    decorations.map(({ id }) => id).includes(decoration.id)
+  )
 );
 
 export const addedDecorationIds = createSelector(

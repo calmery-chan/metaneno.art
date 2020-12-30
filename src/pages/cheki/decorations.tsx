@@ -16,6 +16,7 @@ import { useDispatch, useSelector } from "~/domains";
 import { actions, selectors } from "~/domains/cheki";
 import { Mixin } from "~/styles/mixin";
 import { Spacing } from "~/styles/spacing";
+import { ChekiDecoration } from "~/types/ChekiDecoration";
 
 const Decoration = styled.div<{ selected: boolean }>`
   ${Mixin.clickable};
@@ -75,9 +76,12 @@ const Decorations: NextPage = () => {
   const addedDecorationIds = useSelector(selectors.addedDecorationIds);
   const availableDecorations = useSelector(selectors.availableDecorations);
 
-  const handleOnClickAddDecoration = useCallback((decorationId: string) => {
-    dispatch(actions.addDecoration({ decorationId }));
-  }, []);
+  const handleOnClickAddDecoration = useCallback(
+    (decoration: ChekiDecoration) => {
+      dispatch(actions.addDecoration({ decoration }));
+    },
+    []
+  );
 
   const handleOnClickCloseModalButton = useCallback(() => setOpen(false), []);
 
@@ -141,7 +145,7 @@ const Decorations: NextPage = () => {
                 key={key}
                 onClick={
                   !selected
-                    ? () => handleOnClickAddDecoration(decoration.id)
+                    ? () => handleOnClickAddDecoration(decoration)
                     : undefined
                 }
                 selected={selected}

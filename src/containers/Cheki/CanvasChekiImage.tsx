@@ -4,7 +4,6 @@ import {
   CHEKI_FRAME_MARGIN_TOP,
   CHEKI_HORIZONTAL_FRAME_WIDTH,
   CHEKI_VERTICAL_FRAME_HEIGHT,
-  CHEKI_DECORATIONS,
 } from "~/constants/cheki";
 import { ChekiCanvasImage } from "~/containers/Cheki/CanvasImage";
 import { useDispatch, useSelector } from "~/domains";
@@ -19,14 +18,7 @@ import {
 // Components
 
 export const Decorations: React.FC = () => {
-  const decorationIds = useSelector(selectors.decorations);
-  const decorations = decorationIds.map(
-    (decorationId) =>
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      CHEKI_DECORATIONS[
-        CHEKI_DECORATIONS.findIndex(({ id }) => decorationId === id)
-      ]!
-  );
+  const decorations = useSelector(selectors.decorations);
 
   return (
     <>
