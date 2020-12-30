@@ -155,3 +155,14 @@ export const addableDecorations = createSelector(
 export const addedDecorations = createSelector(decorations, (decorations) =>
   CHEKI_DECORATIONS.filter((decoration) => decorations.includes(decoration.id))
 );
+
+export const addedDecorationIds = createSelector(
+  addedDecorations,
+  (addedDecorations) => addedDecorations.map(({ id }) => id)
+);
+
+export const availableDecorations = createSelector(
+  imageDirection,
+  (direction) =>
+    CHEKI_DECORATIONS.filter((decoration) => decoration.direction === direction)
+);

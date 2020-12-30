@@ -2,7 +2,6 @@ import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 import { NextPage } from "next";
 import React, { useCallback, useState } from "react";
-import { AddableDecorationListItem } from "../../components/Cheki/AddableDecorationListItem";
 import { ChekiColumn } from "~/components/Cheki/Column";
 import { ChekiFlexColumn } from "~/components/Cheki/FlexColumn";
 import { ChekiHeader } from "~/components/Cheki/Header";
@@ -18,13 +17,17 @@ import { actions, selectors } from "~/domains/cheki";
 import { Mixin } from "~/styles/mixin";
 import { Spacing } from "~/styles/spacing";
 
-const Container = styled.div`
-  display: grid;
-  gap: 4px;
-  grid-template-columns: repeat(auto-fit, 96px);
-  margin: 0 auto;
-  max-width: 100%;
-  width: fit-content;
+const Decoration = styled.div<{ selected: boolean }>`
+  ${Mixin.clickable};
+
+  height: 96px;
+  width: 96px;
+
+  ${({ selected }) =>
+    selected &&
+    css`
+      opacity: 0.48;
+    `}
 `;
 
 const items = css`
@@ -40,6 +43,14 @@ const item = css`
   }
 `;
 
+const modal = styled.div`
+  display: grid;
+  gap: 4px;
+  grid-template-columns: repeat(auto-fit, 96px);
+  margin: 0 auto;
+  max-width: 100%;
+`;
+
 const openModal = css`
   ${Mixin.clickable};
   ${item};
@@ -50,11 +61,19 @@ const removeButton = css`
   top: ${Spacing.xs}px;
 `;
 
+const thumbnail = css`
+  height: 100%;
+  object-fit: contain;
+  user-select: none;
+  width: 100%;
+`;
+
 const Decorations: NextPage = () => {
   const [isOpen, setOpen] = useState(false);
   const dispatch = useDispatch();
-  const addableDecorations = useSelector(selectors.addableDecorations);
   const addedDecorations = useSelector(selectors.addedDecorations);
+  const addedDecorationIds = useSelector(selectors.addedDecorationIds);
+  const availableDecorations = useSelector(selectors.availableDecorations);
 
   const handleOnClickAddDecoration = useCallback((decorationId: string) => {
     dispatch(actions.addDecoration({ decorationId }));
@@ -113,15 +132,29 @@ const Decorations: NextPage = () => {
         onClickCloseButton={handleOnClickCloseModalButton}
         visible={isOpen}
       >
-        <Container>
-          {addableDecorations.map((decoration, key) => (
-            <AddableDecorationListItem
-              key={key}
-              onClick={() => handleOnClickAddDecoration(decoration.id)}
-              thumbnail={decoration.thumbnail}
-            />
-          ))}
-        </Container>
+        <div css={modal}>
+          {availableDecorations.map((decoration, key) => {
+            const selected = addedDecorationIds.includes(decoration.id);
+
+            return (
+              <Decoration
+                key={key}
+                onClick={
+                  !selected
+                    ? () => handleOnClickAddDecoration(decoration.id)
+                    : undefined
+                }
+                selected={selected}
+              >
+                <img
+                  css={thumbnail}
+                  src={decoration.thumbnail}
+                  alt="デコレーション素材"
+                />
+              </Decoration>
+            );
+          })}
+        </div>
       </ChekiModal>
     </>
   );
