@@ -6,6 +6,7 @@ export const ChekiCanvasDecorationLayer: React.FC = () => {
   const { decorations: decorationIds } = useSelector(selectors.cheki);
   const decorations = decorationIds.map(
     (decorationId) =>
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       CHEKI_DECORATIONS[
         CHEKI_DECORATIONS.findIndex(({ id }) => decorationId === id)
       ]!

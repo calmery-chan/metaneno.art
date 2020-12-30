@@ -22,6 +22,7 @@ export const Decorations: React.FC = () => {
   const decorationIds = useSelector(selectors.decorations);
   const decorations = decorationIds.map(
     (decorationId) =>
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       CHEKI_DECORATIONS[
         CHEKI_DECORATIONS.findIndex(({ id }) => decorationId === id)
       ]!
