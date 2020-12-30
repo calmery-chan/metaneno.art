@@ -1,14 +1,12 @@
 import { css } from "@emotion/react";
 import { NextPage } from "next";
-import { useRouter } from "next/router";
 import platform from "platform";
-import React, { useCallback, useState } from "react";
+import React, { useCallback } from "react";
 import { ChekiColumn } from "~/components/Cheki/Column";
 import { ChekiFlexColumn } from "~/components/Cheki/FlexColumn";
 import { ChekiGradientText } from "~/components/Cheki/GradientText";
 import { ChekiHeader } from "~/components/Cheki/Header";
 import { ChekiHorizontal } from "~/components/Cheki/Horizontal";
-import { Tutorial } from "~/components/Cheki/Tutorial";
 import {
   ChekiFilter,
   CHEKI_FILTERS,
@@ -26,7 +24,6 @@ import { Colors } from "~/styles/colors";
 import { Spacing } from "~/styles/spacing";
 import { Typography } from "~/styles/typography";
 import { getTutorialElementId } from "~/utils/cheki";
-import * as GA from "~/utils/cheki/google-analytics";
 
 // Styles
 
@@ -73,8 +70,6 @@ const Thumbnail: React.FC<{
 export const ChekiFilters: NextPage = () => {
   const dispatch = useDispatch();
   const selectedFilter = useSelector(selectors.imageFilter);
-  const [isTutorial, setIsTutorial] = useState(true);
-  const { pathname } = useRouter();
 
   // Events
 
@@ -82,16 +77,6 @@ export const ChekiFilters: NextPage = () => {
     (filter: ChekiFilter | null) => dispatch(actions.changeFilter({ filter })),
     []
   );
-
-  const handleOnCompleteTutorial = useCallback(() => {
-    setIsTutorial(false);
-    GA.completeTutorial(pathname);
-  }, [pathname]);
-
-  const handleOnStopTutorial = useCallback(() => {
-    setIsTutorial(false);
-    GA.stopTutorial(pathname);
-  }, [pathname]);
 
   // Render
 
@@ -101,7 +86,7 @@ export const ChekiFilters: NextPage = () => {
     <>
       <ChekiApp>
         <ChekiFlexColumn>
-          <ChekiHeader />
+          <ChekiHeader scenario={FILTERS_PAGE_SCENARIO} />
           <ChekiCanvas>
             <ChekiCanvasTrimedImage />
           </ChekiCanvas>
@@ -139,14 +124,6 @@ export const ChekiFilters: NextPage = () => {
           <ChekiNavigation />
         </ChekiFlexColumn>
       </ChekiApp>
-
-      {isTutorial && (
-        <Tutorial
-          scenarios={FILTERS_PAGE_SCENARIO}
-          onComplete={handleOnCompleteTutorial}
-          onStop={handleOnStopTutorial}
-        />
-      )}
     </>
   );
 };

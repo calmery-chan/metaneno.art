@@ -5,6 +5,7 @@ import { Colors, GradientColors } from "~/styles/colors";
 import { bounceIn, Mixin } from "~/styles/mixin";
 import { Spacing } from "~/styles/spacing";
 import { Typography, TypographyLineHeight } from "~/styles/typography";
+import { ChekiScenario } from "~/types/ChekiScenario";
 
 // Constants
 
@@ -124,11 +125,7 @@ const ProgressBar = styled.div<{ scenarioProgress: number }>`
 // Types
 
 interface TutorialProps {
-  scenarios: {
-    characterImageUrl?: string;
-    emphasisElementId?: string;
-    message: string;
-  }[];
+  scenarios: ChekiScenario[];
   onComplete: () => void;
   onStop: () => void;
 }
