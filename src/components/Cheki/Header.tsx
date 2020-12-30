@@ -112,7 +112,10 @@ export const ChekiHeader: React.FC<{ scenario?: ChekiScenario[] }> = ({
 
   const handleOnClickBackToTop = useCallback(() => push("/"), []);
   const handleOnClickClosePopup = useCallback(() => setBackToTop(false), []);
-  const handleOnClickHelpButton = useCallback(() => setIsTutorial(true), []);
+  const handleOnClickTutorialButton = useCallback(
+    () => setIsTutorial(true),
+    []
+  );
   const handleOnClickInformation = useCallback(
     () => setInformation(!information),
     [information]
@@ -144,11 +147,15 @@ export const ChekiHeader: React.FC<{ scenario?: ChekiScenario[] }> = ({
         <div className="flex ml-auto">
           {scenario && (
             <Icon
-              alt="ヘルプ"
+              alt="チュートリアル"
               css={help}
               height="24px"
-              onClick={handleOnClickHelpButton}
-              src={isTutorial ? "/cheki/help.selected.svg" : "/cheki/help.svg"}
+              onClick={handleOnClickTutorialButton}
+              src={
+                isTutorial
+                  ? "/cheki/tutorial.selected.svg"
+                  : "/cheki/tutorial.svg"
+              }
               width="24px"
             />
           )}
