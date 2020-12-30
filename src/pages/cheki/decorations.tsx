@@ -7,8 +7,6 @@ import { ChekiModal } from "~/components/Cheki/Modal";
 import { AddableDecorationList } from "~/containers/Cheki/AddableDecorationList";
 import { ChekiApp } from "~/containers/Cheki/App";
 import { ChekiCanvas } from "~/containers/Cheki/Canvas";
-import { ChekiCanvasContainer } from "~/containers/Cheki/CanvasContainer";
-import { ChekiCanvasFrames } from "~/containers/Cheki/CanvasFrames";
 import { ChekiNavigation } from "~/containers/Cheki/Navigation";
 
 const Decorations: NextPage = () => {
@@ -19,11 +17,7 @@ const Decorations: NextPage = () => {
       <ChekiApp>
         <ChekiFlexColumn>
           <ChekiHeader />
-          <ChekiCanvasContainer>
-            <ChekiCanvas>
-              <ChekiCanvasFrames />
-            </ChekiCanvas>
-          </ChekiCanvasContainer>
+          <ChekiCanvas />
           <ChekiColumn>
             <button onClick={() => setOpen(true)}>Open</button>
           </ChekiColumn>

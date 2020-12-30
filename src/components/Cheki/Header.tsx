@@ -6,10 +6,13 @@ import { ExternalLink } from "./ExternalLink";
 import { Icon } from "./Icon";
 import { ChekiModal, ChekiModalText, ChekiModalTitle } from "./Modal";
 import { ChekiPopup } from "./Popup";
+import { Tutorial } from "./Tutorial";
 import { Colors, GradientColors } from "~/styles/colors";
 import { Mixin } from "~/styles/mixin";
 import { Spacing } from "~/styles/spacing";
 import { Typography } from "~/styles/typography";
+import { ChekiScenario } from "~/types/ChekiScenario";
+import * as GA from "~/utils/cheki/google-analytics";
 
 const Container = styled.div`
   box-sizing: content-box;
@@ -28,6 +31,10 @@ const Container = styled.div`
       margin-left: auto;
     }
   }
+`;
+
+const help = css`
+  margin-right: ${Spacing.l}px;
 `;
 
 const Contributor: React.FC<{
@@ -95,13 +102,20 @@ const Contributor: React.FC<{
   </ExternalLink>
 );
 
-export const ChekiHeader: React.FC = () => {
-  const { push } = useRouter();
+export const ChekiHeader: React.FC<{ scenario?: ChekiScenario[] }> = ({
+  scenario,
+}) => {
+  const { pathname, push } = useRouter();
   const [information, setInformation] = useState(false);
   const [backToTop, setBackToTop] = useState(false);
+  const [isTutorial, setIsTutorial] = useState(false);
 
   const handleOnClickBackToTop = useCallback(() => push("/"), []);
   const handleOnClickClosePopup = useCallback(() => setBackToTop(false), []);
+  const handleOnClickTutorialButton = useCallback(() => {
+    setIsTutorial(true);
+    GA.startTutorial(pathname);
+  }, [pathname]);
   const handleOnClickInformation = useCallback(
     () => setInformation(!information),
     [information]
@@ -111,6 +125,14 @@ export const ChekiHeader: React.FC = () => {
     () => push("/cheki/terms-of-service"),
     []
   );
+  const handleOnCompleteTutorial = useCallback(() => {
+    setIsTutorial(false);
+    GA.completeTutorial(pathname);
+  }, [pathname]);
+  const handleOnStopTutorial = useCallback(() => {
+    setIsTutorial(false);
+    GA.stopTutorial(pathname);
+  }, [pathname]);
 
   return (
     <>
@@ -122,17 +144,33 @@ export const ChekiHeader: React.FC = () => {
           src="/cheki/close.svg"
           width="24px"
         />
-        <Icon
-          alt="インフォメーション"
-          height="24px"
-          onClick={handleOnClickInformation}
-          src={
-            information
-              ? "/cheki/information.selected.svg"
-              : "/cheki/information.svg"
-          }
-          width="24px"
-        />
+        <div className="flex ml-auto">
+          {scenario && (
+            <Icon
+              alt="チュートリアル"
+              css={help}
+              height="24px"
+              onClick={handleOnClickTutorialButton}
+              src={
+                isTutorial
+                  ? "/cheki/tutorial.selected.svg"
+                  : "/cheki/tutorial.svg"
+              }
+              width="24px"
+            />
+          )}
+          <Icon
+            alt="インフォメーション"
+            height="24px"
+            onClick={handleOnClickInformation}
+            src={
+              information
+                ? "/cheki/information.selected.svg"
+                : "/cheki/information.svg"
+            }
+            width="24px"
+          />
+        </div>
       </Container>
 
       <ChekiModal
@@ -220,6 +258,14 @@ export const ChekiHeader: React.FC = () => {
           <br />
           編集中の内容は全て失われます！
         </ChekiPopup>
+      )}
+
+      {scenario && isTutorial && (
+        <Tutorial
+          scenarios={scenario}
+          onComplete={handleOnCompleteTutorial}
+          onStop={handleOnStopTutorial}
+        />
       )}
     </>
   );

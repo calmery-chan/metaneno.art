@@ -1,10 +1,10 @@
 import { createReducer } from "@reduxjs/toolkit";
 import * as actions from "./actions";
 import { getDirection, random, updateFrame, updateTrim } from "./utils";
-import { ChekiFilter } from "~/constants/cheki";
+import { CharacterTag, ChekiFilter } from "~/constants/cheki";
 import { ChekiDirection } from "~/types/ChekiDirection";
 import { ChekiRectangle } from "~/types/ChekiRectangle";
-import { getImageSizeByDirection } from "~/utils/cheki";
+import { getCharactersWithTags, getImageSizeByDirection } from "~/utils/cheki";
 import * as GA from "~/utils/cheki/google-analytics";
 
 export type State = {
@@ -18,6 +18,7 @@ export type State = {
     y: number;
   } | null;
   decorations: string[];
+  characterTags: CharacterTag[];
   frame: {
     dataUrl: string;
     index: number;
@@ -52,6 +53,7 @@ export type State = {
 const initialState: State = {
   character: null,
   decorations: [],
+  characterTags: [],
   frame: {
     dataUrl: "",
     index: 0,
@@ -130,6 +132,22 @@ export const reducer = createReducer(initialState, (builder) => {
         temporaries: initialState.temporaries,
       };
     })
+    .addCase(actions.changeCharacterTags, (state, action) => {
+      const { tag } = action.payload;
+
+      let nextTags = [...state.characterTags, action.payload.tag].sort();
+
+      if (state.characterTags.includes(tag)) {
+        nextTags = state.characterTags.filter((t) => t !== tag).sort();
+      }
+
+      GA.changeCharacterFilter(nextTags);
+
+      return {
+        ...state,
+        characterTags: nextTags,
+      };
+    })
     .addCase(actions.changeFilter, (state, action) => {
       GA.changeFilter(action.payload.filter || "none");
 
@@ -171,6 +189,10 @@ export const reducer = createReducer(initialState, (builder) => {
         splashed: true,
       };
     })
+    .addCase(actions.resetCharacterTags, (state) => ({
+      ...state,
+      characterTags: [],
+    }))
     .addCase(actions.splashed, (state) => ({
       ...state,
       splashed: true,
@@ -195,8 +217,11 @@ export const reducer = createReducer(initialState, (builder) => {
         },
       };
     })
-    .addCase(actions.take.fulfilled, (state, action) => {
-      const { character } = action.payload;
+    .addCase(actions.take, (state) => {
+      const characters = getCharactersWithTags(state.characterTags.concat());
+      const index = Math.floor(Math.random() * characters.length);
+      const character = characters[index];
+
       const { image } = state;
       const { height, width } = getImageSizeByDirection(image.direction);
 
