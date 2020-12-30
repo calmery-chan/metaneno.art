@@ -1,5 +1,5 @@
 import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
-import { Hex } from "./models";
+import { Hex, ChekiDecoration, isDynamicDecoration } from "./models";
 import {
   convertUrlToDataUrl,
   convertUrlToImage,
@@ -10,24 +10,31 @@ import {
   Character,
   CharacterTag,
   ChekiFilter,
+  CHEKI_DECORATIONS,
   CHEKI_FRAME_IMAGE_URLS,
 } from "~/constants/cheki";
-import { ChekiDecoration } from "~/types/ChekiDecoration";
+
 import { CursorPosition, getCharactersWithTags } from "~/utils/cheki";
 import * as GA from "~/utils/cheki/google-analytics";
 
 export const addDecoration = createAsyncThunk<
   { decoration: ChekiDecoration },
-  { decoration: ChekiDecoration }
->("CHEKI/ADD_DECORATION", async ({ decoration }) => {
-  const dataUrls = await Promise.all(
-    decoration.layers.map((layer) => convertUrlToDataUrl(layer.url))
-  );
+  { decorationId: string }
+>("CHEKI/ADD_DECORATION", async ({ decorationId }) => {
+  const decoration = CHEKI_DECORATIONS.find(
+    (decoration) => decoration.id === decorationId
+  )!;
 
-  decoration.layers = decoration.layers.map((decoration, index) => ({
-    ...decoration,
-    url: dataUrls[index],
-  }));
+  if (!isDynamicDecoration(decoration)) {
+    const dataUrls = await Promise.all(
+      decoration.layers.map((layer) => convertUrlToDataUrl(layer.url))
+    );
+
+    decoration.layers = decoration.layers.map((decoration, index) => ({
+      ...decoration,
+      url: dataUrls[index],
+    }));
+  }
 
   return { decoration };
 });

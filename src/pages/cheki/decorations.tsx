@@ -16,7 +16,6 @@ import { useDispatch, useSelector } from "~/domains";
 import { actions, selectors } from "~/domains/cheki";
 import { Mixin } from "~/styles/mixin";
 import { Spacing } from "~/styles/spacing";
-import { ChekiDecoration } from "~/types/ChekiDecoration";
 
 const Decoration = styled.div<{ selected: boolean }>`
   ${Mixin.clickable};
@@ -77,9 +76,7 @@ const Decorations: NextPage = () => {
   const availableDecorations = useSelector(selectors.availableDecorations);
 
   const handleOnClickAddDecoration = useCallback(
-    (decoration: ChekiDecoration) => {
-      dispatch(actions.addDecoration({ decoration }));
-    },
+    (decorationId: string) => dispatch(actions.addDecoration({ decorationId })),
     []
   );
 
@@ -145,7 +142,7 @@ const Decorations: NextPage = () => {
                 key={key}
                 onClick={
                   !selected
-                    ? () => handleOnClickAddDecoration(decoration)
+                    ? () => handleOnClickAddDecoration(decoration.id)
                     : undefined
                 }
                 selected={selected}

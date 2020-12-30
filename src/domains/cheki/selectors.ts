@@ -3,6 +3,7 @@
 import { createSelector } from "@reduxjs/toolkit";
 import { State } from "../";
 import { CHEKI_DECORATIONS } from "~/constants/cheki";
+import { isDynamicDecoration } from "~/domains/cheki/models";
 import { getSelectableCharacterTags } from "~/utils/cheki";
 
 const characterHeight = ({ cheki }: State) => cheki.character!.height;
@@ -149,8 +150,9 @@ export const addableDecorations = createSelector(
 
     return CHEKI_DECORATIONS.filter(
       (decoration) =>
-        direction === decoration.direction &&
-        !decorationIds.includes(decoration.id)
+        isDynamicDecoration(decoration) ||
+        (direction === decoration.direction &&
+          !decorationIds.includes(decoration.id))
     );
   }
 );
@@ -169,5 +171,8 @@ export const addedDecorationIds = createSelector(
 export const availableDecorations = createSelector(
   imageDirection,
   (direction) =>
-    CHEKI_DECORATIONS.filter((decoration) => decoration.direction === direction)
+    CHEKI_DECORATIONS.filter(
+      (decoration) =>
+        isDynamicDecoration(decoration) || decoration.direction === direction
+    )
 );

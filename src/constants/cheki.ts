@@ -1,6 +1,6 @@
 import { DefaultSeoProps } from "next-seo";
-import { Hex } from "~/domains/cheki/models";
-import { ChekiDecoration } from "~/types/ChekiDecoration";
+import { Hex, ChekiDecoration } from "~/domains/cheki/models";
+
 import { getTutorialElementId } from "~/utils/cheki";
 
 export const CHEKI_FRAME_MARGIN_BOTTOM = 304;
@@ -215,6 +215,11 @@ export const CHEKI_DECORATIONS: ChekiDecoration[] = [
         y: 0,
       },
     ],
+    thumbnail: "/cheki/decorations/2.png",
+  },
+  {
+    id: "created-date",
+    component: "created-date",
     thumbnail: "/cheki/decorations/2.png",
   },
 ];

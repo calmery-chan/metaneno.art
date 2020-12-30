@@ -9,6 +9,10 @@ import {
 import { ChekiCanvasImage } from "~/containers/Cheki/CanvasImage";
 import { useDispatch, useSelector } from "~/domains";
 import { selectors, actions } from "~/domains/cheki";
+import {
+  ChekiStaticDecoration,
+  isDynamicDecoration,
+} from "~/domains/cheki/models";
 
 import {
   convertSvgToDataUrl,
@@ -18,22 +22,41 @@ import {
 
 // Components
 
+const StaticDecoration: React.FC<{ decoration: ChekiStaticDecoration }> = ({
+  decoration,
+}) => (
+  <>
+    {decoration.layers.map(({ height, rotate, url, width, x, y }, key) => (
+      <image
+        key={key}
+        transform={`rotate(${rotate}, ${width / 2}, ${height / 2})`}
+        x={x}
+        xlinkHref={url}
+        y={y}
+      />
+    ))}
+  </>
+);
+
 export const Decorations: React.FC = () => {
   const decorations = useSelector(selectors.decorations);
 
   return (
     <>
-      {decorations.map(({ layers }) =>
-        layers.map(({ height, rotate, url, width, x, y }, key) => (
-          <image
-            key={key}
-            transform={`rotate(${rotate}, ${width / 2}, ${height / 2})`}
-            x={x}
-            xlinkHref={url}
-            y={y}
-          />
-        ))
-      )}
+      {decorations.map((decoration, key) => {
+        if (isDynamicDecoration(decoration)) {
+          const { component } = decoration;
+
+          switch (component) {
+            case "created-date":
+              return <ChekiDate key={key} />;
+          }
+
+          return null;
+        }
+
+        return <StaticDecoration decoration={decoration} key={key} />;
+      })}
     </>
   );
 };
@@ -256,7 +279,6 @@ export const ChekiCanvasChekiImage: React.FC<{
       <FrameImage />
       <Image />
       <Decorations />
-      <ChekiDate />
       <Shadow />
     </svg>
   );

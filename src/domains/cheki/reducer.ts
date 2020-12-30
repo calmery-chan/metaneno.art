@@ -1,13 +1,13 @@
 import { createReducer } from "@reduxjs/toolkit";
 import * as actions from "./actions";
-import { Hex } from "./models";
+import { Hex, ChekiDecoration } from "./models";
 import { getDirection, random, updateFrame, updateTrim } from "./utils";
 import {
   ChekiFilter,
   CHEKI_DECORATION_COLORS,
   CharacterTag,
 } from "~/constants/cheki";
-import { ChekiDecoration } from "~/types/ChekiDecoration";
+
 import { ChekiDirection } from "~/types/ChekiDirection";
 import { ChekiRectangle } from "~/types/ChekiRectangle";
 import { getImageSizeByDirection } from "~/utils/cheki";
