@@ -9,7 +9,7 @@ import { CursorPosition } from "~/utils/cheki";
 import * as GA from "~/utils/cheki/google-analytics";
 
 export const addDecoration = createAction<{ decorationId: string }>(
-  "CHEKI/CHANGE_DECORATION"
+  "CHEKI/ADD_DECORATION"
 );
 
 export const addImage = createAsyncThunk<
@@ -48,6 +48,10 @@ export const changeFrame = createAsyncThunk<
 export const complete = createAction("CHEKI/COMPLETE");
 
 export const ready = createAction<{ ready: boolean }>("CHEKI/READY");
+
+export const removeDecoration = createAction<{ decorationId: string }>(
+  "CHEKI/REMOVE_DECORATION"
+);
 
 export const removeImage = createAction("CHEKI/REMOVE_IMAGE");
 

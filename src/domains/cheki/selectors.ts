@@ -151,3 +151,7 @@ export const addableDecorations = createSelector(
         !decorations.includes(decoration.id)
     )
 );
+
+export const addedDecorations = createSelector(decorations, (decorations) =>
+  CHEKI_DECORATIONS.filter((decoration) => decorations.includes(decoration.id))
+);

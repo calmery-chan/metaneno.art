@@ -181,6 +181,14 @@ export const reducer = createReducer(initialState, (builder) => {
       ...state,
       ...action.payload,
     }))
+    .addCase(actions.removeDecoration, (state, action) => {
+      return {
+        ...state,
+        decorations: state.decorations.filter(
+          (decorationId) => decorationId !== action.payload.decorationId
+        ),
+      };
+    })
     .addCase(actions.removeImage, () => {
       GA.removeImage();
 
