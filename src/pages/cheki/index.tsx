@@ -2,6 +2,7 @@ import { css, Theme } from "@emotion/react";
 import styled, { Interpolation } from "@emotion/styled";
 import { NextPage } from "next";
 import React, { useEffect, useState, useCallback } from "react";
+import { isMobile } from "react-device-detect";
 import { ChekiColumn } from "~/components/Cheki/Column";
 import { ChekiFlexColumn } from "~/components/Cheki/FlexColumn";
 import { ChekiHeader } from "~/components/Cheki/Header";
@@ -113,7 +114,19 @@ export const ChekiCanvasTrim: React.FC<{ emotion?: Interpolation<Theme> }> = ({
 
   // Events
 
-  const handleOnComplete = useCallback(() => dispatch(actions.complete()), []);
+  const handleOnTouchComplete = useCallback(
+    () => dispatch(actions.complete()),
+    []
+  );
+
+  const handleOnMouseComplete = useCallback(() => {
+    // タッチデバイスから実行されてしまうことがあるため
+    if (isMobile) {
+      return;
+    }
+
+    dispatch(actions.complete());
+  }, []);
 
   const handleOnStartDragging = useCallback(
     (event: MouseRelatedEvent | TouchRelatedEvent) => {
@@ -145,10 +158,10 @@ export const ChekiCanvasTrim: React.FC<{ emotion?: Interpolation<Theme> }> = ({
   return (
     <ChekiCanvas
       emotion={emotion}
-      onMouseLeave={handleOnComplete}
+      onMouseLeave={handleOnMouseComplete}
       onMouseMove={handleOnTick}
-      onMouseUp={handleOnComplete}
-      onTouchEnd={handleOnComplete}
+      onMouseUp={handleOnMouseComplete}
+      onTouchEnd={handleOnTouchComplete}
       onTouchMove={handleOnTick}
     >
       <ChekiCanvasTrimedImage visible />
