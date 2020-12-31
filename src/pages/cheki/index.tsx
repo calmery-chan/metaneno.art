@@ -2,6 +2,7 @@ import { css, Theme } from "@emotion/react";
 import styled, { Interpolation } from "@emotion/styled";
 import { NextPage } from "next";
 import React, { useEffect, useState, useCallback } from "react";
+import { isMobile } from "react-device-detect";
 import { ChekiColumn } from "~/components/Cheki/Column";
 import { ChekiFlexColumn } from "~/components/Cheki/FlexColumn";
 import { ChekiHeader } from "~/components/Cheki/Header";
@@ -115,9 +116,18 @@ export const ChekiCanvasTrim: React.FC<{ emotion?: Interpolation<Theme> }> = ({
 
   // Events
 
+  const handleOnLeave = useCallback(() => {
+    if (timer) {
+      clearTimeout(timer);
+    } else {
+      dispatch(actions.complete());
+    }
+  }, [timer]);
+
   const handleOnComplete = useCallback(
-    (event) => {
+    (event: MouseRelatedEvent | TouchRelatedEvent) => {
       if (timer) {
+        console.log("Touch Complete", timer);
         clearTimeout(timer);
         setTimer(null);
 
@@ -133,13 +143,17 @@ export const ChekiCanvasTrim: React.FC<{ emotion?: Interpolation<Theme> }> = ({
     [timer]
   );
 
-  const handleOnLeave = useCallback(() => {
-    if (timer) {
-      clearTimeout(timer);
-    } else {
-      dispatch(actions.complete());
-    }
-  }, [timer]);
+  const handleOnMouseComplete = useCallback(
+    (event) => {
+      // タッチデバイスから実行されてしまうことがあるため
+      if (isMobile) {
+        return;
+      }
+
+      handleOnComplete(event);
+    },
+    [handleOnComplete]
+  );
 
   const handleOnStartDragging = useCallback(
     (event: MouseRelatedEvent | TouchRelatedEvent) => {
@@ -160,6 +174,17 @@ export const ChekiCanvasTrim: React.FC<{ emotion?: Interpolation<Theme> }> = ({
       );
     },
     [timer]
+  );
+
+  const handleOnMouseStartDragging = useCallback(
+    (event: MouseRelatedEvent | TouchRelatedEvent) => {
+      if (isMobile) {
+        return;
+      }
+
+      handleOnStartDragging(event);
+    },
+    [handleOnStartDragging]
   );
 
   const handleOnTick = useCallback(
@@ -185,7 +210,7 @@ export const ChekiCanvasTrim: React.FC<{ emotion?: Interpolation<Theme> }> = ({
       emotion={emotion}
       onMouseLeave={handleOnLeave}
       onMouseMove={handleOnTick}
-      onMouseUp={handleOnComplete}
+      onMouseUp={handleOnMouseComplete}
       onTouchEnd={handleOnComplete}
       onTouchMove={handleOnTick}
     >
@@ -425,7 +450,7 @@ export const ChekiCanvasTrim: React.FC<{ emotion?: Interpolation<Theme> }> = ({
         css={move}
         fillOpacity="0"
         height={trim.height}
-        onMouseDown={handleOnStartDragging}
+        onMouseDown={handleOnMouseStartDragging}
         onTouchStart={handleOnStartDragging}
         width={trim.width}
         x={trim.x - displayable.x}
