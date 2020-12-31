@@ -127,7 +127,6 @@ export const ChekiCanvasTrim: React.FC<{ emotion?: Interpolation<Theme> }> = ({
   const handleOnComplete = useCallback(
     (event: MouseRelatedEvent | TouchRelatedEvent) => {
       if (timer) {
-        console.log("Touch Complete", timer);
         clearTimeout(timer);
         setTimer(null);
 
