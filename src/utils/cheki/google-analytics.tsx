@@ -75,3 +75,5 @@ export const removeDecoration = (decorationId: string) =>
   sendChekiEvent("remove_decoration", {
     label: decorationId,
   });
+
+export const focus = () => sendChekiEvent("focus", {});

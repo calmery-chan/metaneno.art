@@ -81,6 +81,10 @@ export const changeFrame = createAsyncThunk<
 
 export const complete = createAction("CHEKI/COMPLETE");
 
+export const focus = createAction<{
+  cursorPositions: CursorPosition[];
+}>("CHEKI/FOCUS");
+
 export const ready = createAction<{ ready: boolean }>("CHEKI/READY");
 
 export const removeDecoration = createAction<{ decorationId: string }>(

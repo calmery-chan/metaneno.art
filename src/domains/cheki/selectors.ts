@@ -85,6 +85,15 @@ export const frame = createSelector(
   })
 );
 
+// Focus
+
+const focusX = ({ cheki }: State) => cheki.focus?.x;
+const focusY = ({ cheki }: State) => cheki.focus?.y;
+
+export const focus = createSelector(focusX, focusY, (x, y) =>
+  !x || !y ? null : { x, y }
+);
+
 // Image
 
 const imageHeight = ({ cheki }: State) => cheki.image.height;

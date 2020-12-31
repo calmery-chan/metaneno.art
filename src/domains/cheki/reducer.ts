@@ -32,6 +32,10 @@ export type State = {
     index: number;
     ready: boolean;
   };
+  focus: {
+    x: number;
+    y: number;
+  } | null;
   image: ChekiRectangle & {
     createdDate: string | null;
     direction: ChekiDirection;
@@ -72,6 +76,7 @@ const initialState: State = {
     index: 0,
     ready: false,
   },
+  focus: null,
   image: {
     createdDate: null,
     direction: "horizontal",
@@ -201,6 +206,19 @@ export const reducer = createReducer(initialState, (builder) => {
       return {
         ...state,
         temporaries: initialState.temporaries,
+      };
+    })
+    .addCase(actions.focus, (state, action) => {
+      const { trim } = state.layout;
+      const [{ x, y }] = action.payload.cursorPositions;
+      const cursorX = (x - trim.x) * trim.displayMagnification;
+      const cursorY = (y - trim.y) * trim.displayMagnification;
+
+      GA.focus();
+
+      return {
+        ...state,
+        focus: { x: cursorX, y: cursorY },
       };
     })
     .addCase(actions.ready, (state, action) => ({
