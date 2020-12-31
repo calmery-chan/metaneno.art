@@ -76,7 +76,10 @@ const initialState: State = {
     index: 0,
     ready: false,
   },
-  focus: null,
+  focus: {
+    x: 100,
+    y: 100,
+  },
   image: {
     createdDate: null,
     direction: "horizontal",
@@ -201,7 +204,9 @@ export const reducer = createReducer(initialState, (builder) => {
       };
     })
     .addCase(actions.complete, (state) => {
-      GA.transform();
+      if (state.temporaries.isImageDragging) {
+        GA.transform();
+      }
 
       return {
         ...state,
@@ -348,6 +353,14 @@ export const reducer = createReducer(initialState, (builder) => {
       }
 
       return state;
+    })
+    .addCase(actions.unfocus, (state) => {
+      GA.unfocus();
+
+      return {
+        ...state,
+        focus: null,
+      };
     })
     .addCase(actions.updateDisplayable, (state, action) => {
       const { payload: displayable } = action;

@@ -91,7 +91,7 @@ const focusX = ({ cheki }: State) => cheki.focus?.x;
 const focusY = ({ cheki }: State) => cheki.focus?.y;
 
 export const focus = createSelector(focusX, focusY, (x, y) =>
-  !x || !y ? null : { x, y }
+  x === undefined || y === undefined ? null : { x, y }
 );
 
 // Image

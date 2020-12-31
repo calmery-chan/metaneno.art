@@ -109,21 +109,57 @@ export const ChekiCanvasTrim: React.FC<{ emotion?: Interpolation<Theme> }> = ({
 }) => {
   const dispatch = useDispatch();
   const displayable = useSelector(selectors.displayable);
+  const focus = useSelector(selectors.focus);
   const trim = useSelector(selectors.trim);
+  const [timer, setTimer] = useState<number | null>(null);
 
   // Events
 
-  const handleOnComplete = useCallback(() => dispatch(actions.complete()), []);
+  const handleOnComplete = useCallback(
+    (event) => {
+      if (timer) {
+        clearTimeout(timer);
+        setTimer(null);
+
+        dispatch(
+          actions.focus({
+            cursorPositions: convertEventToCursorPositions(event),
+          })
+        );
+      } else {
+        dispatch(actions.complete());
+      }
+    },
+    [timer]
+  );
+
+  const handleOnLeave = useCallback(() => {
+    if (timer) {
+      clearTimeout(timer);
+    } else {
+      dispatch(actions.complete());
+    }
+  }, [timer]);
 
   const handleOnStartDragging = useCallback(
     (event: MouseRelatedEvent | TouchRelatedEvent) => {
-      dispatch(
-        actions.startImageDragging({
-          cursorPositions: convertEventToCursorPositions(event),
-        })
+      if (timer) {
+        clearTimeout(timer);
+      }
+
+      setTimer(
+        window.setTimeout(() => {
+          dispatch(
+            actions.startImageDragging({
+              cursorPositions: convertEventToCursorPositions(event),
+            })
+          );
+
+          setTimer(null);
+        }, 200)
       );
     },
-    []
+    [timer]
   );
 
   const handleOnTick = useCallback(
@@ -145,7 +181,7 @@ export const ChekiCanvasTrim: React.FC<{ emotion?: Interpolation<Theme> }> = ({
   return (
     <ChekiCanvas
       emotion={emotion}
-      onMouseLeave={handleOnComplete}
+      onMouseLeave={handleOnLeave}
       onMouseMove={handleOnTick}
       onMouseUp={handleOnComplete}
       onTouchEnd={handleOnComplete}
@@ -305,6 +341,72 @@ export const ChekiCanvasTrim: React.FC<{ emotion?: Interpolation<Theme> }> = ({
           x={trim.viewBoxWidth - 2 * trim.displayMagnification}
           y={trim.viewBoxHeight - 16 * trim.displayMagnification}
         />
+
+        {/* Focus */}
+        {focus && (
+          <>
+            <rect
+              fill={Colors.yellow}
+              height={72 * trim.displayMagnification}
+              width={trim.displayMagnification}
+              x={focus.x - 36 * trim.displayMagnification}
+              y={focus.y - 36 * trim.displayMagnification}
+            />
+            <rect
+              fill={Colors.yellow}
+              height={trim.displayMagnification}
+              width={72 * trim.displayMagnification}
+              x={focus.x - 36 * trim.displayMagnification}
+              y={focus.y - 36 * trim.displayMagnification}
+            />
+
+            {/* 線の太さ分、座標をズラす必要がある */}
+            <rect
+              fill={Colors.yellow}
+              height={72 * trim.displayMagnification}
+              width={trim.displayMagnification}
+              x={focus.x + (36 - 1) * trim.displayMagnification}
+              y={focus.y - 36 * trim.displayMagnification}
+            />
+            <rect
+              fill={Colors.yellow}
+              height={trim.displayMagnification}
+              width={72 * trim.displayMagnification}
+              x={focus.x - 36 * trim.displayMagnification}
+              y={focus.y + (36 - 1) * trim.displayMagnification}
+            />
+
+            <rect
+              fill={Colors.yellow}
+              height={4 * trim.displayMagnification}
+              width={trim.displayMagnification}
+              x={focus.x - 0.5 * trim.displayMagnification}
+              y={focus.y - 36 * trim.displayMagnification}
+            />
+
+            <rect
+              fill={Colors.yellow}
+              height={4 * trim.displayMagnification}
+              width={trim.displayMagnification}
+              x={focus.x - 0.5 * trim.displayMagnification}
+              y={focus.y + (36 - 4) * trim.displayMagnification}
+            />
+            <rect
+              fill={Colors.yellow}
+              height={trim.displayMagnification}
+              width={4 * trim.displayMagnification}
+              x={focus.x - 36 * trim.displayMagnification}
+              y={focus.y - 0.5 * trim.displayMagnification}
+            />
+            <rect
+              fill={Colors.yellow}
+              height={trim.displayMagnification}
+              width={4 * trim.displayMagnification}
+              x={focus.x + (36 - 4) * trim.displayMagnification}
+              y={focus.y - 0.5 * trim.displayMagnification}
+            />
+          </>
+        )}
       </svg>
 
       <rect

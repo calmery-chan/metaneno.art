@@ -119,6 +119,8 @@ export const tick = createAction<{ cursorPositions: CursorPosition[] }>(
   "CHEKI/TICK"
 );
 
+export const unfocus = createAction("CHEKI/UNFOCUS");
+
 export const updateDisplayable = createAction<{
   height: number;
   width: number;
