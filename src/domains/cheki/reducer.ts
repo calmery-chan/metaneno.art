@@ -76,10 +76,7 @@ const initialState: State = {
     index: 0,
     ready: false,
   },
-  focus: {
-    x: 100,
-    y: 100,
-  },
+  focus: null,
   image: {
     createdDate: null,
     direction: "horizontal",
