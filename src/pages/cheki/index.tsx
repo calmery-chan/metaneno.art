@@ -176,6 +176,8 @@ export const ChekiCanvasTrim: React.FC<{ emotion?: Interpolation<Theme> }> = ({
     []
   );
 
+  const handleOnUnfocus = useCallback(() => dispatch(actions.unfocus()), []);
+
   // Render
 
   return (
@@ -409,6 +411,15 @@ export const ChekiCanvasTrim: React.FC<{ emotion?: Interpolation<Theme> }> = ({
           </>
         )}
       </svg>
+
+      <rect
+        fillOpacity="0"
+        onClick={handleOnUnfocus}
+        height="100%"
+        width="100%"
+        x="0"
+        y="0"
+      />
 
       <rect
         css={move}
