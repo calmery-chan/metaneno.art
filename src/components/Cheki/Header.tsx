@@ -33,7 +33,7 @@ const Container = styled.div`
   }
 `;
 
-const help = css`
+const margin = css`
   margin-right: ${Spacing.l}px;
 `;
 
@@ -109,9 +109,11 @@ export const ChekiHeader: React.FC<{ scenario?: ChekiScenario[] }> = ({
   const [information, setInformation] = useState(false);
   const [backToTop, setBackToTop] = useState(false);
   const [isTutorial, setIsTutorial] = useState(false);
+  const [isPrint, setIsPrint] = useState(false);
 
   const handleOnClickBackToTop = useCallback(() => push("/"), []);
   const handleOnClickClosePopup = useCallback(() => setBackToTop(false), []);
+  const handleOnClickClosePrint = useCallback(() => setIsPrint(false), []);
   const handleOnClickTutorialButton = useCallback(() => {
     setIsTutorial(true);
     GA.startTutorial(pathname);
@@ -121,6 +123,7 @@ export const ChekiHeader: React.FC<{ scenario?: ChekiScenario[] }> = ({
     [information]
   );
   const handleOnClickOpenPopup = useCallback(() => setBackToTop(true), []);
+  const handleOnClickOpenPrint = useCallback(() => setIsPrint(true), []);
   const handleOnClickOpenTerms = useCallback(
     () => push("/cheki/terms-of-service"),
     []
@@ -145,10 +148,20 @@ export const ChekiHeader: React.FC<{ scenario?: ChekiScenario[] }> = ({
           width="24px"
         />
         <div className="flex ml-auto">
+          {pathname === "/cheki/save" && (
+            <Icon
+              alt="印刷"
+              css={margin}
+              height="24px"
+              onClick={handleOnClickOpenPrint}
+              src={isPrint ? "/cheki/print.selected.svg" : "/cheki/print.svg"}
+              width="24px"
+            />
+          )}
           {scenario && (
             <Icon
               alt="チュートリアル"
-              css={help}
+              css={margin}
               height="24px"
               onClick={handleOnClickTutorialButton}
               src={
@@ -267,6 +280,13 @@ export const ChekiHeader: React.FC<{ scenario?: ChekiScenario[] }> = ({
           onStop={handleOnStopTutorial}
         />
       )}
+
+      <ChekiModal
+        visible={isPrint}
+        onClickCloseButton={handleOnClickClosePrint}
+      >
+        <ChekiModalTitle>印刷する</ChekiModalTitle>
+      </ChekiModal>
     </>
   );
 };
