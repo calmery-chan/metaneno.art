@@ -116,10 +116,10 @@ export const convertEventToCursorPositions = (
   const positions = [];
 
   if (isTouchRelatedEvent(event)) {
-    for (let i = 0; i < event.touches.length; i++) {
+    for (let i = 0; i < event.changedTouches.length; i++) {
       positions.push({
-        x: event.touches[i].clientX,
-        y: event.touches[i].clientY,
+        x: event.changedTouches[i].clientX,
+        y: event.changedTouches[i].clientY,
       });
     }
   } else {
