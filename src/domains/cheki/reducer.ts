@@ -6,6 +6,7 @@ import {
   ChekiFilter,
   CHEKI_DECORATION_COLORS,
   CharacterTag,
+  CHEKI_FOCUS_MARGIN,
 } from "~/constants/cheki";
 
 import { getImageSizeByDirection } from "~/utils/cheki";
@@ -275,11 +276,37 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(actions.take.fulfilled, (state, action) => {
       const { character } = action.payload;
-      const { image } = state;
+      const { focus, image } = state;
       const { height, width } = getImageSizeByDirection(image.direction);
 
       let x = random(0, width - character.width);
       let y = random(0, height - character.height);
+
+      if (focus) {
+        const maxX = width - character.width;
+        const maxY = height - character.height;
+
+        let startX = focus.x - CHEKI_FOCUS_MARGIN - character.width / 2;
+        let startY = focus.y - CHEKI_FOCUS_MARGIN - character.height / 2;
+        let endX = focus.x + CHEKI_FOCUS_MARGIN - character.width / 2;
+        let endY = focus.y + CHEKI_FOCUS_MARGIN - character.height / 2;
+
+        startX = startX < 0 ? 0 : startX;
+        startY = startY < 0 ? 0 : startY;
+
+        // 座標の範囲、最大値が表示領域内に収まるようにする
+        endX = endX > maxX ? maxX : endX;
+        endY = endY > maxY ? maxY : endY;
+        endX = endX < 0 ? 0 : endX;
+        endY = endY < 0 ? 0 : endY;
+
+        // 最大座標よりも開始座標の値が大きいとき、最大座標に合わせる
+        startX = startX > endX ? endX : startX;
+        startY = startY > endY ? endY : startY;
+
+        x = random(startX, endX);
+        y = random(startY, endY);
+      }
 
       if (character.fixed.bottom) {
         y = height - character.height;

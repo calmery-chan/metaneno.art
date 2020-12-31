@@ -3,6 +3,8 @@ import { Hex, ChekiDecoration } from "~/domains/cheki/models";
 
 import { getTutorialElementId } from "~/utils/cheki";
 
+export const CHEKI_FOCUS_MARGIN = 64;
+
 export const CHEKI_FRAME_MARGIN_BOTTOM = 304;
 export const CHEKI_FRAME_MARGIN_LEFT = 64;
 export const CHEKI_FRAME_MARGIN_RIGHT = 64;
