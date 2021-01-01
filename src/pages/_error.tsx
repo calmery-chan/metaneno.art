@@ -6,6 +6,7 @@ import { Colors } from "~/styles/colors";
 import { Mixin } from "~/styles/mixin";
 import { Spacing } from "~/styles/spacing";
 import { Typography } from "~/styles/typography";
+import { Sentry } from "~/utils/sentry";
 
 const Error: NextPage<{ statusCode?: number }> = ({ statusCode }) => {
   const { push } = useRouter();
@@ -40,6 +41,9 @@ const Error: NextPage<{ statusCode?: number }> = ({ statusCode }) => {
 
 Error.getInitialProps = ({ res, err }: NextPageContext) => {
   const statusCode = res ? res.statusCode : err ? err.statusCode : 404;
+
+  Sentry.captureException(err);
+
   return { statusCode };
 };
 
