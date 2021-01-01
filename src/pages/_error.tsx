@@ -23,7 +23,9 @@ const Error: NextPage<{ statusCode?: number }> = ({ statusCode }) => {
     >
       <div>
         {statusCode === 404 && <>お探しのページは見つかりませんでした</>}
-        {statusCode !== 404 && <>エラーが発生しました（${statusCode}）</>}
+        {statusCode !== 404 && (
+          <>エラーが発生しました{statusCode ? `（{statusCode}）` : ""}</>
+        )}
         <div
           className="underline"
           css={css`
