@@ -213,9 +213,9 @@ export const ChekiCanvasTrim: React.FC<{ emotion?: Interpolation<Theme> }> = ({
       onTouchEnd={handleOnComplete}
       onTouchMove={handleOnTick}
     >
-      <ChekiCanvasTrimedImage visible />
+      <ChekiCanvasTrimedImage noFilter visible />
       <rect fill="#000" fillOpacity="0.48" height="100%" width="100%" />
-      <ChekiCanvasTrimedImage />
+      <ChekiCanvasTrimedImage noFilter />
 
       <svg
         height={trim.height}
@@ -534,7 +534,7 @@ export const ChekiCamera: React.FC = () => {
     return (
       <>
         <ChekiCanvas emotion={animationFadeIn}>
-          <ChekiCanvasTrimedImage />
+          <ChekiCanvasTrimedImage noFilter />
         </ChekiCanvas>
 
         <ChekiColumn css={animationFadeIn} margin>

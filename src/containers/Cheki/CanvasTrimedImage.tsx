@@ -4,8 +4,9 @@ import { useSelector } from "~/domains";
 import { selectors } from "~/domains/cheki";
 
 export const ChekiCanvasTrimedImage: React.FC<{
+  noFilter?: boolean;
   visible?: boolean;
-}> = ({ visible }) => {
+}> = ({ noFilter, visible }) => {
   const displayable = useSelector(selectors.displayable);
   const filter = useSelector(selectors.imageFilter);
   const trim = useSelector(selectors.trim);
@@ -21,7 +22,7 @@ export const ChekiCanvasTrimedImage: React.FC<{
       xmlnsXlink="http://www.w3.org/1999/xlink"
       y={trim.y - displayable.y}
     >
-      <ChekiCanvasImage filter={filter} />
+      <ChekiCanvasImage filter={!noFilter ? filter : null} />
     </svg>
   );
 };
