@@ -65,6 +65,13 @@ const SpeechBubble = styled.div`
   cursor: pointer;
 `;
 
+const SpeechBubbleCharacterImage = styled.img`
+  width: auto;
+  height: ${SPEECH_BUBBLE_HEIGHT}px;
+  margin-top: -${SPEECH_BUBBLE_HEIGHT - Spacing.m * 2 - TypographyLineHeight.S * 3}px;
+  margin-right: ${Spacing.s}px;
+`;
+
 const SpeechBubbleNoCharacterImage = styled.div`
   width: ${Spacing.m}px;
 `;
@@ -313,7 +320,14 @@ export const Tutorial: React.FC<TutorialProps> = ({
         }}
       >
         <SpeechBubble key={scenario.emphasisElementId}>
-          <SpeechBubbleNoCharacterImage />
+          {scenario.characterImageUrl ? (
+            <SpeechBubbleCharacterImage
+              src={scenario.characterImageUrl}
+              alt="キャラクター"
+            />
+          ) : (
+            <SpeechBubbleNoCharacterImage />
+          )}
           <SpeechBubbleMessage>
             {scenario.message.slice(0, characterCount)}
           </SpeechBubbleMessage>
