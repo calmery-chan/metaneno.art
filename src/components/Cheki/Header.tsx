@@ -12,6 +12,7 @@ import { Colors, GradientColors } from "~/styles/colors";
 import { Mixin } from "~/styles/mixin";
 import { Spacing } from "~/styles/spacing";
 import { Typography } from "~/styles/typography";
+import { getTutorialElementId } from "~/utils/cheki";
 import * as GA from "~/utils/cheki/google-analytics";
 
 const Container = styled.div`
@@ -153,6 +154,7 @@ export const ChekiHeader: React.FC<{ scenario?: ChekiScenario[] }> = ({
               alt="印刷"
               css={margin}
               height="24px"
+              id={getTutorialElementId("header-print")}
               onClick={handleOnClickOpenPrint}
               src={isPrint ? "/cheki/print.selected.svg" : "/cheki/print.svg"}
               width="24px"

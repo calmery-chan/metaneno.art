@@ -18,6 +18,8 @@ import {
   CharacterTag,
   CHARACTER_TAGS,
   CHEKI_FRAME_IMAGE_URLS,
+  CAMERA_SCENARIO,
+  SHOT_SCENARIO,
 } from "~/constants/cheki";
 import { ChekiApp } from "~/containers/Cheki/App";
 import { ChekiCanvas } from "~/containers/Cheki/Canvas";
@@ -539,7 +541,10 @@ export const ChekiCamera: React.FC = () => {
         </ChekiCanvas>
 
         <ChekiColumn css={animationFadeIn} margin>
-          <ChekiSubButton onClick={handleOnClickShootAgainButton}>
+          <ChekiSubButton
+            id={getTutorialElementId("take-a-photo-again")}
+            onClick={handleOnClickShootAgainButton}
+          >
             もう一度撮影する
           </ChekiSubButton>
         </ChekiColumn>
@@ -654,6 +659,7 @@ export const ChekiCamera: React.FC = () => {
 
 export const Index: NextPage = () => {
   const dispatch = useDispatch();
+  const ready = useSelector(selectors.ready);
   const splashed = useSelector(selectors.splashed);
 
   const [fire, setFire] = useState(false);
@@ -684,7 +690,7 @@ export const Index: NextPage = () => {
         }}
       >
         <ChekiFlexColumn>
-          <ChekiHeader />
+          <ChekiHeader scenario={ready ? SHOT_SCENARIO : CAMERA_SCENARIO} />
           <ChekiCamera />
           <ChekiNavigation />
         </ChekiFlexColumn>

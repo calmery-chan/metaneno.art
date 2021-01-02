@@ -355,6 +355,7 @@ export const SHOT_SCENARIO: ChekiScenario[] = [
     message: "...どう？うまく撮れてる？",
   },
   {
+    emphasisElementId: getTutorialElementId("take-a-photo-again"),
     message: "撮影がうまく行かなかった時は何回でも撮り直しもできるよ",
   },
   {
@@ -410,7 +411,7 @@ export const SAVE_PAGE_SCENARIO: ChekiScenario[] = [
     message: "チェキは長押し、または右クリックで保存できます",
   },
   {
-    emphasisElementId: getTutorialElementId("print-button"),
+    emphasisElementId: getTutorialElementId("header-print"),
     message: "作ったチェキを印刷したい場合はこちら",
   },
   {

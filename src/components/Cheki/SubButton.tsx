@@ -50,15 +50,17 @@ const Text = styled.div`
 
 type ChekiSubButtonProps = {
   disabled?: boolean;
+  id?: string;
   onClick?: () => void;
 };
 
 export const ChekiSubButton: React.FC<ChekiSubButtonProps> = ({
   children,
   disabled = false,
+  id,
   onClick,
 }) => (
-  <Container disabled={disabled}>
+  <Container disabled={disabled} id={id}>
     <Body onClick={disabled ? undefined : onClick}>
       <Text className="font-bold">{children}</Text>
     </Body>
