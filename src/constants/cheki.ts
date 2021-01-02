@@ -352,7 +352,7 @@ export const CAMERA_SCENARIO: ChekiScenario[] = [
 
 export const SHOT_SCENARIO: ChekiScenario[] = [
   {
-    characterImageUrl: "/cheki/noneme/save.png",
+    characterImageUrl: "/cheki/characters/2.png",
     message: "...どう？うまく撮れてる？",
   },
   {
@@ -364,7 +364,7 @@ export const SHOT_SCENARIO: ChekiScenario[] = [
     message: "やっぱり別の構図で撮りたい…ってときはここから選び直してね",
   },
   {
-    characterImageUrl: "/cheki/noneme/dummy.png",
+    characterImageUrl: "/cheki/characters/2.png",
     message: "（納得のいく写真が撮れるよう頑張るね…たぶん）",
   },
   {
@@ -374,7 +374,7 @@ export const SHOT_SCENARIO: ChekiScenario[] = [
 
 export const PROCESSING_SCENARIO: ChekiScenario[] = [
   {
-    characterImageUrl: "/cheki/noneme/dummy.png",
+    characterImageUrl: "/cheki/characters/2.png",
     message: "ふぅ。いい感じに撮れてるね...♪早速加工しちゃお〜。",
   },
   {
@@ -401,7 +401,7 @@ export const PROCESSING_SCENARIO: ChekiScenario[] = [
 
 export const SAVE_PAGE_SCENARIO: ChekiScenario[] = [
   {
-    characterImageUrl: "/cheki/noneme/dummy.png",
+    characterImageUrl: "/cheki/characters/2.png",
     message: "完成...！",
   },
   {
