@@ -3,6 +3,7 @@ import { NextPage } from "next";
 import React, { useCallback, useState } from "react";
 import { ChekiButton } from "~/components/Cheki/Button";
 import { ChekiColumn } from "~/components/Cheki/Column";
+import { ChekiConfetti } from "~/components/Cheki/Confetti";
 import { ExternalLink } from "~/components/Cheki/ExternalLink";
 import { ChekiFlexColumn } from "~/components/Cheki/FlexColumn";
 import { ChekiHashTag } from "~/components/Cheki/HashTag";
@@ -71,12 +72,18 @@ const ChekiSaveAndShare: NextPage = () => {
 
   return (
     <ChekiApp>
+      <ChekiConfetti />
+
       <ChekiFlexColumn>
         <ChekiHeader
           forceDisplayOnlyOnce={getScenarioCacheId("save")}
           scenario={SAVE_PAGE_SCENARIO}
         />
-        <ChekiCanvas>
+        <ChekiCanvas
+          emotion={css`
+            z-index: 2;
+          `}
+        >
           <ChekiCanvasChekiImage onCreatePreviewUrl={setPreviewUrl} />
         </ChekiCanvas>
         <div
@@ -85,6 +92,7 @@ const ChekiSaveAndShare: NextPage = () => {
           style={{
             height: `${displayable.height}px`,
             top: `${displayable.y}px`,
+            zIndex: 3,
           }}
         >
           {previewUrl && <img css={preview} src={previewUrl} />}
