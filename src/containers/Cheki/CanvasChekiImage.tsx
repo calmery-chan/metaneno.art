@@ -48,7 +48,7 @@ export const Decorations: React.FC = () => {
           const { component } = decoration;
 
           switch (component) {
-            case "created-date":
+            case "date":
               return <ChekiDate key={key} />;
           }
 

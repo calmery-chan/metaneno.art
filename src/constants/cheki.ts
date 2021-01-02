@@ -174,56 +174,342 @@ export type Character = {
 };
 
 export const CHEKI_DECORATIONS: ChekiDecoration[] = [
+  // Date
+
+  {
+    id: "date/common",
+    component: "date",
+    thumbnail: "/cheki/decorations/thumbnails/date.png",
+  },
+
+  // Glitter
+
   {
     direction: "horizontal",
-    id: "example-1",
+    id: "glitter/horizontal",
     layers: [
       {
-        height: 400,
+        height: CHEKI_HORIZONTAL_FRAME_HEIGHT,
         rotate: 0,
-        url: "/cheki/decorations/1.png",
-        width: 400,
+        url: "/cheki/decorations/glitter-horizontal.png",
+        width: CHEKI_HORIZONTAL_FRAME_WIDTH,
         x: 0,
         y: 0,
       },
-      {
-        height: 400,
-        rotate: 0,
-        url: "/cheki/decorations/2.png",
-        width: 400,
-        x: 850,
-        y: 900,
-      },
     ],
-    thumbnail: "/cheki/decorations/1.png",
+    thumbnail: "/cheki/decorations/thumbnails/glitter.png",
   },
   {
     direction: "vertical",
-    id: "example-2",
+    id: "glitter/vertical",
     layers: [
       {
-        height: 400,
+        height: CHEKI_VERTICAL_FRAME_HEIGHT,
         rotate: 0,
-        url: "/cheki/decorations/1.png",
-        width: 400,
-        x: 0,
-        y: 0,
-      },
-      {
-        height: 400,
-        rotate: 0,
-        url: "/cheki/decorations/2.png",
-        width: 400,
+        url: "/cheki/decorations/glitter-vertical.png",
+        width: CHEKI_VERTICAL_FRAME_WIDTH,
         x: 0,
         y: 0,
       },
     ],
-    thumbnail: "/cheki/decorations/2.png",
+    thumbnail: "/cheki/decorations/thumbnails/glitter.png",
+  },
+
+  // Line
+
+  {
+    direction: "horizontal",
+    id: "line/horizontal",
+    layers: [
+      {
+        height: CHEKI_HORIZONTAL_FRAME_HEIGHT,
+        rotate: 0,
+        url: "/cheki/decorations/line-horizontal.png",
+        width: CHEKI_HORIZONTAL_FRAME_WIDTH,
+        x: 0,
+        y: 0,
+      },
+    ],
+    thumbnail: "/cheki/decorations/thumbnails/line.png",
   },
   {
-    id: "created-date",
-    component: "created-date",
-    thumbnail: "/cheki/decorations/2.png",
+    direction: "vertical",
+    id: "line/vertical",
+    layers: [
+      {
+        height: CHEKI_VERTICAL_FRAME_HEIGHT,
+        rotate: 0,
+        url: "/cheki/decorations/line-vertical.png",
+        width: CHEKI_VERTICAL_FRAME_WIDTH,
+        x: 0,
+        y: 0,
+      },
+    ],
+    thumbnail: "/cheki/decorations/thumbnails/line.png",
+  },
+
+  // Logo 2 Monochrome
+
+  {
+    direction: "horizontal",
+    id: "logo-2-monochrome/horizontal",
+    layers: [
+      {
+        height: CHEKI_HORIZONTAL_FRAME_HEIGHT,
+        rotate: 0,
+        url: "/cheki/decorations/logo-2-monochrome-horizontal.png",
+        width: CHEKI_HORIZONTAL_FRAME_WIDTH,
+        x: 0,
+        y: 0,
+      },
+    ],
+    thumbnail: "/cheki/decorations/thumbnails/logo-2-monochrome.png",
+  },
+  {
+    direction: "vertical",
+    id: "logo-2-monochrome/vertical",
+    layers: [
+      {
+        height: CHEKI_VERTICAL_FRAME_HEIGHT,
+        rotate: 0,
+        url: "/cheki/decorations/logo-2-monochrome-vertical.png",
+        width: CHEKI_VERTICAL_FRAME_WIDTH,
+        x: 0,
+        y: 0,
+      },
+    ],
+    thumbnail: "/cheki/decorations/thumbnails/logo-2-monochrome.png",
+  },
+
+  // Logo 2
+
+  {
+    direction: "horizontal",
+    id: "logo-2/horizontal",
+    layers: [
+      {
+        height: CHEKI_HORIZONTAL_FRAME_HEIGHT,
+        rotate: 0,
+        url: "/cheki/decorations/logo-2-horizontal.png",
+        width: CHEKI_HORIZONTAL_FRAME_WIDTH,
+        x: 0,
+        y: 0,
+      },
+    ],
+    thumbnail: "/cheki/decorations/thumbnails/logo-2.png",
+  },
+  {
+    direction: "vertical",
+    id: "logo-2/vertical",
+    layers: [
+      {
+        height: CHEKI_VERTICAL_FRAME_HEIGHT,
+        rotate: 0,
+        url: "/cheki/decorations/logo-2-vertical.png",
+        width: CHEKI_VERTICAL_FRAME_WIDTH,
+        x: 0,
+        y: 0,
+      },
+    ],
+    thumbnail: "/cheki/decorations/thumbnails/logo-2.png",
+  },
+
+  // Logo Monochrome
+
+  {
+    direction: "horizontal",
+    id: "logo-monochrome/horizontal",
+    layers: [
+      {
+        height: CHEKI_HORIZONTAL_FRAME_HEIGHT,
+        rotate: 0,
+        url: "/cheki/decorations/logo-monochrome-horizontal.png",
+        width: CHEKI_HORIZONTAL_FRAME_WIDTH,
+        x: 0,
+        y: 0,
+      },
+    ],
+    thumbnail: "/cheki/decorations/thumbnails/logo-monochrome.png",
+  },
+  {
+    direction: "vertical",
+    id: "logo-monochrome/vertical",
+    layers: [
+      {
+        height: CHEKI_VERTICAL_FRAME_HEIGHT,
+        rotate: 0,
+        url: "/cheki/decorations/logo-monochrome-vertical.png",
+        width: CHEKI_VERTICAL_FRAME_WIDTH,
+        x: 0,
+        y: 0,
+      },
+    ],
+    thumbnail: "/cheki/decorations/thumbnails/logo-monochrome.png",
+  },
+
+  // Logo
+
+  {
+    direction: "horizontal",
+    id: "logo/horizontal",
+    layers: [
+      {
+        height: CHEKI_HORIZONTAL_FRAME_HEIGHT,
+        rotate: 0,
+        url: "/cheki/decorations/logo-horizontal.png",
+        width: CHEKI_HORIZONTAL_FRAME_WIDTH,
+        x: 0,
+        y: 0,
+      },
+    ],
+    thumbnail: "/cheki/decorations/thumbnails/logo.png",
+  },
+  {
+    direction: "vertical",
+    id: "logo/vertical",
+    layers: [
+      {
+        height: CHEKI_VERTICAL_FRAME_HEIGHT,
+        rotate: 0,
+        url: "/cheki/decorations/logo-vertical.png",
+        width: CHEKI_VERTICAL_FRAME_WIDTH,
+        x: 0,
+        y: 0,
+      },
+    ],
+    thumbnail: "/cheki/decorations/thumbnails/logo.png",
+  },
+
+  // Sign 2 Monochrome
+
+  {
+    direction: "horizontal",
+    id: "sign-2-monochrome/horizontal",
+    layers: [
+      {
+        height: CHEKI_HORIZONTAL_FRAME_HEIGHT,
+        rotate: 0,
+        url: "/cheki/decorations/sign-2-monochrome-horizontal.png",
+        width: CHEKI_HORIZONTAL_FRAME_WIDTH,
+        x: 0,
+        y: 0,
+      },
+    ],
+    thumbnail: "/cheki/decorations/thumbnails/sign-2-monochrome.png",
+  },
+  {
+    direction: "vertical",
+    id: "sign-2-monochrome/vertical",
+    layers: [
+      {
+        height: CHEKI_VERTICAL_FRAME_HEIGHT,
+        rotate: 0,
+        url: "/cheki/decorations/sign-2-monochrome-vertical.png",
+        width: CHEKI_VERTICAL_FRAME_WIDTH,
+        x: 0,
+        y: 0,
+      },
+    ],
+    thumbnail: "/cheki/decorations/thumbnails/sign-2-monochrome.png",
+  },
+
+  // Sign 2
+
+  {
+    direction: "horizontal",
+    id: "sign-2/horizontal",
+    layers: [
+      {
+        height: CHEKI_HORIZONTAL_FRAME_HEIGHT,
+        rotate: 0,
+        url: "/cheki/decorations/sign-2-horizontal.png",
+        width: CHEKI_HORIZONTAL_FRAME_WIDTH,
+        x: 0,
+        y: 0,
+      },
+    ],
+    thumbnail: "/cheki/decorations/thumbnails/sign-2.png",
+  },
+  {
+    direction: "vertical",
+    id: "sign-2/vertical",
+    layers: [
+      {
+        height: CHEKI_VERTICAL_FRAME_HEIGHT,
+        rotate: 0,
+        url: "/cheki/decorations/sign-2-vertical.png",
+        width: CHEKI_VERTICAL_FRAME_WIDTH,
+        x: 0,
+        y: 0,
+      },
+    ],
+    thumbnail: "/cheki/decorations/thumbnails/sign-2.png",
+  },
+
+  // Sign Monochrome
+
+  {
+    direction: "horizontal",
+    id: "sign-monochrome/horizontal",
+    layers: [
+      {
+        height: CHEKI_HORIZONTAL_FRAME_HEIGHT,
+        rotate: 0,
+        url: "/cheki/decorations/sign-monochrome-horizontal.png",
+        width: CHEKI_HORIZONTAL_FRAME_WIDTH,
+        x: 0,
+        y: 0,
+      },
+    ],
+    thumbnail: "/cheki/decorations/thumbnails/sign-monochrome.png",
+  },
+  {
+    direction: "vertical",
+    id: "sign-monochrome/vertical",
+    layers: [
+      {
+        height: CHEKI_VERTICAL_FRAME_HEIGHT,
+        rotate: 0,
+        url: "/cheki/decorations/sign-monochrome-vertical.png",
+        width: CHEKI_VERTICAL_FRAME_WIDTH,
+        x: 0,
+        y: 0,
+      },
+    ],
+    thumbnail: "/cheki/decorations/thumbnails/sign-monochrome.png",
+  },
+
+  // Sign
+
+  {
+    direction: "horizontal",
+    id: "sign/horizontal",
+    layers: [
+      {
+        height: CHEKI_HORIZONTAL_FRAME_HEIGHT,
+        rotate: 0,
+        url: "/cheki/decorations/sign-horizontal.png",
+        width: CHEKI_HORIZONTAL_FRAME_WIDTH,
+        x: 0,
+        y: 0,
+      },
+    ],
+    thumbnail: "/cheki/decorations/thumbnails/sign.png",
+  },
+  {
+    direction: "vertical",
+    id: "sign/vertical",
+    layers: [
+      {
+        height: CHEKI_VERTICAL_FRAME_HEIGHT,
+        rotate: 0,
+        url: "/cheki/decorations/sign-vertical.png",
+        width: CHEKI_VERTICAL_FRAME_WIDTH,
+        x: 0,
+        y: 0,
+      },
+    ],
+    thumbnail: "/cheki/decorations/thumbnails/sign.png",
   },
 ];
 
