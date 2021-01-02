@@ -7,8 +7,8 @@ import {
   CHEKI_VERTICAL_FRAME_HEIGHT,
 } from "~/constants/cheki";
 import { ChekiCanvasImage } from "~/containers/Cheki/CanvasImage";
-import { useDispatch, useSelector } from "~/domains";
-import { selectors, actions } from "~/domains/cheki";
+import { useSelector } from "~/domains";
+import { selectors } from "~/domains/cheki";
 import {
   ChekiStaticDecoration,
   isDynamicDecoration,
@@ -62,17 +62,9 @@ export const Decorations: React.FC = () => {
 };
 
 const FrameImage: React.FC = () => {
-  const dispatch = useDispatch();
   const frameDataUrl = useSelector(selectors.frameDataUrl);
-  const frameReady = useSelector(selectors.frameReady);
   const imageDirection = useSelector(selectors.imageDirection);
   const { height, width } = getFrameSizeByDirection(imageDirection);
-
-  // Side Effects
-
-  useEffect(() => {
-    if (!frameReady) dispatch(actions.changeFrame({ index: 0 }));
-  }, [frameReady]);
 
   // Render
 

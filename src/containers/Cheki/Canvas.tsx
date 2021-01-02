@@ -28,6 +28,7 @@ export const ChekiCanvas: React.FC<
 
   const dispatch = useDispatch();
   const { height, width } = useSelector(selectors.displayable);
+  const frameReady = useSelector(selectors.frameReady);
 
   // Events
 
@@ -43,6 +44,10 @@ export const ChekiCanvas: React.FC<
   const ref = useDisplayable<HTMLDivElement>(handleOnUpdateDisplayable);
 
   // Side Effects
+
+  useEffect(() => {
+    if (!frameReady) dispatch(actions.changeFrame({ index: 0 }));
+  }, [frameReady]);
 
   // `onTouchMove` が渡されたときには `{ passive: false }` を追加する
   useEffect(() => {
