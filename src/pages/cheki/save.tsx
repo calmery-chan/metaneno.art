@@ -72,7 +72,7 @@ const ChekiSaveAndShare: NextPage = () => {
 
   return (
     <ChekiApp>
-      <ChekiConfetti />
+      {previewUrl && <ChekiConfetti />}
 
       <ChekiFlexColumn>
         <ChekiHeader
