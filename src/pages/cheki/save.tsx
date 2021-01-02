@@ -42,8 +42,63 @@ const twitter = css`
 
 // Components
 
-const ChekiSaveAndShare: NextPage = () => {
+const maskingTape = css`
+  height: ${Spacing.l * 3}px;
+  position: absolute;
+  width: ${Spacing.l * 5}px;
+`;
+
+const maskingTapeBottom = css`
+  ${maskingTape};
+  margin-bottom: -${Spacing.l}px;
+`;
+
+const maskingTapeTop = css`
+  ${maskingTape};
+  margin-top: -${Spacing.l}px;
+`;
+
+const Preview: React.FC<{ url: string | null }> = ({ url }) => {
   const displayable = useSelector(selectors.displayable);
+  const frame = useSelector(selectors.frame);
+
+  return (
+    <div
+      className="absolute"
+      id={getTutorialElementId("preview")}
+      style={{
+        height: `${displayable.height}px`,
+        top: `${displayable.y}px`,
+        margin: `0 ${Spacing.l}px`,
+      }}
+    >
+      <div
+        css={maskingTapeTop}
+        style={{
+          // フレームを含む画像の表示位置から予め用意した余白分左へ移動する
+          left: `${frame.x - displayable.x - Spacing.l}px`,
+          top: `${frame.y - displayable.y}px`,
+        }}
+      >
+        {/* https://photo-chips.com/?act=bukken&id=966 */}
+        <img src="/cheki/masking.png" width="100%" />
+      </div>
+      {url && <img css={preview} src={url} />}
+      <div
+        css={maskingTapeBottom}
+        style={{
+          // フレームを含む画像の表示位置から予め用意した余白を抜いた横幅分左へ移動する
+          left: `${frame.x - displayable.x + frame.width - Spacing.l * 4}px`,
+          top: `${frame.y - displayable.y + frame.height - Spacing.l * 2}px`,
+        }}
+      >
+        <img src="/cheki/masking.png" width="100%" />
+      </div>
+    </div>
+  );
+};
+
+const ChekiSaveAndShare: NextPage = () => {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [shareId, setShareId] = useState<string | null>(null);
   const [isFetching, setFetching] = useState(false);
@@ -81,45 +136,12 @@ const ChekiSaveAndShare: NextPage = () => {
         />
         <ChekiCanvas
           emotion={css`
-            z-index: 2;
             margin: ${Spacing.l}px;
           `}
         >
           <ChekiCanvasChekiImage onCreatePreviewUrl={setPreviewUrl} />
         </ChekiCanvas>
-        <div
-          className="absolute"
-          id={getTutorialElementId("preview")}
-          style={{
-            height: `${displayable.height}px`,
-            top: `${displayable.y}px`,
-            margin: `0 ${Spacing.l}px`,
-          }}
-        >
-          <div
-            css={css`
-              position: absolute;
-              top: 0;
-              left: 0;
-              margin-top: -${Spacing.l}px;
-              height: ${Spacing.l * 2}px;
-            `}
-          >
-            Masking
-          </div>
-          {previewUrl && <img css={preview} src={previewUrl} />}
-          <div
-            css={css`
-              position: absolute;
-              bottom: 0;
-              right: 0;
-              margin-bottom: -${Spacing.l}px;
-              height: ${Spacing.l * 2}px;
-            `}
-          >
-            Masking 2
-          </div>
-        </div>
+        <Preview url={previewUrl} />
 
         <ChekiColumn margin>
           <ChekiNote>
