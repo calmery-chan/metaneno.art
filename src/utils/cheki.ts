@@ -97,9 +97,9 @@ export const convertFileToUrl = (
 
         resolve({
           dataUrl: (canvas as HTMLCanvasElement).toDataURL("image/png"),
-          createdDate: `${year}.${month < 10 ? ` ${month}` : month}.${
-            date < 10 ? ` ${date}` : date
-          }`,
+          createdDate: `${year}.${month
+            .toString()
+            .padStart(2, "0")}.${date.toString().padStart(2, "0")}`,
         });
       },
       { canvas: true, meta: true, orientation: true }
