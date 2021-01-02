@@ -7,6 +7,7 @@ import { useSelector } from "~/domains";
 import { selectors } from "~/domains/cheki";
 import { fadeIn, fadeOut, Mixin } from "~/styles/mixin";
 import { Spacing } from "~/styles/spacing";
+import { getTutorialElementId } from "~/utils/cheki";
 
 // Styles
 
@@ -54,9 +55,10 @@ const disabled = css`
 const NavigationIcon: React.FC<{
   alt: string;
   href: string;
+  id?: string;
   src: string;
   always?: boolean;
-}> = ({ alt, always = false, href, src }) => {
+}> = ({ alt, always = false, href, id, src }) => {
   const { pathname, push } = useRouter();
   const ready = useSelector(selectors.ready);
 
@@ -81,6 +83,7 @@ const NavigationIcon: React.FC<{
         alt={alt}
         className={classnames({ active: pathname === href })}
         data={src}
+        id={id}
         type="image/svg+xml"
       />
     </IconContainer>
@@ -92,21 +95,25 @@ export const ChekiNavigation = () => (
     <NavigationIcon alt="カメラ" always href="/cheki" src="/cheki/camera.svg" />
     <NavigationIcon
       alt="フィルター"
+      id={getTutorialElementId("navigation-filters")}
       href="/cheki/filters"
       src="/cheki/filters.svg"
     />
     <NavigationIcon
       alt="フレーム"
+      id={getTutorialElementId("navigation-frames")}
       href="/cheki/frames"
       src="/cheki/frames.svg"
     />
-    {/* <NavigationIcon
+    <NavigationIcon
       alt="デコレーション"
+      id={getTutorialElementId("navigation-decorations")}
       href="/cheki/decorations"
       src="/cheki/decorations.svg"
-    /> */}
+    />
     <NavigationIcon
       alt="保存・シェア"
+      id={getTutorialElementId("navigation-save")}
       href="/cheki/save"
       src="/cheki/save.svg"
     />

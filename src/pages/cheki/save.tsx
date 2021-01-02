@@ -8,7 +8,7 @@ import { ChekiFlexColumn } from "~/components/Cheki/FlexColumn";
 import { ChekiHashTag } from "~/components/Cheki/HashTag";
 import { ChekiHeader } from "~/components/Cheki/Header";
 import { ChekiNote } from "~/components/Cheki/Note";
-import { TWITTER_HASHTAG_URL } from "~/constants/cheki";
+import { SAVE_PAGE_SCENARIO, TWITTER_HASHTAG_URL } from "~/constants/cheki";
 import { ChekiApp } from "~/containers/Cheki/App";
 import { ChekiCanvas } from "~/containers/Cheki/Canvas";
 import { ChekiCanvasChekiImage } from "~/containers/Cheki/CanvasChekiImage";
@@ -16,7 +16,7 @@ import { ChekiNavigation } from "~/containers/Cheki/Navigation";
 import { useSelector } from "~/domains";
 import { selectors } from "~/domains/cheki";
 import { Spacing } from "~/styles/spacing";
-import { getShareUrlById, upload } from "~/utils/cheki";
+import { getShareUrlById, getTutorialElementId, upload } from "~/utils/cheki";
 import * as GA from "~/utils/cheki/google-analytics";
 
 // Styles
@@ -67,13 +67,13 @@ const ChekiSaveAndShare: NextPage = () => {
   return (
     <ChekiApp>
       <ChekiFlexColumn>
-        <ChekiHeader />
-
+        <ChekiHeader scenario={SAVE_PAGE_SCENARIO} />
         <ChekiCanvas>
           <ChekiCanvasChekiImage onCreatePreviewUrl={setPreviewUrl} />
         </ChekiCanvas>
         <div
           className="absolute w-full"
+          id={getTutorialElementId("preview")}
           style={{
             height: `${displayable.height}px`,
             top: `${displayable.y}px`,

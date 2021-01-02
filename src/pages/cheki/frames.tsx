@@ -6,7 +6,7 @@ import { ChekiFlexColumn } from "~/components/Cheki/FlexColumn";
 import { ChekiGradientText } from "~/components/Cheki/GradientText";
 import { ChekiHeader } from "~/components/Cheki/Header";
 import { ChekiHorizontal } from "~/components/Cheki/Horizontal";
-import { CHEKI_FRAME_IMAGE_URLS } from "~/constants/cheki";
+import { CHEKI_FRAME_IMAGE_URLS, PROCESSING_SCENARIO } from "~/constants/cheki";
 import { ChekiApp } from "~/containers/Cheki/App";
 import { ChekiCanvas } from "~/containers/Cheki/Canvas";
 import { ChekiCanvasChekiImage } from "~/containers/Cheki/CanvasChekiImage";
@@ -64,7 +64,7 @@ export const ChekiFrames: NextPage = () => {
   return (
     <ChekiApp>
       <ChekiFlexColumn>
-        <ChekiHeader />
+        <ChekiHeader scenario={PROCESSING_SCENARIO} />
         <ChekiCanvas>
           <ChekiCanvasChekiImage />
         </ChekiCanvas>

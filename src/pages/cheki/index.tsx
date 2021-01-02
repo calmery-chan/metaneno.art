@@ -31,6 +31,7 @@ import { Spacing } from "~/styles/spacing";
 import { Typography } from "~/styles/typography";
 import {
   convertEventToCursorPositions,
+  getTutorialElementId,
   MouseRelatedEvent,
   TouchRelatedEvent,
 } from "~/utils/cheki";
@@ -583,6 +584,7 @@ export const ChekiCamera: React.FC = () => {
         <div>
           <Icon
             alt="撮影する"
+            id={getTutorialElementId("shoot-button")}
             onClick={handleOnClickShootButton}
             src="/cheki/shoot.svg"
           />
@@ -600,6 +602,7 @@ export const ChekiCamera: React.FC = () => {
               height: 32px;
               width: 32px;
             `}
+            id={getTutorialElementId("change-pose-button")}
             onClick={handleOnClickShowTagsButton}
             src="/cheki/filter.svg"
           />

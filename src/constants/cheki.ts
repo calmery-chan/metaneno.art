@@ -1,5 +1,5 @@
 import { DefaultSeoProps } from "next-seo";
-import { Hex, ChekiDecoration } from "~/domains/cheki/models";
+import { Hex, ChekiDecoration, ChekiScenario } from "~/domains/cheki/models";
 
 import { getTutorialElementId } from "~/utils/cheki";
 
@@ -329,5 +329,91 @@ export const FILTERS_PAGE_SCENARIO = [
   },
   {
     message: "ここにはフィルターが表示されているよ",
+  },
+];
+
+export const CAMERA_SCENARIO: ChekiScenario[] = [
+  {
+    message: "ノネメちゃんチェキへようこそ！",
+  },
+  {
+    message: "ここでは天使の女の子、ノネメちゃんとチェキの撮影ができるよ",
+  },
+  {
+    emphasisElementId: getTutorialElementId("shoot-button"),
+    message: "早速このボタンで撮影してみてね",
+  },
+  {
+    emphasisElementId: getTutorialElementId("change-pose-button"),
+    message: "ポーズの指定はここからできるよ！！",
+  },
+];
+
+export const SHOT_SCENARIO: ChekiScenario[] = [
+  {
+    characterImageUrl: "/cheki/noneme/save.png",
+    message: "...どう？うまく撮れてる？",
+  },
+  {
+    message: "撮影がうまく行かなかった時は何回でも撮り直しもできるよ",
+  },
+  {
+    emphasisElementId: getTutorialElementId("take-a-photo-again"),
+    message: "やっぱり別の構図で撮りたい…ってときはここから選び直してね",
+  },
+  {
+    characterImageUrl: "/cheki/noneme/dummy.png",
+    message: "（納得のいく写真が撮れるよう頑張るね…たぶん）",
+  },
+  {
+    message: "この写真で決まり！と思ったら加工しましょう",
+  },
+];
+
+export const PROCESSING_SCENARIO: ChekiScenario[] = [
+  {
+    characterImageUrl: "/cheki/noneme/dummy.png",
+    message: "ふぅ。いい感じに撮れてるね...♪早速加工しちゃお〜。",
+  },
+  {
+    emphasisElementId: getTutorialElementId("navigation-filters"),
+    message: "フィルター加工はここ",
+  },
+  {
+    emphasisElementId: getTutorialElementId("navigation-frames"),
+    message: "フレーム選択はここ",
+  },
+  {
+    emphasisElementId: getTutorialElementId("navigation-decorations"),
+    message: "デコレーションはここ",
+  },
+  {
+    emphasisElementId: getTutorialElementId("navigation-decorations"),
+    message: "ロゴや撮影日時などを入れることが出来ます",
+  },
+  {
+    emphasisElementId: getTutorialElementId("navigation-save"),
+    message: "出来上がったらこのボタンからシェアしましょう",
+  },
+];
+
+export const SAVE_PAGE_SCENARIO: ChekiScenario[] = [
+  {
+    characterImageUrl: "/cheki/noneme/dummy.png",
+    message: "完成...！",
+  },
+  {
+    message: "おめでとうございます！素晴らしいチェキが出来上がりましたね！",
+  },
+  {
+    emphasisElementId: getTutorialElementId("preview"),
+    message: "チェキは長押し、または右クリックで保存できます",
+  },
+  {
+    emphasisElementId: getTutorialElementId("print-button"),
+    message: "作ったチェキを印刷したい場合はこちら",
+  },
+  {
+    message: "ぜひ SNS でシェアしてみましょう！",
   },
 ];
