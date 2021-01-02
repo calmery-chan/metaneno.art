@@ -82,20 +82,43 @@ const ChekiSaveAndShare: NextPage = () => {
         <ChekiCanvas
           emotion={css`
             z-index: 2;
+            margin: ${Spacing.l}px;
           `}
         >
           <ChekiCanvasChekiImage onCreatePreviewUrl={setPreviewUrl} />
         </ChekiCanvas>
         <div
-          className="absolute w-full"
+          className="absolute"
           id={getTutorialElementId("preview")}
           style={{
             height: `${displayable.height}px`,
             top: `${displayable.y}px`,
-            zIndex: 3,
+            margin: `0 ${Spacing.l}px`,
           }}
         >
+          <div
+            css={css`
+              position: absolute;
+              top: 0;
+              left: 0;
+              margin-top: -${Spacing.l}px;
+              height: ${Spacing.l * 2}px;
+            `}
+          >
+            Masking
+          </div>
           {previewUrl && <img css={preview} src={previewUrl} />}
+          <div
+            css={css`
+              position: absolute;
+              bottom: 0;
+              right: 0;
+              margin-bottom: -${Spacing.l}px;
+              height: ${Spacing.l * 2}px;
+            `}
+          >
+            Masking 2
+          </div>
         </div>
 
         <ChekiColumn margin>
