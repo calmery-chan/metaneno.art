@@ -22,9 +22,9 @@ export const addDecoration = createAsyncThunk<
   { decoration: ChekiDecoration },
   { decorationId: string }
 >("CHEKI/ADD_DECORATION", async ({ decorationId }) => {
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const decoration: ChekiDecoration = JSON.parse(
     JSON.stringify(
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       CHEKI_DECORATIONS.find((decoration) => decoration.id === decorationId)!
     )
   );
