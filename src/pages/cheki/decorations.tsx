@@ -15,6 +15,7 @@ import { ChekiCanvasChekiImage } from "~/containers/Cheki/CanvasChekiImage";
 import { ChekiNavigation } from "~/containers/Cheki/Navigation";
 import { useDispatch, useSelector } from "~/domains";
 import { actions, selectors } from "~/domains/cheki";
+import { Colors } from "~/styles/colors";
 import { Mixin } from "~/styles/mixin";
 import { Spacing } from "~/styles/spacing";
 import { getScenarioCacheId } from "~/utils/cheki";
@@ -22,7 +23,10 @@ import { getScenarioCacheId } from "~/utils/cheki";
 const Decoration = styled.div<{ selected: boolean }>`
   ${Mixin.clickable};
 
+  border: 1px solid ${Colors.lightGray};
+  border-radius: 4px;
   height: 96px;
+  padding: ${Spacing.xs}px;
   width: 96px;
 
   ${({ selected }) =>
