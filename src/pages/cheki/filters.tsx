@@ -11,7 +11,7 @@ import {
   ChekiFilter,
   CHEKI_FILTERS,
   CHEKI_THUMBNAIL_IMAGE_SIZE,
-  PROCESSING_SCENARIO,
+  EDITING_SCENARIO,
 } from "~/constants/cheki";
 import { ChekiApp } from "~/containers/Cheki/App";
 import { ChekiCanvas } from "~/containers/Cheki/Canvas";
@@ -23,7 +23,7 @@ import { actions, selectors } from "~/domains/cheki";
 import { Colors } from "~/styles/colors";
 import { Spacing } from "~/styles/spacing";
 import { Typography } from "~/styles/typography";
-import { getTutorialElementId } from "~/utils/cheki";
+import { getScenarioCacheId, getTutorialElementId } from "~/utils/cheki";
 
 // Styles
 
@@ -86,7 +86,10 @@ export const ChekiFilters: NextPage = () => {
     <>
       <ChekiApp>
         <ChekiFlexColumn>
-          <ChekiHeader scenario={PROCESSING_SCENARIO} />
+          <ChekiHeader
+            forceDisplayOnlyOnce={getScenarioCacheId("editing")}
+            scenario={EDITING_SCENARIO}
+          />
           <ChekiCanvas>
             <ChekiCanvasTrimedImage />
           </ChekiCanvas>

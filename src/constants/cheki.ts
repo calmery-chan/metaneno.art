@@ -372,7 +372,7 @@ export const SHOT_SCENARIO: ChekiScenario[] = [
   },
 ];
 
-export const PROCESSING_SCENARIO: ChekiScenario[] = [
+export const EDITING_SCENARIO: ChekiScenario[] = [
   {
     characterImageUrl: "/cheki/characters/2.png",
     message: "ふぅ。いい感じに撮れてるね...♪早速加工しちゃお〜。",

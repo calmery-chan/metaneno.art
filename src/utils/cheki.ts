@@ -370,3 +370,6 @@ export const getSelectableCharacterTags = (characterTags: CharacterTag[]) => {
 };
 
 export const getTutorialElementId = (id: string) => `cheki-tutorial-${id}`;
+
+export const getScenarioCacheId = (id: string) =>
+  `cheki-tutorial-already-seen-${id}`;

@@ -16,7 +16,12 @@ import { ChekiNavigation } from "~/containers/Cheki/Navigation";
 import { useSelector } from "~/domains";
 import { selectors } from "~/domains/cheki";
 import { Spacing } from "~/styles/spacing";
-import { getShareUrlById, getTutorialElementId, upload } from "~/utils/cheki";
+import {
+  getScenarioCacheId,
+  getShareUrlById,
+  getTutorialElementId,
+  upload,
+} from "~/utils/cheki";
 import * as GA from "~/utils/cheki/google-analytics";
 
 // Styles
@@ -67,7 +72,10 @@ const ChekiSaveAndShare: NextPage = () => {
   return (
     <ChekiApp>
       <ChekiFlexColumn>
-        <ChekiHeader scenario={SAVE_PAGE_SCENARIO} />
+        <ChekiHeader
+          forceDisplayOnlyOnce={getScenarioCacheId("save")}
+          scenario={SAVE_PAGE_SCENARIO}
+        />
         <ChekiCanvas>
           <ChekiCanvasChekiImage onCreatePreviewUrl={setPreviewUrl} />
         </ChekiCanvas>

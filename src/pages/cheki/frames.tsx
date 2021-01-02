@@ -6,7 +6,7 @@ import { ChekiFlexColumn } from "~/components/Cheki/FlexColumn";
 import { ChekiGradientText } from "~/components/Cheki/GradientText";
 import { ChekiHeader } from "~/components/Cheki/Header";
 import { ChekiHorizontal } from "~/components/Cheki/Horizontal";
-import { CHEKI_FRAME_IMAGE_URLS, PROCESSING_SCENARIO } from "~/constants/cheki";
+import { CHEKI_FRAME_IMAGE_URLS, EDITING_SCENARIO } from "~/constants/cheki";
 import { ChekiApp } from "~/containers/Cheki/App";
 import { ChekiCanvas } from "~/containers/Cheki/Canvas";
 import { ChekiCanvasChekiImage } from "~/containers/Cheki/CanvasChekiImage";
@@ -16,6 +16,7 @@ import { actions, selectors } from "~/domains/cheki";
 import { Colors } from "~/styles/colors";
 import { Spacing } from "~/styles/spacing";
 import { Typography } from "~/styles/typography";
+import { getScenarioCacheId } from "~/utils/cheki";
 
 // Styles
 
@@ -64,7 +65,10 @@ export const ChekiFrames: NextPage = () => {
   return (
     <ChekiApp>
       <ChekiFlexColumn>
-        <ChekiHeader scenario={PROCESSING_SCENARIO} />
+        <ChekiHeader
+          forceDisplayOnlyOnce={getScenarioCacheId("editing")}
+          scenario={EDITING_SCENARIO}
+        />
         <ChekiCanvas>
           <ChekiCanvasChekiImage />
         </ChekiCanvas>

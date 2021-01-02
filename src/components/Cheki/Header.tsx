@@ -1,7 +1,7 @@
 import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 import { useRouter } from "next/router";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { ExternalLink } from "./ExternalLink";
 import { Icon } from "./Icon";
 import { ChekiModal, ChekiModalText, ChekiModalTitle } from "./Modal";
@@ -103,9 +103,10 @@ const Contributor: React.FC<{
   </ExternalLink>
 );
 
-export const ChekiHeader: React.FC<{ scenario?: ChekiScenario[] }> = ({
-  scenario,
-}) => {
+export const ChekiHeader: React.FC<{
+  forceDisplayOnlyOnce?: string;
+  scenario?: ChekiScenario[];
+}> = ({ forceDisplayOnlyOnce, scenario }) => {
   const { pathname, push } = useRouter();
   const [information, setInformation] = useState(false);
   const [backToTop, setBackToTop] = useState(false);
@@ -129,14 +130,40 @@ export const ChekiHeader: React.FC<{ scenario?: ChekiScenario[] }> = ({
     () => push("/cheki/terms-of-service"),
     []
   );
+
   const handleOnCompleteTutorial = useCallback(() => {
     setIsTutorial(false);
     GA.completeTutorial(pathname);
-  }, [pathname]);
+
+    if (forceDisplayOnlyOnce) {
+      localStorage.setItem(
+        forceDisplayOnlyOnce,
+        new Date().getTime().toString()
+      );
+    }
+  }, [forceDisplayOnlyOnce, pathname]);
+
   const handleOnStopTutorial = useCallback(() => {
     setIsTutorial(false);
     GA.stopTutorial(pathname);
-  }, [pathname]);
+
+    if (forceDisplayOnlyOnce) {
+      localStorage.setItem(
+        forceDisplayOnlyOnce,
+        new Date().getTime().toString()
+      );
+    }
+  }, [forceDisplayOnlyOnce, pathname]);
+
+  useEffect(() => {
+    if (!forceDisplayOnlyOnce) {
+      return;
+    }
+
+    const isTutorial = !localStorage.getItem(forceDisplayOnlyOnce);
+
+    setIsTutorial(isTutorial);
+  }, [forceDisplayOnlyOnce, scenario]);
 
   return (
     <>

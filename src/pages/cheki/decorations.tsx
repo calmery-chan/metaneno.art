@@ -8,6 +8,7 @@ import { ChekiHeader } from "~/components/Cheki/Header";
 import { ChekiHorizontal } from "~/components/Cheki/Horizontal";
 import { Icon } from "~/components/Cheki/Icon";
 import { ChekiModal } from "~/components/Cheki/Modal";
+import { EDITING_SCENARIO } from "~/constants/cheki";
 import { ChekiApp } from "~/containers/Cheki/App";
 import { ChekiCanvas } from "~/containers/Cheki/Canvas";
 import { ChekiCanvasChekiImage } from "~/containers/Cheki/CanvasChekiImage";
@@ -16,6 +17,7 @@ import { useDispatch, useSelector } from "~/domains";
 import { actions, selectors } from "~/domains/cheki";
 import { Mixin } from "~/styles/mixin";
 import { Spacing } from "~/styles/spacing";
+import { getScenarioCacheId } from "~/utils/cheki";
 
 const Decoration = styled.div<{ selected: boolean }>`
   ${Mixin.clickable};
@@ -94,7 +96,10 @@ const Decorations: NextPage = () => {
     <>
       <ChekiApp>
         <ChekiFlexColumn>
-          <ChekiHeader />
+          <ChekiHeader
+            forceDisplayOnlyOnce={getScenarioCacheId("editing")}
+            scenario={EDITING_SCENARIO}
+          />
           <ChekiCanvas>
             <ChekiCanvasChekiImage />
           </ChekiCanvas>

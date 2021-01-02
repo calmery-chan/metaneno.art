@@ -33,6 +33,7 @@ import { Spacing } from "~/styles/spacing";
 import { Typography } from "~/styles/typography";
 import {
   convertEventToCursorPositions,
+  getScenarioCacheId,
   getTutorialElementId,
   MouseRelatedEvent,
   TouchRelatedEvent,
@@ -659,6 +660,8 @@ export const ChekiCamera: React.FC = () => {
 
 export const Index: NextPage = () => {
   const dispatch = useDispatch();
+
+  const dataUrl = useSelector(selectors.imageDataUrl);
   const ready = useSelector(selectors.ready);
   const splashed = useSelector(selectors.splashed);
 
@@ -690,7 +693,18 @@ export const Index: NextPage = () => {
         }}
       >
         <ChekiFlexColumn>
-          <ChekiHeader scenario={ready ? SHOT_SCENARIO : CAMERA_SCENARIO} />
+          <ChekiHeader
+            forceDisplayOnlyOnce={
+              !dataUrl
+                ? undefined
+                : getScenarioCacheId(
+                    ready ? "after-shooting" : "before-shooting"
+                  )
+            }
+            scenario={
+              !dataUrl ? undefined : ready ? SHOT_SCENARIO : CAMERA_SCENARIO
+            }
+          />
           <ChekiCamera />
           <ChekiNavigation />
         </ChekiFlexColumn>
