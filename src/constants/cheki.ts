@@ -1,4 +1,5 @@
 import { DefaultSeoProps } from "next-seo";
+import { isMobile } from "react-device-detect";
 import { Hex, ChekiDecoration, ChekiScenario } from "~/domains/cheki/models";
 
 import { getTutorialElementId } from "~/utils/cheki";
@@ -408,7 +409,7 @@ export const SAVE_PAGE_SCENARIO: ChekiScenario[] = [
   },
   {
     emphasisElementId: getTutorialElementId("preview"),
-    message: "チェキは長押し、または右クリックで保存できます",
+    message: `チェキは${isMobile ? "長押し" : "右クリック"}で保存できます`,
   },
   {
     emphasisElementId: getTutorialElementId("header-print"),
