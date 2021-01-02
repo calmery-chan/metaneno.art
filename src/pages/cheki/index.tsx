@@ -211,6 +211,7 @@ export const ChekiCanvasTrim: React.FC<{ emotion?: Interpolation<Theme> }> = ({
   return (
     <ChekiCanvas
       emotion={emotion}
+      noMargin
       onMouseLeave={handleOnLeave}
       onMouseMove={handleOnTick}
       onMouseUp={handleOnMouseComplete}

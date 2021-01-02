@@ -3,6 +3,7 @@ import styled from "@emotion/styled";
 import { useCallback, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "~/domains";
 import { actions, selectors } from "~/domains/cheki";
+import { Spacing } from "~/styles/spacing";
 import { useDisplayable } from "~/utils/cheki";
 
 // Styles
@@ -11,15 +12,23 @@ const canvas = css`
   position: absolute;
 `;
 
-const Container = styled.div`
+const Container = styled.div<{ noMargin?: boolean }>`
   flex-grow: 1;
   height: fit-content;
+  ${({ noMargin }) =>
+    !noMargin &&
+    css`
+      margin: 0 ${Spacing.l}px;
+    `};
 `;
 
 // Components
 
 export const ChekiCanvas: React.FC<
-  React.SVGProps<SVGSVGElement> & { emotion?: Interpolation<Theme> }
+  React.SVGProps<SVGSVGElement> & {
+    emotion?: Interpolation<Theme>;
+    noMargin?: boolean;
+  }
 > = (props) => {
   const { emotion } = props;
   const onTouchMove = (props.onTouchMove as unknown) as (
@@ -60,7 +69,7 @@ export const ChekiCanvas: React.FC<
   // Render
 
   return (
-    <Container css={emotion} ref={ref}>
+    <Container css={emotion} noMargin={props.noMargin} ref={ref}>
       <svg
         {...props}
         css={canvas}

@@ -136,7 +136,8 @@ const ChekiSaveAndShare: NextPage = () => {
         />
         <ChekiCanvas
           emotion={css`
-            margin: ${Spacing.l}px;
+            margin-bottom: ${Spacing.l}px;
+            margin-top: ${Spacing.l}px;
           `}
         >
           <ChekiCanvasChekiImage onCreatePreviewUrl={setPreviewUrl} />
