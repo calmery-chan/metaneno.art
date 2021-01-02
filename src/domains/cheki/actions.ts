@@ -55,10 +55,18 @@ export const addImage = createAsyncThunk<
     width: number;
   },
   { url: string; createdDate: string }
->("CHEKI/ADD_IMAGE", async ({ url, createdDate }) => ({
-  ...resizeImage(await convertUrlToImage(url)),
-  createdDate,
-}));
+>("CHEKI/ADD_IMAGE", async ({ url, createdDate }) => {
+  try {
+    return {
+      ...resizeImage(await convertUrlToImage(url)),
+      createdDate,
+    };
+  } catch (error) {
+    Sentry.captureException(error);
+
+    throw error;
+  }
+});
 
 export const changeDecorationColor = createAction<{ hex: Hex }>(
   "CHEKI/CHANGE_DECORATION_COLOR"
@@ -76,14 +84,20 @@ export const changeFrame = createAsyncThunk<
   { dataUrl: string; index: number },
   { index: number }
 >("CHEKI/ADD_FRAME", async ({ index }) => {
-  GA.changeFrame(CHEKI_FRAME_IMAGE_URLS[index].name);
+  try {
+    GA.changeFrame(CHEKI_FRAME_IMAGE_URLS[index].name);
 
-  return {
-    dataUrl: resizeFrameImage(
-      await convertUrlToImage(CHEKI_FRAME_IMAGE_URLS[index].url)
-    ),
-    index,
-  };
+    return {
+      dataUrl: resizeFrameImage(
+        await convertUrlToImage(CHEKI_FRAME_IMAGE_URLS[index].url)
+      ),
+      index,
+    };
+  } catch (error) {
+    Sentry.captureException(error);
+
+    throw error;
+  }
 });
 
 export const complete = createAction("CHEKI/COMPLETE");
@@ -112,14 +126,20 @@ export const take = createAsyncThunk<
   { character: Character },
   { characterTags: CharacterTag[] }
 >("CHEKI/TAKE", async ({ characterTags }) => {
-  const characters = getCharactersWithTags(characterTags.concat());
-  const index = Math.floor(Math.random() * characters.length);
-  const character = characters[index];
-  character.url = await convertUrlToDataUrl(character.url);
+  try {
+    const characters = getCharactersWithTags(characterTags.concat());
+    const index = Math.floor(Math.random() * characters.length);
+    const character = characters[index];
+    character.url = await convertUrlToDataUrl(character.url);
 
-  GA.takeAPhoto(index);
+    GA.takeAPhoto(index);
 
-  return { character };
+    return { character };
+  } catch (error) {
+    Sentry.captureException(error);
+
+    throw error;
+  }
 });
 
 export const tick = createAction<{ cursorPositions: CursorPosition[] }>(
