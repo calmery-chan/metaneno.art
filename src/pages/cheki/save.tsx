@@ -28,9 +28,8 @@ import * as GA from "~/utils/cheki/google-analytics";
 // Styles
 
 const preview = css`
-  height: 100%;
-  width: 100%;
-  object-fit: contain;
+  position: absolute;
+  z-index: 1;
 `;
 
 const twitter = css`
@@ -46,6 +45,7 @@ const maskingTape = css`
   height: ${Spacing.l * 3}px;
   position: absolute;
   width: ${Spacing.l * 5}px;
+  z-index: 2;
 `;
 
 const maskingTapeBottom = css`
@@ -83,7 +83,17 @@ const Preview: React.FC<{ url: string | null }> = ({ url }) => {
         {/* https://photo-chips.com/?act=bukken&id=966 */}
         <img src="/cheki/masking.png" width="100%" />
       </div>
-      {url && <img css={preview} src={url} />}
+      {url && (
+        <img
+          css={preview}
+          src={url}
+          style={{
+            height: `${frame.height}px`,
+            left: `${frame.x - displayable.x}px`,
+            width: `${frame.width}px`,
+          }}
+        />
+      )}
       <div
         css={maskingTapeBottom}
         style={{
@@ -132,7 +142,7 @@ const ChekiSaveAndShare: NextPage = () => {
       <ChekiFlexColumn>
         <ChekiHeader
           forceDisplayOnlyOnce={getScenarioCacheId("save")}
-          scenario={SAVE_PAGE_SCENARIO}
+          scenario={previewUrl ? SAVE_PAGE_SCENARIO : undefined}
         />
         <ChekiCanvas
           emotion={css`
