@@ -45,7 +45,7 @@ const item = css`
   }
 `;
 
-const modal = styled.div`
+const modal = css`
   display: grid;
   gap: 4px;
   grid-template-columns: repeat(auto-fit, 96px);
