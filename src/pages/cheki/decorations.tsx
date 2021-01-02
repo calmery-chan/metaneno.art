@@ -47,10 +47,11 @@ const item = css`
 
 const modal = css`
   display: grid;
-  gap: 4px;
+  gap: ${Spacing.s}px;
   grid-template-columns: repeat(auto-fit, 96px);
   margin: 0 auto;
   max-width: 100%;
+  width: max-content;
 `;
 
 const openModal = css`
