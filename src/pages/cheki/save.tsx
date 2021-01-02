@@ -65,11 +65,11 @@ const Preview: React.FC<{ url: string | null }> = ({ url }) => {
   return (
     <div
       className="absolute"
-      id={getTutorialElementId("preview")}
       style={{
         height: `${displayable.height}px`,
         top: `${displayable.y}px`,
         margin: `0 ${Spacing.l}px`,
+        width: `${displayable.width}px`,
       }}
     >
       <div
@@ -86,6 +86,7 @@ const Preview: React.FC<{ url: string | null }> = ({ url }) => {
       {url && (
         <img
           css={preview}
+          id={getTutorialElementId("preview")}
           src={url}
           style={{
             height: `${frame.height}px`,
