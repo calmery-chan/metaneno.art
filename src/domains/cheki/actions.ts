@@ -16,25 +16,32 @@ import {
 
 import { CursorPosition, getCharactersWithTags } from "~/utils/cheki";
 import * as GA from "~/utils/cheki/google-analytics";
+import { Sentry } from "~/utils/sentry";
 
 export const addDecoration = createAsyncThunk<
   { decoration: ChekiDecoration },
   { decorationId: string }
 >("CHEKI/ADD_DECORATION", async ({ decorationId }) => {
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const decoration = CHEKI_DECORATIONS.find(
-    (decoration) => decoration.id === decorationId
-  )!;
+  const decoration: ChekiDecoration = JSON.parse(
+    JSON.stringify(
+      CHEKI_DECORATIONS.find((decoration) => decoration.id === decorationId)!
+    )
+  );
 
   if (!isDynamicDecoration(decoration)) {
-    const dataUrls = await Promise.all(
-      decoration.layers.map((layer) => convertUrlToDataUrl(layer.url))
-    );
+    try {
+      const dataUrls = await Promise.all(
+        decoration.layers.map((layer) => convertUrlToDataUrl(layer.url))
+      );
 
-    decoration.layers = decoration.layers.map((decoration, index) => ({
-      ...decoration,
-      url: dataUrls[index],
-    }));
+      decoration.layers = decoration.layers.map((decoration, index) => ({
+        ...decoration,
+        url: dataUrls[index],
+      }));
+    } catch (error) {
+      Sentry.captureException(error);
+    }
   }
 
   return { decoration };
