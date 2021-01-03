@@ -6,11 +6,25 @@ if (process.env.NODE_ENV === "production") {
   Sentry.init({ dsn: process.env.NEXT_PUBLIC_SENTRY_DSN });
 }
 
+const checkSecretToken = (request: NowRequest): boolean => {
+  if (!process.env.WEBHOOK_SECRET) {
+    throw new Error("WEBHOOK_SECRET is not defined");
+  }
+
+  if (request.body === undefined) {
+    return false;
+  }
+
+  const secret = request.headers["x-secret"];
+
+  return secret === process.env.WEBHOOK_SECRET;
+};
+
 export default async (
   request: NowRequest,
   response: NowResponse
 ): Promise<void> => {
-  if (request.method !== "POST") {
+  if (request.method !== "POST" || !checkSecretToken(request)) {
     response.statusCode = 400;
     response.end();
     return;
