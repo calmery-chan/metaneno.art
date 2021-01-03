@@ -4,7 +4,7 @@ import { NowRequest, NowResponse } from "@vercel/node";
 import axios from "axios";
 
 if (process.env.NODE_ENV === "production") {
-  Sentry.init({ dsn: process.env.SENTRY_DSN });
+  Sentry.init({ dsn: process.env.NEXT_PUBLIC_SENTRY_DSN });
 }
 
 export default async (
