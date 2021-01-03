@@ -57,6 +57,7 @@
     "babel-loader": "8.2.2",
     "contentful": "8.1.6",
     "css-loader": "5.0.1",
+    "dotenv": "8.2.0",
     "eslint": "7.16.0",
     "eslint-config-prettier": "7.1.0",
     "eslint-import-resolver-custom-alias": "1.2.0",
