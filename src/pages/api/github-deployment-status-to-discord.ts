@@ -1,3 +1,4 @@
+import * as crypto from "crypto";
 import { EventPayloads } from "@octokit/webhooks";
 import * as Sentry from "@sentry/node";
 import { NowRequest, NowResponse } from "@vercel/node";
@@ -7,13 +8,32 @@ if (process.env.NODE_ENV === "production") {
   Sentry.init({ dsn: process.env.NEXT_PUBLIC_SENTRY_DSN });
 }
 
+const checkSecretToken = (request: NowRequest): boolean => {
+  if (!process.env.WEBHOOK_SECRET) {
+    throw new Error("WEBHOOK_SECRET is not defined");
+  }
+
+  if (request.body === undefined) {
+    return false;
+  }
+
+  const checksum = request.headers["x-hub-signature"];
+  const digest = `sha1=${crypto
+    .createHmac("sha1", process.env.WEBHOOK_SECRET)
+    .update(JSON.stringify(request.body))
+    .digest("hex")}`;
+
+  return checksum === digest;
+};
+
 export default async (
   request: NowRequest,
   response: NowResponse
 ): Promise<void> => {
   response.statusCode = 200;
 
-  if (!request.body.deployment_status) {
+  if (!request.body.deployment_status || !checkSecretToken(request)) {
+    response.statusCode = 400;
     return response.end();
   }
 
@@ -25,7 +45,8 @@ export default async (
 
   if (
     deploymentStatus.state === "pending" ||
-    (deploymentStatus.environment !== "Production" &&
+    (deploymentStatus.environment !== "Preview" &&
+      deploymentStatus.environment !== "Production" &&
       deploymentStatus.environment !== "creamsoda-in-a-dream")
   ) {
     return response.end();
