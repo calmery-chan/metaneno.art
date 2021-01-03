@@ -18,9 +18,12 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - run: |
-          npm ci
-          node scripts/contentful.js
+      - uses: actions/cache@v2
+        with:
+          key: ${{ runner.os }}-node_modules-${{ hashFiles('**/yarn.lock') }}
+          path: "**/node_modules"
+      - run: yarn
+      - run: node scripts/contentful.js
       - run: |
           git config user.name "ameri-shirosaki"
           git config user.email "59396199+ameri-shirosaki@users.noreply.github.com"
