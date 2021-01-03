@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { ReactThreeFiber } from "react-three-fiber/three-types";
+import { ReactThreeFiber } from "react-three-fiber";
 import { BufferGeometry, Geometry, Material, Mesh, Vector3 } from "three";
 
 export const Cube: React.FC<{ x: number; y: number; z: number }> = ({
