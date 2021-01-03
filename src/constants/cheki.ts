@@ -624,15 +624,27 @@ export const CAMERA_SCENARIO: ChekiScenario[] = [
     message: "ノネメちゃんチェキへようこそ！",
   },
   {
-    message: "ここでは天使の女の子、ノネメちゃんとチェキの撮影ができるよ",
+    message: "ここでは天使の女の子、ノネメちゃんと一緒にチェキが撮れます",
   },
   {
     emphasisElementId: getTutorialElementId("shoot-button"),
-    message: "早速このボタンで撮影してみてね",
+    message: `このボタンを${
+      isMobile ? "タップ" : "クリック"
+    }して撮影スタート！ノネメちゃんがポーズをとってくれます`,
   },
   {
     emphasisElementId: getTutorialElementId("change-pose-button"),
-    message: "ポーズの指定はここからできるよ！！",
+    message:
+      "上手く撮影できないときはここからノネメちゃんにポーズの指示を出しましょう",
+  },
+  {
+    emphasisElementId: getTutorialElementId("trimming"),
+    message:
+      "写真をタップして位置を指定するとその場所でノネメちゃんがポーズをとってくれます",
+  },
+  {
+    emphasisElementId: getTutorialElementId("header-tutorial"),
+    message: "ここからチュートリアルを見返せます",
   },
 ];
 
@@ -643,18 +655,11 @@ export const SHOT_SCENARIO: ChekiScenario[] = [
   },
   {
     emphasisElementId: getTutorialElementId("take-a-photo-again"),
-    message: "撮影がうまく行かなかった時は何回でも撮り直しもできるよ",
-  },
-  {
-    emphasisElementId: getTutorialElementId("take-a-photo-again"),
-    message: "やっぱり別の構図で撮りたい…ってときはここから選び直してね",
+    message: "上手く撮影ができなかったときは何回でも撮り直しもできます",
   },
   {
     characterImageUrl: "/cheki/characters/2.png",
     message: "（納得のいく写真が撮れるよう頑張るね…たぶん）",
-  },
-  {
-    message: "この写真で決まり！と思ったら加工しましょう",
   },
 ];
 
@@ -665,23 +670,26 @@ export const EDITING_SCENARIO: ChekiScenario[] = [
   },
   {
     emphasisElementId: getTutorialElementId("navigation-filters"),
-    message: "フィルター加工はここ",
+    message: "このページでは写真にフィルターをかけて雰囲気を変更できます",
   },
   {
     emphasisElementId: getTutorialElementId("navigation-frames"),
-    message: "フレーム選択はここ",
+    message: "ここではフレームの色や柄を変更できます",
+  },
+  {
+    emphasisElementId: getTutorialElementId("navigation-frames"),
+    message: "色々なフレームを試してみよう",
   },
   {
     emphasisElementId: getTutorialElementId("navigation-decorations"),
-    message: "デコレーションはここ",
-  },
-  {
-    emphasisElementId: getTutorialElementId("navigation-decorations"),
-    message: "ロゴや撮影日時などを入れることが出来ます",
+    message:
+      "ここではチェキに落書きやロゴ、撮影日時を入れてデコレーションすることができます",
   },
   {
     emphasisElementId: getTutorialElementId("navigation-save"),
-    message: "出来上がったらこのボタンからシェアしましょう",
+    message: `加工が終わったらここを${
+      isMobile ? "タップ" : "クリック"
+    }してチェキを完成させましょう`,
   },
 ];
 
@@ -691,7 +699,7 @@ export const SAVE_PAGE_SCENARIO: ChekiScenario[] = [
     message: "完成...！",
   },
   {
-    message: "おめでとうございます！素晴らしいチェキが出来上がりましたね！",
+    message: "おめでとうございます！素敵なチェキが出来上がりましたね！",
   },
   {
     emphasisElementId: getTutorialElementId("preview"),
@@ -702,6 +710,8 @@ export const SAVE_PAGE_SCENARIO: ChekiScenario[] = [
     message: "作ったチェキを印刷したい場合はこちら",
   },
   {
-    message: "ぜひ SNS でシェアしてみましょう！",
+    characterImageUrl: "/cheki/characters/2.png",
+    emphasisElementId: getTutorialElementId("share-twitter"),
+    message: "SNSでみんなに見せよ～♪",
   },
 ];

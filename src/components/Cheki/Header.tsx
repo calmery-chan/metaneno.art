@@ -192,6 +192,7 @@ export const ChekiHeader: React.FC<{
               alt="チュートリアル"
               css={margin}
               height="24px"
+              id={getTutorialElementId("header-tutorial")}
               onClick={handleOnClickTutorialButton}
               src={
                 isTutorial

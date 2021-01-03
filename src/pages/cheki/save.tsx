@@ -164,6 +164,7 @@ const ChekiSaveAndShare: NextPage = () => {
           </ChekiNote>
           <ChekiButton
             disabled={!previewUrl || isFetching}
+            id={getTutorialElementId("share-twitter")}
             onClick={handleOnClickShareButton}
           >
             {!isFetching && previewUrl && (

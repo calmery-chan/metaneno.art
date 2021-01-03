@@ -7,8 +7,9 @@ import { Typography } from "~/styles/typography";
 
 export const ChekiButton: React.FC<{
   disabled?: boolean;
+  id?: string;
   onClick?: () => void;
-}> = ({ children, disabled, onClick }) => (
+}> = ({ children, disabled, id, onClick }) => (
   <div
     css={css`
       ${Typography.M};
@@ -37,6 +38,7 @@ export const ChekiButton: React.FC<{
           cursor: pointer;
         `}
       `}
+      id={id}
       onClick={disabled ? undefined : onClick}
       style={{
         maxWidth: "512px",

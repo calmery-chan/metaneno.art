@@ -224,6 +224,7 @@ export const ChekiCanvasTrim: React.FC<{ emotion?: Interpolation<Theme> }> = ({
 
       <svg
         height={trim.height}
+        id={getTutorialElementId("trimming")}
         overflow="visible"
         viewBox={`0 0 ${trim.viewBoxWidth} ${trim.viewBoxHeight}`}
         width={trim.width}
