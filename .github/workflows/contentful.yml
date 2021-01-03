@@ -19,18 +19,16 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - run: |
-          npm i npm@${{ matrix.npm-version }} -g
           npm ci
           node scripts/contentful.js
       - run: |
-          git config user.name "calmery-chan"
-          git config user.email "59396199+calmery-chan@users.noreply.github.com"
+          git config user.name "ameri-shirosaki"
+          git config user.email "59396199+ameri-shirosaki@users.noreply.github.com"
           git add public
           git commit -m "Update public/contents"
           git push origin master
 
     strategy:
       matrix:
-        node-version: [12.18.3]
-        npm-version: [6.14.7]
+        node-version: [14.15.0]
         os: [ubuntu-latest]
