@@ -705,10 +705,10 @@ export const SAVE_PAGE_SCENARIO: ChekiScenario[] = [
     emphasisElementId: getTutorialElementId("preview"),
     message: `チェキは${isMobile ? "長押し" : "右クリック"}で保存できます`,
   },
-  {
-    emphasisElementId: getTutorialElementId("header-print"),
-    message: "作ったチェキを印刷したい場合はこちら",
-  },
+  // {
+  //   emphasisElementId: getTutorialElementId("header-print"),
+  //   message: "作ったチェキを印刷したい場合はこちら",
+  // },
   {
     characterImageUrl: "/cheki/characters/2.png",
     emphasisElementId: getTutorialElementId("share-twitter"),
