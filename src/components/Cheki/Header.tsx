@@ -125,7 +125,7 @@ export const ChekiHeader: React.FC<{
     [information]
   );
   const handleOnClickOpenPopup = useCallback(() => setBackToTop(true), []);
-  const handleOnClickOpenPrint = useCallback(() => setIsPrint(true), []);
+  // const handleOnClickOpenPrint = useCallback(() => setIsPrint(true), []);
   const handleOnClickOpenTerms = useCallback(
     () => push("/cheki/terms-of-service"),
     []
