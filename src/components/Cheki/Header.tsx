@@ -176,7 +176,7 @@ export const ChekiHeader: React.FC<{
           width="24px"
         />
         <div className="flex ml-auto">
-          {pathname === "/cheki/save" && (
+          {/* {pathname === "/cheki/save" && (
             <Icon
               alt="印刷"
               css={margin}
@@ -186,7 +186,7 @@ export const ChekiHeader: React.FC<{
               src={isPrint ? "/cheki/print.selected.svg" : "/cheki/print.svg"}
               width="24px"
             />
-          )}
+          )} */}
           {scenario && (
             <Icon
               alt="チュートリアル"
