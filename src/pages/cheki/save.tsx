@@ -1,15 +1,10 @@
 import { css } from "@emotion/react";
 import { NextPage } from "next";
 import React, { useCallback, useState } from "react";
-import { ChekiButton } from "~/components/Cheki/Button";
-import { ChekiColumn } from "~/components/Cheki/Column";
 import { ChekiConfetti } from "~/components/Cheki/Confetti";
-import { ExternalLink } from "~/components/Cheki/ExternalLink";
 import { ChekiFlexColumn } from "~/components/Cheki/FlexColumn";
-import { ChekiHashTag } from "~/components/Cheki/HashTag";
 import { ChekiHeader } from "~/components/Cheki/Header";
-import { ChekiNote } from "~/components/Cheki/Note";
-import { SAVE_PAGE_SCENARIO, TWITTER_HASHTAG_URL } from "~/constants/cheki";
+import { SAVE_PAGE_SCENARIO } from "~/constants/cheki";
 import { ChekiApp } from "~/containers/Cheki/App";
 import { ChekiCanvas } from "~/containers/Cheki/Canvas";
 import { ChekiCanvasChekiImage } from "~/containers/Cheki/CanvasChekiImage";
@@ -154,7 +149,7 @@ const ChekiSaveAndShare: NextPage = () => {
         </ChekiCanvas>
         <Preview url={previewUrl} />
 
-        <ChekiColumn margin>
+        {/* <ChekiColumn margin>
           <ChekiNote>
             <ExternalLink href={TWITTER_HASHTAG_URL}>
               <ChekiHashTag>#ノネメちゃんチェキ</ChekiHashTag>
@@ -175,7 +170,7 @@ const ChekiSaveAndShare: NextPage = () => {
             {!isFetching && !previewUrl && <>画像の準備中...</>}
             {isFetching && <>シェア用の URL を取得中...</>}
           </ChekiButton>
-        </ChekiColumn>
+        </ChekiColumn> */}
         <ChekiNavigation />
       </ChekiFlexColumn>
     </ChekiApp>
