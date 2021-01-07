@@ -80,7 +80,6 @@ const Preview: React.FC<{ url: string | null }> = ({ url }) => {
           top: `${frame.y - displayable.y}px`,
         }}
       >
-        {/* https://photo-chips.com/?act=bukken&id=966 */}
         <img src="/cheki/masking.png" width="100%" />
       </div>
       {url && (
