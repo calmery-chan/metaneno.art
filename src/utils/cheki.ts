@@ -22,7 +22,7 @@ import { Hex, ChekiDirection } from "~/domains/cheki/models";
 
 export const getShareImage = (id: string) =>
   get<Response<{ image_url: string; og_image_url: string }>>(
-    `/cheki/edited_images/${id}`
+    `/cheki/images/${id}`
   );
 
 const convertImageToDataUrl = (
