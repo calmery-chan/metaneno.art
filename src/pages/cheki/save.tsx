@@ -1,6 +1,6 @@
 import { css } from "@emotion/react";
 import { NextPage } from "next";
-import React, { useCallback, useState } from "react";
+import React, { useState } from "react";
 import { ChekiConfetti } from "~/components/Cheki/Confetti";
 import { ChekiFlexColumn } from "~/components/Cheki/FlexColumn";
 import { ChekiHeader } from "~/components/Cheki/Header";
@@ -14,11 +14,11 @@ import { selectors } from "~/domains/cheki";
 import { Spacing } from "~/styles/spacing";
 import {
   getScenarioCacheId,
-  getShareUrlById,
+  // getShareUrlById,
   getTutorialElementId,
-  upload,
+  // upload,
 } from "~/utils/cheki";
-import * as GA from "~/utils/cheki/google-analytics";
+// import * as GA from "~/utils/cheki/google-analytics";
 
 // Styles
 
@@ -27,12 +27,12 @@ const preview = css`
   z-index: 1;
 `;
 
-const twitter = css`
-  display: inline-block;
-  height: 14px;
-  margin-right: ${Spacing.xs}px;
-  vertical-align: top;
-`;
+// const twitter = css`
+//   display: inline-block;
+//   height: 14px;
+//   margin-right: ${Spacing.xs}px;
+//   vertical-align: top;
+// `;
 
 // Components
 
@@ -105,28 +105,28 @@ const Preview: React.FC<{ url: string | null }> = ({ url }) => {
 
 const ChekiSaveAndShare: NextPage = () => {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
-  const [shareId, setShareId] = useState<string | null>(null);
-  const [isFetching, setFetching] = useState(false);
+  // const [shareId, setShareId] = useState<string | null>(null);
+  // const [isFetching, setFetching] = useState(false);
 
   // Events
 
-  const handleOnClickShareButton = useCallback(async () => {
-    if (!previewUrl) {
-      return;
-    }
+  // const handleOnClickShareButton = useCallback(async () => {
+  //   if (!previewUrl) {
+  //     return;
+  //   }
 
-    let nextShareId = shareId;
+  //   let nextShareId = shareId;
 
-    if (!nextShareId) {
-      setFetching(true);
-      setShareId((nextShareId = await upload(previewUrl)));
-      setFetching(false);
-    }
+  //   if (!nextShareId) {
+  //     setFetching(true);
+  //     setShareId((nextShareId = await upload(previewUrl)));
+  //     setFetching(false);
+  //   }
 
-    GA.share();
+  //   GA.share();
 
-    window.location.href = getShareUrlById(nextShareId);
-  }, [previewUrl, shareId]);
+  //   window.location.href = getShareUrlById(nextShareId);
+  // }, [previewUrl, shareId]);
 
   // Render
 
