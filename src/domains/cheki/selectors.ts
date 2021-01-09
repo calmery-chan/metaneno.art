@@ -39,6 +39,10 @@ export const character = createSelector(
   })
 );
 
+// Decoration
+
+export const decorationHex = ({ cheki }: State) => cheki.decoration.hex;
+
 // Displayable
 
 const displayableHeight = ({ cheki }: State) => cheki.layout.displayable.height;
@@ -101,6 +105,7 @@ const imageWidth = ({ cheki }: State) => cheki.image.width;
 const imageX = ({ cheki }: State) => cheki.image.x;
 const imageY = ({ cheki }: State) => cheki.image.y;
 
+export const imageCreatedDate = ({ cheki }: State) => cheki.image.createdDate;
 export const imageDataUrl = ({ cheki }: State) => cheki.image.dataUrl;
 export const imageDirection = ({ cheki }: State) => cheki.image.direction;
 export const imageFilter = ({ cheki }: State) => cheki.image.filter;

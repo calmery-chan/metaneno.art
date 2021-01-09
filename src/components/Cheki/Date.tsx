@@ -15,14 +15,15 @@ import {
   CHEKI_FRAME_MARGIN_LEFT,
   CHEKI_FRAME_MARGIN_TOP,
 } from "~/constants/cheki";
-import { selectors, useSelector } from "~/domains";
+import { ChekiDirection, Hex } from "~/domains/cheki/models";
 import { getImageSizeByDirection, getBlackOrWhiteByHex } from "~/utils/cheki";
 
-export const ChekiDate: React.FC = () => {
-  const cheki = useSelector(selectors.cheki);
-  const { hex: backgroundColor } = cheki.decoration;
+export const ChekiDate: React.FC<{
+  backgroundColor: Hex;
+  createdDate: string | null;
+  direction: ChekiDirection;
+}> = React.memo(({ backgroundColor, createdDate, direction }) => {
   const fontColor = getBlackOrWhiteByHex(backgroundColor);
-  const { createdDate, direction } = cheki.image;
   const { height, width } = getImageSizeByDirection(direction);
 
   if (createdDate === null) {
@@ -87,4 +88,4 @@ export const ChekiDate: React.FC = () => {
       })}
     </svg>
   );
-};
+});

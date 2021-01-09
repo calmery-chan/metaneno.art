@@ -22,11 +22,11 @@ import {
 
 // Components
 
-const StaticDecoration: React.FC<{ decoration: ChekiStaticDecoration }> = ({
-  decoration,
-}) => (
+const StaticDecoration: React.FC<{
+  layers: ChekiStaticDecoration["layers"];
+}> = React.memo(({ layers }) => (
   <>
-    {decoration.layers.map(({ height, rotate, url, width, x, y }, key) => (
+    {layers.map(({ height, rotate, url, width, x, y }, key) => (
       <image
         key={key}
         transform={`rotate(${rotate}, ${width / 2}, ${height / 2})`}
@@ -36,10 +36,13 @@ const StaticDecoration: React.FC<{ decoration: ChekiStaticDecoration }> = ({
       />
     ))}
   </>
-);
+));
 
 export const Decorations: React.FC = () => {
+  const backgroundColor = useSelector(selectors.decorationHex);
+  const createdDate = useSelector(selectors.imageCreatedDate);
   const decorations = useSelector(selectors.decorations);
+  const direction = useSelector(selectors.imageDirection);
 
   return (
     <>
@@ -49,13 +52,20 @@ export const Decorations: React.FC = () => {
 
           switch (component) {
             case "date":
-              return <ChekiDate key={key} />;
+              return (
+                <ChekiDate
+                  backgroundColor={backgroundColor}
+                  createdDate={createdDate}
+                  direction={direction}
+                  key={key}
+                />
+              );
           }
 
           return null;
         }
 
-        return <StaticDecoration decoration={decoration} key={key} />;
+        return <StaticDecoration key={key} layers={decoration.layers} />;
       })}
     </>
   );
