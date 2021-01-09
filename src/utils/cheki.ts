@@ -87,7 +87,7 @@ export const convertFileToUrl = (
           const date = (meta.exif as any)["34665"]?.["36867"];
           // 2020:01:01 00:00:00 という形式で取得できる、日付だけを取り出して `:` を `/` に置き換える
           createdDate = date
-            ? new Date(date.slice(0, 10).replace(":", "/"))
+            ? new Date(date.slice(0, 10).replace(/:/g, "/"))
             : createdDate;
         }
 
