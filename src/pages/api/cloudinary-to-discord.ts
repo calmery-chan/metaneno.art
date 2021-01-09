@@ -29,19 +29,15 @@ export default async (
     embeds: [
       {
         color: 65280,
-        embeds: [
-          {
-            image: {
-              url: body.secure_url,
-            },
-          },
-        ],
         fields: [
           {
             name: "Public ID",
             value: body.public_id,
           },
         ],
+        image: {
+          url: body.secure_url,
+        },
         timestamp: new Date(body.created_at).toISOString(),
         title: "Image Uploaded",
         url: body.url,
