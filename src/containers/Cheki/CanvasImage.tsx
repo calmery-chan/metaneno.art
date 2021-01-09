@@ -16,23 +16,23 @@ export const getGradientId = (id: string) =>
 // Helper Components
 // Reference: https://www.w3.org/TR/filter-effects-1/
 
-const Brightness: React.FC<{ amount: number }> = ({ amount }) => (
+const Brightness: React.FC<{ amount: number }> = React.memo(({ amount }) => (
   <feComponentTransfer>
     <feFuncR type="linear" slope={amount} />
     <feFuncG type="linear" slope={amount} />
     <feFuncB type="linear" slope={amount} />
   </feComponentTransfer>
-);
+));
 
-const Contrast: React.FC<{ amount: number }> = ({ amount }) => (
+const Contrast: React.FC<{ amount: number }> = React.memo(({ amount }) => (
   <feComponentTransfer>
     <feFuncR type="linear" slope={amount} intercept={-(0.5 * amount) + 0.5} />
     <feFuncG type="linear" slope={amount} intercept={-(0.5 * amount) + 0.5} />
     <feFuncB type="linear" slope={amount} intercept={-(0.5 * amount) + 0.5} />
   </feComponentTransfer>
-);
+));
 
-const Filter: React.FC<{ id: string }> = ({ children, id }) => (
+const Filter: React.FC<{ id: string }> = React.memo(({ children, id }) => (
   <filter
     filterUnits="objectBoundingBox"
     id={getFilterId(id)}
@@ -40,9 +40,9 @@ const Filter: React.FC<{ id: string }> = ({ children, id }) => (
   >
     {children}
   </filter>
-);
+));
 
-const Grayscale: React.FC<{ amount: number }> = ({ amount }) => (
+const Grayscale: React.FC<{ amount: number }> = React.memo(({ amount }) => (
   <feColorMatrix
     type="matrix"
     values={[
@@ -58,19 +58,23 @@ const Grayscale: React.FC<{ amount: number }> = ({ amount }) => (
       `0 0 0 1 0`,
     ].join(" ")}
   />
-);
+));
 
-const HueRotate: React.FC<{ amount: number }> = ({ amount }) => (
+const HueRotate: React.FC<{ amount: number }> = React.memo(({ amount }) => (
   <feColorMatrix type="hueRotate" values={`${amount}`} />
-);
+));
 
 const LinearGradient: React.FC<
   React.SVGProps<SVGLinearGradientElement> & { id: string }
-> = (props) => <linearGradient {...props} id={getGradientId(props.id)} />;
+> = React.memo((props) => (
+  <linearGradient {...props} id={getGradientId(props.id)} />
+));
 
 const RadialGradient: React.FC<
   React.SVGProps<SVGRadialGradientElement> & { id: string }
-> = (props) => <radialGradient {...props} id={getGradientId(props.id)} />;
+> = React.memo((props) => (
+  <radialGradient {...props} id={getGradientId(props.id)} />
+));
 
 // Types
 
@@ -131,9 +135,9 @@ export const InternalImage: React.FC<React.SVGProps<SVGGElement>> = (props) => {
   );
 };
 
-const Rect: React.FC<React.SVGProps<SVGRectElement>> = (props) => (
-  <rect {...props} height="100%" width="100%" />
-);
+const Rect: React.FC<
+  Pick<React.SVGProps<SVGRectElement>, "fill" | "opacity" | "style">
+> = React.memo((props) => <rect {...props} height="100%" width="100%" />);
 
 export const C1: React.FC<ChekiFilterProps> = ({ noImage }) => (
   <>
