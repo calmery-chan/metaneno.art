@@ -54,7 +54,7 @@ const label = css`
 const Thumbnail: React.FC<{
   filter: ChekiFilter | null;
   isFirefox: boolean;
-}> = ({ filter, isFirefox }) => {
+}> = React.memo(({ filter, isFirefox }) => {
   const { viewBoxHeight, viewBoxWidth } = useSelector(selectors.trim);
 
   return (
@@ -65,7 +65,7 @@ const Thumbnail: React.FC<{
       <ChekiCanvasImage filter={filter} noImage={isFirefox} />
     </svg>
   );
-};
+});
 
 export const ChekiFilters: NextPage = () => {
   const dispatch = useDispatch();
