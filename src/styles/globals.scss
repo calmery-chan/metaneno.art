@@ -25,6 +25,10 @@ a {
   box-sizing: border-box;
 }
 
+.grecaptcha-badge {
+  visibility: hidden;
+}
+
 // https://animate.style/
 
 @-webkit-keyframes fadeIn {
