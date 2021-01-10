@@ -4,6 +4,7 @@ import { DefaultSeo } from "next-seo";
 import { AppProps } from "next/app";
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
+import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 import { Provider } from "react-redux";
 import { DefaultHead } from "~/components/DefaultHead";
 import { GoogleAnalytics } from "~/components/GoogleAnalytics";
@@ -23,14 +24,20 @@ const App = ({ Component, pageProps }: AppProps): JSX.Element => {
   }, [router.events]);
 
   return (
-    <>
+    <GoogleReCaptchaProvider
+      reCaptchaKey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
+      scriptProps={{
+        async: true,
+        defer: true,
+      }}
+    >
       <DefaultHead />
       <DefaultSeo {...defaultSeoProps} />
       <GoogleAnalytics />
       <Provider store={store}>
         <Component {...pageProps} />
       </Provider>
-    </>
+    </GoogleReCaptchaProvider>
   );
 };
 
