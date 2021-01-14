@@ -8,6 +8,12 @@ import {
 } from "react-google-recaptcha-v3";
 import axios from "~/utils/axios";
 
+const MemorizedRecaptcha = React.memo(
+  ({ onChange }: { onChange: (response: string) => void }) => (
+    <GoogleReCaptcha onVerify={onChange} />
+  )
+);
+
 const AdminLogin: React.FC = () => {
   const router = useRouter();
   const [disabled, setDisabled] = useState(true);
@@ -61,14 +67,10 @@ const AdminLogin: React.FC = () => {
   return (
     <GoogleReCaptchaProvider
       reCaptchaKey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
-      scriptProps={{
-        async: true,
-        defer: true,
-      }}
     >
       <div className="bg-gray-100 w-full h-full">
         <div className="container mx-auto py-8">
-          <GoogleReCaptcha onVerify={handleOnChangeRecaptchaResponse} />
+          {<MemorizedRecaptcha onChange={handleOnChangeRecaptchaResponse} />}
           <div className="flex justify-center">
             <div className="max-w-sm">
               <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
