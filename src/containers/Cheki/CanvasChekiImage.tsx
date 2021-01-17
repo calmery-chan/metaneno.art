@@ -229,6 +229,8 @@ export const ChekiCanvasChekiImage: React.FC<{
 }> = ({ onCreatePreviewUrl }) => {
   const displayable = useSelector(selectors.displayable);
   const frame = useSelector(selectors.frame);
+  const frameViewBoxWidth = useSelector(selectors.frameViewBoxWidth);
+  const frameViewBoxHeight = useSelector(selectors.frameViewBoxHeight);
 
   // Refs
 
@@ -249,21 +251,21 @@ export const ChekiCanvasChekiImage: React.FC<{
     div.innerHTML = e.parentElement!.innerHTML;
 
     const svg = div.querySelector("svg") as SVGSVGElement;
-    svg.setAttribute("width", `${frame.viewBoxWidth}`);
-    svg.setAttribute("height", `${frame.viewBoxHeight}`);
+    svg.setAttribute("width", `${frameViewBoxWidth}`);
+    svg.setAttribute("height", `${frameViewBoxHeight}`);
     svg.removeAttribute("x");
     svg.removeAttribute("y");
 
     (async () => {
       const previewUrl = await convertSvgToDataUrl(
         div.innerHTML,
-        frame.viewBoxWidth,
-        frame.viewBoxHeight
+        frameViewBoxWidth,
+        frameViewBoxHeight
       );
 
       onCreatePreviewUrl(previewUrl);
     })();
-  }, [frame, onCreatePreviewUrl, ref]);
+  }, [frameViewBoxWidth, frameViewBoxHeight, onCreatePreviewUrl, ref]);
 
   // Render
 
