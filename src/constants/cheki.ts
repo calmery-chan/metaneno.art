@@ -715,3 +715,6 @@ export const SAVE_PAGE_SCENARIO: ChekiScenario[] = [
     message: "SNSでみんなに見せよ～♪",
   },
 ];
+
+export const CHEKI_PRINTABLE_IMAGE_HEIGHT = 2453;
+export const CHEKI_PRINTABLE_IMAGE_WIDTH = 3500;

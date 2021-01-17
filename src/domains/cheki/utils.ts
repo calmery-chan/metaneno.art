@@ -14,7 +14,7 @@ import {
   getImageSizeByDirection,
 } from "~/utils/cheki";
 
-const calculateCanvasPositionAndSize = (
+export const calculateCanvasPositionAndSize = (
   displayable: { height: number; width: number; x: number; y: number },
   frameViewBox: { height: number; width: number }
 ) => {

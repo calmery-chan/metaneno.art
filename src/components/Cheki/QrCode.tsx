@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react";
 export const ChekiQrCode: React.FC<{
   size?: number;
   url: string;
-}> = ({ size, url }) => {
+}> = React.memo(({ size, url }) => {
   const [path, setPath] = useState<string | null>(null);
 
   useEffect(() => {
@@ -42,4 +42,4 @@ export const ChekiQrCode: React.FC<{
       {htmlReactParser(path) as JSX.Element}
     </svg>
   );
-};
+});
