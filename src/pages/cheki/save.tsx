@@ -90,6 +90,7 @@ const Preview: React.FC<{ url: string | null }> = ({ url }) => {
           style={{
             height: `${frame.height}px`,
             left: `${frame.x - displayable.x}px`,
+            top: `${frame.y - displayable.y}px`,
             width: `${frame.width}px`,
           }}
         />

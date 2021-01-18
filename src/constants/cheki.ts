@@ -519,6 +519,10 @@ export const CHARACTER_TAGS = [
     name: "正面",
   },
   {
+    id: "mini",
+    name: "ミニ",
+  },
+  {
     id: "peace",
     name: "ピース",
   },
@@ -546,7 +550,7 @@ export const NONEME_IMAGES = [
     url: "/cheki/characters/1.png",
     rotate: { min: -24, max: 24 },
     scale: { min: 0.5, max: 1 },
-    tags: ["front", "smile"],
+    tags: ["front", "mini", "smile"],
     width: 385,
   },
   {

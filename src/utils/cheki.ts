@@ -310,6 +310,9 @@ export const CHEKI_REFINE_CHARACTER: {
   front(characters) {
     return characters.filter((character) => character.tags.includes("front"));
   },
+  mini(characters) {
+    return characters.filter((character) => character.tags.includes("mini"));
+  },
   peace(characters) {
     return characters.filter((character) => character.tags.includes("peace"));
   },

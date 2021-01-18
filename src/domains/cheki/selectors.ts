@@ -62,15 +62,16 @@ export const displayable = createSelector(
 
 const frameHeight = ({ cheki }: State) => cheki.layout.frame.height;
 const frameWidth = ({ cheki }: State) => cheki.layout.frame.width;
-const frameViewBoxHeight = ({ cheki }: State) =>
-  cheki.layout.frame.viewBoxHeight;
-const frameViewBoxWidth = ({ cheki }: State) => cheki.layout.frame.viewBoxWidth;
 const frameX = ({ cheki }: State) => cheki.layout.frame.x;
 const frameY = ({ cheki }: State) => cheki.layout.frame.y;
 
 export const frameDataUrl = ({ cheki }: State) => cheki.frame.dataUrl;
 export const frameIndex = ({ cheki }: State) => cheki.frame.index;
 export const frameReady = ({ cheki }: State) => cheki.frame.ready;
+export const frameViewBoxHeight = ({ cheki }: State) =>
+  cheki.layout.frame.viewBoxHeight;
+export const frameViewBoxWidth = ({ cheki }: State) =>
+  cheki.layout.frame.viewBoxWidth;
 
 export const frame = createSelector(
   frameHeight,
