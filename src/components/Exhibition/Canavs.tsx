@@ -18,5 +18,5 @@ export const ExhibitionCanavs: React.FC = React.memo(() => {
     return null;
   }
 
-  return <div />;
+  return <primitive object={player.scene} />;
 });
