@@ -8,10 +8,10 @@ import {
   EXHIBITION_2D_CHARACTER_X,
 } from "~/constants/exhibition";
 
-export const Exhibition2dCharacter: React.FC<{
+export const Exhibition2dCharacter = React.memo<{
   direction: "left" | "right";
   step: number;
-}> = React.memo(({ direction, step }) => (
+}>(({ direction, step }) => (
   <svg x={EXHIBITION_2D_CHARACTER_X} y={EXHIBITION_2D_CHARACTER_Y}>
     <image
       height={EXHIBITION_2D_CHARACTER_HEIGHT}
