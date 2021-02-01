@@ -2,6 +2,8 @@ import React, { useCallback, useState } from "react";
 import { Exhibition2dBackground } from "~/components/Exhibition/2d/Background";
 import { Exhibition2dCanvas } from "~/components/Exhibition/2d/Canvas";
 import { Exhibition2dCharacter } from "~/components/Exhibition/2d/Character";
+import { Exhibition2dForeground } from "~/components/Exhibition/2d/Foreground";
+import { EXHIBITION_2D_MAX_STEP } from "~/constants/exhibition";
 import { useKeydown } from "~/hooks/useKeydown";
 
 const ExhibitionIndex: React.FC = () => {
@@ -14,10 +16,14 @@ const ExhibitionIndex: React.FC = () => {
 
       if (key === "a" || key === "ArrowLeft") difference = difference - 1;
       if (key === "d" || key === "ArrowRight") difference = difference + 1;
-      if (difference === 0 || step + difference < 0) return;
+      if (difference === 0) return;
+
+      const nextStep = step + difference;
+
+      if (nextStep < 0 || nextStep > EXHIBITION_2D_MAX_STEP) return;
 
       setDirection(difference < 0 ? "left" : "right");
-      setStep(step + difference);
+      setStep(nextStep);
     },
     [step]
   );
@@ -30,6 +36,7 @@ const ExhibitionIndex: React.FC = () => {
     <Exhibition2dCanvas>
       <Exhibition2dBackground step={step} />
       <Exhibition2dCharacter direction={direction} step={step} />
+      <Exhibition2dForeground step={step} />
     </Exhibition2dCanvas>
   );
 };
