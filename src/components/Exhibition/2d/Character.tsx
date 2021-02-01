@@ -4,6 +4,7 @@ import {
   EXHIBITION_2D_CHARACTER_HEIGHT,
   EXHIBITION_2D_CHARACTER_BOTTOM_OFFSET,
   EXHIBITION_2D_HEIGHT,
+  EXHIBITION_2D_CHARACTER_ANIMATION_PER_FRAME,
 } from "~/constants/exhibition";
 
 export const Exhibition2dCharacter: React.FC<{
@@ -14,7 +15,10 @@ export const Exhibition2dCharacter: React.FC<{
     height={EXHIBITION_2D_CHARACTER_HEIGHT}
     style={{ imageRendering: "pixelated" }}
     xlinkHref={`/exhibition/character/${Math.floor(
-      step % EXHIBITION_2D_CHARACTER_ANIMATION_FRAME_COUNT
+      (step %
+        (EXHIBITION_2D_CHARACTER_ANIMATION_FRAME_COUNT *
+          EXHIBITION_2D_CHARACTER_ANIMATION_PER_FRAME)) /
+        EXHIBITION_2D_CHARACTER_ANIMATION_PER_FRAME
     )}.png`}
     y={
       EXHIBITION_2D_HEIGHT -
