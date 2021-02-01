@@ -7,7 +7,7 @@ import {
   EXHIBITION_2D_CHARACTER_Y,
   EXHIBITION_2D_CHARACTER_X,
   EXHIBITION_2D_MINIMUM_STEP_TO_START_ANIMATION,
-  EXHIBITION_2D_DISTANCE_PER_STEP,
+  EXHIBITION_2D_MOVING_DISTANCE_PER_STEP,
 } from "~/constants/exhibition";
 
 export const Exhibition2dCharacter = React.memo<{
@@ -17,7 +17,7 @@ export const Exhibition2dCharacter = React.memo<{
   <svg
     x={
       step < EXHIBITION_2D_MINIMUM_STEP_TO_START_ANIMATION
-        ? step * EXHIBITION_2D_DISTANCE_PER_STEP
+        ? step * EXHIBITION_2D_MOVING_DISTANCE_PER_STEP
         : EXHIBITION_2D_CHARACTER_X
     }
     y={EXHIBITION_2D_CHARACTER_Y}
