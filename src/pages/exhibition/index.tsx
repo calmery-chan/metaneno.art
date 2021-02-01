@@ -38,11 +38,13 @@ const ExhibitionIndex: React.FC = () => {
   // Render
 
   return (
-    <Exhibition2dCanvas>
-      <Exhibition2dBackground step={step} />
-      <Exhibition2dCharacter direction={direction} step={step} />
-      <Exhibition2dForeground step={step} />
-    </Exhibition2dCanvas>
+    <div className="bg-black h-full w-full">
+      <Exhibition2dCanvas>
+        <Exhibition2dBackground step={step} />
+        <Exhibition2dCharacter direction={direction} step={step} />
+        <Exhibition2dForeground step={step} />
+      </Exhibition2dCanvas>
+    </div>
   );
 };
 
