@@ -5,6 +5,7 @@ import { Exhibition2dCharacter } from "~/components/Exhibition/2d/Character";
 import { Exhibition2dForeground } from "~/components/Exhibition/2d/Foreground";
 import {
   EXHIBITION_2D_CHARACTER_DEFAULT_DIRECTION,
+  EXHIBITION_2D_INITIAL_STEP,
   EXHIBITION_2D_MAX_STEP,
 } from "~/constants/exhibition";
 import { useKeydown } from "~/hooks/useKeydown";
@@ -13,7 +14,7 @@ const ExhibitionIndex: React.FC = () => {
   const [direction, setDirection] = useState<"left" | "right">(
     EXHIBITION_2D_CHARACTER_DEFAULT_DIRECTION
   );
-  const [step, setStep] = useState(0);
+  const [step, setStep] = useState(EXHIBITION_2D_INITIAL_STEP);
 
   const handleKeydown = useCallback(
     ({ key }: KeyboardEvent) => {
