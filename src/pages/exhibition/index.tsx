@@ -3,6 +3,7 @@ import { Exhibition2dBackground } from "~/components/Exhibition/2d/Background";
 import { Exhibition2dCanvas } from "~/components/Exhibition/2d/Canvas";
 import { Exhibition2dCharacter } from "~/components/Exhibition/2d/Character";
 import { Exhibition2dForeground } from "~/components/Exhibition/2d/Foreground";
+import { Exhibition2dItems } from "~/components/Exhibition/2d/Items";
 import {
   EXHIBITION_2D_CHARACTER_DEFAULT_DIRECTION,
   EXHIBITION_2D_INITIAL_STEP,
@@ -42,6 +43,7 @@ const ExhibitionIndex: React.FC = () => {
     <div className="bg-black h-full w-full">
       <Exhibition2dCanvas>
         <Exhibition2dBackground step={step} />
+        <Exhibition2dItems step={step} />
         <Exhibition2dCharacter direction={direction} step={step} />
         <Exhibition2dForeground step={step} />
       </Exhibition2dCanvas>
