@@ -1,8 +1,8 @@
 import React, { useCallback, useState } from "react";
 import { Exhibition2dResizeObserver } from "./ResizeObserver";
 import {
-  EXHIBITION_2D_HEIGHT,
-  EXHIBITION_2D_WIDTH,
+  EXHIBITION_2D_CANVAS_HEIGHT,
+  EXHIBITION_2D_CANVAS_WIDTH,
 } from "~/constants/exhibition";
 
 export const Exhibition2dCanvas: React.FC = ({ children }) => {
@@ -25,7 +25,7 @@ export const Exhibition2dCanvas: React.FC = ({ children }) => {
         className="absolute"
         height={height}
         style={{ top: `${y}px`, left: `${x}px` }}
-        viewBox={`0 0 ${EXHIBITION_2D_WIDTH} ${EXHIBITION_2D_HEIGHT}`}
+        viewBox={`0 0 ${EXHIBITION_2D_CANVAS_WIDTH} ${EXHIBITION_2D_CANVAS_HEIGHT}`}
         width={width}
         xmlns="http://www.w3.org/2000/svg"
       >

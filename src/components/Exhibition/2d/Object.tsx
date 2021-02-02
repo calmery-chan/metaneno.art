@@ -1,7 +1,7 @@
 import {
   EXHIBITION_2D_BACKGROUND_MAX_STEP,
-  EXHIBITION_2D_CHARACTER_HORIZONTAL_OFFSET_STEP,
-  EXHIBITION_2D_HEIGHT,
+  EXHIBITION_2D_CHARACTER_HORIZONTAL_MARGIN_IN_STEP,
+  EXHIBITION_2D_CANVAS_HEIGHT,
   EXHIBITION_2D_MOVING_DISTANCE_PER_STEP,
 } from "~/constants/exhibition";
 
@@ -12,13 +12,13 @@ export const Exhibition2dObject: React.FC<{
   x?: number;
 }> = ({ speed, step, url, x }) => (
   <image
-    height={EXHIBITION_2D_HEIGHT}
+    height={EXHIBITION_2D_CANVAS_HEIGHT}
     style={{
       imageRendering: "pixelated",
     }}
     transform={`translate(-${(() => {
       // キャラクターが画面中央に存在しないとき、スクロールしない
-      if (step < EXHIBITION_2D_CHARACTER_HORIZONTAL_OFFSET_STEP) {
+      if (step < EXHIBITION_2D_CHARACTER_HORIZONTAL_MARGIN_IN_STEP) {
         return 0;
       }
 
@@ -26,13 +26,13 @@ export const Exhibition2dObject: React.FC<{
       if (step > EXHIBITION_2D_BACKGROUND_MAX_STEP) {
         return (
           (EXHIBITION_2D_BACKGROUND_MAX_STEP -
-            EXHIBITION_2D_CHARACTER_HORIZONTAL_OFFSET_STEP) *
+            EXHIBITION_2D_CHARACTER_HORIZONTAL_MARGIN_IN_STEP) *
           EXHIBITION_2D_MOVING_DISTANCE_PER_STEP
         );
       }
 
       return (
-        (step - EXHIBITION_2D_CHARACTER_HORIZONTAL_OFFSET_STEP) *
+        (step - EXHIBITION_2D_CHARACTER_HORIZONTAL_MARGIN_IN_STEP) *
         EXHIBITION_2D_MOVING_DISTANCE_PER_STEP
       );
     })()} 0)`}

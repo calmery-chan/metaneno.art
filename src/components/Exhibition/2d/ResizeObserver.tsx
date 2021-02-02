@@ -1,13 +1,13 @@
 import React, { createRef, useCallback, useEffect } from "react";
 import ResizeObserver from "resize-observer-polyfill";
 import {
-  EXHIBITION_2D_HEIGHT,
-  EXHIBITION_2D_WIDTH,
+  EXHIBITION_2D_CANVAS_HEIGHT,
+  EXHIBITION_2D_CANVAS_WIDTH,
 } from "~/constants/exhibition";
 
 // Constants
 
-const ASPECT_RATIO = EXHIBITION_2D_WIDTH / EXHIBITION_2D_HEIGHT;
+const ASPECT_RATIO = EXHIBITION_2D_CANVAS_WIDTH / EXHIBITION_2D_CANVAS_HEIGHT;
 
 // Main Component
 
