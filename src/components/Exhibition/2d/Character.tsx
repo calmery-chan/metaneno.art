@@ -9,17 +9,21 @@ import {
   EXHIBITION_2D_MOVING_DISTANCE_PER_STEP,
   EXHIBITION_2D_CHARACTER_CENTER_X,
   EXHIBITION_2D_BACKGROUND_MAX_STEP,
+  EXHIBITION_2D_BACKGROUND_MAX_STEP_WHEN_RESTRICTED,
 } from "~/constants/exhibition";
 
-const getCharacterX = (step: number) => {
+const getCharacterX = (restricted: boolean, step: number) => {
   if (step < EXHIBITION_2D_CHARACTER_HORIZONTAL_MARGIN_IN_STEP) {
     return step * EXHIBITION_2D_MOVING_DISTANCE_PER_STEP;
   }
 
-  if (step > EXHIBITION_2D_BACKGROUND_MAX_STEP) {
+  const MAX_STEP = restricted
+    ? EXHIBITION_2D_BACKGROUND_MAX_STEP_WHEN_RESTRICTED
+    : EXHIBITION_2D_BACKGROUND_MAX_STEP;
+
+  if (step > MAX_STEP) {
     return (
-      (step - EXHIBITION_2D_BACKGROUND_MAX_STEP) *
-        EXHIBITION_2D_MOVING_DISTANCE_PER_STEP +
+      (step - MAX_STEP) * EXHIBITION_2D_MOVING_DISTANCE_PER_STEP +
       EXHIBITION_2D_CHARACTER_CENTER_X
     );
   }
@@ -29,9 +33,10 @@ const getCharacterX = (step: number) => {
 
 export const Exhibition2dCharacter = React.memo<{
   direction: "left" | "right";
+  restricted: boolean;
   step: number;
-}>(({ direction, step }) => (
-  <svg x={getCharacterX(step)} y={EXHIBITION_2D_CHARACTER_CENTER_Y}>
+}>(({ direction, restricted, step }) => (
+  <svg x={getCharacterX(restricted, step)} y={EXHIBITION_2D_CHARACTER_CENTER_Y}>
     <image
       height={EXHIBITION_2D_CHARACTER_HEIGHT}
       style={{ imageRendering: "pixelated" }}
