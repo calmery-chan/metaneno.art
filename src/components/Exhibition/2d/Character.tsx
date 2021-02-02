@@ -5,9 +5,10 @@ import {
   EXHIBITION_2D_CHARACTER_ANIMATION_PER_FRAME,
   EXHIBITION_2D_CHARACTER_WIDTH,
   EXHIBITION_2D_CHARACTER_Y,
-  EXHIBITION_2D_CHARACTER_X,
-  EXHIBITION_2D_MINIMUM_STEP_TO_START_ANIMATION,
+  EXHIBITION_2D_CHARACTER_HORIZONTAL_OFFSET_STEP,
   EXHIBITION_2D_MOVING_DISTANCE_PER_STEP,
+  EXHIBITION_2D_CHARACTER_X,
+  EXHIBITION_2D_BACKGROUND_MAX_STEP,
 } from "~/constants/exhibition";
 
 export const Exhibition2dCharacter = React.memo<{
@@ -15,11 +16,21 @@ export const Exhibition2dCharacter = React.memo<{
   step: number;
 }>(({ direction, step }) => (
   <svg
-    x={
-      step < EXHIBITION_2D_MINIMUM_STEP_TO_START_ANIMATION
-        ? step * EXHIBITION_2D_MOVING_DISTANCE_PER_STEP
-        : EXHIBITION_2D_CHARACTER_X
-    }
+    x={(() => {
+      if (step < EXHIBITION_2D_CHARACTER_HORIZONTAL_OFFSET_STEP) {
+        return step * EXHIBITION_2D_MOVING_DISTANCE_PER_STEP;
+      }
+
+      if (step > EXHIBITION_2D_BACKGROUND_MAX_STEP) {
+        return (
+          (step - EXHIBITION_2D_BACKGROUND_MAX_STEP) *
+            EXHIBITION_2D_MOVING_DISTANCE_PER_STEP +
+          EXHIBITION_2D_CHARACTER_X
+        );
+      }
+
+      return EXHIBITION_2D_CHARACTER_X;
+    })()}
     y={EXHIBITION_2D_CHARACTER_Y}
   >
     <image
