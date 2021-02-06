@@ -60,8 +60,8 @@ export const postCredential = async (credential: Credential, token: string) => {
   const { data } = await axios.post<ApiResponse<Patient>>(
     "/patients",
     {
-      accessToken: (credential as any).accessToken,
-      accessTokenSecret: (credential as any).secret,
+      accessToken: credential.accessToken,
+      accessTokenSecret: credential.secret,
     },
     getHeaders(token)
   );

@@ -54,6 +54,7 @@ export const useOkusuriLand = () => {
     authenticate,
     busy,
     examine: useCallback(
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       (key: string, value: number) => examine(token!, key, value),
       [token]
     ),
