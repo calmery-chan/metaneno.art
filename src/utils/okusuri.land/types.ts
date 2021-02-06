@@ -1,6 +1,5 @@
 export type Disease = {
   description: string;
-  icon: { url: string };
   medicines: Medicine[];
   name: string;
 };
