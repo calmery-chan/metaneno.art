@@ -6,7 +6,6 @@ export const Exhibition2dBackground: React.FC<{
   step: number;
 }> = React.memo((props) => (
   <>
-    <Exhibition2dObject {...props} url="/exhibition/full.png" />
     <Exhibition2dObject {...props} url="/exhibition/background/0.png" />
     <Exhibition2dObject {...props} url="/exhibition/background/1.png" />
     <Exhibition2dObject
