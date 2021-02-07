@@ -33,20 +33,27 @@ const getObjectX = (restricted: boolean, step: number) => {
 };
 
 export const Exhibition2dObject: React.FC<{
+  onClick?: () => void;
   restricted: boolean;
   speed?: number;
   step: number;
   url: string;
   x?: number;
-}> = ({ restricted, speed, step, url, x }) => (
-  <image
-    height={EXHIBITION_2D_CANVAS_HEIGHT}
-    style={{
-      imageRendering: "pixelated",
-    }}
+}> = ({ children, onClick, restricted, speed, step, url, x }) => (
+  <g
+    className={onClick ? "cursor-pointer" : undefined}
+    onClick={onClick}
     transform={`translate(${
       getObjectX(restricted, step) * (speed || 1) + (x || 0)
     } 0)`}
-    xlinkHref={url}
-  />
+  >
+    <image
+      height={EXHIBITION_2D_CANVAS_HEIGHT}
+      style={{
+        imageRendering: "pixelated",
+      }}
+      xlinkHref={url}
+    />
+    {children}
+  </g>
 );

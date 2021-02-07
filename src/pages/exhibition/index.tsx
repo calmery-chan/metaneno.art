@@ -4,8 +4,7 @@ import { Exhibition2dBackground } from "~/components/Exhibition/2d/Background";
 import { Exhibition2dCanvas } from "~/components/Exhibition/2d/Canvas";
 import { Exhibition2dCharacter } from "~/components/Exhibition/2d/Character";
 import { Exhibition2dForeground } from "~/components/Exhibition/2d/Foreground";
-import { Exhibition2dItems } from "~/components/Exhibition/2d/Items";
-import { Exhibition2DPickable } from "~/components/Exhibition/2d/Pickable";
+import { Exhibition2DItemsKey } from "~/components/Exhibition/2d/Items/Key";
 import {
   EXHIBITION_2D_CHARACTER_CENTER_X,
   EXHIBITION_2D_CHARACTER_DEFAULT_DIRECTION,
@@ -38,7 +37,7 @@ const fadeOutImage = css`
 `;
 
 const ExhibitionIndex: React.FC = () => {
-  const [restricted, setRestricted] = useState(false);
+  const [restricted, setRestricted] = useState(true);
   const [direction, setDirection] = useState<"left" | "right">(
     EXHIBITION_2D_CHARACTER_DEFAULT_DIRECTION
   );
@@ -57,6 +56,8 @@ const ExhibitionIndex: React.FC = () => {
 
     setSelectedCreamSoda("blue");
   }, [selectedCreamSoda]);
+
+  const handleClickKey = useCallback(() => setRestricted(false), []);
 
   const handleClickPinkIceCreamSoda = useCallback(() => {
     if (selectedCreamSoda) {
@@ -105,14 +106,18 @@ const ExhibitionIndex: React.FC = () => {
       <div className="absolute h-full w-full">
         <Exhibition2dCanvas creamsoda={selectedCreamSoda} walked={walked}>
           <Exhibition2dBackground restricted={restricted} step={step} />
-          <Exhibition2dItems restricted={restricted} step={step} />
+          <Exhibition2DItemsKey
+            onClick={handleClickKey}
+            restricted={restricted}
+            step={step}
+            x={520}
+          />
           <Exhibition2dCharacter
             creamsoda={selectedCreamSoda}
             direction={direction}
             restricted={restricted}
             step={step}
           />
-          <Exhibition2DPickable x={0} y={0} />
           <Exhibition2dForeground restricted={restricted} step={step} />
         </Exhibition2dCanvas>
         <div
