@@ -37,7 +37,6 @@ const ExhibitionIndex: React.FC = () => {
       if (difference === 0) return;
 
       const nextStep = step + difference;
-      console.log(nextStep);
 
       if (
         nextStep < 0 ||
