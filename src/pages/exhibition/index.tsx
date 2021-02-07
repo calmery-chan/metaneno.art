@@ -104,7 +104,11 @@ const ExhibitionIndex: React.FC = () => {
   return (
     <div className="bg-black h-full w-full">
       <div className="absolute h-full w-full">
-        <Exhibition2dCanvas creamsoda={selectedCreamSoda} walked={walked}>
+        <Exhibition2dCanvas
+          creamsoda={selectedCreamSoda}
+          restricted={restricted}
+          walked={walked}
+        >
           <Exhibition2dBackground restricted={restricted} step={step} />
           <Exhibition2DItemsKey
             onClick={handleClickKey}

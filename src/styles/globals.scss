@@ -29,6 +29,13 @@ a {
   visibility: hidden;
 }
 
+@font-face {
+  font-family: "PixelMplus";
+  src: url("/exhibition/fonts/PixelMplus.woff2") format("woff2"),
+    url("/exhibition/fonts/PixelMplus.woff") format("woff"),
+    url("/exhibition/fonts/PixelMplus.ttf") format("ttf");
+}
+
 // https://animate.style/
 
 @-webkit-keyframes fadeIn {

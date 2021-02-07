@@ -1,10 +1,12 @@
 import { css, keyframes } from "@emotion/react";
 import React, { useCallback, useState } from "react";
 import { Exhibition2dResizeObserver } from "./ResizeObserver";
+import { Exhibition2dSpeechBubble } from "./SpeechBubble";
 import {
   EXHIBITION_2D_CANVAS_HEIGHT,
   EXHIBITION_2D_CANVAS_WIDTH,
   EXHIBITION_2D_FADE_ANIMATION_DURATION,
+  EXHIBITION_2D_KEY_SCENARIO,
   EXHIBITION_2D_ZOOM_OUT_ANIMATION_DURATION,
 } from "~/constants/exhibition";
 import { Mixin } from "~/styles/mixin";
@@ -60,12 +62,18 @@ const zoomOut = css`
 
 export const Exhibition2dCanvas: React.FC<{
   creamsoda: string | null;
+  restricted: boolean;
   walked: boolean;
-}> = ({ children, creamsoda, walked }) => {
+}> = ({ children, creamsoda, restricted, walked }) => {
   const [height, setHeight] = useState(0);
   const [width, setWidth] = useState(0);
   const [x, setX] = useState(0);
   const [y, setY] = useState(0);
+  const [isReadScenario, setReadScenario] = useState(false);
+
+  const handleReadScenario = useCallback(() => {
+    setReadScenario(true);
+  }, []);
 
   const handleResize = useCallback(({ height, width, x, y }) => {
     setHeight(height);
@@ -143,6 +151,12 @@ export const Exhibition2dCanvas: React.FC<{
             </filter>
           </defs>
           {children}
+          {!restricted && !isReadScenario && (
+            <Exhibition2dSpeechBubble
+              scenarios={EXHIBITION_2D_KEY_SCENARIO}
+              onComplete={handleReadScenario}
+            />
+          )}
         </svg>
       </div>
     </>
