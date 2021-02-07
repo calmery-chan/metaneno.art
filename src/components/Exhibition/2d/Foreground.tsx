@@ -28,7 +28,7 @@ export const Exhibition2dForeground: React.FC<{
     />
     <Exhibition2dObject
       {...props}
-      url="/exhibition/foreground/door.png"
+      url="/exhibition/foreground/door.jpg"
       x={822}
     />
     <Exhibition2dObject
