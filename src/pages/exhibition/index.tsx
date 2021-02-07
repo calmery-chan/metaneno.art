@@ -61,7 +61,7 @@ const ExhibitionIndex: React.FC = () => {
 
   return (
     <div className="bg-black h-full w-full">
-      <Exhibition2dCanvas step={step}>
+      <Exhibition2dCanvas walked={walked}>
         <Exhibition2dBackground restricted={restricted} step={step} />
         <Exhibition2dItems restricted={restricted} step={step} />
         <Exhibition2dCharacter
