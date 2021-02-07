@@ -16,13 +16,17 @@ export const Exhibition2DPickable = React.memo<{ x: number; y: number }>(
     const [frame, setFrame] = useState(0);
 
     useEffect(() => {
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         const nextFrame = frame + 1;
 
         setFrame(
           nextFrame < EXHIBITION_2D_PICKABLE_MAX_FRAME_COUNT ? nextFrame : 0
         );
       }, EXHIBITION_2D_PICKABLE_ANIMATION_DURATION);
+
+      return () => {
+        clearTimeout(timer);
+      };
     }, [frame]);
 
     return (
