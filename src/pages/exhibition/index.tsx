@@ -10,6 +10,7 @@ import {
   EXHIBITION_2D_CHARACTER_MAX_STEP,
   EXHIBITION_2D_CHARACTER_MAX_STEP_WHEN_RESTRICTED,
   EXHIBITION_2D_MOVING_DISTANCE_PER_STEP,
+  EXHIBITION_2D_ZOOM_ANIMATION_STEP,
 } from "~/constants/exhibition";
 import { useKeydown } from "~/hooks/useKeydown";
 
@@ -21,9 +22,14 @@ const ExhibitionIndex: React.FC = () => {
   const [step, setStep] = useState(
     EXHIBITION_2D_CHARACTER_CENTER_X / EXHIBITION_2D_MOVING_DISTANCE_PER_STEP
   );
+  const [walked, setWalked] = useState(false);
 
   const handleKeydown = useCallback(
     ({ key }: KeyboardEvent) => {
+      if (walked) {
+        return;
+      }
+
       let difference = 0;
 
       if (key === "a" || key === "ArrowLeft") difference = difference - 1;
@@ -44,8 +50,9 @@ const ExhibitionIndex: React.FC = () => {
 
       setDirection(difference < 0 ? "left" : "right");
       setStep(nextStep);
+      setWalked(nextStep >= EXHIBITION_2D_ZOOM_ANIMATION_STEP);
     },
-    [restricted, step]
+    [restricted, step, walked]
   );
 
   useKeydown(handleKeydown);
@@ -54,7 +61,7 @@ const ExhibitionIndex: React.FC = () => {
 
   return (
     <div className="bg-black h-full w-full">
-      <Exhibition2dCanvas>
+      <Exhibition2dCanvas step={step}>
         <Exhibition2dBackground restricted={restricted} step={step} />
         <Exhibition2dItems restricted={restricted} step={step} />
         <Exhibition2dCharacter

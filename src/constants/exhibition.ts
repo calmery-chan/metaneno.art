@@ -13,6 +13,10 @@ const FLOOR_HEIGHT = 36;
 /** 背景画像やキャラクターの画像を Step 毎に何 px 動かすかを指定する */
 export const EXHIBITION_2D_MOVING_DISTANCE_PER_STEP = 4;
 
+// Animation
+
+export const EXHIBITION_2D_ZOOM_ANIMATION_STEP = 417;
+
 // Canvas
 
 export const EXHIBITION_2D_CANVAS_HEIGHT = 300;
