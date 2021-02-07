@@ -30,7 +30,7 @@ export const Exhibition2DItemsKey = React.memo<{
 
   return (
     <Exhibition2dObject
-      onClick={onClick}
+      onClick={isPickable ? onClick : undefined}
       restricted={restricted}
       step={currentStep}
       url="/exhibition/items/key.png"
