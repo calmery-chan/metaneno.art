@@ -32,10 +32,11 @@ const getCharacterX = (restricted: boolean, step: number) => {
 };
 
 export const Exhibition2dCharacter = React.memo<{
+  creamsoda: "blue" | "pink" | null;
   direction: "left" | "right";
   restricted: boolean;
   step: number;
-}>(({ direction, restricted, step }) => (
+}>(({ creamsoda, direction, restricted, step }) => (
   <svg x={getCharacterX(restricted, step)} y={EXHIBITION_2D_CHARACTER_CENTER_Y}>
     <image
       height={EXHIBITION_2D_CHARACTER_HEIGHT}
@@ -47,14 +48,16 @@ export const Exhibition2dCharacter = React.memo<{
       }
       width={EXHIBITION_2D_CHARACTER_WIDTH}
       xlinkHref={
-        EXHIBITION_2D_CHARACTER_WALKING_ANIMATION_IMAGES[
-          Math.floor(
-            (step %
-              (EXHIBITION_2D_CHARACTER_WALKING_ANIMATION_IMAGES.length *
-                EXHIBITION_2D_CHARACTER_FRAME_PER_ANIMATION)) /
-              EXHIBITION_2D_CHARACTER_FRAME_PER_ANIMATION
-          )
-        ]
+        creamsoda
+          ? `/exhibition/character/${creamsoda}.png`
+          : EXHIBITION_2D_CHARACTER_WALKING_ANIMATION_IMAGES[
+              Math.floor(
+                (step %
+                  (EXHIBITION_2D_CHARACTER_WALKING_ANIMATION_IMAGES.length *
+                    EXHIBITION_2D_CHARACTER_FRAME_PER_ANIMATION)) /
+                  EXHIBITION_2D_CHARACTER_FRAME_PER_ANIMATION
+              )
+            ]
       }
     />
   </svg>

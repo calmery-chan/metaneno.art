@@ -4,10 +4,14 @@ import { Exhibition2dResizeObserver } from "./ResizeObserver";
 import {
   EXHIBITION_2D_CANVAS_HEIGHT,
   EXHIBITION_2D_CANVAS_WIDTH,
-  EXHIBITION_2D_FADEIN_ANIMATION_DELAY,
-  EXHIBITION_2D_FADEIN_ANIMATION_DURATION,
+  EXHIBITION_2D_FADE_ANIMATION_DURATION,
+  EXHIBITION_2D_ZOOM_OUT_ANIMATION_DURATION,
 } from "~/constants/exhibition";
-import { fadeIn, Mixin } from "~/styles/mixin";
+import { Mixin } from "~/styles/mixin";
+
+const zoomCommonTransform = css`
+  transform: translate(-50%, -36%) scale(2);
+`;
 
 const zoomInKeyframes = keyframes`
   0% {
@@ -15,7 +19,7 @@ const zoomInKeyframes = keyframes`
   }
 
   100% {
-    transform: translate(-50%, -36%) scale(2);
+    ${zoomCommonTransform};
   }
 `;
 
@@ -27,21 +31,37 @@ const zoomIn = css`
   animation-timing-function: ease-out;
 `;
 
-const creamsoda = css`
-  image-rendering: pixelated;
+const zoomOutKeyframes = keyframes`
+  // 0.8s で移動する
+  31.25% {
+    transform: translateY(-20%) scale(1.6);
+  }
+
+  // 0.16s でフェードアウトする
+  93.75% {
+    filter: url(#glitch);
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(-20%) scale(1.6);
+  }
 `;
 
-const fadeInImage = css`
+const zoomOut = css`
   ${Mixin.animation};
-  ${fadeIn};
-  animation-delay: ${EXHIBITION_2D_FADEIN_ANIMATION_DELAY}s;
-  animation-duration: ${EXHIBITION_2D_FADEIN_ANIMATION_DURATION}s;
+  animation-delay: ${EXHIBITION_2D_FADE_ANIMATION_DURATION}s;
+  animation-duration: ${EXHIBITION_2D_ZOOM_OUT_ANIMATION_DURATION}s;
+  animation-name: ${zoomOutKeyframes};
+  animation-timing-function: ease-out;
+  ${zoomCommonTransform};
 `;
 
-export const Exhibition2dCanvas: React.FC<{ walked: boolean }> = ({
-  children,
-  walked,
-}) => {
+export const Exhibition2dCanvas: React.FC<{
+  creamsoda: string | null;
+  walked: boolean;
+}> = ({ children, creamsoda, walked }) => {
   const [height, setHeight] = useState(0);
   const [width, setWidth] = useState(0);
   const [x, setX] = useState(0);
@@ -55,7 +75,7 @@ export const Exhibition2dCanvas: React.FC<{ walked: boolean }> = ({
   }, []);
 
   return (
-    <div className="absolute h-full w-full">
+    <>
       <Exhibition2dResizeObserver onResize={handleResize} />
       <div
         className="absolute overflow-hidden"
@@ -67,25 +87,65 @@ export const Exhibition2dCanvas: React.FC<{ walked: boolean }> = ({
         }}
       >
         <svg
-          css={walked ? zoomIn : undefined}
+          css={walked ? (creamsoda ? zoomOut : zoomIn) : undefined}
           viewBox={`0 0 ${EXHIBITION_2D_CANVAS_WIDTH} ${EXHIBITION_2D_CANVAS_HEIGHT}`}
           xmlns="http://www.w3.org/2000/svg"
         >
+          <defs>
+            <filter id="glitch" x="0" y="0">
+              <feColorMatrix
+                in="SourceGraphic"
+                mode="matrix"
+                values="1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0"
+                result="r"
+              />
+              <feOffset in="r" result="r" dx="-5">
+                <animate
+                  attributeName="dx"
+                  attributeType="XML"
+                  values="0; -5; 0; -18; -2; -4; 0 ;-3; 0"
+                  dur="0.2s"
+                  repeatCount="indefinite"
+                />
+              </feOffset>
+              <feColorMatrix
+                in="SourceGraphic"
+                mode="matrix"
+                values="0 0 0 0 0  0 1 0 0 0  0 0 0 0 0  0 0 0 1 0"
+                result="g"
+              />
+              <feOffset in="g" result="g" dx="-5" dy="1">
+                <animate
+                  attributeName="dx"
+                  attributeType="XML"
+                  values="0; 0; 0; -3; 0; 8; 0 ;-1; 0"
+                  dur="0.15s"
+                  repeatCount="indefinite"
+                />
+              </feOffset>
+              <feColorMatrix
+                in="SourceGraphic"
+                mode="matrix"
+                values="0 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0"
+                result="b"
+              />
+              <feOffset in="b" result="b" dx="5" dy="2">
+                <animate
+                  attributeName="dx"
+                  attributeType="XML"
+                  values="0; 3; -1; 4; 0; 2; 0 ;18; 0"
+                  dur="0.35s"
+                  repeatCount="indefinite"
+                />
+              </feOffset>
+              <feBlend in="r" in2="g" mode="screen" result="blend" />
+              <feBlend in="blend" in2="b" mode="screen" result="blend" />
+            </filter>
+          </defs>
           {children}
         </svg>
-        <div
-          className="absolute h-full opacity-0 top-0 w-full"
-          css={walked ? fadeInImage : undefined}
-          style={{ background: "#000" }}
-        >
-          <img
-            className="h-full object-contain w-full"
-            css={creamsoda}
-            src="/exhibition/creamsoda.png"
-          />
-        </div>
       </div>
-    </div>
+    </>
   );
 };
 

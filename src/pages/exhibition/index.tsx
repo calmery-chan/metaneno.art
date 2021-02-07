@@ -1,3 +1,4 @@
+import { css } from "@emotion/react";
 import React, { useCallback, useState } from "react";
 import { Exhibition2dBackground } from "~/components/Exhibition/2d/Background";
 import { Exhibition2dCanvas } from "~/components/Exhibition/2d/Canvas";
@@ -9,20 +10,60 @@ import {
   EXHIBITION_2D_CHARACTER_DEFAULT_DIRECTION,
   EXHIBITION_2D_CHARACTER_MAX_STEP,
   EXHIBITION_2D_CHARACTER_MAX_STEP_WHEN_RESTRICTED,
+  EXHIBITION_2D_FADEIN_ANIMATION_DELAY,
+  EXHIBITION_2D_FADE_ANIMATION_DURATION,
   EXHIBITION_2D_MOVING_DISTANCE_PER_STEP,
   EXHIBITION_2D_ZOOM_ANIMATION_STEP,
 } from "~/constants/exhibition";
 import { useKeydown } from "~/hooks/useKeydown";
+import { fadeIn, fadeOut, Mixin } from "~/styles/mixin";
+
+const creamsoda = css`
+  image-rendering: pixelated;
+`;
+
+const fadeInImage = css`
+  ${Mixin.animation};
+  ${fadeIn};
+  animation-delay: ${EXHIBITION_2D_FADEIN_ANIMATION_DELAY}s;
+  animation-duration: ${EXHIBITION_2D_FADE_ANIMATION_DURATION}s;
+`;
+
+// ToDo: fadeIn, fadeOut の animation で display none する
+const fadeOutImage = css`
+  ${Mixin.animation};
+  ${fadeOut};
+  animation-duration: ${EXHIBITION_2D_FADE_ANIMATION_DURATION}s;
+`;
 
 const ExhibitionIndex: React.FC = () => {
   const [restricted, setRestricted] = useState(false);
   const [direction, setDirection] = useState<"left" | "right">(
     EXHIBITION_2D_CHARACTER_DEFAULT_DIRECTION
   );
+  const [selectedCreamSoda, setSelectedCreamSoda] = useState<
+    "blue" | "pink" | null
+  >(null);
   const [step, setStep] = useState(
     EXHIBITION_2D_CHARACTER_CENTER_X / EXHIBITION_2D_MOVING_DISTANCE_PER_STEP
   );
   const [walked, setWalked] = useState(false);
+
+  const handleClickBlueIceCreamSoda = useCallback(() => {
+    if (selectedCreamSoda) {
+      return;
+    }
+
+    setSelectedCreamSoda("blue");
+  }, [selectedCreamSoda]);
+
+  const handleClickPinkIceCreamSoda = useCallback(() => {
+    if (selectedCreamSoda) {
+      return;
+    }
+
+    setSelectedCreamSoda("pink");
+  }, [selectedCreamSoda]);
 
   const handleKeydown = useCallback(
     ({ key }: KeyboardEvent) => {
@@ -60,16 +101,40 @@ const ExhibitionIndex: React.FC = () => {
 
   return (
     <div className="bg-black h-full w-full">
-      <Exhibition2dCanvas walked={walked}>
-        <Exhibition2dBackground restricted={restricted} step={step} />
-        <Exhibition2dItems restricted={restricted} step={step} />
-        <Exhibition2dCharacter
-          direction={direction}
-          restricted={restricted}
-          step={step}
-        />
-        <Exhibition2dForeground restricted={restricted} step={step} />
-      </Exhibition2dCanvas>
+      <div className="absolute h-full w-full">
+        <Exhibition2dCanvas creamsoda={selectedCreamSoda} walked={walked}>
+          <Exhibition2dBackground restricted={restricted} step={step} />
+          <Exhibition2dItems restricted={restricted} step={step} />
+          <Exhibition2dCharacter
+            creamsoda={selectedCreamSoda}
+            direction={direction}
+            restricted={restricted}
+            step={step}
+          />
+          <Exhibition2dForeground restricted={restricted} step={step} />
+        </Exhibition2dCanvas>
+        <div
+          className="absolute bg-black h-full opacity-0 top-0 w-full"
+          css={
+            walked
+              ? selectedCreamSoda
+                ? fadeOutImage
+                : fadeInImage
+              : undefined
+          }
+          style={{ display: walked && !selectedCreamSoda ? "block" : "none" }}
+        >
+          <img
+            className="h-full object-contain w-full"
+            css={creamsoda}
+            src="/exhibition/creamsoda.png"
+          />
+          <div className="absolute cursor-pointer flex h-full top-0 w-full">
+            <div className="w-full" onClick={handleClickBlueIceCreamSoda} />
+            <div className="w-full" onClick={handleClickPinkIceCreamSoda} />
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
