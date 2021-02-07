@@ -5,6 +5,7 @@ import { Exhibition2dCanvas } from "~/components/Exhibition/2d/Canvas";
 import { Exhibition2dCharacter } from "~/components/Exhibition/2d/Character";
 import { Exhibition2dForeground } from "~/components/Exhibition/2d/Foreground";
 import { Exhibition2dItems } from "~/components/Exhibition/2d/Items";
+import { Exhibition2DPickable } from "~/components/Exhibition/2d/Pickable";
 import {
   EXHIBITION_2D_CHARACTER_CENTER_X,
   EXHIBITION_2D_CHARACTER_DEFAULT_DIRECTION,
@@ -111,6 +112,7 @@ const ExhibitionIndex: React.FC = () => {
             restricted={restricted}
             step={step}
           />
+          <Exhibition2DPickable x={0} y={0} />
           <Exhibition2dForeground restricted={restricted} step={step} />
         </Exhibition2dCanvas>
         <div
