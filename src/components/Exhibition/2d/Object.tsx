@@ -37,23 +37,26 @@ export const Exhibition2dObject: React.FC<{
   restricted: boolean;
   speed?: number;
   step: number;
-  url: string;
+  url?: string;
   x?: number;
-}> = ({ children, onClick, restricted, speed, step, url, x }) => (
+  y?: number;
+}> = ({ children, onClick, restricted, speed, step, url, x, y }) => (
   <g
     className={onClick ? "cursor-pointer" : undefined}
     onClick={onClick}
     transform={`translate(${
       getObjectX(restricted, step) * (speed || 1) + (x || 0)
-    } 0)`}
+    } ${y ? y : 0})`}
   >
-    <image
-      height={EXHIBITION_2D_CANVAS_HEIGHT}
-      style={{
-        imageRendering: "pixelated",
-      }}
-      xlinkHref={url}
-    />
+    {url && (
+      <image
+        height={EXHIBITION_2D_CANVAS_HEIGHT}
+        style={{
+          imageRendering: "pixelated",
+        }}
+        xlinkHref={url}
+      />
+    )}
     {children}
   </g>
 );
