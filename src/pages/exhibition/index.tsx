@@ -42,7 +42,7 @@ const ExhibitionIndex: React.FC = () => {
     EXHIBITION_2D_CHARACTER_DEFAULT_DIRECTION
   );
   const [selectedCreamSoda, setSelectedCreamSoda] = useState<
-    "blue" | "pink" | null
+    "blue" | "flower" | null
   >(null);
   const [step, setStep] = useState(
     EXHIBITION_2D_CHARACTER_CENTER_X / EXHIBITION_2D_MOVING_DISTANCE_PER_STEP
@@ -57,15 +57,15 @@ const ExhibitionIndex: React.FC = () => {
     setSelectedCreamSoda("blue");
   }, [selectedCreamSoda]);
 
-  const handleClickKey = useCallback(() => setRestricted(false), []);
-
-  const handleClickPinkIceCreamSoda = useCallback(() => {
+  const handleClickFlowerIceCreamSoda = useCallback(() => {
     if (selectedCreamSoda) {
       return;
     }
 
-    setSelectedCreamSoda("pink");
+    setSelectedCreamSoda("flower");
   }, [selectedCreamSoda]);
+
+  const handleClickKey = useCallback(() => setRestricted(false), []);
 
   const handleKeydown = useCallback(
     ({ key }: KeyboardEvent) => {
@@ -138,7 +138,7 @@ const ExhibitionIndex: React.FC = () => {
           />
           <div className="absolute cursor-pointer flex h-full top-0 w-full">
             <div className="w-full" onClick={handleClickBlueIceCreamSoda} />
-            <div className="w-full" onClick={handleClickPinkIceCreamSoda} />
+            <div className="w-full" onClick={handleClickFlowerIceCreamSoda} />
           </div>
         </div>
       </div>
