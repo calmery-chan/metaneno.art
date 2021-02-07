@@ -21,16 +21,22 @@ export const Exhibition2dCanvas: React.FC = ({ children }) => {
   return (
     <div className="h-full relative w-full">
       <Exhibition2dResizeObserver onResize={handleResize} />
-      <svg
-        className="absolute"
-        height={height}
-        style={{ top: `${y}px`, left: `${x}px` }}
-        viewBox={`0 0 ${EXHIBITION_2D_CANVAS_WIDTH} ${EXHIBITION_2D_CANVAS_HEIGHT}`}
-        width={width}
-        xmlns="http://www.w3.org/2000/svg"
+      <div
+        className="absolute overflow-hidden"
+        style={{
+          height: `${height}px`,
+          left: `${x}px`,
+          top: `${y}px`,
+          width: `${width}px`,
+        }}
       >
-        {children}
-      </svg>
+        <svg
+          viewBox={`0 0 ${EXHIBITION_2D_CANVAS_WIDTH} ${EXHIBITION_2D_CANVAS_HEIGHT}`}
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          {children}
+        </svg>
+      </div>
     </div>
   );
 };
