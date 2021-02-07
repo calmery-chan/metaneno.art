@@ -1,7 +1,9 @@
 import React from "react";
+import { Exhibition2DEffectsTwinkle } from "./Effects/Twinkle";
 import { Exhibition2dObject } from "./Object";
 
 export const Exhibition2dForeground: React.FC<{
+  creamsoda: "blue" | "flower" | null;
   restricted: boolean;
   step: number;
 }> = React.memo((props) => (
@@ -29,5 +31,26 @@ export const Exhibition2dForeground: React.FC<{
       url="/exhibition/foreground/door.png"
       x={822}
     />
+    <Exhibition2dObject
+      {...props}
+      x={885}
+      url="/exhibition/foreground/corridor.png"
+    />
+    {props.creamsoda ? (
+      <Exhibition2dObject
+        {...props}
+        x={1758}
+        url={`/exhibition/foreground/creamsoda/${props.creamsoda}.png`}
+      />
+    ) : (
+      <Exhibition2dObject
+        {...props}
+        x={1758}
+        url="/exhibition/foreground/creamsoda.png"
+      />
+    )}
+    <Exhibition2dObject {...props} x={1755} y={185}>
+      <Exhibition2DEffectsTwinkle />
+    </Exhibition2dObject>
   </>
 ));

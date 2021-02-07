@@ -118,7 +118,11 @@ const ExhibitionIndex: React.FC = () => {
             restricted={restricted}
             step={step}
           />
-          <Exhibition2dForeground restricted={restricted} step={step} />
+          <Exhibition2dForeground
+            creamsoda={selectedCreamSoda}
+            restricted={restricted}
+            step={step}
+          />
         </Exhibition2dCanvas>
         <div
           className="absolute bg-black h-full opacity-0 top-0 w-full"
