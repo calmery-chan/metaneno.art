@@ -85,7 +85,7 @@ const Wrapper = styled.div`
 
   ${media.smallDown} {
     grid-gap: 30px;
-    padding-top: 180px;
+    padding-top: 220px;
   }
 
   &::before,
