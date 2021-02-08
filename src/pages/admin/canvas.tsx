@@ -6,9 +6,8 @@ import { Floor } from "~/components/Canvas/Floor";
 import { Helpers } from "~/components/Canvas/Helpers";
 import { Lights } from "~/components/Canvas/Lights";
 import { Player } from "~/components/Canvas/Player";
-import { useMultiplayer } from "~/utils/canvas/use-multiplayer";
+import { Works } from "~/components/Canvas/Works";
 import { useWorks } from "~/utils/use-works";
-import { withAdmin } from "~/utils/with-admin";
 
 const Plane = () => (
   <mesh>
@@ -88,7 +87,6 @@ const Controller: React.FC<{
 };
 
 const Canvas: React.FC = () => {
-  const { players, move } = useMultiplayer();
   const { works } = useWorks();
   const [isMove, setMove] = useState(false);
   const [startPosition, setStartPosition] = useState({ x: 0, y: 0 });
@@ -96,6 +94,8 @@ const Canvas: React.FC = () => {
   const [vecPosition, setVecPosition] = useState<Vector3>(new Vector3(0, 0, 0));
   const [mouseVector2, setMouseVector2] = useState<Vector2>(new Vector2(0, 0));
   const [vector3, setVector3] = useState<Vector3>(new Vector3(0, 0, 0));
+
+  console.log(works);
 
   // Events
 
@@ -140,9 +140,9 @@ const Canvas: React.FC = () => {
 
   return (
     <Container
-      // onMouseDown={handleOnMouseDown}
-      // onMouseMove={handleOnMouseMove}
-      // onMouseUp={handleOnMouseUp}
+      onMouseDown={handleOnMouseDown}
+      onMouseMove={handleOnMouseMove}
+      onMouseUp={handleOnMouseUp}
       onClick={(event) => {
         const x = event.clientX;
         const y = event.clientY;
@@ -159,8 +159,12 @@ const Canvas: React.FC = () => {
         <Helpers />
         <Lights />
         {/* <OtherPlayers players={players} /> */}
-        <Player destination={vecPosition} position={vector3} onMove={move} />
-        {/* <Works works={works} /> */}
+        <Player
+          destination={vecPosition}
+          position={vector3}
+          onMove={(x, y) => setPosition({ x, y })}
+        />
+        <Works works={works} />
       </ReactThreeFiber.Canvas>
       <Controller
         startPosition={startPosition}
@@ -172,4 +176,4 @@ const Canvas: React.FC = () => {
   );
 };
 
-export default withAdmin(Canvas);
+export default Canvas;

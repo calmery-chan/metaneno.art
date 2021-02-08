@@ -3,28 +3,30 @@ import { Vector3, Box3, Scene } from "three";
 import GLTFLoader from "three-gltf-loader";
 import { Work as WorkType, Works as WorksType } from "~/types/contentful";
 
-const Work: React.FC<WorkType> = ({ model }) => {
+const Work: React.FC<WorkType> = (props: any) => {
   const [scene, setScene] = useState<Scene>();
 
   useEffect(() => {
     const loader = new GLTFLoader();
-    loader.load(model.url, (gltf) => setScene(gltf.scene));
-  }, [model.url]);
+    loader.load(props.file.url, (gltf) => setScene(gltf.scene));
+  }, [props.file.url]);
 
   useEffect(() => {
     if (!scene) {
       return;
     }
 
-    scene.position.x = model.position_x;
-    scene.position.y = model.position_y;
-    scene.position.z = model.position_z;
-    scene.rotateX(model.rotate_x);
-    scene.rotateY(model.rotate_y);
-    scene.rotateZ(model.rotate_z);
-    scene.scale.x = model.scale_x;
-    scene.scale.y = model.scale_y;
-    scene.scale.z = model.scale_z;
+    scene.position.x = props.positionX;
+    scene.position.y = 0; // props.position_y;
+    scene.position.z = props.positionZ;
+    scene.rotateX(props.rotateX);
+    scene.rotateY(props.rotateY);
+    scene.rotateZ(props.rotateZ);
+    scene.scale.x = props.scaleX;
+    scene.scale.y = props.scaleY;
+    scene.scale.z = props.scaleZ;
+
+    console.log(scene.position.x, scene.position.y, scene.position.z);
 
     const box = new Box3().setFromObject(scene);
     const size = box.getSize(new Vector3());

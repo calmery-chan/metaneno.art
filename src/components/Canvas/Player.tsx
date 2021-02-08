@@ -66,26 +66,26 @@ export const Player: React.FC<PlayerProps> = ({
     onMove(position.x, position.y, position.z);
   }, [position.x, position.y, position.z]);
 
-  useFrame((state) => {
+  useFrame((state, delta) => {
     const position = ref.current!.position as Vector3;
 
     let nextX = 0;
     let nextZ = 0;
 
     if (up || left) {
-      nextX += 0.1;
+      nextX += 0.1 * delta;
     }
 
     if (down || right) {
-      nextX -= 0.1;
+      nextX -= 0.1 * delta;
     }
 
     if (up || right) {
-      nextZ += 0.1;
+      nextZ += 0.1 * delta;
     }
 
     if (down || left) {
-      nextZ -= 0.1;
+      nextZ -= 0.1 * delta;
     }
 
     position.x += nextX;
