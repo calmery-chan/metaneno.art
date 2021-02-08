@@ -67,6 +67,36 @@ const ExhibitionIndex: React.FC = () => {
 
   const handleClickKey = useCallback(() => setRestricted(false), []);
 
+  const handleMove = useCallback(
+    (direction: "left" | "right") => {
+      if (walked) {
+        return;
+      }
+
+      let difference = 0;
+
+      if (direction === "left") difference = difference - 1;
+      if (direction === "right") difference = difference + 1;
+      if (difference === 0) return;
+
+      const nextStep = step + difference;
+
+      if (
+        nextStep < 0 ||
+        nextStep >
+          (restricted
+            ? EXHIBITION_2D_CHARACTER_MAX_STEP_WHEN_RESTRICTED
+            : EXHIBITION_2D_CHARACTER_MAX_STEP)
+      )
+        return;
+
+      setDirection(difference < 0 ? "left" : "right");
+      setStep(nextStep);
+      setWalked(nextStep >= EXHIBITION_2D_ZOOM_ANIMATION_STEP);
+    },
+    [restricted, step, walked]
+  );
+
   const handleKeydown = useCallback(
     ({ key }: KeyboardEvent) => {
       if (walked) {
@@ -106,6 +136,7 @@ const ExhibitionIndex: React.FC = () => {
       <div className="absolute h-full w-full">
         <Exhibition2dCanvas
           creamsoda={selectedCreamSoda}
+          onMove={handleMove}
           restricted={restricted}
           walked={walked}
         >

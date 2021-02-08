@@ -1,5 +1,6 @@
 import { css, keyframes } from "@emotion/react";
 import React, { useCallback, useState } from "react";
+import { Exhibition2dController } from "./Controller";
 import { Exhibition2dResizeObserver } from "./ResizeObserver";
 import { Exhibition2dSpeechBubble } from "./SpeechBubble";
 import {
@@ -62,9 +63,10 @@ const zoomOut = css`
 
 export const Exhibition2dCanvas: React.FC<{
   creamsoda: string | null;
+  onMove: (direction: "left" | "right") => void;
   restricted: boolean;
   walked: boolean;
-}> = ({ children, creamsoda, restricted, walked }) => {
+}> = ({ children, creamsoda, onMove, restricted, walked }) => {
   const [height, setHeight] = useState(0);
   const [width, setWidth] = useState(0);
   const [x, setX] = useState(0);
@@ -151,6 +153,7 @@ export const Exhibition2dCanvas: React.FC<{
             </filter>
           </defs>
           {children}
+          <Exhibition2dController onMove={onMove} screenWidth={width} />
           {!restricted && !isReadScenario && (
             <Exhibition2dSpeechBubble
               scenarios={EXHIBITION_2D_KEY_SCENARIO}

@@ -16,7 +16,7 @@ const SPEECH_BUBBLE_HEIGHT =
 const SPEECH_BUBBLE_WIDTH =
   EXHIBITION_2D_CANVAS_WIDTH - SPEECH_BUBBLE_MARGIN * 2;
 const SPEECH_BUBBLE_CHERRY_HEIGHT = 10;
-const SPEECH_BUBBLE_CHERRY_WIDTH = 10;
+const SPEECH_BUBBLE_CHERRY_WIDTH = 5;
 const SPEECH_BUBBLE_CHERRY_X =
   EXHIBITION_2D_CANVAS_WIDTH -
   SPEECH_BUBBLE_MARGIN * 2 -
@@ -110,11 +110,11 @@ export const Exhibition2dSpeechBubble: React.FC<{
       <rect fillOpacity="0" height="100%" width="100%" />
       <g transform="translate(8, 254)" className="cursor-pointer select-none">
         <rect height={SPEECH_BUBBLE_HEIGHT} width={SPEECH_BUBBLE_WIDTH} />
-        <rect
-          fill="red"
+        <image
           height={SPEECH_BUBBLE_CHERRY_HEIGHT}
           width={SPEECH_BUBBLE_CHERRY_WIDTH}
           x={SPEECH_BUBBLE_CHERRY_X}
+          xlinkHref="/exhibition/cherry.png"
           y={SPEECH_BUBBLE_CHERRY_Y}
         />
         <Text line={1}>
