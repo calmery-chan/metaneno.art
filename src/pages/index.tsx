@@ -1,14 +1,10 @@
 import styled from "@emotion/styled";
 import { NextPage } from "next";
 import React from "react";
-import MainVisual from "../components/lp/MainVisual";
+import { Exhibition3dWork } from "~/components/Exhibition/3d/Work";
 
 const Home: NextPage = () => {
-  return (
-    <Wrapper>
-      <MainVisual />
-    </Wrapper>
-  );
+  return <Exhibition3dWork />;
 };
 
 const Wrapper = styled.div`
