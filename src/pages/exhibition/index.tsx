@@ -1,11 +1,15 @@
 import { NextPage } from "next";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import * as ReactThreeFiber from "react-three-fiber";
-import { useFrame } from "react-three-fiber";
+import { useFrame, useThree } from "react-three-fiber";
 import useSWR from "swr";
 import { Box3, Scene, Vector3 } from "three";
 import GLTFLoader from "three-gltf-loader";
 import axios from "~/utils/axios";
+import CameraControls from 'camera-controls';
+import * as THREE from 'three';
+
+CameraControls.install({ THREE })
 
 // Constants
 
@@ -186,26 +190,26 @@ const Exhibition3dPlayer: React.FC = () => {
     };
   }, []);
 
-  useFrame((state, delta) => {
-    const position = ref.current!.position as Vector3;
+  // useFrame((state, delta) => {
+  //   const position = ref.current!.position as Vector3;
 
-    let nextX = 0;
-    let nextZ = 0;
+  //   let nextX = 0;
+  //   let nextZ = 0;
 
-    if (up || left) nextX += EXHIBITION_3D_PLAYER_MOVING_DISTANCE * delta;
-    if (down || right) nextX -= EXHIBITION_3D_PLAYER_MOVING_DISTANCE * delta;
-    if (up || right) nextZ += EXHIBITION_3D_PLAYER_MOVING_DISTANCE * delta;
-    if (down || left) nextZ -= EXHIBITION_3D_PLAYER_MOVING_DISTANCE * delta;
+  //   if (up || left) nextX += EXHIBITION_3D_PLAYER_MOVING_DISTANCE * delta;
+  //   if (down || right) nextX -= EXHIBITION_3D_PLAYER_MOVING_DISTANCE * delta;
+  //   if (up || right) nextZ += EXHIBITION_3D_PLAYER_MOVING_DISTANCE * delta;
+  //   if (down || left) nextZ -= EXHIBITION_3D_PLAYER_MOVING_DISTANCE * delta;
 
-    position.x += nextX;
-    position.z += nextZ;
+  //   position.x += nextX;
+  //   position.z += nextZ;
 
-    state.camera.position.x = position.x + 2;
-    state.camera.position.y = position.y + 2;
-    state.camera.position.z = position.z;
-    state.camera.lookAt(new Vector3(position.x, position.y + 1, position.z));
-    state.camera.updateProjectionMatrix();
-  });
+  //   state.camera.position.x = position.x + 2;
+  //   state.camera.position.y = position.y + 2;
+  //   state.camera.position.z = position.z;
+  //   state.camera.lookAt(new Vector3(position.x, position.y + 1, position.z));
+  //   state.camera.updateProjectionMatrix();
+  // });
 
   // Render
 
@@ -219,6 +223,38 @@ const Exhibition3dPlayer: React.FC = () => {
 
 // Main
 
+const Exhibition3dCamera: React.FC = () => {
+  const { gl, camera } = useThree();
+  const [clock, setClock] = useState<THREE.Clock>();
+  const [cameraControls, setCameraControls] = useState<CameraControls>();
+
+  useEffect(() => {
+    setClock(new THREE.Clock());
+  }, []);
+
+  useEffect(() => {
+    const cameraControls = new CameraControls(camera, gl.domElement);
+
+    cameraControls.minDistance = 3;
+    cameraControls.maxDistance = 10;
+    cameraControls.minPolarAngle =  50 * (Math.PI / 180);
+    cameraControls.maxPolarAngle = 50 * (Math.PI / 180);
+    cameraControls.boundaryFriction = 0.1;
+
+    setCameraControls(cameraControls);
+  }, [camera, gl.domElement])
+
+  useFrame(() => {
+    if (!clock || !cameraControls) {
+      return;
+    }
+
+    cameraControls.update(clock.getDelta());
+  })
+
+  return null;
+}
+
 const ExhibitionIndex: NextPage = () => {
   const [area] = useState<Area>("meadow");
   const { objects } = useObjects(area);
@@ -231,6 +267,7 @@ const ExhibitionIndex: NextPage = () => {
 
   return (
     <Exhibition3dCanvas>
+      <Exhibition3dCamera />
       <Exhibition3dCanvasDebugger />
       <Exhibition3dCanvasObjects objects={objects} />
       <Exhibition3dDirectionalLight />
