@@ -1,5 +1,5 @@
 import CameraControls from "camera-controls";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useFrame, useThree } from "react-three-fiber";
 import * as THREE from "three";
 import { AnimationClip, AnimationMixer, Box3, Scene, Vector3 } from "three";
@@ -43,7 +43,47 @@ const useCamera = (
       cameraControls.update(delta);
     }
   });
+
+  return camera;
 };
+
+const useKeyboard = () => {
+  const [down, setDown] = useState(false);
+  const [left, setLeft] = useState(false);
+  const [right, setRight] = useState(false);
+  const [up, setUp] = useState(false);
+
+  const handleKeydown = useCallback(({ code }: KeyboardEvent) => {
+    if (code === "ArrowDown" || code === "KeyS") setDown(true);
+    if (code === "ArrowLeft" || code === "KeyA") setLeft(true);
+    if (code === "ArrowRight" || code === "KeyD") setRight(true);
+    if (code === "ArrowUp" || code === "KeyW") setUp(true);
+  }, []);
+
+  const handleKeyup = useCallback(({ code }: KeyboardEvent) => {
+    if (code === "ArrowDown" || code === "KeyS") setDown(false);
+    if (code === "ArrowLeft" || code === "KeyA") setLeft(false);
+    if (code === "ArrowRight" || code === "KeyD") setRight(false);
+    if (code === "ArrowUp" || code === "KeyW") setUp(false);
+  }, []);
+
+  useEffect(() => {
+    addEventListener("keydown", handleKeydown);
+    addEventListener("keyup", handleKeyup);
+
+    return () => {
+      removeEventListener("keydown", handleKeydown);
+      removeEventListener("keyup", handleKeyup);
+    }
+  }, []);
+
+  return {
+    down,
+    left,
+    right,
+    up
+  }
+}
 
 export const Exhibition3dPlayer = React.memo<{
   state: "running" | "standing" | "walking";
@@ -88,13 +128,36 @@ export const Exhibition3dPlayer = React.memo<{
     };
   }, [animations, mixer, state]);
 
-  useCamera(scene?.position, cameraOffset);
+  const camera = useCamera(scene?.position, cameraOffset);
+  const { down, left, right, up } = useKeyboard();
 
   useFrame((_, delta) => {
     /* Animation */
 
     if (mixer) {
       mixer.update(delta);
+    }
+
+    if ((down || left || right || up) && scene) {
+      const deltaTime = new Vector3(delta, delta, delta);
+      let velocity = new Vector3(0, 0, 0);
+
+      if(down)  velocity.z += 1;
+      if(left)  velocity.x -= 1;
+      if(right) velocity.x += 1;
+      if(up)    velocity.z -= 1;
+
+      velocity = velocity
+        .normalize()
+        .multiply(deltaTime)
+
+      const { x, y, z } = velocity.applyQuaternion(camera.quaternion);
+
+      scene.position.set(
+        scene.position.x + x,
+        scene.position.y + y,
+        scene.position.z + z
+      )
     }
   });
 

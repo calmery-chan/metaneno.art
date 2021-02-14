@@ -1,13 +1,11 @@
 import { NextPage } from "next";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import * as ReactThreeFiber from "react-three-fiber";
-import { useFrame, useThree } from "react-three-fiber";
 import useSWR from "swr";
 import { Box3, Scene, Vector3 } from "three";
 import GLTFLoader from "three-gltf-loader";
-import axios from "~/utils/axios";
-import * as THREE from 'three';
 import { Exhibition3dPlayer } from "~/components/Exhibition/3d/Player";
+import axios from "~/utils/axios";
 
 // Constants
 
