@@ -15,17 +15,16 @@ export const Exhibition3dCamera = React.memo<{
 
   useEffect(() => {
     gl.outputEncoding = THREE.sRGBEncoding;
+    gl.setPixelRatio(window.devicePixelRatio);
     gl.shadowMap.autoUpdate = false;
   }, [gl]);
 
   useEffect(() => {
     const cameraControls = new CameraControls(camera, gl.domElement);
 
-    cameraControls.maxDistance = 2;
-    cameraControls.maxPolarAngle = 50 * (Math.PI / 180);
+    cameraControls.distance = 2;
+    cameraControls.maxDistance = 4;
     cameraControls.minDistance = 1;
-    cameraControls.minPolarAngle = 50 * (Math.PI / 180);
-    cameraControls.polarAngle = 50 * (Math.PI / 180);
 
     setCameraControls(cameraControls);
   }, [camera, gl.domElement]);
