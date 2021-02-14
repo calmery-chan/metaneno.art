@@ -31,6 +31,11 @@ const useCamera = (
     cameraControls.minPolarAngle = 50 * (Math.PI / 180);
     cameraControls.polarAngle = 50 * (Math.PI / 180);
 
+    const color = new THREE.Color(0x2CDDEE)
+    const fog = new THREE.Fog(color, 1.5, 20);
+    scene.fog = fog;
+    scene.background = color;
+
     setCameraControls(cameraControls);
   }, [camera, gl.domElement]);
 

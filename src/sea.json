@@ -3,6 +3,26 @@
     {
       "transform": {
         "position": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "scale": {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        }
+      },
+      "url": "http://localhost:8000/objects/areas/sea/terrain"
+    },
+    {
+      "transform": {
+        "position": {
           "x": 1.5,
           "y": 2,
           "z": 4.35

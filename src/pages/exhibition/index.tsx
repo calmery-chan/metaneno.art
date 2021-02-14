@@ -83,8 +83,8 @@ const Exhibition3dCanvasDebugger = React.memo(() => (
 
 const Exhibition3dDirectionalLight = React.memo(() => (
   <>
-  <directionalLight color="#AEF3FF" intensity={1.4} />
-  <pointLight position={new Vector3(10, 0, 0)} />
+    <directionalLight color="#AEF3FF" intensity={1.4} />
+    <pointLight position={new Vector3(10, 0, 0)} />
   </>
 ));
 
