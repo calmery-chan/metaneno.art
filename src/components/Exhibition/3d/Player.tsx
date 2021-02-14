@@ -139,9 +139,7 @@ export const Exhibition3dPlayer = React.memo<{
     }
 
     if ((down || left || right || up) && scene) {
-      const deltaTime = new Vector3(delta, delta, delta);
       const velocity = new Vector3(0, 0, 0);
-      const speed = new Vector3(2, 2, 2);
 
       if (down) velocity.z += 1;
       if (left) velocity.x -= 1;
@@ -149,16 +147,23 @@ export const Exhibition3dPlayer = React.memo<{
       if (up) velocity.z -= 1;
 
       const { x, z } = velocity
+        .clone()
         .normalize()
-        .multiply(speed)
-        .multiply(deltaTime)
+        .multiply(new Vector3(2, 2, 2))
+        .multiply(new Vector3(delta, delta, delta))
         .applyQuaternion(camera.quaternion);
 
-      scene.position.set(
+      const nextPosition = new Vector3(
         scene.position.x + x,
         scene.position.y,
         scene.position.z + z
       );
+
+      const rotation = scene.position.clone().sub(nextPosition).normalize();
+
+      scene.rotation.y = Math.atan2(rotation.x, rotation.z);
+
+      scene.position.set(nextPosition.x, nextPosition.y, nextPosition.z);
     }
   });
 
