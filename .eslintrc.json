@@ -45,7 +45,7 @@
         "alias": {
           "~": "./src"
         },
-        "extensions": [".ts", ".tsx"]
+        "extensions": [".js", ".ts", ".tsx"]
       }
     },
     "react": {

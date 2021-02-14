@@ -1,9 +1,10 @@
 import CameraControls from "camera-controls";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useFrame, useThree } from "react-three-fiber";
 import * as THREE from "three";
 import { AnimationClip, AnimationMixer, Box3, Scene, Vector3 } from "three";
 import GLTFLoader from "three-gltf-loader";
+import { useKeyboard } from "~/hooks/exhibition/useKeyboard";
 
 CameraControls.install({ THREE });
 
@@ -12,17 +13,14 @@ const useCamera = (
   offset: Vector3 = new Vector3(0, 0, 0)
 ) => {
   const [cameraControls, setCameraControls] = useState<CameraControls>();
-  const [clock, setClock] = useState<THREE.Clock>();
-  const { camera, scene, gl } = useThree();
-
-  useEffect(() => {
-    setClock(new THREE.Clock());
-  }, []);
+  const { camera, gl } = useThree();
 
   useEffect(() => {
     gl.outputEncoding = THREE.sRGBEncoding;
     gl.shadowMap.autoUpdate = false;
+  }, [gl]);
 
+  useEffect(() => {
     const cameraControls = new CameraControls(camera, gl.domElement);
 
     cameraControls.maxDistance = 2;
@@ -31,16 +29,11 @@ const useCamera = (
     cameraControls.minPolarAngle = 50 * (Math.PI / 180);
     cameraControls.polarAngle = 50 * (Math.PI / 180);
 
-    const color = new THREE.Color(0x2CDDEE)
-    const fog = new THREE.Fog(color, 1.5, 20);
-    scene.fog = fog;
-    scene.background = color;
-
     setCameraControls(cameraControls);
   }, [camera, gl.domElement]);
 
   useFrame((_, delta) => {
-    if (clock && cameraControls) {
+    if (cameraControls) {
       cameraControls.moveTo(
         position.x + offset.x,
         position.y + offset.y,
@@ -55,56 +48,25 @@ const useCamera = (
   return camera;
 };
 
-const useKeyboard = () => {
-  const [down, setDown] = useState(false);
-  const [left, setLeft] = useState(false);
-  const [right, setRight] = useState(false);
-  const [up, setUp] = useState(false);
-
-  const handleKeydown = useCallback(({ code }: KeyboardEvent) => {
-    if (code === "ArrowDown" || code === "KeyS") setDown(true);
-    if (code === "ArrowLeft" || code === "KeyA") setLeft(true);
-    if (code === "ArrowRight" || code === "KeyD") setRight(true);
-    if (code === "ArrowUp" || code === "KeyW") setUp(true);
-  }, []);
-
-  const handleKeyup = useCallback(({ code }: KeyboardEvent) => {
-    if (code === "ArrowDown" || code === "KeyS") setDown(false);
-    if (code === "ArrowLeft" || code === "KeyA") setLeft(false);
-    if (code === "ArrowRight" || code === "KeyD") setRight(false);
-    if (code === "ArrowUp" || code === "KeyW") setUp(false);
-  }, []);
-
-  useEffect(() => {
-    addEventListener("keydown", handleKeydown);
-    addEventListener("keyup", handleKeyup);
-
-    return () => {
-      removeEventListener("keydown", handleKeydown);
-      removeEventListener("keyup", handleKeyup);
-    };
-  }, []);
-
-  return {
-    down,
-    left,
-    right,
-    up,
-  };
-};
-
 export const Exhibition3dPlayer = React.memo<{
-  state: "running" | "standing" | "walking";
-}>(({ state }) => {
+  offset?: Vector3;
+}>(({ offset = new Vector3(0, 0, 0) }) => {
   const [animations, setAnimations] = useState<AnimationClip[]>();
-  const [mixer, setMixer] = useState<AnimationMixer>();
-  const [scene, setScene] = useState<Scene>();
   const [cameraOffset, setCameraOffset] = useState<Vector3>();
+  const [mixer, setMixer] = useState<AnimationMixer>();
+  const [state, setState] = useState<"running" | "standing" | "walking">(
+    "standing"
+  );
+  const [scene, setScene] = useState<Scene>();
+  const camera = useCamera(scene?.position, cameraOffset);
+  const { down, left, right, up } = useKeyboard();
 
   // Side Effects
 
   useEffect(() => {
-    new GLTFLoader().load("/hikikomori_chan.glb", ({ animations, scene }) => {
+    new GLTFLoader().load("/player.glb", ({ animations, scene }) => {
+      scene.scale.set(0.5, 0.5, 0.5);
+
       setAnimations(animations);
       setCameraOffset(
         new Vector3(
@@ -114,10 +76,17 @@ export const Exhibition3dPlayer = React.memo<{
         )
       );
       setMixer(new AnimationMixer(scene));
-      scene.scale.set(0.5, 0.5, 0.5);
       setScene(scene);
     });
   }, []);
+
+  useEffect(() => {
+    if (!scene) {
+      return;
+    }
+
+    scene.position.set(offset.x, offset.y, offset.z);
+  }, [offset, scene]);
 
   useEffect(() => {
     if (!animations || !mixer) {
@@ -125,6 +94,7 @@ export const Exhibition3dPlayer = React.memo<{
     }
 
     const animation = mixer.clipAction(
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       animations.find((animation) => animation.name.toLowerCase() === state)!
     );
 
@@ -137,12 +107,16 @@ export const Exhibition3dPlayer = React.memo<{
     };
   }, [animations, mixer, state]);
 
-  const camera = useCamera(scene?.position, cameraOffset);
-  const { down, left, right, up } = useKeyboard();
+  useEffect(() => {
+    if (down || left || right || up) {
+      setState("running");
+      return;
+    }
+
+    setState("standing");
+  }, [down, left, right, up]);
 
   useFrame((_, delta) => {
-    /* Animation */
-
     if (mixer) {
       mixer.update(delta);
     }
@@ -150,10 +124,21 @@ export const Exhibition3dPlayer = React.memo<{
     if ((down || left || right || up) && scene) {
       const velocity = new Vector3(0, 0, 0);
 
-      if (down) velocity.z += 1;
-      if (left) velocity.x -= 1;
-      if (right) velocity.x += 1;
-      if (up) velocity.z -= 1;
+      if (down) {
+        velocity.z += 1;
+      }
+
+      if (left) {
+        velocity.x -= 1;
+      }
+
+      if (right) {
+        velocity.x += 1;
+      }
+
+      if (up) {
+        velocity.z -= 1;
+      }
 
       const { x, z } = velocity
         .clone()
@@ -163,13 +148,12 @@ export const Exhibition3dPlayer = React.memo<{
         .applyQuaternion(camera.quaternion);
 
       const nextPosition = new Vector3(
-        scene.position.x + x,
-        2,
-        scene.position.z + z
+        scene.position.x + x + offset.x,
+        offset.y,
+        scene.position.z + z + offset.z
       );
 
       const rotation = scene.position.clone().sub(nextPosition).normalize();
-
       scene.rotation.y = Math.atan2(rotation.x, rotation.z);
 
       scene.position.set(nextPosition.x, nextPosition.y, nextPosition.z);
