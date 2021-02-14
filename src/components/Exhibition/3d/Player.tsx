@@ -141,6 +141,7 @@ export const Exhibition3dPlayer = React.memo<{
     if ((down || left || right || up) && scene) {
       const deltaTime = new Vector3(delta, delta, delta);
       const velocity = new Vector3(0, 0, 0);
+      const speed = new Vector3(2, 2, 2);
 
       if (down) velocity.z += 1;
       if (left) velocity.x -= 1;
@@ -149,6 +150,7 @@ export const Exhibition3dPlayer = React.memo<{
 
       const { x, z } = velocity
         .normalize()
+        .multiply(speed)
         .multiply(deltaTime)
         .applyQuaternion(camera.quaternion);
 
