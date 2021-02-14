@@ -74,16 +74,16 @@ const useKeyboard = () => {
     return () => {
       removeEventListener("keydown", handleKeydown);
       removeEventListener("keyup", handleKeyup);
-    }
+    };
   }, []);
 
   return {
     down,
     left,
     right,
-    up
-  }
-}
+    up,
+  };
+};
 
 export const Exhibition3dPlayer = React.memo<{
   state: "running" | "standing" | "walking";
@@ -140,24 +140,23 @@ export const Exhibition3dPlayer = React.memo<{
 
     if ((down || left || right || up) && scene) {
       const deltaTime = new Vector3(delta, delta, delta);
-      let velocity = new Vector3(0, 0, 0);
+      const velocity = new Vector3(0, 0, 0);
 
-      if(down)  velocity.z += 1;
-      if(left)  velocity.x -= 1;
-      if(right) velocity.x += 1;
-      if(up)    velocity.z -= 1;
+      if (down) velocity.z += 1;
+      if (left) velocity.x -= 1;
+      if (right) velocity.x += 1;
+      if (up) velocity.z -= 1;
 
-      velocity = velocity
+      const { x, z } = velocity
         .normalize()
         .multiply(deltaTime)
-
-      const { x, y, z } = velocity.applyQuaternion(camera.quaternion);
+        .applyQuaternion(camera.quaternion);
 
       scene.position.set(
         scene.position.x + x,
-        scene.position.y + y,
+        scene.position.y,
         scene.position.z + z
-      )
+      );
     }
   });
 
