@@ -6,6 +6,7 @@ import { Box3, Scene, Vector3 } from "three";
 import GLTFLoader from "three-gltf-loader";
 import { Exhibition3dPlayer } from "~/components/Exhibition/3d/Player";
 import axios from "~/utils/axios";
+import json from "~/sea.json";
 
 // Constants
 
@@ -19,20 +20,25 @@ type ApiResponse<T> = {
 
 type Area = "clouds" | "meadow";
 
-type Object = {
-  file: {
-    url: string;
-  };
-  name: string;
-  positionX: number;
-  positionY: number;
-  positionZ: number;
-  rotateX: number;
-  rotateY: number;
-  rotateZ: number;
-  scaleX: number;
-  scaleY: number;
-  scaleZ: number;
+type CanvasObject = {
+  url: string;
+  transform: {
+    position: {
+      x: number;
+      y: number;
+      z: number;
+    }
+    rotation: {
+      x: number;
+      y: number;
+      z: number;
+    }
+    scale: {
+      x: number;
+      y: number;
+      z: number;
+    }
+  }
 };
 
 /* Helper Functions */
@@ -75,60 +81,57 @@ const Exhibition3dCanvasDebugger = React.memo(() => (
   </>
 ));
 
-const Exhibition3dDirectionalLight = React.memo(() => <directionalLight />);
+const Exhibition3dDirectionalLight = React.memo(() => (
+  <>
+  <directionalLight color="#AEF3FF" intensity={1.4} />
+  <pointLight position={new Vector3(10, 0, 0)} />
+  </>
+));
 
-const Exhibition3dCanvasObject: React.FC<Object> = (props) => {
+const Exhibition3dCanvasObject: React.FC<CanvasObject> = (props) => {
   const [scene, setScene] = useState<Scene>();
 
   const {
-    file,
-    positionX,
-    positionY,
-    positionZ,
-    rotateX,
-    rotateY,
-    rotateZ,
-    scaleX,
-    scaleY,
-    scaleZ,
+    url,
+    transform
   } = props;
 
   // Side Effects
 
   useEffect(() => {
     (async () => {
-      setScene(await getScene(file.url));
+      setScene(await getScene(`${url}.glb`));
     })();
-  }, [file.url]);
+  }, [url]);
 
   useEffect(() => {
     if (!scene) {
       return;
     }
 
-    scene.position.x = positionX;
-    scene.position.y = positionY;
-    scene.position.z = positionZ;
-    scene.rotateX(rotateX);
-    scene.rotateY(rotateY);
-    scene.rotateZ(rotateZ);
-    scene.scale.x = scaleX;
-    scene.scale.y = scaleY;
-    scene.scale.z = scaleZ;
+    const {
+      position,
+      rotation,
+      scale
+    } = transform
 
-    scene.position.y +=
-      new Box3().setFromObject(scene).getSize(new Vector3()).y / 2;
+    scene.position.x = position.x;
+    scene.position.y = position.y;
+    scene.position.z = position.z;
+    scene.rotateX(rotation.x);
+    scene.rotateY(rotation.y);
+    scene.rotateZ(rotation.z);
+    scene.scale.x = scale.x;
+    scene.scale.y = scale.y;
+    scene.scale.z = scale.z;
+
+    // scene.position.y +=
+    //   new Box3().setFromObject(scene).getSize(new Vector3()).y / 2;
   }, [
-    positionX,
-    positionX,
-    positionZ,
-    rotateX,
-    rotateY,
-    rotateZ,
     scene,
-    scaleX,
-    scaleY,
-    scaleZ,
+    transform.position,
+    transform.rotation,
+    transform.scale
   ]);
 
   if (!scene) {
@@ -138,30 +141,23 @@ const Exhibition3dCanvasObject: React.FC<Object> = (props) => {
   return <primitive object={scene} />;
 };
 
-const Exhibition3dCanvasObjects: React.FC<{ objects: Object[] }> = ({
+const Exhibition3dCanvasObjects: React.FC<{ objects: CanvasObject[] }> = ({
   objects,
 }) => (
   <>
-    {objects.map((object) => (
-      <Exhibition3dCanvasObject key={object.name} {...object} />
+    {objects.map((object, index) => (
+      <Exhibition3dCanvasObject key={index} {...object} />
     ))}
   </>
 );
 
 const ExhibitionIndex: NextPage = () => {
-  const [area] = useState<Area>("meadow");
-  // const { objects } = useObjects(area);
-
-  // Render
-
-  // if (!objects) {
-  //   return null;
-  // }
+  const [area] = useState<Area>("clouds");
 
   return (
     <Exhibition3dCanvas>
       <Exhibition3dCanvasDebugger />
-      {/* <Exhibition3dCanvasObjects objects={objects} /> */}
+      <Exhibition3dCanvasObjects objects={json.objects} />
       <Exhibition3dDirectionalLight />
       <Exhibition3dPlayer state="standing" />
     </Exhibition3dCanvas>

@@ -13,18 +13,21 @@ const useCamera = (
 ) => {
   const [cameraControls, setCameraControls] = useState<CameraControls>();
   const [clock, setClock] = useState<THREE.Clock>();
-  const { camera, gl } = useThree();
+  const { camera, scene, gl } = useThree();
 
   useEffect(() => {
     setClock(new THREE.Clock());
   }, []);
 
   useEffect(() => {
+    gl.outputEncoding = THREE.sRGBEncoding;
+    gl.shadowMap.autoUpdate = false;
+
     const cameraControls = new CameraControls(camera, gl.domElement);
 
-    cameraControls.maxDistance = 10;
+    cameraControls.maxDistance = 2;
     cameraControls.maxPolarAngle = 50 * (Math.PI / 180);
-    cameraControls.minDistance = 3;
+    cameraControls.minDistance = 1;
     cameraControls.minPolarAngle = 50 * (Math.PI / 180);
     cameraControls.polarAngle = 50 * (Math.PI / 180);
 
@@ -101,11 +104,12 @@ export const Exhibition3dPlayer = React.memo<{
       setCameraOffset(
         new Vector3(
           0,
-          new Box3().setFromObject(scene).getSize(new Vector3()).y / 2,
+          new Box3().setFromObject(scene).getSize(new Vector3()).y / 4,
           0
         )
       );
       setMixer(new AnimationMixer(scene));
+      scene.scale.set(0.5, 0.5, 0.5);
       setScene(scene);
     });
   }, []);
@@ -155,7 +159,7 @@ export const Exhibition3dPlayer = React.memo<{
 
       const nextPosition = new Vector3(
         scene.position.x + x,
-        scene.position.y,
+        2,
         scene.position.z + z
       );
 
