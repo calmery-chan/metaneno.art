@@ -6,10 +6,8 @@ import useSWR from "swr";
 import { Box3, Scene, Vector3 } from "three";
 import GLTFLoader from "three-gltf-loader";
 import axios from "~/utils/axios";
-import CameraControls from 'camera-controls';
 import * as THREE from 'three';
-
-CameraControls.install({ THREE })
+import { Exhibition3dPlayer } from "~/components/Exhibition/3d/Player";
 
 // Constants
 
@@ -152,126 +150,22 @@ const Exhibition3dCanvasObjects: React.FC<{ objects: Object[] }> = ({
   </>
 );
 
-const Exhibition3dPlayer: React.FC = () => {
-  const [up, setUp] = useState(false);
-  const [down, setDown] = useState(false);
-  const [left, setLeft] = useState(false);
-  const [right, setRight] = useState(false);
-
-  // Refs
-
-  const ref = useRef<any>();
-
-  // Events
-
-  const handleKeyDown = useCallback(({ keyCode }: KeyboardEvent) => {
-    if (keyCode === 87 || keyCode === 38) setUp(true);
-    if (keyCode === 83 || keyCode === 40) setDown(true);
-    if (keyCode === 65 || keyCode === 37) setLeft(true);
-    if (keyCode === 68 || keyCode === 39) setRight(true);
-  }, []);
-
-  const handleKeyUp = useCallback(({ keyCode }: KeyboardEvent) => {
-    if (keyCode === 87 || keyCode === 38) setUp(false);
-    if (keyCode === 83 || keyCode === 40) setDown(false);
-    if (keyCode === 65 || keyCode === 37) setLeft(false);
-    if (keyCode === 68 || keyCode === 39) setRight(false);
-  }, []);
-
-  // Side Effects
-
-  useEffect(() => {
-    addEventListener("keydown", handleKeyDown);
-    addEventListener("keyup", handleKeyUp);
-
-    return () => {
-      removeEventListener("keydown", handleKeyDown);
-      removeEventListener("keyup", handleKeyUp);
-    };
-  }, []);
-
-  // useFrame((state, delta) => {
-  //   const position = ref.current!.position as Vector3;
-
-  //   let nextX = 0;
-  //   let nextZ = 0;
-
-  //   if (up || left) nextX += EXHIBITION_3D_PLAYER_MOVING_DISTANCE * delta;
-  //   if (down || right) nextX -= EXHIBITION_3D_PLAYER_MOVING_DISTANCE * delta;
-  //   if (up || right) nextZ += EXHIBITION_3D_PLAYER_MOVING_DISTANCE * delta;
-  //   if (down || left) nextZ -= EXHIBITION_3D_PLAYER_MOVING_DISTANCE * delta;
-
-  //   position.x += nextX;
-  //   position.z += nextZ;
-
-  //   state.camera.position.x = position.x + 2;
-  //   state.camera.position.y = position.y + 2;
-  //   state.camera.position.z = position.z;
-  //   state.camera.lookAt(new Vector3(position.x, position.y + 1, position.z));
-  //   state.camera.updateProjectionMatrix();
-  // });
-
-  // Render
-
-  return (
-    <mesh ref={ref}>
-      <boxGeometry attach="geometry" args={[1, 1, 1]} />
-      <meshToonMaterial attach="material" color={"#000"} />
-    </mesh>
-  );
-};
-
-// Main
-
-const Exhibition3dCamera: React.FC = () => {
-  const { gl, camera } = useThree();
-  const [clock, setClock] = useState<THREE.Clock>();
-  const [cameraControls, setCameraControls] = useState<CameraControls>();
-
-  useEffect(() => {
-    setClock(new THREE.Clock());
-  }, []);
-
-  useEffect(() => {
-    const cameraControls = new CameraControls(camera, gl.domElement);
-
-    cameraControls.minDistance = 3;
-    cameraControls.maxDistance = 10;
-    cameraControls.minPolarAngle =  50 * (Math.PI / 180);
-    cameraControls.maxPolarAngle = 50 * (Math.PI / 180);
-    cameraControls.boundaryFriction = 0.1;
-
-    setCameraControls(cameraControls);
-  }, [camera, gl.domElement])
-
-  useFrame(() => {
-    if (!clock || !cameraControls) {
-      return;
-    }
-
-    cameraControls.update(clock.getDelta());
-  })
-
-  return null;
-}
-
 const ExhibitionIndex: NextPage = () => {
   const [area] = useState<Area>("meadow");
-  const { objects } = useObjects(area);
+  // const { objects } = useObjects(area);
 
   // Render
 
-  if (!objects) {
-    return null;
-  }
+  // if (!objects) {
+  //   return null;
+  // }
 
   return (
     <Exhibition3dCanvas>
-      <Exhibition3dCamera />
       <Exhibition3dCanvasDebugger />
-      <Exhibition3dCanvasObjects objects={objects} />
+      {/* <Exhibition3dCanvasObjects objects={objects} /> */}
       <Exhibition3dDirectionalLight />
-      <Exhibition3dPlayer />
+      <Exhibition3dPlayer state="standing" />
     </Exhibition3dCanvas>
   );
 };
