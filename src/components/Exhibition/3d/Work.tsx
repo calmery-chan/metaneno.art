@@ -1,9 +1,9 @@
 import { css, keyframes } from "@emotion/react";
 import React, { useCallback, useEffect, useState } from "react";
-import { Scene } from "three";
+import { Scene, Vector3 } from "three";
 import { Exhibition3dCamera } from "./Camera";
 import { Exhibition3dCanvas } from "./Canvas";
-import { Exhibition3dLights } from "./Lights";
+import { Exhibition3dRenderer } from "./Renderer";
 import { Colors } from "~/styles/colors";
 import { Mixin } from "~/styles/mixin";
 import { Spacing } from "~/styles/spacing";
@@ -181,11 +181,7 @@ export const Exhibition3dWork = React.memo<{ onClose: () => void }>(
     useEffect(() => {
       (async () => {
         try {
-          setScene(
-            await getScene(
-              "http://localhost:8000/objects/areas/cloud/koishi.glb"
-            )
-          );
+          setScene(await getScene("/aquarium.glb"));
         } catch (error) {
           Sentry.captureException(error);
         }
@@ -231,8 +227,13 @@ export const Exhibition3dWork = React.memo<{ onClose: () => void }>(
                 )}
                 {mode === "3d" && (
                   <Exhibition3dCanvas>
+                    <Exhibition3dRenderer />
+                    <pointLight position={new Vector3(0, 0, -1)} />
+                    <directionalLight
+                      position={new Vector3(0, 0, 1)}
+                      intensity={1}
+                    />
                     <Exhibition3dCamera />
-                    <Exhibition3dLights />
                     <primitive object={scene} />
                   </Exhibition3dCanvas>
                 )}

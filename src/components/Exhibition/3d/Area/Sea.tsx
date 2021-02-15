@@ -7,6 +7,7 @@ import { Exhibition3dCanvas } from "../Canvas";
 import { Exhibition3dLights } from "../Lights";
 import { Exhibition3dCanvasObjects } from "../Objects";
 import { Exhibition3dPlayer } from "../Player";
+import { Exhibition3dRenderer } from "../Renderer";
 import { Water } from "~/externals/Water2";
 import { useObjects } from "~/hooks/exhibition/useObjects";
 import { preload } from "~/utils/exhibition";
@@ -83,6 +84,7 @@ export const Exhibition3dAreaSea: React.FC = () => {
       <Exhibition3dCanvasObjects objects={objects} />
       <Exhibition3dLights />
       <Exhibition3dPlayer offset={new Vector3(0, 1.25, 0)} />
+      <Exhibition3dRenderer />
     </Exhibition3dCanvas>
   );
 };

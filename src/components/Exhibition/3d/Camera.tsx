@@ -14,12 +14,6 @@ export const Exhibition3dCamera = React.memo<{
   const { camera, gl } = useThree();
 
   useEffect(() => {
-    gl.outputEncoding = THREE.sRGBEncoding;
-    gl.setPixelRatio(window.devicePixelRatio);
-    gl.shadowMap.autoUpdate = false;
-  }, [gl]);
-
-  useEffect(() => {
     const cameraControls = new CameraControls(camera, gl.domElement);
 
     cameraControls.distance = 2;
