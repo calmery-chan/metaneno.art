@@ -8,7 +8,7 @@ import { Colors } from "~/styles/colors";
 import { Mixin } from "~/styles/mixin";
 import { Spacing } from "~/styles/spacing";
 import { Typography } from "~/styles/typography";
-import { getScene } from "~/utils/exhibition";
+import { getGltf } from "~/utils/exhibition";
 import { Sentry } from "~/utils/sentry";
 
 // Animations
@@ -181,7 +181,8 @@ export const Exhibition3dWork = React.memo<{ onClose: () => void }>(
     useEffect(() => {
       (async () => {
         try {
-          setScene(await getScene("/aquarium.glb"));
+          const { scene } = await getGltf("/aquarium.glb");
+          setScene(scene);
         } catch (error) {
           Sentry.captureException(error);
         }
