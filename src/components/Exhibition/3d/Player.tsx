@@ -18,14 +18,16 @@ const useCamera = (
   useEffect(() => {
     gl.outputEncoding = THREE.sRGBEncoding;
     gl.shadowMap.autoUpdate = false;
+    gl.setPixelRatio(window.devicePixelRatio);
   }, [gl]);
 
   useEffect(() => {
     const cameraControls = new CameraControls(camera, gl.domElement);
 
-    cameraControls.maxDistance = 2;
+    cameraControls.distance = 3;
+    cameraControls.maxDistance = 4;
     cameraControls.maxPolarAngle = 50 * (Math.PI / 180);
-    cameraControls.minDistance = 1;
+    cameraControls.minDistance = 2;
     cameraControls.minPolarAngle = 50 * (Math.PI / 180);
     cameraControls.polarAngle = 50 * (Math.PI / 180);
 
@@ -143,7 +145,7 @@ export const Exhibition3dPlayer = React.memo<{
       const { x, z } = velocity
         .clone()
         .normalize()
-        .multiply(new Vector3(2, 2, 2))
+        .multiply(new Vector3(6, 6, 6))
         .multiply(new Vector3(delta, delta, delta))
         .applyQuaternion(camera.quaternion);
 
