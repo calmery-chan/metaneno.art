@@ -1,4 +1,4 @@
-export type Area = "sea";
+export type Area = "meadow" | "sea";
 
 export type AreaObject = {
   transform: {
