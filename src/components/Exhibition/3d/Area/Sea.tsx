@@ -4,7 +4,6 @@ import * as Three from "three";
 import { Color, MathUtils, PlaneGeometry, Vector2, Vector3 } from "three";
 import { Exhibition3dCamera } from "../Camera";
 import { Exhibition3dCanvas } from "../Canvas";
-import { Exhibition3dLights } from "../Lights";
 import { Exhibition3dCanvasObjects } from "../Objects";
 import { Exhibition3dPlayer } from "../Player";
 import { Exhibition3dRenderer } from "../Renderer";
@@ -32,7 +31,7 @@ const Sea = React.memo(() => {
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const water: any = new Water(new PlaneGeometry(100, 100), {
-      color: "#17A0B4",
+      color: "#0D524E",
       flowDirection: new Vector2(1, 1),
       scale: 10,
       textureHeight: 512,
@@ -80,10 +79,10 @@ export const Exhibition3dAreaSea: React.FC = () => {
     <Exhibition3dCanvas>
       <Fog />
       <Sea />
+      <directionalLight color="#AEF3FF" intensity={1} />
       <Exhibition3dCamera />
       <Exhibition3dCanvasObjects objects={objects} />
-      <Exhibition3dLights />
-      <Exhibition3dPlayer offset={new Vector3(0, 1.25, 0)} />
+      <Exhibition3dPlayer offset={new Vector3(0, 1.35, 0)} />
       <Exhibition3dRenderer />
     </Exhibition3dCanvas>
   );
