@@ -10,11 +10,18 @@ import {
 } from "three";
 import GLTFLoader from "three-gltf-loader";
 
-const createMaterial = (material: Material) =>
-  new MeshToonMaterial({
+const createMaterial = (material: Material) => {
+  // UniGLTF/UniUnlit を使用しているときは MeshBasicMaterial となる、書き換えない
+  if (material.type === "MeshBasicMaterial") {
+    return material;
+  }
+
+  // MToon で出力すると MeshStandardMaterial となる、影の描写がおかしくなるのでマテリアルを作り直す
+  return new MeshToonMaterial({
     color: (material as MeshStandardMaterial).color,
     map: (material as MeshStandardMaterial).map,
   });
+};
 
 export const getDevicePixelRatio = (quality: "low" | "middle" | "high") => {
   if (!window) {
