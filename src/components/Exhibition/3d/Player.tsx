@@ -16,12 +16,6 @@ const useCamera = (
   const { camera, gl } = useThree();
 
   useEffect(() => {
-    gl.outputEncoding = THREE.sRGBEncoding;
-    gl.shadowMap.autoUpdate = false;
-    gl.setPixelRatio(window.devicePixelRatio);
-  }, [gl]);
-
-  useEffect(() => {
     const cameraControls = new CameraControls(camera, gl.domElement);
 
     cameraControls.distance = 3;
