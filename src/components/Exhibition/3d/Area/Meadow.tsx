@@ -79,7 +79,7 @@ export const Exhibition3dAreaMeadow: React.FC = () => {
       <Fog />
       <Sea />
       <Exhibition3dCanvasObjects objects={objects} />
-      <directionalLight />
+      <directionalLight color="#F9FDC2" />
       <Exhibition3dPlayer offset={new Vector3(0, 3.8, 0)} />
       <Exhibition3dRenderer />
     </Exhibition3dCanvas>
