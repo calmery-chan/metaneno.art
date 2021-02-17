@@ -16,11 +16,15 @@ const createMaterial = (material: Material) => {
     return material;
   }
 
+  const m = material as MeshStandardMaterial;
+
   // MToon で出力すると MeshStandardMaterial となる、影の描写がおかしくなるのでマテリアルを作り直す
   return new MeshToonMaterial({
-    alphaTest: (material as MeshStandardMaterial).alphaTest,
-    color: (material as MeshStandardMaterial).color,
-    map: (material as MeshStandardMaterial).map,
+    alphaTest: m.alphaTest,
+    color: m.color,
+    map: m.map,
+    opacity: m.opacity,
+    transparent: m.transparent,
   });
 };
 
