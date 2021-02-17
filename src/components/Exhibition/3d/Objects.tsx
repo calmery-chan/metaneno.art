@@ -4,7 +4,7 @@ import { useFrame } from "react-three-fiber";
 import { AnimationMixer, Scene } from "three";
 import * as Three from "three";
 import { AreaObject } from "~/types/exhibition";
-import { getGltf } from "~/utils/exhibition";
+import { getGltf, rewriteMaterials } from "~/utils/exhibition";
 
 const Exhibition3dCanvasObject = React.memo<AreaObject>(
   ({ transform, url }) => {
@@ -18,6 +18,7 @@ const Exhibition3dCanvasObject = React.memo<AreaObject>(
       (async () => {
         const { animations, scene } = await getGltf(url);
 
+        rewriteMaterials(scene);
         setScene(scene);
 
         if (animations[0]) {

@@ -1,6 +1,20 @@
 import axios from "axios";
-import { AnimationClip, Scene } from "three";
+import {
+  AnimationClip,
+  Material,
+  Mesh,
+  MeshStandardMaterial,
+  MeshToonMaterial,
+  Object3D,
+  Scene,
+} from "three";
 import GLTFLoader from "three-gltf-loader";
+
+const createMaterial = (material: Material) =>
+  new MeshToonMaterial({
+    color: (material as MeshStandardMaterial).color,
+    map: (material as MeshStandardMaterial).map,
+  });
 
 export const getDevicePixelRatio = (quality: "low" | "middle" | "high") => {
   if (!window) {
@@ -56,3 +70,26 @@ export const getGltf = (
   });
 
 export const preload = (url: string) => axios.get(url);
+
+export const rewriteMaterials = (scene: Scene) => {
+  const helper = (objects: Object3D[]) => {
+    objects.forEach((object) => {
+      if (object instanceof Mesh) {
+        if (Array.isArray(object.material)) {
+          object.material = object.material.map(createMaterial);
+          return;
+        }
+
+        object.material = createMaterial(object.material);
+        return;
+      }
+
+      if (object instanceof Object3D) {
+        helper(object.children);
+        return;
+      }
+    });
+  };
+
+  helper(scene.children);
+};
