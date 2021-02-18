@@ -11,42 +11,42 @@ export const Exhibition2dForeground: React.FC<{
     <Exhibition2dObject
       {...props}
       speed={1.2}
-      url="/exhibition/foreground/garbage.png"
+      url="/exhibition/2d/night/foreground/garbage.png"
       x={96}
     />
     <Exhibition2dObject
       {...props}
       speed={1.1}
-      url="/exhibition/foreground/bag.png"
+      url="/exhibition/2d/night/foreground/bag.png"
       x={435}
     />
     <Exhibition2dObject
       {...props}
       speed={1.25}
-      url="/exhibition/foreground/book.png"
+      url="/exhibition/2d/night/foreground/book.png"
       x={520}
     />
     <Exhibition2dObject
       {...props}
-      url="/exhibition/foreground/door.jpg"
+      url="/exhibition/2d/night/foreground/door.jpg"
       x={822}
     />
     <Exhibition2dObject
       {...props}
       x={885}
-      url="/exhibition/foreground/corridor.png"
+      url="/exhibition/2d/night/foreground/corridor.png"
     />
     {props.creamsoda ? (
       <Exhibition2dObject
         {...props}
         x={1758}
-        url={`/exhibition/foreground/creamsoda/${props.creamsoda}.png`}
+        url={`/exhibition/2d/night/foreground/creamsoda/${props.creamsoda}.png`}
       />
     ) : (
       <Exhibition2dObject
         {...props}
         x={1758}
-        url="/exhibition/foreground/creamsoda.png"
+        url="/exhibition/2d/night/foreground/creamsoda.png"
       />
     )}
     <Exhibition2dObject {...props} x={1755} y={185}>

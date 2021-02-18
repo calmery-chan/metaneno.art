@@ -53,10 +53,10 @@ const BACKGROUND_IMAGE_MAX_WIDTH_FIT_CANVAS_WHEN_RESTRICTED =
 
 export const EXHIBITION_2D_CHARACTER_FRAME_PER_ANIMATION = 4;
 export const EXHIBITION_2D_CHARACTER_WALKING_ANIMATION_IMAGES = [
-  "/exhibition/character/0.png",
-  "/exhibition/character/1.png",
-  "/exhibition/character/2.png",
-  "/exhibition/character/3.png",
+  "/exhibition/2d/night/character/0.png",
+  "/exhibition/2d/night/character/1.png",
+  "/exhibition/2d/night/character/2.png",
+  "/exhibition/2d/night/character/3.png",
 ];
 
 // Character (Direction)

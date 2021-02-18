@@ -30,7 +30,7 @@ export const Exhibition2DEffectsTwinkle = React.memo(() => {
       css={pickable}
       height={EXHIBITION_2D_PICKABLE_HEIGHT}
       width={EXHIBITION_2D_PICKABLE_WIDTH}
-      xlinkHref={`/exhibition/effects/twinkle/${frame}.png`}
+      xlinkHref={`/exhibition/2d/night/effects/twinkle/${frame}.png`}
     />
   );
 });

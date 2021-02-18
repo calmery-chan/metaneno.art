@@ -35,7 +35,7 @@ export const Exhibition2DPickable = React.memo<{ x: number; y: number }>(
         height={EXHIBITION_2D_PICKABLE_HEIGHT}
         width={EXHIBITION_2D_PICKABLE_WIDTH}
         x={x}
-        xlinkHref={`/exhibition/pickable/${frame}.png`}
+        xlinkHref={`/exhibition/2d/pickable/${frame}.png`}
         y={y}
       />
     );

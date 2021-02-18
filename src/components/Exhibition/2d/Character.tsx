@@ -49,7 +49,7 @@ export const Exhibition2dCharacter = React.memo<{
       width={EXHIBITION_2D_CHARACTER_WIDTH}
       xlinkHref={
         creamsoda
-          ? `/exhibition/character/${creamsoda}.png`
+          ? `/exhibition/2d/night/character/${creamsoda}.png`
           : EXHIBITION_2D_CHARACTER_WALKING_ANIMATION_IMAGES[
               Math.floor(
                 (step %

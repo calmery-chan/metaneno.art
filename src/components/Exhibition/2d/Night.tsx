@@ -73,7 +73,7 @@ const Exhibition2dWakeupCaharcter: React.FC<{ onComplete: () => void }> = ({
       style={{ imageRendering: "pixelated" }}
       x={105}
       y={117}
-      xlinkHref={`/exhibition/wakeup/${frame}.png`}
+      xlinkHref={`/exhibition/2d/night/character/wakeup/${frame}.png`}
     />
   );
 };
@@ -276,7 +276,7 @@ export const Exhibition2dNight: React.FC = () => {
             <img
               className="h-full object-contain w-full"
               css={creamsoda}
-              src="/exhibition/creamsoda/background.png"
+              src="/exhibition/2d/night/creamsoda/background.png"
               style={{ imageRendering: "pixelated" }}
             />
             <div className="absolute cursor-pointer flex h-full top-0 w-full">
@@ -284,7 +284,7 @@ export const Exhibition2dNight: React.FC = () => {
                 <img
                   className="h-full object-contain w-full"
                   css={clickable}
-                  src="/exhibition/creamsoda/blue.png"
+                  src="/exhibition/2d/night/creamsoda/blue.png"
                   style={{ imageRendering: "pixelated" }}
                 />
               </div>
@@ -292,7 +292,7 @@ export const Exhibition2dNight: React.FC = () => {
                 <img
                   className="h-full object-contain w-full"
                   css={clickable}
-                  src="/exhibition/creamsoda/flower.png"
+                  src="/exhibition/2d/night/creamsoda/flower.png"
                   style={{ imageRendering: "pixelated" }}
                 />
               </div>
