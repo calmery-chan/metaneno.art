@@ -4,6 +4,7 @@ import React from "react";
 import Badge from "./Badge";
 import CreatorComment from "./CreatorComment";
 import MainContentLink from "./MainContentLink";
+import ScrollIcon from "./ScrollIcon";
 import StoryTitle from "./Title/StoryTitle";
 import creatorList from "./creatorList";
 import { useIntersectionObserver } from "./hooks";
@@ -21,6 +22,7 @@ export default function Story() {
 
   return (
     <Wrapper>
+      <ScrollIcon />
       <Badge />
       <WaveWrapper>
         <Wave1 src="/lp/story/wave1.svg" />
@@ -85,7 +87,7 @@ const Wrapper = styled.div`
 
   ${media.smallDown} {
     grid-gap: 30px;
-    padding-top: 180px;
+    padding-top: 220px;
   }
 
   &::before,

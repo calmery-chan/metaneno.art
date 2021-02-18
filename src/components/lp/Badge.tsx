@@ -49,7 +49,7 @@ const Wrapper = styled.div<{ isIntersected: boolean }>`
 
   ${media.smallDown} {
     top: 20px;
-    width: 128px;
+    width: 150px;
   }
 
   &::before {
@@ -92,6 +92,6 @@ const Text = styled.img`
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 80%;
+  width: 85%;
   transform: translate(-50%, -50%);
 `;
