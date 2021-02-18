@@ -10,6 +10,11 @@ export const Exhibition2dBackground: React.FC<{
     <Exhibition2dObject {...props} url="/exhibition/background/1.png" />
     <Exhibition2dObject
       {...props}
+      x={128}
+      url="/exhibition/background/comforter.png"
+    />
+    <Exhibition2dObject
+      {...props}
       x={885}
       url="/exhibition/background/corridor.jpg"
     />
