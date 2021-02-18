@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
+import { Exhibition2dCanvasContainer } from "./CanvasContainer";
 import {
   EXHIBITION_2D_CANVAS_HEIGHT,
   EXHIBITION_2D_CANVAS_WIDTH,
@@ -99,40 +100,39 @@ export const Exhibition2dSpeechBubble: React.FC<{
   // Render
 
   return (
-    <svg
-      height={EXHIBITION_2D_CANVAS_HEIGHT}
-      onClick={handleOnClickSpeechBubble}
-      width={EXHIBITION_2D_CANVAS_WIDTH}
-      x="0"
-      xmlns="http://www.w3.org/2000/svg"
-      y="0"
-    >
-      <rect fillOpacity="0" height="100%" width="100%" />
-      <g transform="translate(8, 254)" className="cursor-pointer select-none">
-        <rect height={SPEECH_BUBBLE_HEIGHT} width={SPEECH_BUBBLE_WIDTH} />
-        <image
-          height={SPEECH_BUBBLE_CHERRY_HEIGHT}
-          style={{ imageRendering: "pixelated" }}
-          width={SPEECH_BUBBLE_CHERRY_WIDTH}
-          x={SPEECH_BUBBLE_CHERRY_X}
-          xlinkHref="/exhibition/cherry.png"
-          y={SPEECH_BUBBLE_CHERRY_Y}
-        />
-        <Text line={1}>
-          {scenario.message.slice(
-            0,
-            characterCount <= SPEECH_BUBBLE_MAXIMUM_CHARACTERS_PER_LINE
-              ? characterCount
-              : SPEECH_BUBBLE_MAXIMUM_CHARACTERS_PER_LINE
-          )}
-        </Text>
-        <Text line={2}>
-          {scenario.message.slice(
-            SPEECH_BUBBLE_MAXIMUM_CHARACTERS_PER_LINE,
-            characterCount
-          )}
-        </Text>
-      </g>
-    </svg>
+    <Exhibition2dCanvasContainer>
+      <svg
+        onClick={handleOnClickSpeechBubble}
+        viewBox={`0 0 ${EXHIBITION_2D_CANVAS_WIDTH} ${EXHIBITION_2D_CANVAS_HEIGHT}`}
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <rect fillOpacity="0" height="100%" width="100%" />
+        <g transform="translate(8, 254)" className="cursor-pointer select-none">
+          <rect height={SPEECH_BUBBLE_HEIGHT} width={SPEECH_BUBBLE_WIDTH} />
+          <image
+            height={SPEECH_BUBBLE_CHERRY_HEIGHT}
+            style={{ imageRendering: "pixelated" }}
+            width={SPEECH_BUBBLE_CHERRY_WIDTH}
+            x={SPEECH_BUBBLE_CHERRY_X}
+            xlinkHref="/exhibition/cherry.png"
+            y={SPEECH_BUBBLE_CHERRY_Y}
+          />
+          <Text line={1}>
+            {scenario.message.slice(
+              0,
+              characterCount <= SPEECH_BUBBLE_MAXIMUM_CHARACTERS_PER_LINE
+                ? characterCount
+                : SPEECH_BUBBLE_MAXIMUM_CHARACTERS_PER_LINE
+            )}
+          </Text>
+          <Text line={2}>
+            {scenario.message.slice(
+              SPEECH_BUBBLE_MAXIMUM_CHARACTERS_PER_LINE,
+              characterCount
+            )}
+          </Text>
+        </g>
+      </svg>
+    </Exhibition2dCanvasContainer>
   );
 };

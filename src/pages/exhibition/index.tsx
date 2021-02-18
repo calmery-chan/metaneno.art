@@ -5,6 +5,7 @@ import { Exhibition2dCanvas } from "~/components/Exhibition/2d/Canvas";
 import { Exhibition2dCharacter } from "~/components/Exhibition/2d/Character";
 import { Exhibition2dForeground } from "~/components/Exhibition/2d/Foreground";
 import { Exhibition2DItemsKey } from "~/components/Exhibition/2d/Items/Key";
+import { Exhibition2dSpeechBubble } from "~/components/Exhibition/2d/SpeechBubble";
 import {
   EXHIBITION_2D_CHARACTER_CENTER_X,
   EXHIBITION_2D_CHARACTER_DEFAULT_DIRECTION,
@@ -13,7 +14,9 @@ import {
   EXHIBITION_2D_CHARACTER_MAX_STEP_WHEN_RESTRICTED,
   EXHIBITION_2D_FADEIN_ANIMATION_DELAY,
   EXHIBITION_2D_FADE_ANIMATION_DURATION,
+  EXHIBITION_2D_KEY_SCENARIO,
   EXHIBITION_2D_MOVING_DISTANCE_PER_STEP,
+  EXHIBITION_2D_SELECT_ICE_CREAMSODA_SCENARIO,
   EXHIBITION_2D_ZOOM_ANIMATION_STEP,
 } from "~/constants/exhibition";
 import { useKeydown } from "~/hooks/useKeydown";
@@ -118,36 +121,6 @@ const ExhibitionIndex: React.FC = () => {
 
   const handleClickKey = useCallback(() => setRestricted(false), []);
 
-  const handleMove = useCallback(
-    (direction: "left" | "right") => {
-      if (walked) {
-        return;
-      }
-
-      let difference = 0;
-
-      if (direction === "left") difference = difference - 1;
-      if (direction === "right") difference = difference + 1;
-      if (difference === 0) return;
-
-      const nextStep = step + difference;
-
-      if (
-        nextStep < 0 ||
-        nextStep >
-          (restricted
-            ? EXHIBITION_2D_CHARACTER_MAX_STEP_WHEN_RESTRICTED
-            : EXHIBITION_2D_CHARACTER_MAX_STEP)
-      )
-        return;
-
-      setDirection(difference < 0 ? "left" : "right");
-      setStep(nextStep);
-      setWalked(nextStep >= EXHIBITION_2D_ZOOM_ANIMATION_STEP);
-    },
-    [restricted, step, walked]
-  );
-
   const handleKeydown = useCallback(
     ({ key }: KeyboardEvent) => {
       if (!wakeup || walked) {
@@ -173,7 +146,16 @@ const ExhibitionIndex: React.FC = () => {
 
       setDirection(difference < 0 ? "left" : "right");
       setStep(nextStep);
-      setWalked(nextStep >= EXHIBITION_2D_ZOOM_ANIMATION_STEP);
+
+      const nextWalked = nextStep >= EXHIBITION_2D_ZOOM_ANIMATION_STEP;
+
+      if (nextWalked) {
+        setWalked(true);
+        setTimeout(() => {
+          setZoom(true);
+          console.log("EXHIBITION_2D_FADEIN_ANIMATION_DELAY");
+        }, EXHIBITION_2D_FADEIN_ANIMATION_DELAY * 1000);
+      }
     },
     [restricted, step, wakeup, walked]
   );
@@ -182,11 +164,18 @@ const ExhibitionIndex: React.FC = () => {
     setWakeup(true);
   }, []);
 
-  const handleZoom = useCallback(() => {
-    setZoom(true);
+  useKeydown(handleKeydown);
+
+  const [isReadScenario, setReadScenario] = useState(false);
+  const [isReadSelectScenario, setReadSelectScenario] = useState(false);
+
+  const handleReadScenario = useCallback(() => {
+    setReadScenario(true);
   }, []);
 
-  useKeydown(handleKeydown);
+  const handleReadSelectScenario = useCallback(() => {
+    setReadSelectScenario(true);
+  }, []);
 
   // Render
 
@@ -195,8 +184,6 @@ const ExhibitionIndex: React.FC = () => {
       <div className="absolute h-full w-full" css={fadeIn}>
         <Exhibition2dCanvas
           creamsoda={selectedCreamSoda}
-          onMove={handleMove}
-          onZoom={handleZoom}
           restricted={restricted}
           walked={walked}
         >
@@ -229,14 +216,14 @@ const ExhibitionIndex: React.FC = () => {
         <div
           className="absolute bg-black h-full opacity-0 top-0 w-full"
           css={
-            walked && zoom
+            walked
               ? selectedCreamSoda
                 ? fadeOutImage
                 : fadeInImage
               : undefined
           }
           style={{
-            display: walked && zoom && !selectedCreamSoda ? "block" : "none",
+            display: walked && !selectedCreamSoda ? "block" : "none",
           }}
         >
           <img
@@ -249,6 +236,18 @@ const ExhibitionIndex: React.FC = () => {
             <div className="w-full" onClick={handleClickFlowerIceCreamSoda} />
           </div>
         </div>
+        {!restricted && !isReadScenario && (
+          <Exhibition2dSpeechBubble
+            scenarios={EXHIBITION_2D_KEY_SCENARIO}
+            onComplete={handleReadScenario}
+          />
+        )}
+        {!restricted && walked && zoom && !isReadSelectScenario && (
+          <Exhibition2dSpeechBubble
+            scenarios={EXHIBITION_2D_SELECT_ICE_CREAMSODA_SCENARIO}
+            onComplete={handleReadSelectScenario}
+          />
+        )}
       </div>
     </div>
   );
