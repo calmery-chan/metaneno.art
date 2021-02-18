@@ -1,6 +1,5 @@
 import { css, keyframes } from "@emotion/react";
 import React, { useCallback, useState } from "react";
-import { Exhibition2dController } from "./Controller";
 import { Exhibition2dResizeObserver } from "./ResizeObserver";
 import { Exhibition2dSpeechBubble } from "./SpeechBubble";
 import {
@@ -153,7 +152,7 @@ export const Exhibition2dCanvas: React.FC<{
             </filter>
           </defs>
           {children}
-          <Exhibition2dController onMove={onMove} screenWidth={width} />
+          {/* <Exhibition2dController onMove={onMove} screenWidth={width} /> */}
           {!restricted && !isReadScenario && (
             <Exhibition2dSpeechBubble
               scenarios={EXHIBITION_2D_KEY_SCENARIO}

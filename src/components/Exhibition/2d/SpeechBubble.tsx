@@ -112,6 +112,7 @@ export const Exhibition2dSpeechBubble: React.FC<{
         <rect height={SPEECH_BUBBLE_HEIGHT} width={SPEECH_BUBBLE_WIDTH} />
         <image
           height={SPEECH_BUBBLE_CHERRY_HEIGHT}
+          style={{ imageRendering: "pixelated" }}
           width={SPEECH_BUBBLE_CHERRY_WIDTH}
           x={SPEECH_BUBBLE_CHERRY_X}
           xlinkHref="/exhibition/cherry.png"

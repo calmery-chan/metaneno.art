@@ -112,6 +112,6 @@ export const EXHIBITION_2D_BACKGROUND_MAX_STEP_WHEN_RESTRICTED =
 
 export const EXHIBITION_2D_KEY_SCENARIO = [
   {
-    message: "鍵を手に入れた。扉が開いたようだ、先に進んでみよう。",
+    message: "何のチケットだろう…？",
   },
 ];
