@@ -163,7 +163,6 @@ const ExhibitionIndex: React.FC = () => {
         setWalked(true);
         setTimeout(() => {
           setZoom(true);
-          console.log("EXHIBITION_2D_FADEIN_ANIMATION_DELAY");
         }, EXHIBITION_2D_FADEIN_ANIMATION_DELAY * 1000);
       }
     },
