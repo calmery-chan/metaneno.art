@@ -61,7 +61,7 @@ const Exhibition2dWakeupCaharcter: React.FC<{ onComplete: () => void }> = ({
     <image
       height={EXHIBITION_2D_CHARACTER_HEIGHT}
       style={{ imageRendering: "pixelated" }}
-      x={146}
+      x={105}
       y={117}
       xlinkHref={`/exhibition/wakeup/${frame}.png`}
     />
@@ -182,11 +182,7 @@ const ExhibitionIndex: React.FC = () => {
   return (
     <div className="bg-black h-full w-full">
       <div className="absolute h-full w-full" css={fadeIn}>
-        <Exhibition2dCanvas
-          creamsoda={selectedCreamSoda}
-          restricted={restricted}
-          walked={walked}
-        >
+        <Exhibition2dCanvas creamsoda={selectedCreamSoda} walked={walked}>
           <Exhibition2dBackground
             restricted={restricted}
             wakeup={wakeup}

@@ -62,9 +62,8 @@ const zoomOut = css`
 
 export const Exhibition2dCanvas: React.FC<{
   creamsoda: string | null;
-  restricted: boolean;
   walked: boolean;
-}> = ({ children, creamsoda, restricted, walked }) => (
+}> = ({ children, creamsoda, walked }) => (
   <Exhibition2dCanvasContainer>
     <svg
       css={walked ? (creamsoda ? zoomOut : zoomIn) : undefined}
