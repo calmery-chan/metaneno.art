@@ -68,8 +68,9 @@ const zoomOut = css`
 export const Exhibition2dCanvas: React.FC<{
   creamsoda: string | null;
   onMove: (direction: "left" | "right") => void;
+  onMoveEnd: () => void;
   walked: boolean;
-}> = ({ children, creamsoda, onMove, walked }) => {
+}> = ({ children, creamsoda, onMove, onMoveEnd, walked }) => {
   const ref = useRef<SVGSVGElement>(null);
   const [displayMagnification, setDisplayMagnification] = useState<number>(0);
   const [startX, setStartX] = useState<number | null>(null);
@@ -101,7 +102,8 @@ export const Exhibition2dCanvas: React.FC<{
     setCurrentY(null);
     setStartX(null);
     setStartY(null);
-  }, []);
+    onMoveEnd();
+  }, [onMoveEnd]);
 
   const handleTouchMove = useCallback(
     (event: MouseRelatedEvent | TouchRelatedEvent) => {

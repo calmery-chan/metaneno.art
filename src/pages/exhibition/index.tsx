@@ -213,6 +213,15 @@ const ExhibitionIndex: React.FC = () => {
     setReadSelectScenario(true);
   }, []);
 
+  const handleTouchMove = useCallback((direction) => {
+    setDirection(direction);
+    setIsMoving(true);
+  }, []);
+
+  const handleTouchMoveEnd = useCallback(() => {
+    setIsMoving(false);
+  }, []);
+
   // Render
 
   return (
@@ -220,7 +229,8 @@ const ExhibitionIndex: React.FC = () => {
       <div className="absolute h-full w-full" css={fadeIn}>
         <Exhibition2dCanvas
           creamsoda={selectedCreamSoda}
-          onMove={handleMove}
+          onMove={handleTouchMove}
+          onMoveEnd={handleTouchMoveEnd}
           walked={walked}
         >
           <Exhibition2dBackground
