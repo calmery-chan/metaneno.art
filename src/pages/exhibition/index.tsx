@@ -98,6 +98,7 @@ const ExhibitionIndex: React.FC = () => {
   );
   const [walked, setWalked] = useState(false);
   const [wakeup, setWakeup] = useState(false);
+  const [zoom, setZoom] = useState(false);
 
   const handleClickBlueIceCreamSoda = useCallback(() => {
     if (selectedCreamSoda) {
@@ -181,6 +182,10 @@ const ExhibitionIndex: React.FC = () => {
     setWakeup(true);
   }, []);
 
+  const handleZoom = useCallback(() => {
+    setZoom(true);
+  }, []);
+
   useKeydown(handleKeydown);
 
   // Render
@@ -191,6 +196,7 @@ const ExhibitionIndex: React.FC = () => {
         <Exhibition2dCanvas
           creamsoda={selectedCreamSoda}
           onMove={handleMove}
+          onZoom={handleZoom}
           restricted={restricted}
           walked={walked}
         >
@@ -223,13 +229,15 @@ const ExhibitionIndex: React.FC = () => {
         <div
           className="absolute bg-black h-full opacity-0 top-0 w-full"
           css={
-            walked
+            walked && zoom
               ? selectedCreamSoda
                 ? fadeOutImage
                 : fadeInImage
               : undefined
           }
-          style={{ display: walked && !selectedCreamSoda ? "block" : "none" }}
+          style={{
+            display: walked && zoom && !selectedCreamSoda ? "block" : "none",
+          }}
         >
           <img
             className="h-full object-contain w-full"

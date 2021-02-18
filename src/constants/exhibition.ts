@@ -112,6 +112,17 @@ export const EXHIBITION_2D_BACKGROUND_MAX_STEP_WHEN_RESTRICTED =
 
 export const EXHIBITION_2D_KEY_SCENARIO = [
   {
-    message: "何のチケットだろう…？",
+    message:
+      "光るチケットを手に入れた。ドアが開いて怪しい光が差し込んできた……。",
+  },
+];
+
+export const EXHIBITION_2D_SELECT_ICE_CREAMSODA_SCENARIO = [
+  {
+    message: "2つのクリームソーダが怪しい光に照らされている…。",
+  },
+  {
+    message:
+      "チケットを見返してみると、”あなたは花香るクリームソーダと透き通る水のクリームソーダ、まず最初にどちらを選びますか？”と書いてある。",
   },
 ];

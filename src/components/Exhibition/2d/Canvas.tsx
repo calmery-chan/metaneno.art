@@ -7,6 +7,7 @@ import {
   EXHIBITION_2D_CANVAS_WIDTH,
   EXHIBITION_2D_FADE_ANIMATION_DURATION,
   EXHIBITION_2D_KEY_SCENARIO,
+  EXHIBITION_2D_SELECT_ICE_CREAMSODA_SCENARIO,
   EXHIBITION_2D_ZOOM_OUT_ANIMATION_DURATION,
 } from "~/constants/exhibition";
 import { Mixin } from "~/styles/mixin";
@@ -63,18 +64,25 @@ const zoomOut = css`
 export const Exhibition2dCanvas: React.FC<{
   creamsoda: string | null;
   onMove: (direction: "left" | "right") => void;
+  onZoom: () => void;
   restricted: boolean;
   walked: boolean;
-}> = ({ children, creamsoda, onMove, restricted, walked }) => {
+}> = ({ children, creamsoda, onMove, onZoom, restricted, walked }) => {
   const [height, setHeight] = useState(0);
   const [width, setWidth] = useState(0);
   const [x, setX] = useState(0);
   const [y, setY] = useState(0);
   const [isReadScenario, setReadScenario] = useState(false);
+  const [isReadSelectScenario, setReadSelectScenario] = useState(false);
 
   const handleReadScenario = useCallback(() => {
     setReadScenario(true);
   }, []);
+
+  const handleReadSelectScenario = useCallback(() => {
+    setReadSelectScenario(true);
+    onZoom();
+  }, [onZoom]);
 
   const handleResize = useCallback(({ height, width, x, y }) => {
     setHeight(height);
@@ -96,7 +104,13 @@ export const Exhibition2dCanvas: React.FC<{
         }}
       >
         <svg
-          css={walked ? (creamsoda ? zoomOut : zoomIn) : undefined}
+          css={
+            walked && isReadSelectScenario
+              ? creamsoda
+                ? zoomOut
+                : zoomIn
+              : undefined
+          }
           viewBox={`0 0 ${EXHIBITION_2D_CANVAS_WIDTH} ${EXHIBITION_2D_CANVAS_HEIGHT}`}
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -157,6 +171,12 @@ export const Exhibition2dCanvas: React.FC<{
             <Exhibition2dSpeechBubble
               scenarios={EXHIBITION_2D_KEY_SCENARIO}
               onComplete={handleReadScenario}
+            />
+          )}
+          {!restricted && walked && !isReadSelectScenario && (
+            <Exhibition2dSpeechBubble
+              scenarios={EXHIBITION_2D_SELECT_ICE_CREAMSODA_SCENARIO}
+              onComplete={handleReadSelectScenario}
             />
           )}
         </svg>
