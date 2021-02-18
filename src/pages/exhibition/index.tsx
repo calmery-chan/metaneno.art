@@ -2,6 +2,7 @@ import { css, keyframes } from "@emotion/react";
 import React, { useCallback, useEffect, useState } from "react";
 import { Exhibition2dBackground } from "~/components/Exhibition/2d/Background";
 import { Exhibition2dCanvas } from "~/components/Exhibition/2d/Canvas";
+import { Exhibition2dCanvasContainer } from "~/components/Exhibition/2d/CanvasContainer";
 import { Exhibition2dCharacter } from "~/components/Exhibition/2d/Character";
 import { Exhibition2dForeground } from "~/components/Exhibition/2d/Foreground";
 import { Exhibition2DItemsKey } from "~/components/Exhibition/2d/Items/Key";
@@ -23,6 +24,15 @@ import { useKeydown } from "~/hooks/useKeydown";
 import { fadeOut, Mixin } from "~/styles/mixin";
 
 // Components
+
+const clickable = css`
+  cursor: pointer;
+  transition: ${Mixin.ANIMATION_DURATION.seconds}s ease;
+
+  &:hover {
+    transform: scale(1.04);
+  }
+`;
 
 const fadeInKeyframes = keyframes`
   from {
@@ -122,7 +132,7 @@ const ExhibitionIndex: React.FC = () => {
   const handleClickKey = useCallback(() => setRestricted(false), []);
 
   const handleKeydown = useCallback(
-    ({ key }: KeyboardEvent) => {
+    ({ key }: { key: string }) => {
       if (!wakeup || walked) {
         return;
       }
@@ -160,6 +170,15 @@ const ExhibitionIndex: React.FC = () => {
     [restricted, step, wakeup, walked]
   );
 
+  const handleMove = useCallback(
+    (direction: "left" | "right") => {
+      handleKeydown({
+        key: direction === "left" ? "a" : "d",
+      });
+    },
+    [handleKeydown]
+  );
+
   const handleWakeup = useCallback(() => {
     setWakeup(true);
   }, []);
@@ -182,7 +201,11 @@ const ExhibitionIndex: React.FC = () => {
   return (
     <div className="bg-black h-full w-full">
       <div className="absolute h-full w-full" css={fadeIn}>
-        <Exhibition2dCanvas creamsoda={selectedCreamSoda} walked={walked}>
+        <Exhibition2dCanvas
+          creamsoda={selectedCreamSoda}
+          onMove={handleMove}
+          walked={walked}
+        >
           <Exhibition2dBackground
             restricted={restricted}
             wakeup={wakeup}
@@ -222,15 +245,32 @@ const ExhibitionIndex: React.FC = () => {
             display: walked && !selectedCreamSoda ? "block" : "none",
           }}
         >
-          <img
-            className="h-full object-contain w-full"
-            css={creamsoda}
-            src="/exhibition/creamsoda.png"
-          />
-          <div className="absolute cursor-pointer flex h-full top-0 w-full">
-            <div className="w-full" onClick={handleClickBlueIceCreamSoda} />
-            <div className="w-full" onClick={handleClickFlowerIceCreamSoda} />
-          </div>
+          <Exhibition2dCanvasContainer>
+            <img
+              className="h-full object-contain w-full"
+              css={creamsoda}
+              src="/exhibition/creamsoda/background.png"
+              style={{ imageRendering: "pixelated" }}
+            />
+            <div className="absolute cursor-pointer flex h-full top-0 w-full">
+              <div className="w-full" onClick={handleClickBlueIceCreamSoda}>
+                <img
+                  className="h-full object-contain w-full"
+                  css={clickable}
+                  src="/exhibition/creamsoda/blue.png"
+                  style={{ imageRendering: "pixelated" }}
+                />
+              </div>
+              <div className="w-full" onClick={handleClickFlowerIceCreamSoda}>
+                <img
+                  className="h-full object-contain w-full"
+                  css={clickable}
+                  src="/exhibition/creamsoda/flower.png"
+                  style={{ imageRendering: "pixelated" }}
+                />
+              </div>
+            </div>
+          </Exhibition2dCanvasContainer>
         </div>
         {!restricted && !isReadScenario && (
           <Exhibition2dSpeechBubble
