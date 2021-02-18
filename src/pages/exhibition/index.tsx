@@ -20,7 +20,7 @@ import {
   EXHIBITION_2D_SELECT_ICE_CREAMSODA_SCENARIO,
   EXHIBITION_2D_ZOOM_ANIMATION_STEP,
 } from "~/constants/exhibition";
-import { useKeydown } from "~/hooks/useKeydown";
+import { useKeydown, useKeyup } from "~/hooks/useKeyboard";
 import { fadeOut, Mixin } from "~/styles/mixin";
 
 // Components
@@ -112,6 +112,7 @@ const ExhibitionIndex: React.FC = () => {
   const [walked, setWalked] = useState(false);
   const [wakeup, setWakeup] = useState(false);
   const [zoom, setZoom] = useState(false);
+  const [isMoving, setIsMoving] = useState(false);
 
   const handleClickBlueIceCreamSoda = useCallback(() => {
     if (selectedCreamSoda) {
@@ -131,58 +132,75 @@ const ExhibitionIndex: React.FC = () => {
 
   const handleClickKey = useCallback(() => setRestricted(false), []);
 
-  const handleKeydown = useCallback(
-    ({ key }: { key: string }) => {
-      if (!wakeup || walked) {
-        return;
-      }
+  const handleMove = useCallback(() => {
+    if (!wakeup || walked) {
+      return;
+    }
 
-      let difference = 0;
+    let difference = 0;
+    if (direction === "left") difference = difference - 1;
+    if (direction === "right") difference = difference + 1;
+    if (difference === 0) return;
 
-      if (key === "a" || key === "ArrowLeft") difference = difference - 1;
-      if (key === "d" || key === "ArrowRight") difference = difference + 1;
-      if (difference === 0) return;
+    const nextStep = step + difference;
 
-      const nextStep = step + difference;
+    if (
+      nextStep < 0 ||
+      nextStep >
+        (restricted
+          ? EXHIBITION_2D_CHARACTER_MAX_STEP_WHEN_RESTRICTED
+          : EXHIBITION_2D_CHARACTER_MAX_STEP)
+    ) {
+      return;
+    }
 
-      if (
-        nextStep < 0 ||
-        nextStep >
-          (restricted
-            ? EXHIBITION_2D_CHARACTER_MAX_STEP_WHEN_RESTRICTED
-            : EXHIBITION_2D_CHARACTER_MAX_STEP)
-      )
-        return;
+    setStep(nextStep);
 
-      setDirection(difference < 0 ? "left" : "right");
-      setStep(nextStep);
+    const nextWalked = nextStep >= EXHIBITION_2D_ZOOM_ANIMATION_STEP;
 
-      const nextWalked = nextStep >= EXHIBITION_2D_ZOOM_ANIMATION_STEP;
+    if (nextWalked) {
+      setWalked(true);
+      setTimeout(() => {
+        setZoom(true);
+      }, EXHIBITION_2D_FADEIN_ANIMATION_DELAY * 1000);
+    }
+  }, [direction, restricted, step, wakeup, walked]);
 
-      if (nextWalked) {
-        setWalked(true);
-        setTimeout(() => {
-          setZoom(true);
-        }, EXHIBITION_2D_FADEIN_ANIMATION_DELAY * 1000);
-      }
-    },
-    [restricted, step, wakeup, walked]
-  );
+  useEffect(() => {
+    if (isMoving) {
+      setTimeout(() => {
+        handleMove();
+      }, 35);
+    }
+  }, [isMoving, handleMove]);
 
-  const handleMove = useCallback(
-    (direction: "left" | "right") => {
-      handleKeydown({
-        key: direction === "left" ? "a" : "d",
-      });
-    },
-    [handleKeydown]
-  );
+  const handleKeydown = useCallback(({ key }: KeyboardEvent) => {
+    const isLeft = key === "a" || key === "ArrowLeft";
+    const isRight = key === "d" || key === "ArrowRight";
+
+    if (isLeft) setDirection("left");
+    if (isRight) setDirection("right");
+
+    setIsMoving(isLeft || isRight);
+  }, []);
+
+  const handleKeyup = useCallback(({ key }: KeyboardEvent) => {
+    if (
+      key === "a" ||
+      key === "ArrowLeft" ||
+      key === "d" ||
+      key === "ArrowRight"
+    ) {
+      setIsMoving(false);
+    }
+  }, []);
 
   const handleWakeup = useCallback(() => {
     setWakeup(true);
   }, []);
 
   useKeydown(handleKeydown);
+  useKeyup(handleKeyup);
 
   const [isReadScenario, setReadScenario] = useState(false);
   const [isReadSelectScenario, setReadSelectScenario] = useState(false);
