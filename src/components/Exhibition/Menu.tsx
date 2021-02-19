@@ -1,8 +1,8 @@
 import { css } from "@emotion/react";
 import { Howler } from "howler";
 import React, { useCallback, useEffect, useState } from "react";
+import { OkusuriLand } from "./Menu/OkusuriLand";
 import { Settings } from "./Menu/Settings";
-import { ExhibitionPopup } from "~/components/Exhibition/Popup";
 import { fadeIn, fadeOut } from "~/styles/animations";
 import { Colors } from "~/styles/colors";
 import { Mixin } from "~/styles/mixin";
@@ -44,12 +44,6 @@ const menuGroup = css`
 `;
 
 // Main
-
-const OkusuriLand: React.FC<{
-  onClose: () => void;
-}> = ({ onClose }) => {
-  return <ExhibitionPopup onClose={onClose}>Okusuri.land</ExhibitionPopup>;
-};
 
 const loadSettings = ():
   | Partial<{
