@@ -116,9 +116,13 @@ export const OkusuriLand: React.FC<{
         <div>
           <div className="flex">
             <div className="flex items-center">
-              <img css={profileIcon} alt="アイコン" src={patient.image} />
+              <img
+                css={profileIcon}
+                alt="アイコン"
+                src={patient.record.image}
+              />
               <div css={profileName}>
-                {patient.name}（@{patient.screenName}）
+                {patient.record.name}（@{patient.record.screenName}）
               </div>
             </div>
             <div className="flex ml-auto">

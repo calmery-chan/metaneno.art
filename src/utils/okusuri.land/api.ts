@@ -1,6 +1,6 @@
 import _axios from "axios";
 import { Credential } from "./authentication";
-import { Patient, Prescription } from "./types";
+import { Prescription, Patient } from "./types";
 
 // Axios
 
@@ -58,7 +58,7 @@ export const getPatient = async (token: string): Promise<Patient | null> => {
 
 export const postCredential = async (credential: Credential, token: string) => {
   const { data } = await axios.post<ApiResponse<Patient>>(
-    "/patients",
+    "/reception",
     {
       accessToken: credential.accessToken,
       accessTokenSecret: credential.secret,

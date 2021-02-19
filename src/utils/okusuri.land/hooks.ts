@@ -42,7 +42,6 @@ export const useOkusuriLand = () => {
       setBusy(true);
 
       const credential = await getCredential();
-
       setPatient(
         await (credential
           ? postCredential(credential, token)
