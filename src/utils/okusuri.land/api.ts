@@ -1,6 +1,6 @@
 import _axios from "axios";
 import { Credential } from "./authentication";
-import { Prescription, Patient } from "./types";
+import { Prescription, Patient, Department } from "./types";
 
 // Axios
 
@@ -45,6 +45,14 @@ export const examine = async (token: string, key: string, value: number) => {
   );
 
   return data.data.prescription;
+};
+
+export const getDepartment = async () => {
+  const { data } = await axios.get<ApiResponse<Department>>(
+    "/departments/ckksser080xz10a89ypu5ccjp"
+  );
+
+  return data.data;
 };
 
 export const getPatient = async (token: string): Promise<Patient | null> => {

@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
-import { examine, getPatient, postCredential } from "./api";
+import { Sentry } from "../sentry";
+import { examine, getDepartment, getPatient, postCredential } from "./api";
 import {
   firebase,
   getCredential,
@@ -7,13 +8,15 @@ import {
   logIn,
   logOut,
 } from "./authentication";
-import { Patient } from "./types";
+import { Disease, PatientRecord } from "./types";
 
 // Main
 
 export const useOkusuriLand = () => {
   const [busy, setBusy] = useState(true);
-  const [patient, setPatient] = useState<Patient | null>(null);
+  const [diseases, setDiseases] = useState<Disease[]>([]);
+  const [error, setError] = useState<Error>();
+  const [record, setRecord] = useState<PatientRecord | null>(null);
   const [token, setToken] = useState<string | null>(null);
 
   // Side Effects
@@ -22,7 +25,7 @@ export const useOkusuriLand = () => {
     firebase.auth().onAuthStateChanged(async (user: firebase.User | null) => {
       if (!user) {
         setBusy(false);
-        setPatient(null);
+        setRecord(null);
         setToken(null);
         return;
       }
@@ -34,26 +37,43 @@ export const useOkusuriLand = () => {
 
   useEffect(() => {
     if (!token) {
-      setPatient(null);
+      setRecord(null);
       return;
     }
 
     (async () => {
-      setBusy(true);
+      try {
+        setBusy(true);
 
-      const credential = await getCredential();
-      setPatient(
-        await (credential
+        const credential = await getCredential();
+        const department = await getDepartment();
+        const patient = (await (credential
           ? postCredential(credential, token)
-          : getPatient(token))
-      );
+          : getPatient(token)))!;
 
-      setBusy(false);
+        const diseaseIds = patient.diseases
+          .filter(({ departmentId }) => departmentId === department.id)
+          .map(({ diseaseId }) => diseaseId);
+
+        const diseases = department.diseases.filter(({ id }) =>
+          diseaseIds.includes(id)
+        );
+
+        setDiseases(diseases);
+        setRecord(patient.record);
+      } catch (error) {
+        Sentry.captureException(error);
+        setError(error);
+      } finally {
+        setBusy(false);
+      }
     })();
   }, [token]);
 
   return {
     busy,
+    diseases,
+    error,
     examine: useCallback(
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       (key: string, value: number) => examine(token!, key, value),
@@ -61,6 +81,6 @@ export const useOkusuriLand = () => {
     ),
     logIn,
     logOut,
-    patient,
+    record,
   };
 };
