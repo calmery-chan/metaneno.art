@@ -16,6 +16,8 @@ const background = css`
 const body = css`
   max-height: 768px;
   max-width: 1024px;
+  min-height: 0;
+  min-width: 0;
   padding: ${Spacing.m}px;
 `;
 
@@ -33,13 +35,20 @@ const header = css`
   margin-bottom: ${Spacing.s}px;
 `;
 
+const labelIcon = css`
+  height: 20px;
+  image-rendering: crisp-edges;
+  margin-right: ${Spacing.s}px;
+`;
+
 // Main
 
 export const ExhibitionPopup = React.memo<{
   children: React.ReactNode;
+  icon?: string;
   label?: string;
   onClose: () => void;
-}>(({ children, label, onClose }) => {
+}>(({ children, icon, label, onClose }) => {
   const [isVisible, setIsVisible] = useState(true);
 
   // Events
@@ -75,12 +84,15 @@ export const ExhibitionPopup = React.memo<{
         `}
       >
         <div className="flex items-center" css={header}>
-          <div css={Typography.L}>{label}</div>
+          <div className="flex" css={Typography.L}>
+            {icon && <img alt="アイコン" css={labelIcon} src={icon} />}
+            {label}
+          </div>
           <div className="ml-auto" css={close} onClick={handleClickCloseButton}>
             <img src="/exhibition/close.svg" />
           </div>
         </div>
-        <div className="flex-grow">{children}</div>
+        <div className="flex-grow overflow-scroll relative">{children}</div>
       </div>
     </div>
   );
