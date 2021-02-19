@@ -130,11 +130,7 @@ export const OkusuriLand: React.FC<{
                 rel="noreferrer"
                 target="_blank"
               >
-                <div
-                  className="bg-blue-400"
-                  css={myPageButton}
-                  onClick={logOut}
-                >
+                <div className="bg-blue-400" css={myPageButton}>
                   マイページ
                 </div>
               </a>
