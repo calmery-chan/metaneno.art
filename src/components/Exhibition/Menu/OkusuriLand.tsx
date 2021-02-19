@@ -124,9 +124,7 @@ export const OkusuriLand: React.FC<{
             <div className="flex ml-auto">
               <a
                 className="text-center"
-                href={`https://okusuri.land/${
-                  patient ? `~${patient.screenName}/index.htm` : ""
-                }`}
+                href="https://okusuri.land/okusuri.htm"
                 rel="noreferrer"
                 target="_blank"
               >
