@@ -1,6 +1,6 @@
 import React from "react";
-import { Exhibition2dNight } from "~/components/Exhibition/2d/Night";
+import { Exhibition2dMorning } from "~/components/Exhibition/2d/Morning";
 
-const ExhibitionIndex = () => <Exhibition2dNight />;
+const ExhibitionIndex = () => <Exhibition2dMorning />;
 
 export default ExhibitionIndex;
