@@ -1,6 +1,7 @@
 import { css } from "@emotion/react";
 import { Howler } from "howler";
 import { ChangeEvent, useCallback, useState } from "react";
+import { ExhibitionPopup } from "~/components/Exhibition/Popup";
 import { Colors } from "~/styles/colors";
 import { Mixin } from "~/styles/mixin";
 import { Spacing } from "~/styles/spacing";
@@ -141,10 +142,7 @@ export const ExhibitionMenu: React.FC = () => {
 
   if (isOpenSettings) {
     return (
-      <div
-        className="bg-white bottom-0 fixed flex flex-col h-full left-0 right-0 top-0 w-full"
-        css={container}
-      >
+      <ExhibitionPopup onClose={handleClickCloseSettings}>
         <div className="flex items-center w-full" css={header}>
           <div css={title}>設定</div>
           <div
@@ -163,7 +161,7 @@ export const ExhibitionMenu: React.FC = () => {
             type="range"
           />
         </div>
-      </div>
+      </ExhibitionPopup>
     );
   }
 
