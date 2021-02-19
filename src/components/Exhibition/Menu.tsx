@@ -60,7 +60,7 @@ const title = css`
 
 // Main
 
-export const ExhibitionSettings: React.FC = () => {
+export const ExhibitionMenu: React.FC = () => {
   const [currentAudioVolume, setCurrentAudioVolume] = useState(Howler.volume());
   const [isMuteAudio, setIsMuteAudio] = useState(false);
   const [isOpenOkusuriLand, setIsOpenOkusuriLand] = useState(false);

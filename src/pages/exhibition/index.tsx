@@ -1,11 +1,11 @@
 import React from "react";
 import { Exhibition2dNight } from "~/components/Exhibition/2d/Night";
-import { ExhibitionSettings } from "~/components/Exhibition/Settings";
+import { ExhibitionMenu } from "~/components/Exhibition/Menu";
 
 const ExhibitionIndex = () => (
   <>
     <Exhibition2dNight />
-    <ExhibitionSettings />
+    <ExhibitionMenu />
   </>
 );
 
