@@ -18,14 +18,24 @@ const header = css`
 `;
 
 const menu = css`
+  right: ${Spacing.m}px;
+  top: ${Spacing.m}px;
+`;
+
+const menuGroup = css`
   ${Mixin.animation};
 
   background: ${Colors.blackTransparent};
-  opacity: 0.48;
   border-radius: 2px;
+  margin-left: ${Spacing.s}px;
+  opacity: 0.48;
   padding: ${Spacing.xs}px ${Spacing.s}px;
   right: ${Spacing.m}px;
   top: ${Spacing.m}px;
+
+  &:first-child {
+    margin-left: 0;
+  }
 
   &:hover {
     opacity: 1;
@@ -50,7 +60,7 @@ const title = css`
 
 // Main
 
-export const ExhibitionSettings: React.FC = () => {
+export const ExhibitionSettings: React.FC<{}> = () => {
   const [currentAudioVolume, setCurrentAudioVolume] = useState(Howler.volume());
   const [isMuteAudio, setIsMuteAudio] = useState(false);
   const [isOpenSettings, setIsOpenSettings] = useState(false);
@@ -84,21 +94,35 @@ export const ExhibitionSettings: React.FC = () => {
     setIsOpenSettings(true);
   }, []);
 
+  const handleClickScreenshot = useCallback(() => {
+    console.log("Screenshot");
+  }, []);
+
   // Render
 
   if (!isOpenSettings) {
     return (
       <div className="fixed flex" css={menu}>
-        <img
-          alt="音量"
-          onClick={handleClickMuteAudioToggle}
-          src={`/exhibition/audio-${isMuteAudio ? "off" : "on"}.svg`}
-        />
-        <img
-          alt="設定"
-          onClick={handleClickOpenSettings}
-          src="/exhibition/settings.svg"
-        />
+        <div className="flex" css={menuGroup}>
+          <img
+            alt="スクリーンショット"
+            onClick={handleClickScreenshot}
+            src="/exhibition/camera.svg"
+          />
+        </div>
+
+        <div className="flex" css={menuGroup}>
+          <img
+            alt="音量"
+            onClick={handleClickMuteAudioToggle}
+            src={`/exhibition/audio-${isMuteAudio ? "off" : "on"}.svg`}
+          />
+          <img
+            alt="設定"
+            onClick={handleClickOpenSettings}
+            src="/exhibition/settings.svg"
+          />
+        </div>
       </div>
     );
   }
