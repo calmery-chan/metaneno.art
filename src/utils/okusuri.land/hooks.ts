@@ -1,10 +1,11 @@
 import { useCallback, useEffect, useState } from "react";
 import { examine, getPatient, postCredential } from "./api";
 import {
-  authenticate,
   firebase,
   getCredential,
   getToken,
+  logIn,
+  logOut,
 } from "./authentication";
 import { Patient } from "./types";
 
@@ -51,13 +52,14 @@ export const useOkusuriLand = () => {
   }, [token]);
 
   return {
-    authenticate,
     busy,
     examine: useCallback(
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       (key: string, value: number) => examine(token!, key, value),
       [token]
     ),
+    logIn,
+    logOut,
     patient,
   };
 };

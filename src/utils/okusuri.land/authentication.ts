@@ -19,13 +19,19 @@ export type Credential = {
 
 // Functions
 
-export const authenticate = () => {
-  firebase.auth().signInWithRedirect(new firebase.auth.TwitterAuthProvider());
-};
-
 export const getCredential = async () =>
   (await firebase.auth().getRedirectResult()).credential as Credential | null;
 
 export const getToken = async (user: firebase.User) => await user.getIdToken();
+
+export const logIn = async () => {
+  await firebase
+    .auth()
+    .signInWithRedirect(new firebase.auth.TwitterAuthProvider());
+};
+
+export const logOut = async () => {
+  await firebase.auth().signOut();
+};
 
 export { firebase };

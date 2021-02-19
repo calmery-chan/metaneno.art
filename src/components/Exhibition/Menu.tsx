@@ -5,6 +5,7 @@ import { Colors } from "~/styles/colors";
 import { Mixin } from "~/styles/mixin";
 import { Spacing } from "~/styles/spacing";
 import { Typography } from "~/styles/typography";
+import { useOkusuriLand } from "~/utils/okusuri.land";
 
 // Styles
 
@@ -60,7 +61,18 @@ const title = css`
 
 // Main
 
+const OkusuriLand: React.FC = () => {
+  const { logIn, logOut, patient } = useOkusuriLand();
+
+  if (!patient) {
+    return <>Login</>;
+  }
+
+  return <>{patient.name}</>;
+};
+
 export const ExhibitionMenu: React.FC = () => {
+  const { patient } = useOkusuriLand();
   const [currentAudioVolume, setCurrentAudioVolume] = useState(Howler.volume());
   const [isMuteAudio, setIsMuteAudio] = useState(false);
   const [isOpenOkusuriLand, setIsOpenOkusuriLand] = useState(false);
@@ -120,7 +132,9 @@ export const ExhibitionMenu: React.FC = () => {
             <img src="/exhibition/close.svg" alt="閉じる" />
           </div>
         </div>
-        <div className="overflow-scroll">okusuri.land</div>
+        <div className="overflow-scroll">
+          <OkusuriLand />
+        </div>
       </div>
     );
   }
