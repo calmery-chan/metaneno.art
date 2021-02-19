@@ -60,9 +60,10 @@ const title = css`
 
 // Main
 
-export const ExhibitionSettings: React.FC<{}> = () => {
+export const ExhibitionSettings: React.FC = () => {
   const [currentAudioVolume, setCurrentAudioVolume] = useState(Howler.volume());
   const [isMuteAudio, setIsMuteAudio] = useState(false);
+  const [isOpenOkusuriLand, setIsOpenOkusuriLand] = useState(false);
   const [isOpenSettings, setIsOpenSettings] = useState(false);
 
   // Events
@@ -86,41 +87,66 @@ export const ExhibitionSettings: React.FC<{}> = () => {
     setIsMuteAudio(!isMuteAudio);
   }, [currentAudioVolume, isMuteAudio]);
 
+  const handleClickCloseOkusuriLand = useCallback(() => {
+    setIsOpenOkusuriLand(false);
+  }, []);
+
   const handleClickCloseSettings = useCallback(() => {
     setIsOpenSettings(false);
+  }, []);
+
+  const handleClickOpenOkusuriLand = useCallback(() => {
+    setIsOpenOkusuriLand(true);
   }, []);
 
   const handleClickOpenSettings = useCallback(() => {
     setIsOpenSettings(true);
   }, []);
 
-  const handleClickScreenshot = useCallback(() => {
-    console.log("Screenshot");
-  }, []);
-
   // Render
 
-  if (!isOpenSettings) {
+  if (isOpenOkusuriLand) {
     return (
-      <div className="fixed flex" css={menu}>
-        <div className="flex" css={menuGroup}>
-          <img
-            alt="スクリーンショット"
-            onClick={handleClickScreenshot}
-            src="/exhibition/camera.svg"
-          />
+      <div
+        className="bg-white bottom-0 fixed flex flex-col h-full left-0 right-0 top-0 w-full"
+        css={container}
+      >
+        <div className="flex items-center w-full" css={header}>
+          <div css={title}>おくすりランド</div>
+          <div
+            className="cursor-pointer ml-auto"
+            onClick={handleClickCloseOkusuriLand}
+          >
+            <img src="/exhibition/close.svg" alt="閉じる" />
+          </div>
         </div>
+        <div className="overflow-scroll">okusuri.land</div>
+      </div>
+    );
+  }
 
-        <div className="flex" css={menuGroup}>
-          <img
-            alt="音量"
-            onClick={handleClickMuteAudioToggle}
-            src={`/exhibition/audio-${isMuteAudio ? "off" : "on"}.svg`}
-          />
-          <img
-            alt="設定"
-            onClick={handleClickOpenSettings}
-            src="/exhibition/settings.svg"
+  if (isOpenSettings) {
+    return (
+      <div
+        className="bg-white bottom-0 fixed flex flex-col h-full left-0 right-0 top-0 w-full"
+        css={container}
+      >
+        <div className="flex items-center w-full" css={header}>
+          <div css={title}>設定</div>
+          <div
+            className="cursor-pointer ml-auto"
+            onClick={handleClickCloseSettings}
+          >
+            <img src="/exhibition/close.svg" alt="閉じる" />
+          </div>
+        </div>
+        <div className="overflow-scroll">
+          <input
+            max="1"
+            min="0"
+            onChange={handleChangeAudioVolume}
+            step="0.1"
+            type="range"
           />
         </div>
       </div>
@@ -128,26 +154,25 @@ export const ExhibitionSettings: React.FC<{}> = () => {
   }
 
   return (
-    <div
-      className="bg-white bottom-0 fixed flex flex-col h-full left-0 right-0 top-0 w-full"
-      css={container}
-    >
-      <div className="flex items-center w-full" css={header}>
-        <div css={title}>設定</div>
-        <div
-          className="cursor-pointer ml-auto"
-          onClick={handleClickCloseSettings}
-        >
-          <img src="/exhibition/close.svg" alt="閉じる" />
-        </div>
+    <div className="fixed flex" css={menu}>
+      <div className="flex" css={menuGroup}>
+        <img
+          alt="おくすりランド"
+          onClick={handleClickOpenOkusuriLand}
+          src="/exhibition/book.svg"
+        />
       </div>
-      <div className="overflow-scroll">
-        <input
-          max="1"
-          min="0"
-          onChange={handleChangeAudioVolume}
-          step="0.1"
-          type="range"
+
+      <div className="flex" css={menuGroup}>
+        <img
+          alt="音量"
+          onClick={handleClickMuteAudioToggle}
+          src={`/exhibition/audio-${isMuteAudio ? "off" : "on"}.svg`}
+        />
+        <img
+          alt="設定"
+          onClick={handleClickOpenSettings}
+          src="/exhibition/settings.svg"
         />
       </div>
     </div>
