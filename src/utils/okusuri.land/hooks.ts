@@ -12,7 +12,7 @@ import { Patient } from "./types";
 // Main
 
 export const useOkusuriLand = () => {
-  const [busy, setBusy] = useState(false);
+  const [busy, setBusy] = useState(true);
   const [patient, setPatient] = useState<Patient | null>(null);
   const [token, setToken] = useState<string | null>(null);
 
@@ -21,12 +21,14 @@ export const useOkusuriLand = () => {
   useEffect(() => {
     firebase.auth().onAuthStateChanged(async (user: firebase.User | null) => {
       if (!user) {
+        setBusy(false);
         setPatient(null);
         setToken(null);
         return;
       }
 
       setToken(await getToken(user));
+      setBusy(false);
     });
   }, []);
 
