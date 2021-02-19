@@ -37,8 +37,9 @@ const header = css`
 
 export const ExhibitionPopup = React.memo<{
   children: React.ReactNode;
+  label?: string;
   onClose: () => void;
-}>(({ children, onClose }) => {
+}>(({ children, label, onClose }) => {
   const [isVisible, setIsVisible] = useState(true);
 
   // Events
@@ -74,7 +75,7 @@ export const ExhibitionPopup = React.memo<{
         `}
       >
         <div className="flex items-center" css={header}>
-          <div css={Typography.L}>Title</div>
+          <div css={Typography.L}>{label}</div>
           <div className="ml-auto" css={close} onClick={handleClickCloseButton}>
             <img src="/exhibition/close.svg" />
           </div>

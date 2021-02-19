@@ -1,16 +1,12 @@
 import { css } from "@emotion/react";
 import { Howler } from "howler";
-import React, { ChangeEvent, useCallback, useState } from "react";
+import React, { useCallback, useState } from "react";
+import { Settings } from "./Menu/Settings";
 import { ExhibitionPopup } from "~/components/Exhibition/Popup";
 import { fadeIn, fadeOut } from "~/styles/animations";
 import { Colors } from "~/styles/colors";
 import { Mixin } from "~/styles/mixin";
 import { Spacing } from "~/styles/spacing";
-import { Typography } from "~/styles/typography";
-
-const header = css`
-  margin-bottom: ${Spacing.s}px;
-`;
 
 const menu = css`
   right: ${Spacing.m}px;
@@ -47,12 +43,6 @@ const menuGroup = css`
   }
 `;
 
-const title = css`
-  ${Typography.L};
-
-  font-weight: bold;
-`;
-
 // Main
 
 const OkusuriLand: React.FC<{
@@ -61,49 +51,12 @@ const OkusuriLand: React.FC<{
   return <ExhibitionPopup onClose={onClose}>Okusuri.land</ExhibitionPopup>;
 };
 
-const Settings: React.FC<{
-  currentAudioVolume: number;
-  onChangeAudioVolume: (audioVolume: number) => void;
-  onClose: () => void;
-}> = ({ currentAudioVolume, onClose, onChangeAudioVolume }) => {
-  const handleChangeAudioVolume = useCallback(
-    (event: ChangeEvent<HTMLInputElement>) => {
-      const audioVolume = parseFloat(event.currentTarget.value);
-
-      if (audioVolume < 0 || 1 < audioVolume) {
-        return;
-      }
-
-      onChangeAudioVolume(audioVolume);
-    },
-    []
-  );
-
-  return (
-    <ExhibitionPopup onClose={onClose}>
-      <div className="flex items-center w-full" css={header}>
-        <div css={title}>設定</div>
-        <div className="cursor-pointer ml-auto" onClick={onClose}>
-          <img src="/exhibition/close.svg" alt="閉じる" />
-        </div>
-      </div>
-      <div className="overflow-scroll">
-        <input
-          defaultValue={currentAudioVolume}
-          max="1"
-          min="0"
-          onChange={handleChangeAudioVolume}
-          step="0.1"
-          type="range"
-        />
-      </div>
-    </ExhibitionPopup>
-  );
-};
-
 export const ExhibitionMenu: React.FC = () => {
   const [currentAudioVolume, setCurrentAudioVolume] = useState(Howler.volume());
-  const [isMuteAudio, setIsMuteAudio] = useState(false);
+  const [currentGraphics, setCurrentGraphics] = useState<
+    "high" | "low" | "middle"
+  >("high");
+  const [muted, setMuted] = useState(false);
   const [isOpenOkusuriLand, setIsOpenOkusuriLand] = useState(false);
   const [isOpenSettings, setIsOpenSettings] = useState(false);
 
@@ -114,10 +67,17 @@ export const ExhibitionMenu: React.FC = () => {
     setCurrentAudioVolume(audioVolume);
   }, []);
 
+  const handleChangeGraphics = useCallback(
+    (graphics: "high" | "low" | "middle") => {
+      setCurrentGraphics(graphics);
+    },
+    []
+  );
+
   const handleClickMuteAudioToggle = useCallback(() => {
-    Howler.volume(isMuteAudio ? currentAudioVolume : 0);
-    setIsMuteAudio(!isMuteAudio);
-  }, [currentAudioVolume, isMuteAudio]);
+    Howler.volume(muted ? currentAudioVolume : 0);
+    setMuted(!muted);
+  }, [currentAudioVolume, muted]);
 
   const handleCloseOkusuriLand = useCallback(
     () => setIsOpenOkusuriLand(false),
@@ -154,12 +114,11 @@ export const ExhibitionMenu: React.FC = () => {
             src="/exhibition/book.svg"
           />
         </div>
-
         <div className="flex" css={menuGroup}>
           <img
             alt="音量"
             onClick={handleClickMuteAudioToggle}
-            src={`/exhibition/audio-${isMuteAudio ? "off" : "on"}.svg`}
+            src={`/exhibition/audio-${muted ? "off" : "on"}.svg`}
           />
           <img
             alt="設定"
@@ -172,7 +131,11 @@ export const ExhibitionMenu: React.FC = () => {
       {isOpenSettings && (
         <Settings
           currentAudioVolume={currentAudioVolume}
+          currentGraphics={currentGraphics}
+          muted={muted}
           onChangeAudioVolume={handleChangeAudioVolume}
+          onChangeGraphics={handleChangeGraphics}
+          onClickMuteToggle={handleClickMuteAudioToggle}
           onClose={handleCloseSettings}
         />
       )}
