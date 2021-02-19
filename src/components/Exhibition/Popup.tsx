@@ -143,7 +143,7 @@ export const ExhibitionPopup = React.memo<{
 
     setTimeout(() => {
       onClose();
-    }, Mixin.ANIMATION_DURATION.seconds);
+    }, Mixin.ANIMATION_DURATION.milliseconds);
   }, [onClose]);
 
   // Render
@@ -151,14 +151,14 @@ export const ExhibitionPopup = React.memo<{
   return (
     <>
       <div
-        className="fixed h-full w-full"
+        className="bottom-0 fixed h-full left-0 right-0 top-0 w-full"
         css={css`
           ${background};
           ${isVisible ? fadeIn : fadeOut}
         `}
       />
       <div
-        className="fixed grid h-full place-items-center w-full"
+        className="bottom-0 fixed grid h-full left-0 place-items-center right-0 top-0 w-full"
         css={css`
           ${container};
           ${isVisible ? bounceIn : bounceOut}
