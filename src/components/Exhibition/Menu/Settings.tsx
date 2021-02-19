@@ -46,18 +46,18 @@ const GroupTitle: React.FC<{ children: string }> = ({ children }) => (
 
 export const Settings: React.FC<{
   currentAudioVolume: number;
-  currentGraphics: "high" | "low" | "middle";
+  currentGraphicsQuality: "high" | "low" | "middle";
   muted: boolean;
   onChangeAudioVolume: (audioVolume: number) => void;
-  onChangeGraphics: (graphics: "high" | "low" | "middle") => void;
+  onChangeGraphicsQuality: (graphics: "high" | "low" | "middle") => void;
   onClickMuteToggle: () => void;
   onClose: () => void;
 }> = ({
   currentAudioVolume,
-  currentGraphics,
+  currentGraphicsQuality,
   muted,
   onChangeAudioVolume,
-  onChangeGraphics,
+  onChangeGraphicsQuality,
   onClickMuteToggle,
   onClose,
 }) => {
@@ -82,9 +82,9 @@ export const Settings: React.FC<{
         return;
       }
 
-      onChangeGraphics(graphics);
+      onChangeGraphicsQuality(graphics);
     },
-    [onChangeGraphics]
+    [onChangeGraphicsQuality]
   );
 
   return (
@@ -117,7 +117,7 @@ export const Settings: React.FC<{
         <GroupTitle>画質</GroupTitle>
         <select
           css={Typography.M}
-          defaultValue={currentGraphics}
+          defaultValue={currentGraphicsQuality}
           onChange={handleChangeGraphics}
         >
           <option value="low">低</option>

@@ -1,6 +1,6 @@
 import { css } from "@emotion/react";
 import { Howler } from "howler";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Settings } from "./Menu/Settings";
 import { ExhibitionPopup } from "~/components/Exhibition/Popup";
 import { fadeIn, fadeOut } from "~/styles/animations";
@@ -51,9 +51,48 @@ const OkusuriLand: React.FC<{
   return <ExhibitionPopup onClose={onClose}>Okusuri.land</ExhibitionPopup>;
 };
 
+const loadSettings = ():
+  | Partial<{
+      audioVolume: number;
+      graphicsQuality: string;
+      muted: boolean;
+    }>
+  | undefined => {
+  const string = localStorage.getItem("exhibition-settings");
+
+  if (!string) {
+    return;
+  }
+
+  try {
+    const json = JSON.parse(string);
+    return json;
+  } catch (_) {
+    return;
+  }
+};
+
+const saveSettings = (
+  value: Partial<{
+    audioVolume: number;
+    graphicsQuality: string;
+    muted: boolean;
+  }>
+) => {
+  const json = loadSettings() || {};
+
+  localStorage.setItem(
+    "exhibition-settings",
+    JSON.stringify({
+      ...json,
+      ...value,
+    })
+  );
+};
+
 export const ExhibitionMenu: React.FC = () => {
   const [currentAudioVolume, setCurrentAudioVolume] = useState(Howler.volume());
-  const [currentGraphics, setCurrentGraphics] = useState<
+  const [currentGraphicsQuality, setCurrentGraphicsQuality] = useState<
     "high" | "low" | "middle"
   >("high");
   const [muted, setMuted] = useState(false);
@@ -64,18 +103,21 @@ export const ExhibitionMenu: React.FC = () => {
 
   const handleChangeAudioVolume = useCallback((audioVolume: number) => {
     Howler.volume(audioVolume);
+    saveSettings({ audioVolume });
     setCurrentAudioVolume(audioVolume);
   }, []);
 
-  const handleChangeGraphics = useCallback(
-    (graphics: "high" | "low" | "middle") => {
-      setCurrentGraphics(graphics);
+  const handleChangeGraphicsQuality = useCallback(
+    (graphicsQuality: "high" | "low" | "middle") => {
+      saveSettings({ graphicsQuality });
+      setCurrentGraphicsQuality(graphicsQuality);
     },
     []
   );
 
   const handleClickMuteAudioToggle = useCallback(() => {
     Howler.volume(muted ? currentAudioVolume : 0);
+    saveSettings({ muted });
     setMuted(!muted);
   }, [currentAudioVolume, muted]);
 
@@ -95,6 +137,35 @@ export const ExhibitionMenu: React.FC = () => {
     () => setIsOpenSettings(true),
     []
   );
+
+  // Side Effects
+
+  useEffect(() => {
+    const settings = loadSettings();
+
+    if (!settings) {
+      return;
+    }
+
+    const { audioVolume, graphicsQuality, muted } = settings;
+
+    if (audioVolume && !isNaN(audioVolume)) {
+      setCurrentAudioVolume(audioVolume);
+    }
+
+    if (
+      graphicsQuality &&
+      (graphicsQuality === "high" ||
+        graphicsQuality === "low" ||
+        graphicsQuality === "middle")
+    ) {
+      setCurrentGraphicsQuality(graphicsQuality);
+    }
+
+    if (muted) {
+      setMuted(!!muted);
+    }
+  }, []);
 
   // Render
 
@@ -131,10 +202,10 @@ export const ExhibitionMenu: React.FC = () => {
       {isOpenSettings && (
         <Settings
           currentAudioVolume={currentAudioVolume}
-          currentGraphics={currentGraphics}
+          currentGraphicsQuality={currentGraphicsQuality}
           muted={muted}
           onChangeAudioVolume={handleChangeAudioVolume}
-          onChangeGraphics={handleChangeGraphics}
+          onChangeGraphicsQuality={handleChangeGraphicsQuality}
           onClickMuteToggle={handleClickMuteAudioToggle}
           onClose={handleCloseSettings}
         />
