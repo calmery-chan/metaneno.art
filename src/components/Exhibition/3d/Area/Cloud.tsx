@@ -6,7 +6,9 @@ import { Exhibition3dCanvas } from "../Canvas";
 import { Exhibition3dCanvasObjects } from "../Objects";
 import { Exhibition3dPlayer } from "../Player";
 import { Exhibition3dRenderer } from "../Renderer";
+import cloud from "./cloud.json";
 import { objects } from "~/data/cloud.json";
+import { useAudio } from "~/hooks/useAudio";
 import { GraphicsQuality } from "~/types/exhibition";
 import { preload } from "~/utils/exhibition";
 import { Sentry } from "~/utils/sentry";
@@ -49,9 +51,20 @@ export const Exhibition3dAreaCloud: React.FC<{ quality: GraphicsQuality }> = ({
   quality,
 }) => {
   const [ready, setReady] = useState(false);
+  const { audio } = useAudio(cloud.sound.url, { loop: true });
   // const { objects } = useObjects("meadow");
 
   // Side Effects
+
+  useEffect(() => {
+    if (audio && objects && ready) {
+      audio.play();
+
+      return () => {
+        audio.stop();
+      };
+    }
+  }, [audio, objects, ready]);
 
   useEffect(() => {
     if (!objects) return;

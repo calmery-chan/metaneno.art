@@ -148,6 +148,7 @@ export const ExhibitionMenu: React.FC<{
     const { audioVolume, graphicsQuality, muted } = settings;
 
     if (audioVolume && !isNaN(audioVolume)) {
+      Howler.volume(audioVolume);
       setCurrentAudioVolume(audioVolume);
     }
 
@@ -162,6 +163,7 @@ export const ExhibitionMenu: React.FC<{
     }
 
     if (muted) {
+      Howler.volume(0);
       setMuted(!!muted);
     }
   }, []);
