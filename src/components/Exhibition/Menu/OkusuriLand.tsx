@@ -118,9 +118,11 @@ export const OkusuriLand: React.FC<{
         />
       </div>
       {error && (
-        <div>おくすりランドでエラーが発生しました！（{error.message}）</div>
+        <div className="text-center">
+          おくすりランドでエラーが発生しました！（{error.message}）
+        </div>
       )}
-      {!busy && record && (
+      {!error && !busy && record && (
         <div>
           <div className="flex">
             <div className="flex items-center">
@@ -164,7 +166,7 @@ export const OkusuriLand: React.FC<{
           ))}
         </div>
       )}
-      {!busy && !record && (
+      {!error && !busy && !record && (
         <div className="grid place-items-center">
           <div className="flex" css={loginButton} onClick={logIn}>
             <img src="/exhibition/okusuri.land/twitter.svg" />
