@@ -7,6 +7,7 @@ import { fadeIn, fadeOut } from "~/styles/animations";
 import { Colors } from "~/styles/colors";
 import { Mixin } from "~/styles/mixin";
 import { Spacing } from "~/styles/spacing";
+import { GraphicsQuality } from "~/types/exhibition";
 
 const menu = css`
   right: ${Spacing.m}px;
@@ -84,7 +85,9 @@ const saveSettings = (
   );
 };
 
-export const ExhibitionMenu: React.FC = () => {
+export const ExhibitionMenu: React.FC<{
+  onChangeGraphicsQuality: (quality: GraphicsQuality) => void;
+}> = ({ onChangeGraphicsQuality }) => {
   const [currentAudioVolume, setCurrentAudioVolume] = useState(Howler.volume());
   const [currentGraphicsQuality, setCurrentGraphicsQuality] = useState<
     "high" | "low" | "middle"
@@ -103,10 +106,11 @@ export const ExhibitionMenu: React.FC = () => {
 
   const handleChangeGraphicsQuality = useCallback(
     (graphicsQuality: "high" | "low" | "middle") => {
+      onChangeGraphicsQuality(graphicsQuality);
       saveSettings({ graphicsQuality });
       setCurrentGraphicsQuality(graphicsQuality);
     },
-    []
+    [onChangeGraphicsQuality]
   );
 
   const handleClickMuteAudioToggle = useCallback(() => {
@@ -153,6 +157,7 @@ export const ExhibitionMenu: React.FC = () => {
         graphicsQuality === "low" ||
         graphicsQuality === "middle")
     ) {
+      onChangeGraphicsQuality(graphicsQuality);
       setCurrentGraphicsQuality(graphicsQuality);
     }
 
