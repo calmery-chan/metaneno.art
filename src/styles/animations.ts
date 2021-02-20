@@ -62,6 +62,18 @@ const fadeInKeyframes = keyframes`
   }
 `;
 
+const fadeInUpKeyframes = keyframes`
+  from {
+  opacity: 0;
+  transform: translate3d(0, 100%, 0);
+  }
+
+  to {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+  }
+`;
+
 const fadeOutKeyframes = keyframes`
   from {
     opacity: 1;
@@ -69,6 +81,17 @@ const fadeOutKeyframes = keyframes`
 
   to {
     opacity: 0;
+  }
+`;
+
+const fadeOutDownKeyframes = keyframes`
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+    transform: translate3d(0, 100%, 0);
   }
 `;
 
@@ -89,7 +112,17 @@ export const fadeIn = css`
     forwards;
 `;
 
+export const fadeInUp = css`
+  animation: ${fadeInUpKeyframes} ${Mixin.ANIMATION_DURATION.seconds}s ease
+    forwards;
+`;
+
 export const fadeOut = css`
   animation: ${fadeOutKeyframes} ${Mixin.ANIMATION_DURATION.seconds}s ease
+    forwards;
+`;
+
+export const fadeOutDown = css`
+  animation: ${fadeOutDownKeyframes} ${Mixin.ANIMATION_DURATION.seconds}s ease
     forwards;
 `;
