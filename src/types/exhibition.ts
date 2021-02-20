@@ -24,7 +24,7 @@ export type Area = {
     characters: AreaObject[];
     colliders: AreaObject[];
     decorations: AreaObject[];
-    illustrations: AreaIllustrationObject[];
+    works: AreaWorkObject[];
   };
   player: {
     defaultPosition: Transform;
@@ -55,7 +55,7 @@ export type AreaObject = {
   url: string;
 };
 
-export type AreaIllustrationObject = AreaObject & {
+export type AreaWorkObject = AreaObject & {
   id: string;
   image: {
     url: string;

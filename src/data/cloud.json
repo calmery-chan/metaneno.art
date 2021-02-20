@@ -247,7 +247,7 @@
         "url": "http://localhost:8000/objects/areas/cloud/terrain.glb"
       }
     ],
-    "illustrations": [
+    "works": [
       {
         "id": "calmery_chan",
         "image": { "url": "/og.png" },

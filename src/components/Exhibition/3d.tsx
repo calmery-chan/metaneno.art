@@ -5,7 +5,7 @@ import { Exhibition3dFog } from "./3d/Fog";
 import { Exhibition3dLights } from "./3d/Lights";
 import { Exhibition3dObjectsCharacters } from "./3d/Objects/Characters";
 import { Exhibition3dObjectsDecorations } from "./3d/Objects/Decorations";
-import { Exhibition3dObjectsIllustrations } from "./3d/Objects/Illustrations";
+import { Exhibition3dObjectsWorks } from "./3d/Objects/Works";
 import { Exhibition3dPlayer } from "./3d/Player";
 import { Exhibition3dRenderer } from "./3d/Renderer";
 import { Exhibition3dWork } from "./3d/Work";
@@ -34,11 +34,13 @@ export const Exhibition3d: React.FC<{
   useEffect(() => {
     setReady(false);
 
+    console.log(area.objects);
+
     const objects = [
       ...area.objects.characters,
       ...area.objects.colliders,
       ...area.objects.decorations,
-      ...area.objects.illustrations,
+      ...area.objects.works,
     ];
 
     (async () => {
@@ -76,14 +78,19 @@ export const Exhibition3d: React.FC<{
         <Exhibition3dLights {...area.lights} />
         <Exhibition3dObjectsCharacters objects={area.objects.characters} />
         <Exhibition3dObjectsDecorations objects={area.objects.decorations} />
-        <Exhibition3dObjectsIllustrations
-          objects={area.objects.illustrations}
+        <Exhibition3dObjectsWorks
+          objects={area.objects.works}
           onClick={setWorkId}
         />
         <Exhibition3dPlayer {...area.player} operable={!workId} />
         <Exhibition3dRenderer graphicsQuality={settings.graphicsQuality} />
       </Exhibition3dCanvas>
-      {workId && <Exhibition3dWork graphicsQuality={settings.graphicsQuality} onClose={handleCloseWork} />}
+      {workId && (
+        <Exhibition3dWork
+          graphicsQuality={settings.graphicsQuality}
+          onClose={handleCloseWork}
+        />
+      )}
     </>
   );
 };
