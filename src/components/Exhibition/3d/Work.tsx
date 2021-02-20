@@ -108,7 +108,7 @@ export const Exhibition3dWork = React.memo<{ onClose: () => void }>(
 
       setTimeout(() => {
         onClose();
-      }, Mixin.ANIMATION_DURATION.seconds);
+      }, Mixin.ANIMATION_DURATION.milliseconds);
     }, [onClose]);
 
     const handleClickToggleMode = useCallback(() => {

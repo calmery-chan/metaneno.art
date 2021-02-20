@@ -13,18 +13,20 @@ import { useAudio } from "~/hooks/useAudio";
 import { Area, GraphicsQuality } from "~/types/exhibition";
 import { preload } from "~/utils/exhibition";
 import { Sentry } from "~/utils/sentry";
+import { Exhibition3dWork } from "./3d/Work";
 
 export const Exhibition3d: React.FC<{
   area: Area;
   settings: { graphicsQuality: GraphicsQuality };
 }> = ({ area, settings }) => {
   const [ready, setReady] = useState(false);
+  const [workId, setWorkId] = useState<string | null>();
   const { audio } = useAudio(area.sound.url, { loop: true });
 
   // Events
 
-  const handleClickIllustrationId = useCallback((illustrationId: string) => {
-    console.log(illustrationId);
+  const handleCloseWork = useCallback(() => {
+    setWorkId(null);
   }, []);
 
   // Side Effects
@@ -76,11 +78,12 @@ export const Exhibition3d: React.FC<{
         <Exhibition3dObjectsDecorations objects={area.objects.decorations} />
         <Exhibition3dObjectsIllustrations
           objects={area.objects.illustrations}
-          onClick={handleClickIllustrationId}
+          onClick={setWorkId}
         />
-        <Exhibition3dPlayer {...area.player} />
+        <Exhibition3dPlayer {...area.player} operable={!workId} />
         <Exhibition3dRenderer graphicsQuality={settings.graphicsQuality} />
       </Exhibition3dCanvas>
+      {workId && <Exhibition3dWork onClose={handleCloseWork} />}
     </>
   );
 };

@@ -49,7 +49,8 @@ export const Exhibition3dPlayer = React.memo<{
   defaultPosition: Transform
   defaultRotation: Transform
   defaultScale: Transform
-}>(({ defaultPosition, defaultRotation, defaultScale }) => {
+  operable: boolean
+}>(({ defaultPosition, defaultRotation, defaultScale, operable }) => {
   const [animations, setAnimations] = useState<AnimationClip[]>();
   const [cameraOffset, setCameraOffset] = useState<Vector3>();
   const [mixer, setMixer] = useState<AnimationMixer>();
@@ -70,10 +71,10 @@ export const Exhibition3dPlayer = React.memo<{
     // const meshes = s.children.find(c => c.name === "COL")?.children[0].children.filter<Mesh>((m) => m instanceof Mesh);
     // setMeshes(meshes!);
 
-    setTimeout(() => {
-      setMeshes(s.children.find(c => c.name === "COL")!.children as Mesh[]);
-      setObj(s.children.find(c => c.name === "COL")!);
-    }, 3000)
+    // setTimeout(() => {
+    //   setMeshes(s.children.find(c => c.name === "COL")!.children as Mesh[]);
+    //   setObj(s.children.find(c => c.name === "COL")!);
+    // }, 3000)
   }, [s]);
 
   useEffect(() => {
@@ -103,7 +104,7 @@ export const Exhibition3dPlayer = React.memo<{
       defaultPosition.y,
       defaultPosition.z
     );
-    
+
     scene.rotation.set(
       defaultRotation.x,
       defaultRotation.y,
@@ -137,17 +138,25 @@ export const Exhibition3dPlayer = React.memo<{
   }, [animations, mixer, state]);
 
   useEffect(() => {
+    if (!operable) {
+      return;
+    }
+
     if (down || left || right || up) {
       setState("running");
       return;
     }
 
     setState("standing");
-  }, [down, left, right, up]);
+  }, [down, left, operable, right, up]);
 
   useFrame((_, delta) => {
     if (mixer) {
       mixer.update(delta);
+    }
+
+    if (!operable) {
+      return;
     }
 
     if ((down || left || right || up) && scene) {
