@@ -1,14 +1,6 @@
 import React from "react";
 import { Color, Vector3 } from "three";
-
-type Light = {
-  color: string;
-  position: {
-    x: number,
-    y: number,
-    z: number
-  }
-}
+import { Light } from "~/types/exhibition";
 
 export const Exhibition3dLights = React.memo<{
   directional: Light

@@ -5,6 +5,7 @@ import * as THREE from "three";
 import { AnimationClip, AnimationMixer, Box3, Mesh, Scene, Vector3 } from "three";
 import GLTFLoader from "three-gltf-loader";
 import { useKeyboard } from "~/hooks/exhibition/useKeyboard";
+import { Transform } from "~/types/exhibition";
 
 CameraControls.install({ THREE });
 
@@ -45,10 +46,10 @@ const useCamera = (
 };
 
 export const Exhibition3dPlayer = React.memo<{
-  defaultPosition?: { x: number, y: number, z: number };
-  defaultRotation?: { x: number, y: number, z: number };
-  offsetPosition?: { x: number, y: number, z: number };
-}>(({ defaultPosition = { x: 0, y: 0, z: 0 }, defaultRotation = { x: 0, y: 0, z: 0 }, offsetPosition = { x: 0, y: 0, z: 0 } }) => {
+  defaultPosition: Transform
+  defaultRotation: Transform
+  defaultScale: Transform
+}>(({ defaultPosition, defaultRotation, defaultScale }) => {
   const [animations, setAnimations] = useState<AnimationClip[]>();
   const [cameraOffset, setCameraOffset] = useState<Vector3>();
   const [mixer, setMixer] = useState<AnimationMixer>();
@@ -98,16 +99,23 @@ export const Exhibition3dPlayer = React.memo<{
     }
 
     scene.position.set(
-      defaultPosition.x + offsetPosition.x,
-      defaultPosition.y + offsetPosition.y,
-      defaultPosition.z + offsetPosition.z);
+      defaultPosition.x,
+      defaultPosition.y,
+      defaultPosition.z
+    );
     
     scene.rotation.set(
       defaultRotation.x,
       defaultRotation.y,
       defaultRotation.z
-    )
-  }, [defaultPosition, defaultRotation, offsetPosition, scene]);
+    );
+
+    scene.scale.set(
+      defaultScale.x,
+      defaultScale.y,
+      defaultScale.z
+    );
+  }, [defaultPosition, defaultRotation, scene]);
 
   useEffect(() => {
     if (!animations || !mixer) {
@@ -169,9 +177,9 @@ export const Exhibition3dPlayer = React.memo<{
         .applyQuaternion(camera.quaternion);
 
       const nextPosition = new Vector3(
-        scene.position.x + x + offsetPosition.x,
-        offsetPosition.y,
-        scene.position.z + z + offsetPosition.z
+        scene.position.x + x,
+        defaultPosition.y,
+        scene.position.z + z
       );
 
       const result = meshes.some((mesh) => {

@@ -1,7 +1,44 @@
-export type Area = "meadow" | "sea";
+import { PhantomType } from "./PhantomType";
+
+export type Transform = {
+  x: number;
+  y: number;
+  z: number;
+}
+
+export type Light = {
+  color: string,
+  position: Transform
+}
+
+export type Area = {
+  background: {
+    color: string;
+  }
+  fog: {
+    color: string;
+  }
+  lights: {
+    directional: Light,
+    points: Light[]
+  },
+  objects: {
+    characters: AreaObject[],
+    colliders: AreaObject[],
+    decorations: AreaObject[],
+    illustrations: AreaObject[]
+  },
+  player: {
+    defaultPosition: Transform,
+    defaultRotation: Transform
+    defaultScale: Transform
+  },
+  sound: {
+    url: string
+  }
+};
 
 export type AreaObject = {
-  transform: {
     position: {
       x: number;
       y: number;
@@ -17,7 +54,6 @@ export type AreaObject = {
       y: number;
       z: number;
     };
-  };
   url: string;
 };
 

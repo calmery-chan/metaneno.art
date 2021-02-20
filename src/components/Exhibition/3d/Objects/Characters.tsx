@@ -1,16 +1,14 @@
 import React, { useState, useEffect } from "react";
-
 import { useFrame } from "react-three-fiber";
-import { AnimationMixer, Mesh, MeshStandardMaterial, Scene } from "three";
+import { AnimationMixer, Scene } from "three";
 import * as Three from "three";
 import { AreaObject } from "~/types/exhibition";
-import { getGltf, rewriteMaterials } from "~/utils/exhibition";
+import { getGltf } from "~/utils/exhibition";
 
-const Exhibition3dCanvasObject = React.memo<AreaObject>(
-  ({ transform, url }) => {
+const Character = React.memo<AreaObject>(
+  ({ position, rotation, scale, url }) => {
     const [mixer, setMixer] = useState<AnimationMixer>();
     const [scene, setScene] = useState<Scene>();
-    const { position, rotation, scale } = transform;
 
     // Side Effects
 
@@ -18,16 +16,6 @@ const Exhibition3dCanvasObject = React.memo<AreaObject>(
       (async () => {
         const { animations, scene } = await getGltf(url);
 
-        if(scene.children.length === 42){
-          console.log(scene)
-          scene.children.map((cube) => {
-            ((cube as Mesh).material as MeshStandardMaterial).opacity = 0;
-            ((cube as Mesh).material as MeshStandardMaterial).transparent = true;
-          })
-          scene.name = "COL"
-        }
-
-        rewriteMaterials(scene);
         setScene(scene);
 
         if (animations[0]) {
@@ -75,12 +63,15 @@ const Exhibition3dCanvasObject = React.memo<AreaObject>(
   }
 );
 
-export const Exhibition3dCanvasObjects: React.FC<{ objects: AreaObject[] }> = ({
+export const Exhibition3dObjectsCharacters: React.FC<{ objects: AreaObject[] }> = ({
   objects,
 }) => (
   <>
     {objects.map((object) => (
-      <Exhibition3dCanvasObject key={object.url} {...object} />
+      <Character
+        {...object}
+        key={object.url}
+      />
     ))}
   </>
 );

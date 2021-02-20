@@ -1,19 +1,20 @@
 import { NextPage } from "next";
 import React, { useCallback, useState } from "react";
-import { Exhibition3dAreaCloud } from "~/components/Exhibition/3d/Area/Cloud";
+import { Exhibition3d } from "~/components/Exhibition/3d";
 import { ExhibitionMenu } from "~/components/Exhibition/Menu";
 import { GraphicsQuality } from "~/types/exhibition";
+import cloud from "~/data/cloud.json";
 
 const Exhibition: NextPage = () => {
-  const [quality, setQuality] = useState<GraphicsQuality>("high");
+  const [graphicsQuality, setGraphicsQuality] = useState<GraphicsQuality>("high");
 
-  const handleChangeQuality = useCallback((quality: GraphicsQuality) => {
-    setQuality(quality);
+  const handleChangeQuality = useCallback((graphicsQuality: GraphicsQuality) => {
+    setGraphicsQuality(graphicsQuality);
   }, []);
 
   return (
     <>
-      <Exhibition3dAreaCloud quality={quality} />
+      <Exhibition3d area={cloud} settings={{ graphicsQuality }} />
       <ExhibitionMenu onChangeGraphicsQuality={handleChangeQuality} />
     </>
   );

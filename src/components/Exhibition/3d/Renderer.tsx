@@ -5,8 +5,8 @@ import { GraphicsQuality } from "~/types/exhibition";
 import { getDevicePixelRatio } from "~/utils/exhibition";
 
 export const Exhibition3dRenderer = React.memo<{
-  quality: GraphicsQuality;
-}>(({ quality }) => {
+  graphicsQuality: GraphicsQuality;
+}>(({ graphicsQuality }) => {
   const { gl } = useThree();
 
   useEffect(() => {
@@ -15,8 +15,8 @@ export const Exhibition3dRenderer = React.memo<{
   }, []);
 
   useEffect(() => {
-    gl.setPixelRatio(getDevicePixelRatio(quality));
-  }, [quality]);
+    gl.setPixelRatio(getDevicePixelRatio(graphicsQuality));
+  }, [graphicsQuality]);
 
   return null;
 });
