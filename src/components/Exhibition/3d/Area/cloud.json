@@ -249,8 +249,6 @@
     ],
     "illustrations": [
       {
-        "id": "calmery_chan",
-        "image": { "url": "/og.png" },
         "position": {
           "x": 3.25,
           "y": 6.85,
@@ -269,8 +267,6 @@
         "url": "http://localhost:8000/objects/areas/cloud/calmery_chan.glb"
       },
       {
-        "id": "fried_egg",
-        "image": { "url": "/og.png" },
         "position": {
           "x": 12.6,
           "y": 6.87,
@@ -289,8 +285,6 @@
         "url": "http://localhost:8000/objects/areas/cloud/fried_egg.glb"
       },
       {
-        "id": "koishi",
-        "image": { "url": "/og.png" },
         "position": {
           "x": -3.75,
           "y": 6.85,
@@ -309,8 +303,6 @@
         "url": "http://localhost:8000/objects/areas/cloud/koishi.glb"
       },
       {
-        "id": "lee_mai",
-        "image": { "url": "/og.png" },
         "position": {
           "x": 6.95,
           "y": 6.9,
@@ -329,8 +321,6 @@
         "url": "http://localhost:8000/objects/areas/cloud/lee_mai.glb"
       },
       {
-        "id": "maid",
-        "image": { "url": "/og.png" },
         "position": {
           "x": 1.7,
           "y": 6.885,
@@ -349,8 +339,6 @@
         "url": "http://localhost:8000/objects/areas/cloud/maid.glb"
       },
       {
-        "id": "maid_gas_mask",
-        "image": { "url": "/og.png" },
         "position": {
           "x": 9.2,
           "y": 6.85,
@@ -369,8 +357,6 @@
         "url": "http://localhost:8000/objects/areas/cloud/maid_gas_mask.glb"
       },
       {
-        "id": "maid_pancake",
-        "image": { "url": "/og.png" },
         "position": {
           "x": -10.65,
           "y": 6.87,
@@ -389,8 +375,6 @@
         "url": "http://localhost:8000/objects/areas/cloud/maid_pancake.glb"
       },
       {
-        "id": "main_visual",
-        "image": { "url": "/og.png" },
         "position": {
           "x": -10.175,
           "y": 6.75,
@@ -409,8 +393,6 @@
         "url": "http://localhost:8000/objects/areas/cloud/main_visual.glb"
       },
       {
-        "id": "moment",
-        "image": { "url": "/og.png" },
         "position": {
           "x": -0.615,
           "y": 6.85,
@@ -429,8 +411,6 @@
         "url": "http://localhost:8000/objects/areas/cloud/moment.glb"
       },
       {
-        "id": "neminko",
-        "image": { "url": "/og.png" },
         "position": {
           "x": -14,
           "y": 6.925,
@@ -449,8 +429,6 @@
         "url": "http://localhost:8000/objects/areas/cloud/neminko.glb"
       },
       {
-        "id": "okusuri",
-        "image": { "url": "/og.png" },
         "position": {
           "x": -8.9,
           "y": 6.85,
@@ -469,8 +447,6 @@
         "url": "http://localhost:8000/objects/areas/cloud/okusuri.glb"
       },
       {
-        "id": "pancake",
-        "image": { "url": "/og.png" },
         "position": {
           "x": -15.28,
           "y": 6.88,
@@ -489,8 +465,6 @@
         "url": "http://localhost:8000/objects/areas/cloud/pancake.glb"
       },
       {
-        "id": "satori_koishi",
-        "image": { "url": "/og.png" },
         "position": {
           "x": -0.37,
           "y": 6.85,
@@ -509,8 +483,6 @@
         "url": "http://localhost:8000/objects/areas/cloud/satori_koishi.glb"
       },
       {
-        "id": "strawberry_cake",
-        "image": { "url": "/og.png" },
         "position": {
           "x": -21.5,
           "y": 6.85,
@@ -529,8 +501,6 @@
         "url": "http://localhost:8000/objects/areas/cloud/strawberry_cake.glb"
       },
       {
-        "id": "tabenemi",
-        "image": { "url": "/og.png" },
         "position": {
           "x": -17.95,
           "y": 6.85,
@@ -549,8 +519,6 @@
         "url": "http://localhost:8000/objects/areas/cloud/tabenemi.glb"
       },
       {
-        "id": "yumekawa",
-        "image": { "url": "/og.png" },
         "position": {
           "x": -18.4,
           "y": 6.89,

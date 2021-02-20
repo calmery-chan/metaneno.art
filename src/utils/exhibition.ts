@@ -7,9 +7,11 @@ import {
   MeshToonMaterial,
   Object3D,
   Scene,
+  MathUtils,
 } from "three";
 import GLTFLoader from "three-gltf-loader";
-import { GraphicsQuality } from "~/types/exhibition";
+
+import { GraphicsQuality, Transform } from "~/types/exhibition";
 
 const createMaterial = (material: Material) => {
   // UniGLTF/UniUnlit を使用しているときは MeshBasicMaterial となる、書き換えない
@@ -28,6 +30,8 @@ const createMaterial = (material: Material) => {
     transparent: m.transparent,
   });
 };
+
+export const alwaysTrue = () => true;
 
 export const getDevicePixelRatio = (quality: GraphicsQuality) => {
   if (!window) {
@@ -105,4 +109,20 @@ export const rewriteMaterials = (scene: Scene) => {
   };
 
   helper(scene.children);
+};
+
+export const setupScene = (
+  scene: Scene,
+  position: Transform,
+  rotation: Transform,
+  scale: Transform
+) => {
+  scene.position.set(position.x, position.y, position.z);
+  scene.rotation.set(
+    MathUtils.degToRad(rotation.x),
+    MathUtils.degToRad(rotation.y),
+    MathUtils.degToRad(rotation.z)
+  );
+  scene.scale.set(scale.x, scale.y, scale.z);
+  return scene;
 };

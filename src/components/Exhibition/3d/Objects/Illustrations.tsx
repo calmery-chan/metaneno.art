@@ -1,56 +1,51 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Scene } from "three";
-import * as Three from "three";
-import { AreaObject } from "~/types/exhibition";
-import { getGltf, rewriteMaterials } from "~/utils/exhibition";
+import { Exhibition3dScene } from "../Scene";
+import { AreaIllustrationObject, AreaObject } from "~/types/exhibition";
+import { getGltf, rewriteMaterials, setupScene } from "~/utils/exhibition";
 
-const Illustration = React.memo<AreaObject>(
-  ({ position, rotation, scale, url }) => {
+// Decoration は完全に不変、更新する必要がない
+const Illustration = React.memo<AreaObject & { onClick: () => void }>(
+  ({ onClick, position, rotation, scale, url }) => {
     const [scene, setScene] = useState<Scene>();
+
+    // Events
+
+    const handleClick = useCallback(() => {
+      onClick();
+      console.log("Click !", url);
+    }, [onClick]);
 
     // Side Effects
 
     useEffect(() => {
       (async () => {
         const { scene } = await getGltf(url);
+
+        setupScene(scene, position, rotation, scale);
+
         rewriteMaterials(scene);
         setScene(scene);
       })();
-    }, [url]);
-
-    useEffect(() => {
-      if (!scene) {
-        return;
-      }
-
-      scene.position.set(position.x, position.y, position.z);
-      scene.rotation.set(
-        Three.MathUtils.degToRad(rotation.x),
-        Three.MathUtils.degToRad(rotation.y),
-        Three.MathUtils.degToRad(rotation.z)
-      );
-
-      scene.scale.set(scale.x, scale.y, scale.z);
-    }, [position, rotation, scale, scene]);
+    }, []);
 
     // Render
 
-    if (!scene) {
-      return null;
-    }
-
-    return <primitive object={scene} />;
-  }
+    return <Exhibition3dScene onClick={handleClick} scene={scene} />;
+  },
+  (previousProps, nextProps) => previousProps.onClick === nextProps.onClick
 );
 
-export const Exhibition3dObjectsIllustrations: React.FC<{ objects: AreaObject[] }> = ({
-  objects,
-}) => (
+export const Exhibition3dObjectsIllustrations: React.FC<{
+  objects: AreaIllustrationObject[];
+  onClick: (id: string) => void;
+}> = ({ objects, onClick }) => (
   <>
     {objects.map((object) => (
       <Illustration
         {...object}
         key={object.url}
+        onClick={() => onClick(object.id)}
       />
     ))}
   </>

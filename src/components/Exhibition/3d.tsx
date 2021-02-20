@@ -1,5 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
+import { Exhibition3dBackground } from "./3d/Background";
 import { Exhibition3dCanvas } from "./3d/Canvas";
+import { Exhibition3dFog } from "./3d/Fog";
+import { Exhibition3dLights } from "./3d/Lights";
+import { Exhibition3dObjectsCharacters } from "./3d/Objects/Characters";
+import { Exhibition3dObjectsDecorations } from "./3d/Objects/Decorations";
+import { Exhibition3dObjectsIllustrations } from "./3d/Objects/Illustrations";
 import { Exhibition3dPlayer } from "./3d/Player";
 import { Exhibition3dRenderer } from "./3d/Renderer";
 import { objects } from "~/data/cloud.json";
@@ -7,22 +13,19 @@ import { useAudio } from "~/hooks/useAudio";
 import { Area, GraphicsQuality } from "~/types/exhibition";
 import { preload } from "~/utils/exhibition";
 import { Sentry } from "~/utils/sentry";
-import { Exhibition3dBackground } from "./3d/Background";
-import { Exhibition3dFog } from "./3d/Fog";
-import { Exhibition3dLights } from "./3d/Lights";
-import { Exhibition3dObjectsDecorations } from "./3d/Objects/Decorations";
-import { Exhibition3dObjectsCharacters } from "./3d/Objects/Characters";
-import { Exhibition3dObjectsIllustrations } from "./3d/Objects/Illustrations";
 
 export const Exhibition3d: React.FC<{
-  area: Area
-  settings: { graphicsQuality: GraphicsQuality }
-}> = ({
-  area,
-  settings,
-}) => {
+  area: Area;
+  settings: { graphicsQuality: GraphicsQuality };
+}> = ({ area, settings }) => {
   const [ready, setReady] = useState(false);
   const { audio } = useAudio(area.sound.url, { loop: true });
+
+  // Events
+
+  const handleClickIllustrationId = useCallback((illustrationId: string) => {
+    console.log(illustrationId);
+  }, []);
 
   // Side Effects
 
@@ -33,7 +36,7 @@ export const Exhibition3d: React.FC<{
       ...area.objects.characters,
       ...area.objects.colliders,
       ...area.objects.decorations,
-      ...area.objects.illustrations
+      ...area.objects.illustrations,
     ];
 
     (async () => {
@@ -64,15 +67,20 @@ export const Exhibition3d: React.FC<{
   }
 
   return (
-    <Exhibition3dCanvas>
-      <Exhibition3dBackground {...area.background} />
-      <Exhibition3dFog {...area.fog} />
-      <Exhibition3dLights {...area.lights} />
-      <Exhibition3dObjectsCharacters objects={area.objects.characters} />
-      <Exhibition3dObjectsDecorations objects={area.objects.decorations} />
-      <Exhibition3dObjectsIllustrations objects={area.objects.illustrations} />
-      <Exhibition3dPlayer {...area.player} />
-      <Exhibition3dRenderer graphicsQuality={settings.graphicsQuality} />
-    </Exhibition3dCanvas>
+    <>
+      <Exhibition3dCanvas>
+        <Exhibition3dBackground {...area.background} />
+        <Exhibition3dFog {...area.fog} />
+        <Exhibition3dLights {...area.lights} />
+        <Exhibition3dObjectsCharacters objects={area.objects.characters} />
+        <Exhibition3dObjectsDecorations objects={area.objects.decorations} />
+        <Exhibition3dObjectsIllustrations
+          objects={area.objects.illustrations}
+          onClick={handleClickIllustrationId}
+        />
+        <Exhibition3dPlayer {...area.player} />
+        <Exhibition3dRenderer graphicsQuality={settings.graphicsQuality} />
+      </Exhibition3dCanvas>
+    </>
   );
 };
