@@ -13,6 +13,7 @@ export type Area = {
   background: {
     color: string;
   };
+  collider: AreaObject;
   fog: {
     color: string;
   };
@@ -22,7 +23,6 @@ export type Area = {
   };
   objects: {
     characters: AreaObject[];
-    colliders: AreaObject[];
     decorations: AreaObject[];
     works: AreaWorkObject[];
   };

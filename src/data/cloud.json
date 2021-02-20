@@ -2,6 +2,24 @@
   "background": {
     "color": "#FFCFCB"
   },
+  "collider": {
+    "position": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "rotation": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "scale": {
+      "x": 1,
+      "y": 1,
+      "z": 1
+    },
+    "url": "http://localhost:8000/objects/areas/cloud/collider.glb"
+  },
   "fog": {
     "color": "#FFCFCB"
   },
@@ -82,7 +100,6 @@
         "url": "http://localhost:8000/objects/characters/hitugi.glb"
       }
     ],
-    "colliders": [],
     "decorations": [
       {
         "position": {
@@ -249,9 +266,7 @@
     ],
     "works": [
       {
-        "characters": [
-          "ノネメちゃん"
-        ],
+        "characters": ["ノネメちゃん"],
         "comment": "コメント",
         "date": "2020/01",
         "id": "calmery_chan",
@@ -278,9 +293,7 @@
         "title": "タイトル"
       },
       {
-        "characters": [
-          "ノネメちゃん"
-        ],
+        "characters": ["ノネメちゃん"],
         "comment": "コメント",
         "date": "2020/01",
         "id": "fried_egg",
@@ -307,9 +320,7 @@
         "title": "タイトル"
       },
       {
-        "characters": [
-          "ノネメちゃん"
-        ],
+        "characters": ["ノネメちゃん"],
         "comment": "コメント",
         "date": "2020/01",
         "id": "koishi",
@@ -336,9 +347,7 @@
         "title": "タイトル"
       },
       {
-        "characters": [
-          "ノネメちゃん"
-        ],
+        "characters": ["ノネメちゃん"],
         "comment": "コメント",
         "date": "2020/01",
         "id": "lee_mai",
@@ -365,9 +374,7 @@
         "title": "タイトル"
       },
       {
-        "characters": [
-          "ノネメちゃん"
-        ],
+        "characters": ["ノネメちゃん"],
         "comment": "コメント",
         "date": "2020/01",
         "id": "maid",
@@ -394,9 +401,7 @@
         "title": "タイトル"
       },
       {
-        "characters": [
-          "ノネメちゃん"
-        ],
+        "characters": ["ノネメちゃん"],
         "comment": "コメント",
         "date": "2020/01",
         "id": "maid_gas_mask",
@@ -423,9 +428,7 @@
         "title": "タイトル"
       },
       {
-        "characters": [
-          "ノネメちゃん"
-        ],
+        "characters": ["ノネメちゃん"],
         "comment": "コメント",
         "date": "2020/01",
         "id": "maid_pancake",
@@ -452,9 +455,7 @@
         "title": "タイトル"
       },
       {
-        "characters": [
-          "ノネメちゃん"
-        ],
+        "characters": ["ノネメちゃん"],
         "comment": "コメント",
         "date": "2020/01",
         "id": "main_visual",
@@ -481,9 +482,7 @@
         "title": "タイトル"
       },
       {
-        "characters": [
-          "ノネメちゃん"
-        ],
+        "characters": ["ノネメちゃん"],
         "comment": "コメント",
         "date": "2020/01",
         "id": "moment",
@@ -510,9 +509,7 @@
         "title": "タイトル"
       },
       {
-        "characters": [
-          "ノネメちゃん"
-        ],
+        "characters": ["ノネメちゃん"],
         "comment": "コメント",
         "date": "2020/01",
         "id": "neminko",
@@ -539,9 +536,7 @@
         "title": "タイトル"
       },
       {
-        "characters": [
-          "ノネメちゃん"
-        ],
+        "characters": ["ノネメちゃん"],
         "comment": "コメント",
         "date": "2020/01",
         "id": "okusuri",
@@ -568,9 +563,7 @@
         "title": "タイトル"
       },
       {
-        "characters": [
-          "ノネメちゃん"
-        ],
+        "characters": ["ノネメちゃん"],
         "comment": "コメント",
         "date": "2020/01",
         "id": "pancake",
@@ -597,9 +590,7 @@
         "title": "タイトル"
       },
       {
-        "characters": [
-          "ノネメちゃん"
-        ],
+        "characters": ["ノネメちゃん"],
         "comment": "コメント",
         "date": "2020/01",
         "id": "satori_koishi",
@@ -626,9 +617,7 @@
         "title": "タイトル"
       },
       {
-        "characters": [
-          "ノネメちゃん"
-        ],
+        "characters": ["ノネメちゃん"],
         "comment": "コメント",
         "date": "2020/01",
         "id": "strawberry_cake",
@@ -655,9 +644,7 @@
         "title": "タイトル"
       },
       {
-        "characters": [
-          "ノネメちゃん"
-        ],
+        "characters": ["ノネメちゃん"],
         "comment": "コメント",
         "date": "2020/01",
         "id": "tabenemi",
@@ -684,9 +671,7 @@
         "title": "タイトル"
       },
       {
-        "characters": [
-          "ノネメちゃん"
-        ],
+        "characters": ["ノネメちゃん"],
         "comment": "コメント",
         "date": "2020/01",
         "id": "yumekawa",

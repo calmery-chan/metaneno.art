@@ -75,7 +75,7 @@ const view = css`
 
 // Main
 
-export const Exhibition3dWork = React.memo<AreaWorkObject & { graphicsQuality: GraphicsQuality, onClose: () => void }>(
+export const Exhibition3dWork = React.memo<Pick<AreaWorkObject, "characters" | "comment" | "date" | "imageUrl" | "title" | "url"> & { graphicsQuality: GraphicsQuality, onClose: () => void }>(
   ({ characters, comment, date, graphicsQuality, imageUrl, onClose, title, url }) => {
     const [scene, setScene] = useState<Scene>();
     const [mode, setMode] = useState<"2d" | "3d">("2d");

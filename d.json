@@ -1,0 +1,466 @@
+[
+  {
+    "characters": [
+      "ノネメちゃん"
+    ],
+    "comment": "コメント",
+    "date": "2020/01",
+    "id": "calmery_chan",
+    "image": {
+      "url": "/og.png"
+    },
+    "position": {
+      "x": 3.25,
+      "y": 6.85,
+      "z": -3.25
+    },
+    "rotation": {
+      "x": -11,
+      "y": 0,
+      "z": 0
+    },
+    "scale": {
+      "x": 1,
+      "y": 1,
+      "z": 1
+    },
+    "url": "http://localhost:8000/objects/areas/cloud/calmery_chan.glb",
+    "imageUrl": "/logo.png",
+    "title": "タイトル"
+  },
+  {
+    "characters": [
+      "ノネメちゃん"
+    ],
+    "comment": "コメント",
+    "date": "2020/01",
+    "id": "fried_egg",
+    "image": {
+      "url": "/og.png"
+    },
+    "position": {
+      "x": 12.6,
+      "y": 6.87,
+      "z": 9.9
+    },
+    "rotation": {
+      "x": -11,
+      "y": 0,
+      "z": 0
+    },
+    "scale": {
+      "x": 1,
+      "y": 1,
+      "z": 1
+    },
+    "url": "http://localhost:8000/objects/areas/cloud/fried_egg.glb",
+    "imageUrl": "/logo.png",
+    "title": "タイトル"
+  },
+  {
+    "characters": [
+      "ノネメちゃん"
+    ],
+    "comment": "コメント",
+    "date": "2020/01",
+    "id": "koishi",
+    "image": {
+      "url": "/og.png"
+    },
+    "position": {
+      "x": -3.75,
+      "y": 6.85,
+      "z": 2
+    },
+    "rotation": {
+      "x": -11,
+      "y": 0,
+      "z": 0
+    },
+    "scale": {
+      "x": 1,
+      "y": 1,
+      "z": 1
+    },
+    "url": "http://localhost:8000/objects/areas/cloud/koishi.glb",
+    "imageUrl": "/logo.png",
+    "title": "タイトル"
+  },
+  {
+    "characters": [
+      "ノネメちゃん"
+    ],
+    "comment": "コメント",
+    "date": "2020/01",
+    "id": "lee_mai",
+    "image": {
+      "url": "/og.png"
+    },
+    "position": {
+      "x": 6.95,
+      "y": 6.9,
+      "z": -2.85
+    },
+    "rotation": {
+      "x": -11,
+      "y": 0,
+      "z": 0
+    },
+    "scale": {
+      "x": 1,
+      "y": 1,
+      "z": 1
+    },
+    "url": "http://localhost:8000/objects/areas/cloud/lee_mai.glb",
+    "imageUrl": "/logo.png",
+    "title": "タイトル"
+  },
+  {
+    "characters": [
+      "ノネメちゃん"
+    ],
+    "comment": "コメント",
+    "date": "2020/01",
+    "id": "maid",
+    "image": {
+      "url": "/og.png"
+    },
+    "position": {
+      "x": 1.7,
+      "y": 6.885,
+      "z": 9.75
+    },
+    "rotation": {
+      "x": -11,
+      "y": 0,
+      "z": 0
+    },
+    "scale": {
+      "x": 1,
+      "y": 1,
+      "z": 1
+    },
+    "url": "http://localhost:8000/objects/areas/cloud/maid.glb",
+    "imageUrl": "/logo.png",
+    "title": "タイトル"
+  },
+  {
+    "characters": [
+      "ノネメちゃん"
+    ],
+    "comment": "コメント",
+    "date": "2020/01",
+    "id": "maid_gas_mask",
+    "image": {
+      "url": "/og.png"
+    },
+    "position": {
+      "x": 9.2,
+      "y": 6.85,
+      "z": 9.35
+    },
+    "rotation": {
+      "x": -11,
+      "y": 0,
+      "z": 0
+    },
+    "scale": {
+      "x": 1,
+      "y": 1,
+      "z": 1
+    },
+    "url": "http://localhost:8000/objects/areas/cloud/maid_gas_mask.glb",
+    "imageUrl": "/logo.png",
+    "title": "タイトル"
+  },
+  {
+    "characters": [
+      "ノネメちゃん"
+    ],
+    "comment": "コメント",
+    "date": "2020/01",
+    "id": "maid_pancake",
+    "image": {
+      "url": "/og.png"
+    },
+    "position": {
+      "x": -10.65,
+      "y": 6.87,
+      "z": 9.68
+    },
+    "rotation": {
+      "x": -11,
+      "y": 0,
+      "z": 0
+    },
+    "scale": {
+      "x": 1,
+      "y": 1,
+      "z": 1
+    },
+    "url": "http://localhost:8000/objects/areas/cloud/maid_pancake.glb",
+    "imageUrl": "/logo.png",
+    "title": "タイトル"
+  },
+  {
+    "characters": [
+      "ノネメちゃん"
+    ],
+    "comment": "コメント",
+    "date": "2020/01",
+    "id": "main_visual",
+    "image": {
+      "url": "/og.png"
+    },
+    "position": {
+      "x": -10.175,
+      "y": 6.75,
+      "z": -19.8
+    },
+    "rotation": {
+      "x": -11,
+      "y": 0,
+      "z": 0
+    },
+    "scale": {
+      "x": 1,
+      "y": 1,
+      "z": 1
+    },
+    "url": "http://localhost:8000/objects/areas/cloud/main_visual.glb",
+    "imageUrl": "/logo.png",
+    "title": "タイトル"
+  },
+  {
+    "characters": [
+      "ノネメちゃん"
+    ],
+    "comment": "コメント",
+    "date": "2020/01",
+    "id": "moment",
+    "image": {
+      "url": "/og.png"
+    },
+    "position": {
+      "x": -0.615,
+      "y": 6.85,
+      "z": -3.13
+    },
+    "rotation": {
+      "x": -11,
+      "y": 0,
+      "z": 0
+    },
+    "scale": {
+      "x": 1,
+      "y": 1,
+      "z": 1
+    },
+    "url": "http://localhost:8000/objects/areas/cloud/moment.glb",
+    "imageUrl": "/logo.png",
+    "title": "タイトル"
+  },
+  {
+    "characters": [
+      "ノネメちゃん"
+    ],
+    "comment": "コメント",
+    "date": "2020/01",
+    "id": "neminko",
+    "image": {
+      "url": "/og.png"
+    },
+    "position": {
+      "x": -14,
+      "y": 6.925,
+      "z": -7.85
+    },
+    "rotation": {
+      "x": -11,
+      "y": 0,
+      "z": 0
+    },
+    "scale": {
+      "x": 1,
+      "y": 1,
+      "z": 1
+    },
+    "url": "http://localhost:8000/objects/areas/cloud/neminko.glb",
+    "imageUrl": "/logo.png",
+    "title": "タイトル"
+  },
+  {
+    "characters": [
+      "ノネメちゃん"
+    ],
+    "comment": "コメント",
+    "date": "2020/01",
+    "id": "okusuri",
+    "image": {
+      "url": "/og.png"
+    },
+    "position": {
+      "x": -8.9,
+      "y": 6.85,
+      "z": 1.85
+    },
+    "rotation": {
+      "x": -11,
+      "y": 0,
+      "z": 0
+    },
+    "scale": {
+      "x": 1,
+      "y": 1,
+      "z": 1
+    },
+    "url": "http://localhost:8000/objects/areas/cloud/okusuri.glb",
+    "imageUrl": "/logo.png",
+    "title": "タイトル"
+  },
+  {
+    "characters": [
+      "ノネメちゃん"
+    ],
+    "comment": "コメント",
+    "date": "2020/01",
+    "id": "pancake",
+    "image": {
+      "url": "/og.png"
+    },
+    "position": {
+      "x": -15.28,
+      "y": 6.88,
+      "z": 8.82
+    },
+    "rotation": {
+      "x": -11,
+      "y": 0,
+      "z": 0
+    },
+    "scale": {
+      "x": 1,
+      "y": 1,
+      "z": 1
+    },
+    "url": "http://localhost:8000/objects/areas/cloud/pancake.glb",
+    "imageUrl": "/logo.png",
+    "title": "タイトル"
+  },
+  {
+    "characters": [
+      "ノネメちゃん"
+    ],
+    "comment": "コメント",
+    "date": "2020/01",
+    "id": "satori_koishi",
+    "image": {
+      "url": "/og.png"
+    },
+    "position": {
+      "x": -0.37,
+      "y": 6.85,
+      "z": 2.12
+    },
+    "rotation": {
+      "x": -11,
+      "y": 0,
+      "z": 0
+    },
+    "scale": {
+      "x": 1,
+      "y": 1,
+      "z": 1
+    },
+    "url": "http://localhost:8000/objects/areas/cloud/satori_koishi.glb",
+    "imageUrl": "/logo.png",
+    "title": "タイトル"
+  },
+  {
+    "characters": [
+      "ノネメちゃん"
+    ],
+    "comment": "コメント",
+    "date": "2020/01",
+    "id": "strawberry_cake",
+    "image": {
+      "url": "/og.png"
+    },
+    "position": {
+      "x": -21.5,
+      "y": 6.85,
+      "z": 10.85
+    },
+    "rotation": {
+      "x": -11,
+      "y": 0,
+      "z": 0
+    },
+    "scale": {
+      "x": 1,
+      "y": 1,
+      "z": 1
+    },
+    "url": "http://localhost:8000/objects/areas/cloud/strawberry_cake.glb",
+    "imageUrl": "/logo.png",
+    "title": "タイトル"
+  },
+  {
+    "characters": [
+      "ノネメちゃん"
+    ],
+    "comment": "コメント",
+    "date": "2020/01",
+    "id": "tabenemi",
+    "image": {
+      "url": "/og.png"
+    },
+    "position": {
+      "x": -17.95,
+      "y": 6.85,
+      "z": 9
+    },
+    "rotation": {
+      "x": -11,
+      "y": 0,
+      "z": 0
+    },
+    "scale": {
+      "x": 1,
+      "y": 1,
+      "z": 1
+    },
+    "url": "http://localhost:8000/objects/areas/cloud/tabenemi.glb",
+    "imageUrl": "/logo.png",
+    "title": "タイトル"
+  },
+  {
+    "characters": [
+      "ノネメちゃん"
+    ],
+    "comment": "コメント",
+    "date": "2020/01",
+    "id": "yumekawa",
+    "image": {
+      "url": "/og.png"
+    },
+    "position": {
+      "x": -18.4,
+      "y": 6.89,
+      "z": -8.2
+    },
+    "rotation": {
+      "x": -11,
+      "y": 0,
+      "z": 0
+    },
+    "scale": {
+      "x": 1,
+      "y": 1,
+      "z": 1
+    },
+    "url": "http://localhost:8000/objects/areas/cloud/yumekawa.glb",
+    "imageUrl": "/logo.png",
+    "title": "タイトル"
+  }
+]

@@ -7,12 +7,14 @@ import {
   AnimationMixer,
   Box3,
   Mesh,
+  MeshStandardMaterial,
   Scene,
   Vector3,
 } from "three";
 import GLTFLoader from "three-gltf-loader";
 import { useKeyboard } from "~/hooks/exhibition/useKeyboard";
-import { Transform } from "~/types/exhibition";
+import { AreaObject, Transform } from "~/types/exhibition";
+import { getGltf } from "~/utils/exhibition";
 
 CameraControls.install({ THREE });
 
@@ -53,13 +55,15 @@ const useCamera = (
 };
 
 export const Exhibition3dPlayer = React.memo<{
+  collider: AreaObject;
   defaultPosition: Transform;
   defaultRotation: Transform;
   defaultScale: Transform;
   operable: boolean;
-}>(({ defaultPosition, defaultRotation, defaultScale, operable }) => {
+}>(({ collider, defaultPosition, defaultRotation, defaultScale, operable }) => {
   const [animations, setAnimations] = useState<AnimationClip[]>();
   const [cameraOffset, setCameraOffset] = useState<Vector3>();
+  const [colliders, setColliders] = useState<Mesh[]>();
   const [mixer, setMixer] = useState<AnimationMixer>();
   const [state, setState] = useState<"running" | "standing" | "walking">(
     "standing"
@@ -67,21 +71,21 @@ export const Exhibition3dPlayer = React.memo<{
   const [scene, setScene] = useState<Scene>();
   const camera = useCamera(scene?.position, cameraOffset);
   const { down, left, right, up } = useKeyboard();
-  const { scene: s } = useThree();
-  const [meshes, setMeshes] = useState<Mesh[]>([]);
-  const [obj, setObj] = useState<THREE.Object3D>();
 
   // Side Effects
 
   useEffect(() => {
-    // @ts-ignore
-    // const meshes = s.children.find(c => c.name === "COL")?.children[0].children.filter<Mesh>((m) => m instanceof Mesh);
-    // setMeshes(meshes!);
-    // setTimeout(() => {
-    //   setMeshes(s.children.find(c => c.name === "COL")!.children as Mesh[]);
-    //   setObj(s.children.find(c => c.name === "COL")!);
-    // }, 3000)
-  }, [s]);
+    (async () => {
+      const { scene } = await getGltf(collider.url);
+
+      scene.children.map((cube) => {
+        ((cube as Mesh).material as MeshStandardMaterial).opacity = 0;
+        ((cube as Mesh).material as MeshStandardMaterial).transparent = true;
+      });
+
+      setColliders(scene.children as Mesh[]);
+    })();
+  }, [collider]);
 
   useEffect(() => {
     new GLTFLoader().load("/player.glb", ({ animations, scene }) => {
@@ -106,9 +110,7 @@ export const Exhibition3dPlayer = React.memo<{
     }
 
     scene.position.set(defaultPosition.x, defaultPosition.y, defaultPosition.z);
-
     scene.rotation.set(defaultRotation.x, defaultRotation.y, defaultRotation.z);
-
     scene.scale.set(defaultScale.x, defaultScale.y, defaultScale.z);
   }, [defaultPosition, defaultRotation, scene]);
 
@@ -172,7 +174,7 @@ export const Exhibition3dPlayer = React.memo<{
         velocity.z -= 1;
       }
 
-      const { x, y, z } = velocity
+      const { x, z } = velocity
         .clone()
         .normalize()
         .multiply(new Vector3(6, 6, 6))
@@ -185,15 +187,18 @@ export const Exhibition3dPlayer = React.memo<{
         scene.position.z + z
       );
 
-      const result = meshes.some((mesh) => {
-        const box3 = new THREE.Box3().setFromObject(mesh);
-        return box3.containsPoint(nextPosition);
-      });
+      let isMoveable = true;
+
+      if (colliders) {
+        isMoveable = !colliders.some((mesh) =>
+          new THREE.Box3().setFromObject(mesh).containsPoint(nextPosition)
+        );
+      }
 
       const rotation = scene.position.clone().sub(nextPosition).normalize();
       scene.rotation.y = Math.atan2(rotation.x, rotation.z);
 
-      if (!result) {
+      if (isMoveable) {
         scene.position.set(nextPosition.x, nextPosition.y, nextPosition.z);
       }
     }

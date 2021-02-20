@@ -41,11 +41,9 @@ export const Exhibition3d: React.FC<{
   useEffect(() => {
     setReady(false);
 
-    console.log(area.objects);
-
     const objects = [
+      area.collider,
       ...area.objects.characters,
-      ...area.objects.colliders,
       ...area.objects.decorations,
       ...area.objects.works,
     ];
@@ -89,10 +87,10 @@ export const Exhibition3d: React.FC<{
           objects={area.objects.works}
           onClick={setWorkId}
         />
-        <Exhibition3dPlayer {...area.player} operable={!workId} />
+        <Exhibition3dPlayer {...area.player} collider={area.collider} operable={!workId} />
         <Exhibition3dRenderer graphicsQuality={settings.graphicsQuality} />
       </Exhibition3dCanvas>
-      {workId && (
+      {work && (
         <Exhibition3dWork
           {...work}
           graphicsQuality={settings.graphicsQuality}
