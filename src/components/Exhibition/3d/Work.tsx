@@ -10,19 +10,12 @@ import { Spacing } from "~/styles/spacing";
 import { Typography } from "~/styles/typography";
 import { getGltf } from "~/utils/exhibition";
 import { Sentry } from "~/utils/sentry";
-import { GraphicsQuality } from "~/types/exhibition";
+import { AreaWorkObject, GraphicsQuality } from "~/types/exhibition";
 
 // Styles
 
 const border = css`
   margin: ${Spacing.m}px 0;
-`;
-
-const character = css`
-  background: ${Colors.lightGray};
-  border-radius: 2px;
-  margin-right: ${Spacing.xs}px;
-  padding: ${Spacing.xs}px ${Spacing.s}px;
 `;
 
 const column = css`
@@ -52,17 +45,27 @@ const description = css`
   padding: ${Spacing.m}px 0;
 `;
 
-const title = css`
+const workCharacter = css`
+  background: ${Colors.lightGray};
+  border-radius: 2px;
+  margin-right: ${Spacing.xs}px;
+  padding: ${Spacing.xs}px ${Spacing.s}px;
+`;
+
+const workTitle = css`
   ${Typography.M};
   font-weight: bold;
 `;
 
 const toggle = css`
-  background: #000;
-  height: 24px;
+  ${Typography.S};
+  background: rgba(0, 0, 0, .24);
+  border-radius: 100%;
+  color: ${Colors.white};
+  height: 32px;
   right: ${Spacing.m}px;
   top: ${Spacing.m}px;
-  width: 24px;
+  width: 32px;
 `;
 
 const view = css`
@@ -72,8 +75,8 @@ const view = css`
 
 // Main
 
-export const Exhibition3dWork = React.memo<{ graphicsQuality: GraphicsQuality, onClose: () => void }>(
-  ({ graphicsQuality, onClose }) => {
+export const Exhibition3dWork = React.memo<AreaWorkObject & { graphicsQuality: GraphicsQuality, onClose: () => void }>(
+  ({ characters, comment, date, graphicsQuality, imageUrl, onClose, title, url }) => {
     const [scene, setScene] = useState<Scene>();
     const [mode, setMode] = useState<"2d" | "3d">("2d");
 
@@ -88,13 +91,13 @@ export const Exhibition3dWork = React.memo<{ graphicsQuality: GraphicsQuality, o
     useEffect(() => {
       (async () => {
         try {
-          const { scene } = await getGltf("/aquarium.glb");
+          const { scene } = await getGltf(url);
           setScene(scene);
         } catch (error) {
           Sentry.captureException(error);
         }
       })();
-    }, []);
+    }, [url]);
 
     // Render
 
@@ -105,7 +108,7 @@ export const Exhibition3dWork = React.memo<{ graphicsQuality: GraphicsQuality, o
             {mode === "2d" && (
               <img
                 className="h-full object-contain w-full"
-                src="/icon.png"
+                src={imageUrl}
               />
             )}
             {mode === "3d" && (
@@ -122,30 +125,29 @@ export const Exhibition3dWork = React.memo<{ graphicsQuality: GraphicsQuality, o
             )}
             {scene && (
               <div
-                className="absolute"
+                className="absolute grid place-items-center"
                 css={toggle}
                 onClick={handleClickToggleMode}
               >
-                {mode === "2d" && <div>3d</div>}
-                {mode === "3d" && <div>2d</div>}
+                {mode === "2d" && <div>2D</div>}
+                {mode === "3d" && <div>3D</div>}
               </div>
             )}
           </div>
           <div className="w-1/2" css={description}>
             <div className="flex">
-              <div css={title}>タイトル</div>
-              <div className="ml-auto">2019/01/01</div>
+              <div css={workTitle}>{title}</div>
+              <div className="ml-auto">{date}</div>
             </div>
             <hr css={border} />
             <div className="flex">
-              <div css={character}>りぃちゃん</div>
-              <div css={character}>あ</div>
+              {characters.map((character) => (
+                <div css={workCharacter}>{character}</div>
+              ))}
             </div>
             <div css={column}>
               <div css={commentTitle}>コメント</div>
-              <div>
-                コメントコメントコメントコメントコメントコメントコメントコメントコメントコメントコメントコメントコメントコメントコメントコメント
-              </div>
+              <div>{comment}</div>
             </div>
           </div>
         </div>

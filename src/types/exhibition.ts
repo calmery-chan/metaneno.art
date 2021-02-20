@@ -56,10 +56,12 @@ export type AreaObject = {
 };
 
 export type AreaWorkObject = AreaObject & {
+  characters: string[];
+  comment: string;
+  date: string;
   id: string;
-  image: {
-    url: string;
-  };
+  imageUrl: string;
+  title: string
 };
 
 export type GraphicsQuality = "high" | "low" | "middle";

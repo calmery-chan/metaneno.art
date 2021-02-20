@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { Exhibition3dBackground } from "./3d/Background";
 import { Exhibition3dCanvas } from "./3d/Canvas";
 import { Exhibition3dFog } from "./3d/Fog";
@@ -11,7 +11,7 @@ import { Exhibition3dRenderer } from "./3d/Renderer";
 import { Exhibition3dWork } from "./3d/Work";
 import { objects } from "~/data/cloud.json";
 import { useAudio } from "~/hooks/useAudio";
-import { Area, GraphicsQuality } from "~/types/exhibition";
+import { Area, AreaWorkObject, GraphicsQuality } from "~/types/exhibition";
 import { preload } from "~/utils/exhibition";
 import { Sentry } from "~/utils/sentry";
 
@@ -19,9 +19,16 @@ export const Exhibition3d: React.FC<{
   area: Area;
   settings: { graphicsQuality: GraphicsQuality };
 }> = ({ area, settings }) => {
+  const { audio } = useAudio(area.sound.url, { loop: true });
   const [ready, setReady] = useState(false);
   const [workId, setWorkId] = useState<string | null>();
-  const { audio } = useAudio(area.sound.url, { loop: true });
+  const work = useMemo<AreaWorkObject | null>(() => {
+    if (!workId) {
+      return null;
+    }
+
+    return area.objects.works.find(({ id }) => id === workId)!;
+  }, [workId])
 
   // Events
 
@@ -87,6 +94,7 @@ export const Exhibition3d: React.FC<{
       </Exhibition3dCanvas>
       {workId && (
         <Exhibition3dWork
+          {...work}
           graphicsQuality={settings.graphicsQuality}
           onClose={handleCloseWork}
         />
