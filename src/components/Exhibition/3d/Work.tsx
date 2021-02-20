@@ -1,31 +1,18 @@
 import { css } from "@emotion/react";
 import React, { useCallback, useEffect, useState } from "react";
 import { Scene, Vector3 } from "three";
+import { ExhibitionPopup } from "../Popup";
 import { Exhibition3dCamera } from "./Camera";
 import { Exhibition3dCanvas } from "./Canvas";
 import { Exhibition3dRenderer } from "./Renderer";
-import { bounceIn, bounceOut, fadeIn, fadeOut } from "~/styles/animations";
 import { Colors } from "~/styles/colors";
-import { Mixin } from "~/styles/mixin";
 import { Spacing } from "~/styles/spacing";
 import { Typography } from "~/styles/typography";
 import { getGltf } from "~/utils/exhibition";
 import { Sentry } from "~/utils/sentry";
+import { GraphicsQuality } from "~/types/exhibition";
 
 // Styles
-
-const background = css`
-  background: ${Colors.blackTransparent};
-`;
-
-const body = css`
-  background: ${Colors.white};
-  height: 100%;
-  max-height: 768px;
-  max-width: 1024px;
-  padding: ${Spacing.m}px;
-  width: 100%;
-`;
 
 const border = css`
   margin: ${Spacing.m}px 0;
@@ -36,12 +23,6 @@ const character = css`
   border-radius: 2px;
   margin-right: ${Spacing.xs}px;
   padding: ${Spacing.xs}px ${Spacing.s}px;
-`;
-
-const close = css`
-  ${Mixin.clickable};
-  height: 24px;
-  width: 24px;
 `;
 
 const column = css`
@@ -60,14 +41,10 @@ const commentTitle = css`
   margin-bottom: ${Spacing.xs}px;
 `;
 
-const container = css`
-  padding: ${Spacing.m}px;
-`;
-
 const contents = css`
   grid-template-columns: 1fr 1fr;
   gap: ${Spacing.s}px;
-  margin-top: ${Spacing.s}px;
+  padding-top: ${Spacing.s}px;
 `;
 
 const description = css`
@@ -95,21 +72,12 @@ const view = css`
 
 // Main
 
-export const Exhibition3dWork = React.memo<{ onClose: () => void }>(
-  ({ onClose }) => {
-    const [isVisible, setIsVisible] = useState(true);
+export const Exhibition3dWork = React.memo<{ graphicsQuality: GraphicsQuality, onClose: () => void }>(
+  ({ graphicsQuality, onClose }) => {
     const [scene, setScene] = useState<Scene>();
     const [mode, setMode] = useState<"2d" | "3d">("2d");
 
     // Events
-
-    const handleClickCloseButton = useCallback(() => {
-      setIsVisible(false);
-
-      setTimeout(() => {
-        onClose();
-      }, Mixin.ANIMATION_DURATION.milliseconds);
-    }, [onClose]);
 
     const handleClickToggleMode = useCallback(() => {
       setMode(mode === "2d" ? "3d" : "2d");
@@ -131,87 +99,57 @@ export const Exhibition3dWork = React.memo<{ onClose: () => void }>(
     // Render
 
     return (
-      <div
-        className="bottom-0 fixed grid h-full left-0 place-items-center right-0 top-0 w-full"
-        css={container}
-      >
-        <div
-          className="absolute h-full w-full"
-          css={css`
-            ${background};
-            ${isVisible ? fadeIn : fadeOut}
-          `}
-          onClick={handleClickCloseButton}
-        />
-        <div
-          className="bg-white flex flex-col h-full w-full"
-          css={css`
-            ${body};
-            ${isVisible ? bounceIn : bounceOut}
-          `}
-        >
-          <div className="flex flex-col h-full">
-            <div className="flex items-center">
+      <ExhibitionPopup onClose={onClose}>
+        <div className="flex h-full" css={contents}>
+          <div className="relative w-1/2" css={view}>
+            {mode === "2d" && (
+              <img
+                className="h-full object-contain w-full"
+                src="/icon.png"
+              />
+            )}
+            {mode === "3d" && (
+              <Exhibition3dCanvas>
+                <Exhibition3dRenderer graphicsQuality={graphicsQuality} />
+                <pointLight position={new Vector3(0, 0, -1)} />
+                <directionalLight
+                  position={new Vector3(0, 0, 1)}
+                  intensity={1}
+                />
+                <Exhibition3dCamera />
+                <primitive object={scene} />
+              </Exhibition3dCanvas>
+            )}
+            {scene && (
               <div
-                className="ml-auto"
-                css={close}
-                onClick={handleClickCloseButton}
+                className="absolute"
+                css={toggle}
+                onClick={handleClickToggleMode}
               >
-                <img src="/exhibition/close.svg" />
+                {mode === "2d" && <div>3d</div>}
+                {mode === "3d" && <div>2d</div>}
               </div>
+            )}
+          </div>
+          <div className="w-1/2" css={description}>
+            <div className="flex">
+              <div css={title}>タイトル</div>
+              <div className="ml-auto">2019/01/01</div>
             </div>
-            <div className="grid flex-grow" css={contents}>
-              <div className="relative" css={view}>
-                {mode === "2d" && (
-                  <img
-                    className="h-full object-contain w-full"
-                    src="/exhibition/q8lOo072QPZKELTtdVekq6wY.jpg"
-                  />
-                )}
-                {mode === "3d" && (
-                  <Exhibition3dCanvas>
-                    <Exhibition3dRenderer />
-                    <pointLight position={new Vector3(0, 0, -1)} />
-                    <directionalLight
-                      position={new Vector3(0, 0, 1)}
-                      intensity={1}
-                    />
-                    <Exhibition3dCamera />
-                    <primitive object={scene} />
-                  </Exhibition3dCanvas>
-                )}
-                {scene && (
-                  <div
-                    className="absolute"
-                    css={toggle}
-                    onClick={handleClickToggleMode}
-                  >
-                    {mode === "2d" && <div>3d</div>}
-                    {mode === "3d" && <div>2d</div>}
-                  </div>
-                )}
-              </div>
-              <div css={description}>
-                <div className="flex">
-                  <div css={title}>タイトル</div>
-                  <div className="ml-auto">2019/01/01</div>
-                </div>
-                <hr css={border} />
-                <div className="flex">
-                  <div css={character}>りぃちゃん</div>
-                  <div css={character}>あ</div>
-                </div>
-                <div css={column}>
-                  <div css={commentTitle}>コメント</div>
-                  <div>
-                    コメントコメントコメントコメントコメントコメントコメントコメントコメントコメントコメントコメントコメントコメントコメントコメント
-                  </div>
-                </div>
+            <hr css={border} />
+            <div className="flex">
+              <div css={character}>りぃちゃん</div>
+              <div css={character}>あ</div>
+            </div>
+            <div css={column}>
+              <div css={commentTitle}>コメント</div>
+              <div>
+                コメントコメントコメントコメントコメントコメントコメントコメントコメントコメントコメントコメントコメントコメントコメントコメント
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </ExhibitionPopup>
     );
   }
 );

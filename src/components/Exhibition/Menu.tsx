@@ -12,6 +12,7 @@ import { GraphicsQuality } from "~/types/exhibition";
 const menu = css`
   right: ${Spacing.m}px;
   top: ${Spacing.m}px;
+  z-index: 10;
 `;
 
 const menuGroup = css`

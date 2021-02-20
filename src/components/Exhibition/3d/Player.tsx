@@ -2,7 +2,14 @@ import CameraControls from "camera-controls";
 import React, { useEffect, useState } from "react";
 import { useFrame, useThree } from "react-three-fiber";
 import * as THREE from "three";
-import { AnimationClip, AnimationMixer, Box3, Mesh, Scene, Vector3 } from "three";
+import {
+  AnimationClip,
+  AnimationMixer,
+  Box3,
+  Mesh,
+  Scene,
+  Vector3,
+} from "three";
 import GLTFLoader from "three-gltf-loader";
 import { useKeyboard } from "~/hooks/exhibition/useKeyboard";
 import { Transform } from "~/types/exhibition";
@@ -46,10 +53,10 @@ const useCamera = (
 };
 
 export const Exhibition3dPlayer = React.memo<{
-  defaultPosition: Transform
-  defaultRotation: Transform
-  defaultScale: Transform
-  operable: boolean
+  defaultPosition: Transform;
+  defaultRotation: Transform;
+  defaultScale: Transform;
+  operable: boolean;
 }>(({ defaultPosition, defaultRotation, defaultScale, operable }) => {
   const [animations, setAnimations] = useState<AnimationClip[]>();
   const [cameraOffset, setCameraOffset] = useState<Vector3>();
@@ -70,7 +77,6 @@ export const Exhibition3dPlayer = React.memo<{
     // @ts-ignore
     // const meshes = s.children.find(c => c.name === "COL")?.children[0].children.filter<Mesh>((m) => m instanceof Mesh);
     // setMeshes(meshes!);
-
     // setTimeout(() => {
     //   setMeshes(s.children.find(c => c.name === "COL")!.children as Mesh[]);
     //   setObj(s.children.find(c => c.name === "COL")!);
@@ -99,23 +105,11 @@ export const Exhibition3dPlayer = React.memo<{
       return;
     }
 
-    scene.position.set(
-      defaultPosition.x,
-      defaultPosition.y,
-      defaultPosition.z
-    );
+    scene.position.set(defaultPosition.x, defaultPosition.y, defaultPosition.z);
 
-    scene.rotation.set(
-      defaultRotation.x,
-      defaultRotation.y,
-      defaultRotation.z
-    );
+    scene.rotation.set(defaultRotation.x, defaultRotation.y, defaultRotation.z);
 
-    scene.scale.set(
-      defaultScale.x,
-      defaultScale.y,
-      defaultScale.z
-    );
+    scene.scale.set(defaultScale.x, defaultScale.y, defaultScale.z);
   }, [defaultPosition, defaultRotation, scene]);
 
   useEffect(() => {
@@ -194,13 +188,13 @@ export const Exhibition3dPlayer = React.memo<{
       const result = meshes.some((mesh) => {
         const box3 = new THREE.Box3().setFromObject(mesh);
         return box3.containsPoint(nextPosition);
-      })
+      });
 
       const rotation = scene.position.clone().sub(nextPosition).normalize();
       scene.rotation.y = Math.atan2(rotation.x, rotation.z);
 
       if (!result) {
-      scene.position.set(nextPosition.x, nextPosition.y, nextPosition.z);
+        scene.position.set(nextPosition.x, nextPosition.y, nextPosition.z);
       }
     }
   });

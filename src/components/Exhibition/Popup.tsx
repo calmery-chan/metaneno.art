@@ -29,6 +29,7 @@ const close = css`
 
 const container = css`
   padding: ${Spacing.m}px;
+  z-index: 100;
 `;
 
 const header = css`

@@ -63,15 +63,12 @@ const Character = React.memo<AreaObject>(
   }
 );
 
-export const Exhibition3dObjectsCharacters: React.FC<{ objects: AreaObject[] }> = ({
-  objects,
-}) => (
+export const Exhibition3dObjectsCharacters: React.FC<{
+  objects: AreaObject[];
+}> = ({ objects }) => (
   <>
     {objects.map((object) => (
-      <Character
-        {...object}
-        key={object.url}
-      />
+      <Character {...object} key={object.url} />
     ))}
   </>
 );

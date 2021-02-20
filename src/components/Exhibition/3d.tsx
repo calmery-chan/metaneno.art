@@ -8,12 +8,12 @@ import { Exhibition3dObjectsDecorations } from "./3d/Objects/Decorations";
 import { Exhibition3dObjectsIllustrations } from "./3d/Objects/Illustrations";
 import { Exhibition3dPlayer } from "./3d/Player";
 import { Exhibition3dRenderer } from "./3d/Renderer";
+import { Exhibition3dWork } from "./3d/Work";
 import { objects } from "~/data/cloud.json";
 import { useAudio } from "~/hooks/useAudio";
 import { Area, GraphicsQuality } from "~/types/exhibition";
 import { preload } from "~/utils/exhibition";
 import { Sentry } from "~/utils/sentry";
-import { Exhibition3dWork } from "./3d/Work";
 
 export const Exhibition3d: React.FC<{
   area: Area;
@@ -83,7 +83,7 @@ export const Exhibition3d: React.FC<{
         <Exhibition3dPlayer {...area.player} operable={!workId} />
         <Exhibition3dRenderer graphicsQuality={settings.graphicsQuality} />
       </Exhibition3dCanvas>
-      {workId && <Exhibition3dWork onClose={handleCloseWork} />}
+      {workId && <Exhibition3dWork graphicsQuality={settings.graphicsQuality} onClose={handleCloseWork} />}
     </>
   );
 };
