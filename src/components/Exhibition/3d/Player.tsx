@@ -2,7 +2,7 @@ import CameraControls from "camera-controls";
 import React, { useEffect, useState } from "react";
 import { useFrame, useThree } from "react-three-fiber";
 import * as THREE from "three";
-import { AnimationClip, AnimationMixer, Box3, Scene, Vector3 } from "three";
+import { AnimationClip, AnimationMixer, Box3, Mesh, Scene, Vector3 } from "three";
 import GLTFLoader from "three-gltf-loader";
 import { useKeyboard } from "~/hooks/exhibition/useKeyboard";
 
@@ -56,8 +56,22 @@ export const Exhibition3dPlayer = React.memo<{
   const [scene, setScene] = useState<Scene>();
   const camera = useCamera(scene?.position, cameraOffset);
   const { down, left, right, up } = useKeyboard();
+  const { scene: s } = useThree();
+  const [meshes, setMeshes] = useState<Mesh[]>([]);
+  const [obj, setObj] = useState<THREE.Object3D>();
 
   // Side Effects
+
+  useEffect(() => {
+    // @ts-ignore
+    // const meshes = s.children.find(c => c.name === "COL")?.children[0].children.filter<Mesh>((m) => m instanceof Mesh);
+    // setMeshes(meshes!);
+
+    setTimeout(() => {
+      setMeshes(s.children.find(c => c.name === "COL")!.children as Mesh[]);
+      setObj(s.children.find(c => c.name === "COL")!);
+    }, 3000)
+  }, [s]);
 
   useEffect(() => {
     new GLTFLoader().load("/player.glb", ({ animations, scene }) => {
@@ -136,7 +150,7 @@ export const Exhibition3dPlayer = React.memo<{
         velocity.z -= 1;
       }
 
-      const { x, z } = velocity
+      const { x, y, z } = velocity
         .clone()
         .normalize()
         .multiply(new Vector3(6, 6, 6))
@@ -149,10 +163,17 @@ export const Exhibition3dPlayer = React.memo<{
         scene.position.z + z + offset.z
       );
 
+      const result = meshes.some((mesh) => {
+        const box3 = new THREE.Box3().setFromObject(mesh);
+        return box3.containsPoint(nextPosition);
+      })
+
       const rotation = scene.position.clone().sub(nextPosition).normalize();
       scene.rotation.y = Math.atan2(rotation.x, rotation.z);
 
+      if (!result) {
       scene.position.set(nextPosition.x, nextPosition.y, nextPosition.z);
+      }
     }
   });
 

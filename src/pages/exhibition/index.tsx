@@ -1,11 +1,10 @@
 import { NextPage } from "next";
-import { Exhibition3dWork } from "~/components/Exhibition/3d/Work";
+import React from "react";
+import { Exhibition3dAreaCloud } from "~/components/Exhibition/3d/Area/Cloud";
+import { Exhibition3dAreaMeadow } from "~/components/Exhibition/3d/Area/Meadow";
 
 const Exhibition: NextPage = () => (
-  <Exhibition3dWork
-    onClose={() => {
-      console.log;
-    }}
+  <Exhibition3dAreaCloud
   />
 );
 

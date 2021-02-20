@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import { useFrame } from "react-three-fiber";
-import { AnimationMixer, Scene } from "three";
+import { AnimationMixer, Mesh, MeshStandardMaterial, Scene } from "three";
 import * as Three from "three";
 import { AreaObject } from "~/types/exhibition";
 import { getGltf, rewriteMaterials } from "~/utils/exhibition";
@@ -17,6 +17,15 @@ const Exhibition3dCanvasObject = React.memo<AreaObject>(
     useEffect(() => {
       (async () => {
         const { animations, scene } = await getGltf(url);
+
+        if(scene.children.length === 42){
+          console.log(scene)
+          scene.children.map((cube) => {
+            ((cube as Mesh).material as MeshStandardMaterial).opacity = 0;
+            ((cube as Mesh).material as MeshStandardMaterial).transparent = true;
+          })
+          scene.name = "COL"
+        }
 
         rewriteMaterials(scene);
         setScene(scene);

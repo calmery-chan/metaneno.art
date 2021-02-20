@@ -9,6 +9,7 @@ import { Exhibition3dRenderer } from "../Renderer";
 import { useObjects } from "~/hooks/exhibition/useObjects";
 import { preload } from "~/utils/exhibition";
 import { Sentry } from "~/utils/sentry";
+import { objects } from "~/data/cloud.json";
 
 const Fog = React.memo(() => {
   const { scene } = useThree();
@@ -24,29 +25,29 @@ const Fog = React.memo(() => {
 });
 
 export const Exhibition3dAreaCloud: React.FC = () => {
-  const [ready, setReady] = useState(false);
-  const { objects } = useObjects("meadow");
+  // const [ready, setReady] = useState(false);
+  // const { objects } = useObjects("meadow");
 
-  // Side Effects
+  // // Side Effects
 
-  useEffect(() => {
-    if (!objects) return;
+  // useEffect(() => {
+  //   if (!objects) return;
 
-    (async () => {
-      try {
-        await Promise.all(objects.map(({ url }) => url).map(preload));
-        setReady(true);
-      } catch (error) {
-        Sentry.captureException(error);
-      }
-    })();
-  }, [objects]);
+  //   (async () => {
+  //     try {
+  //       await Promise.all(objects.map(({ url }) => url).map(preload));
+  //       setReady(true);
+  //     } catch (error) {
+  //       Sentry.captureException(error);
+  //     }
+  //   })();
+  // }, [objects]);
 
-  // Render
+  // // Render
 
-  if (!objects || !ready) {
-    return <div>Loading</div>;
-  }
+  // if (!objects || !ready) {
+  //   return <div>Loading</div>;
+  // }
 
   return (
     <Exhibition3dCanvas>
