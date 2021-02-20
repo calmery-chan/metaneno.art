@@ -1,4 +1,53 @@
 {
+  "background": {
+    "color": "#FFCFCB"
+  },
+  "fog": {
+    "color": "#FFCFCB"
+  },
+  "lights": {
+    "directional": {
+      "color": "#FD4D56",
+      "position": {
+        "x": 0,
+        "y": 10,
+        "z": 0
+      }
+    },
+    "points": [
+      {
+        "color": "#FFF",
+        "position": {
+          "x": 0,
+          "y": 10,
+          "z": 0
+        }
+      }
+    ]
+  },
+  "objects": {
+    "characters": [],
+    "colliders": [],
+    "decorations": [],
+    "illustrations": []
+  },
+  "player": {
+    "defaultPosition": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "defaultRotation": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "offsetPosition": {
+      "x": 0,
+      "y": 5.7,
+      "z": 0
+    }
+  },
   "sound": {
     "url": "http://localhost:8000/sounds/cloud.mp3"
   }

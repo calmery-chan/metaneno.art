@@ -45,8 +45,10 @@ const useCamera = (
 };
 
 export const Exhibition3dPlayer = React.memo<{
-  offset?: Vector3;
-}>(({ offset = new Vector3(0, 0, 0) }) => {
+  defaultPosition?: { x: number, y: number, z: number };
+  defaultRotation?: { x: number, y: number, z: number };
+  offsetPosition?: { x: number, y: number, z: number };
+}>(({ defaultPosition = { x: 0, y: 0, z: 0 }, defaultRotation = { x: 0, y: 0, z: 0 }, offsetPosition = { x: 0, y: 0, z: 0 } }) => {
   const [animations, setAnimations] = useState<AnimationClip[]>();
   const [cameraOffset, setCameraOffset] = useState<Vector3>();
   const [mixer, setMixer] = useState<AnimationMixer>();
@@ -95,8 +97,17 @@ export const Exhibition3dPlayer = React.memo<{
       return;
     }
 
-    scene.position.set(offset.x, offset.y, offset.z);
-  }, [offset, scene]);
+    scene.position.set(
+      defaultPosition.x + offsetPosition.x,
+      defaultPosition.y + offsetPosition.y,
+      defaultPosition.z + offsetPosition.z);
+    
+    scene.rotation.set(
+      defaultRotation.x,
+      defaultRotation.y,
+      defaultRotation.z
+    )
+  }, [defaultPosition, defaultRotation, offsetPosition, scene]);
 
   useEffect(() => {
     if (!animations || !mixer) {
@@ -158,9 +169,9 @@ export const Exhibition3dPlayer = React.memo<{
         .applyQuaternion(camera.quaternion);
 
       const nextPosition = new Vector3(
-        scene.position.x + x + offset.x,
-        offset.y,
-        scene.position.z + z + offset.z
+        scene.position.x + x + offsetPosition.x,
+        offsetPosition.y,
+        scene.position.z + z + offsetPosition.z
       );
 
       const result = meshes.some((mesh) => {

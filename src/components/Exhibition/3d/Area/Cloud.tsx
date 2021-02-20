@@ -12,38 +12,9 @@ import { useAudio } from "~/hooks/useAudio";
 import { GraphicsQuality } from "~/types/exhibition";
 import { preload } from "~/utils/exhibition";
 import { Sentry } from "~/utils/sentry";
-
-// Components
-
-const Background = React.memo(() => {
-  const { scene } = useThree();
-
-  useEffect(() => {
-    scene.background = new Color(0xffcfcb);
-  }, [scene]);
-
-  return null;
-});
-
-const Fog = React.memo(() => {
-  const { scene } = useThree();
-
-  useEffect(() => {
-    scene.fog = new Three.Fog(new Color(0xffcfcb), 1.5, 20);
-  }, [scene]);
-
-  return null;
-});
-
-const Lights = React.memo(() => (
-  <>
-    <directionalLight
-      color={new Color(0xfd4d56)}
-      position={new Vector3(0, 10, 0)}
-    />
-    <pointLight position={new Vector3(0, 10, 0)} />
-  </>
-));
+import { Exhibition3dBackground } from "../Background";
+import { Exhibition3dFog } from "../Fog";
+import { Exhibition3dLights } from "../Lights";
 
 // Main
 
@@ -88,12 +59,13 @@ export const Exhibition3dAreaCloud: React.FC<{ quality: GraphicsQuality }> = ({
 
   return (
     <Exhibition3dCanvas>
-      <Background />
-      <Fog />
-      <Lights />
-      <Exhibition3dCanvasObjects objects={objects} />
-      <Exhibition3dPlayer offset={new Vector3(0, 5.7, 0)} />
+      <Exhibition3dBackground {...cloud.background} />
+      <Exhibition3dFog {...cloud.fog} />
+      <Exhibition3dLights {...cloud.lights} />
+      <Exhibition3dPlayer {...cloud.player} />
       <Exhibition3dRenderer quality={quality} />
+
+      <Exhibition3dCanvasObjects objects={objects} />
     </Exhibition3dCanvas>
   );
 };
