@@ -117,7 +117,7 @@ export const ExhibitionMenu: React.FC<{
   const handleClickMuteAudioToggle = useCallback(() => {
     Howler.volume(muted ? currentAudioVolume : 0);
     saveSettings({ muted });
-    setMuted(!muted);
+    setMuted(muted);
   }, [currentAudioVolume, muted]);
 
   const handleCloseOkusuriLand = useCallback(
