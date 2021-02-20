@@ -9,6 +9,7 @@ import {
   Scene,
 } from "three";
 import GLTFLoader from "three-gltf-loader";
+import { GraphicsQuality } from "~/types/exhibition";
 
 const createMaterial = (material: Material) => {
   // UniGLTF/UniUnlit を使用しているときは MeshBasicMaterial となる、書き換えない
@@ -28,7 +29,7 @@ const createMaterial = (material: Material) => {
   });
 };
 
-export const getDevicePixelRatio = (quality: "low" | "middle" | "high") => {
+export const getDevicePixelRatio = (quality: GraphicsQuality) => {
   if (!window) {
     return 1;
   }

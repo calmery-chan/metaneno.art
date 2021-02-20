@@ -20,3 +20,5 @@ export type AreaObject = {
   };
   url: string;
 };
+
+export type GraphicsQuality = "high" | "low" | "middle";
