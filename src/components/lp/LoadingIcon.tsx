@@ -13,6 +13,7 @@ export default function LoadingIcon() {
             <Layer2 xlinkHref="/lp/loading/6.png" />
           </IceWrapper>
           <Layer3 xlinkHref="/lp/loading/5.png" />
+          <Layer3Sub xlinkHref="/lp/loading/5-change.png" />
           <Layer4 xlinkHref="/lp/loading/4.png" />
           <Layer5 xlinkHref="/lp/loading/3.png" />
           <Layer6Wrapper>
@@ -120,6 +121,11 @@ const Layer2 = styled.image`
 
 const Layer3 = styled.image`
   ${layerStyles}
+`;
+
+const Layer3Sub = styled.image`
+  ${layerStyles}
+  animation: ${fadeIn} 2.4s linear 0s both;
 `;
 
 const Layer4 = styled.image`
