@@ -196,13 +196,11 @@ const Choices = React.memo<{
 // Components
 
 export const Exhibition3dSpeechBubble: React.FC<{
-  name: string;
   onChangeActions: (actions: string[]) => void;
   onChangeAnimations: (animations: string[][]) => void;
   onComplete: () => void;
   scenarios: Scenario[];
 }> = ({
-  name,
   onChangeActions,
   onChangeAnimations,
   onComplete,
@@ -213,6 +211,7 @@ export const Exhibition3dSpeechBubble: React.FC<{
   const [currentScenarioIndex, setCurrentScenarioIndex] = useState(0);
   const [isChoosing, setIsChoosing] = useState(false);
   const [isCompleted, setIsCompleted] = useState(false);
+  const [name, setName] = useState<string | null>(null);
   const [scenarios, setScenarios] = useState<Scenario[]>(_scenarios);
 
   const scenario: Scenario | undefined = scenarios[currentScenarioIndex];
@@ -231,7 +230,7 @@ export const Exhibition3dSpeechBubble: React.FC<{
     setCharacterCount(0);
     setCharacterTimer(null);
     setCurrentScenarioIndex(0);
-    setIsChoosing(false);
+    setIsChoosing(!!scenarios[0]?.branches);
 
     if (!scenarios.length) {
       setIsCompleted(true);
@@ -246,11 +245,17 @@ export const Exhibition3dSpeechBubble: React.FC<{
 
   useEffect(() => {
     if (scenario && scenario.animations) {
+      console.log("Change Animations:", JSON.stringify(scenario.animations));
       onChangeAnimations(scenario.animations);
     }
 
     if (scenario && scenario.actions) {
+      console.log("Change Actions:", JSON.stringify(scenario.actions));
       onChangeActions(scenario.actions);
+    }
+
+    if (scenario && scenario.name !== undefined) {
+      setName(scenario.name);
     }
   }, [onChangeActions, onChangeAnimations, scenario]);
 
@@ -259,11 +264,15 @@ export const Exhibition3dSpeechBubble: React.FC<{
       return;
     }
 
-    setCharacterTimer(
-      window.setTimeout(() => {
-        setCharacterCount(characterCount + 1);
-      }, 80)
-    );
+    const timer = window.setTimeout(() => {
+      setCharacterCount(characterCount + 1);
+    }, 80);
+
+    setCharacterTimer(timer);
+
+    return () => {
+      window.clearTimeout(timer);
+    };
   }, [characterCount, scenario]);
 
   // Events
@@ -341,7 +350,7 @@ export const Exhibition3dSpeechBubble: React.FC<{
           xmlns="http://www.w3.org/2000/svg"
         >
           <Background />
-          <Name>{name}</Name>
+          {name && <Name>{name}</Name>}
           <Message>{scenario.message.slice(0, characterCount)}</Message>
           {isChoosing && scenario.branches && (
             <Choices

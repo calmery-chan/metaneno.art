@@ -31,6 +31,7 @@ export type Area = {
     defaultPosition: Transform;
     defaultRotation: Transform;
     defaultScale: Transform;
+    url: string;
   };
   sound: {
     url: string;
@@ -95,4 +96,5 @@ export type Scenario = {
     scenarios: Scenario[];
   }[];
   message: string;
+  name?: string | null;
 };

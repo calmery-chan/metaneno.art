@@ -12,7 +12,6 @@ import { Exhibition3dObjectsWorks } from "./3d/Objects/Works";
 import { Exhibition3dPlayer } from "./3d/Player";
 import { Exhibition3dRenderer } from "./3d/Renderer";
 import { Exhibition3dWork } from "./3d/Work";
-import { objects } from "~/data/cloud.json";
 import { useAudio } from "~/hooks/useAudio";
 import {
   Area,
@@ -29,7 +28,13 @@ export const Exhibition3d: React.FC<{
 }> = ({ area, settings }) => {
   const { audio } = useAudio(area.sound.url, { loop: true });
   const [characterId, setCharacterId] = useState<string | null>(null);
+  const [characterAnimations, setCharacterAnimations] = useState<
+    string[][] | null
+  >(null);
   const [itemId, setItemId] = useState<string | null>(null);
+  const [playerAccessory, setPlayerAccessory] = useState<
+    "fried_egg" | "pancake" | null
+  >(null);
   const [ready, setReady] = useState(false);
   const [workId, setWorkId] = useState<string | null>(null);
 
@@ -65,13 +70,39 @@ export const Exhibition3d: React.FC<{
     setWorkId(null);
   }, []);
 
+  //
+
+  const handleAction = useCallback((actions: string[]) => {
+    actions.forEach((action) => {
+      switch (action) {
+        case "pancake":
+          setPlayerAccessory("pancake");
+          return;
+
+        case "fried_egg":
+          setPlayerAccessory("fried_egg");
+          return;
+      }
+    });
+  }, []);
+
+  const handleChangeCharacterAnimations = useCallback(
+    (animations: string[][]) => {
+      setCharacterAnimations(animations);
+    },
+    []
+  );
+
+  console.log(playerAccessory, characterAnimations);
+
   // Side Effects
 
   useEffect(() => {
     setReady(false);
 
-    const objects = [
-      area.collider,
+    const objects: { url: string }[] = [
+      { url: area.collider.url },
+      { url: area.player.url },
       ...area.objects.characters,
       ...area.objects.decorations,
       ...area.objects.items,
@@ -101,7 +132,7 @@ export const Exhibition3d: React.FC<{
 
   // Render
 
-  if (!objects || !ready) {
+  if (!ready) {
     return <div>Loading</div>;
   }
 
@@ -126,6 +157,7 @@ export const Exhibition3d: React.FC<{
         />
         <Exhibition3dPlayer
           {...area.player}
+          accessory={playerAccessory}
           collider={area.collider}
           operable={!workId}
         />
@@ -133,10 +165,10 @@ export const Exhibition3d: React.FC<{
       </Exhibition3dCanvas>
       {character && (
         <Exhibition3dCharacter
-          {...character}
-          onChangeActions={(actions) => console.log(actions)}
-          onChangeAnimations={(animations) => console.log(animations)}
+          onChangeActions={handleAction}
+          onChangeAnimations={handleChangeCharacterAnimations}
           onClose={handleCloseCharacter}
+          scenarios={character.scenarios}
         />
       )}
       {itemId && <Exhibition3dItem id={itemId} onClose={handleCloseItem} />}

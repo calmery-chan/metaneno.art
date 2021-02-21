@@ -2,7 +2,7 @@ import { NextPage } from "next";
 import React, { useCallback, useState } from "react";
 import { Exhibition3d } from "~/components/Exhibition/3d";
 import { ExhibitionMenu } from "~/components/Exhibition/Menu";
-import cloud from "~/data/cloud.json";
+import cloud from "~/data/cloud";
 import { GraphicsQuality } from "~/types/exhibition";
 
 const Exhibition: NextPage = () => {
