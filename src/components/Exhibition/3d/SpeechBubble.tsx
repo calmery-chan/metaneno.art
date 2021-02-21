@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { Exhibition3dSpeechBubbleCanvasContainer } from "./SpeechBubble/CanvasContainer";
-import { bounceIn, bounceOut } from "~/styles/animations";
+import { bounceIn, bounceOut, fadeIn, fadeOut } from "~/styles/animations";
 import { Mixin } from "~/styles/mixin";
 
 // Constants
@@ -110,6 +110,8 @@ const Choices = React.memo<{
   messages: string[];
   onClick: (index: number) => void;
 }>(({ messages, onClick }) => {
+  const [chose, setChose] = useState<number | null>(null);
+
   const width = useMemo(() => {
     const maximumWidth =
       EXHIBITION_3D_CANVAS_WIDTH - MARGIN * messages.length - MARGIN * 2;
@@ -143,17 +145,23 @@ const Choices = React.memo<{
     (event: React.MouseEvent, index: number) => {
       event.preventDefault();
       event.stopPropagation();
-
-      onClick(index);
+      setChose(index);
     },
     [onClick]
   );
+
+  useEffect(() => {
+    if (chose !== null) {
+      setTimeout(() => onClick(chose), Mixin.ANIMATION_DURATION.milliseconds);
+    }
+  }, [chose, onClick]);
 
   return (
     <>
       {messages.map((message, index) => (
         <svg
           className="cursor-pointer"
+          css={chose !== null ? fadeOut : fadeIn}
           key={index}
           height={height}
           onClick={(event) => handleClickMessage(event, index)}
@@ -189,26 +197,21 @@ export const Exhibition3dSpeechBubble: React.FC<{
   scenarios: Scenario[];
   onChangeAnimation: (animation: string) => void;
   onComplete: () => void;
-}> = ({
-  name,
-  scenarios: originalScenarios,
-  onChangeAnimation,
-  onComplete,
-}) => {
-  const [scenarios, setScenarios] = useState(originalScenarios);
-  const [isCompleted, setIsCompleted] = useState(false);
+}> = ({ name, scenarios: _scenarios, onChangeAnimation, onComplete }) => {
+  const [scenarios, setScenarios] = useState(_scenarios);
   const [scenarioIndex, setScenarioIndex] = useState(0);
   const [characterCount, setCharacterCount] = useState(0);
   const [characterTimer, setCharacterTimer] = useState<number | null>(null);
+  const [isCompleted, setIsCompleted] = useState(false);
+  const [isChoosing, setIsChoosing] = useState(false);
 
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const scenario = scenarios[scenarioIndex]!;
-  const isChoosing = !!scenario?.branches;
 
   // 上位コンポーネントからの scenarios が変更されたとき、scenarios を更新して最初から始める
   useEffect(() => {
-    setScenarios(originalScenarios);
-  }, [originalScenarios]);
+    setScenarios(_scenarios);
+  }, [_scenarios]);
 
   // scenarios が更新された、現在の位置をリセットする
   useEffect(() => {
@@ -219,10 +222,10 @@ export const Exhibition3dSpeechBubble: React.FC<{
 
     if (characterTimer) {
       clearTimeout(characterTimer);
-      setCharacterTimer(null);
     }
 
     setCharacterCount(0);
+    setCharacterTimer(null);
     setScenarioIndex(0);
   }, [scenarios]);
 
@@ -258,19 +261,19 @@ export const Exhibition3dSpeechBubble: React.FC<{
 
   const handleOnClickSpeechBubble = useCallback(() => {
     if (characterCount >= scenario.message.length) {
-      if (isChoosing) {
-        return;
-      }
+      if (isChoosing) return;
 
       const nextScenarioIndex = scenarioIndex + 1;
       const scenario = scenarios[nextScenarioIndex];
 
       if (!scenario) {
         setIsCompleted(true);
-      } else {
-        setScenarioIndex(nextScenarioIndex);
-        setCharacterCount(0);
+        return;
       }
+
+      setCharacterCount(0);
+      setScenarioIndex(nextScenarioIndex);
+      setIsChoosing(!!scenario?.branches);
 
       return;
     }
@@ -280,12 +283,13 @@ export const Exhibition3dSpeechBubble: React.FC<{
     }
 
     setCharacterCount(scenario.message.length);
+    setIsChoosing(!!scenario?.branches);
   }, [
-    scenarioIndex,
     characterCount,
-    scenarios.length,
-    scenario.message,
     characterTimer,
+    scenarioIndex,
+    scenario,
+    scenarios.length,
     isChoosing,
   ]);
 
