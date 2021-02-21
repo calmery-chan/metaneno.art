@@ -1,10 +1,12 @@
 import { css } from "@emotion/react";
+import classnames from "classnames";
 import React, { useCallback, useEffect, useState } from "react";
 import { Scene, Vector3 } from "three";
 import { ExhibitionPopup } from "../Popup";
 import { Exhibition3dCamera } from "./Camera";
 import { Exhibition3dCanvas } from "./Canvas";
 import { Exhibition3dRenderer } from "./Renderer";
+import { useScreenOrientation } from "~/hooks/exhibition/useScreenOrientation";
 import { Colors } from "~/styles/colors";
 import { Spacing } from "~/styles/spacing";
 import { Typography } from "~/styles/typography";
@@ -69,7 +71,6 @@ const toggle = css`
 
 const view = css`
   background: ${Colors.lightGray};
-  height: 100%;
 `;
 
 // Main
@@ -90,8 +91,11 @@ export const Exhibition3dWork = React.memo<
     title,
     url,
   }) => {
+    const { isMobile, orientation } = useScreenOrientation();
     const [scene, setScene] = useState<Scene>();
     const [mode, setMode] = useState<"2d" | "3d">("2d");
+
+    const isPortrait = isMobile && orientation === "portrait";
 
     // Events
 
@@ -116,8 +120,20 @@ export const Exhibition3dWork = React.memo<
 
     return (
       <ExhibitionPopup onClose={onClose}>
-        <div className="flex h-full" css={contents}>
-          <div className="relative w-1/2" css={view}>
+        <div
+          className={classnames("flex h-full", {
+            "flex-col": isPortrait,
+            "flex-row": !isPortrait,
+          })}
+          css={contents}
+        >
+          <div
+            className={classnames("relative", {
+              "h-1/2 w-full": isPortrait,
+              "h-full w-1/2": !isPortrait,
+            })}
+            css={view}
+          >
             {mode === "2d" && (
               <img className="h-full object-contain w-full" src={imageUrl} />
             )}
@@ -135,7 +151,7 @@ export const Exhibition3dWork = React.memo<
             )}
             {scene && (
               <div
-                className="absolute grid place-items-center"
+                className="absolute cursor-pointer grid place-items-center"
                 css={toggle}
                 onClick={handleClickToggleMode}
               >
@@ -144,7 +160,13 @@ export const Exhibition3dWork = React.memo<
               </div>
             )}
           </div>
-          <div className="w-1/2" css={description}>
+          <div
+            className={classnames("overflow-scroll", {
+              "h-1/2 w-full": isPortrait,
+              "h-full w-1/2": !isPortrait,
+            })}
+            css={description}
+          >
             <div className="flex">
               <div css={workTitle}>{title}</div>
               <div className="ml-auto">{date}</div>
