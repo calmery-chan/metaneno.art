@@ -134,6 +134,7 @@ export const Exhibition3d: React.FC<{
       {character && (
         <Exhibition3dCharacter
           {...character}
+          onChangeActions={(actions) => console.log(actions)}
           onChangeAnimations={(animations) => console.log(animations)}
           onClose={handleCloseCharacter}
         />

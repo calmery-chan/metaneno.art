@@ -59,10 +59,7 @@ export type AreaObject = {
 export type AreaCharacterObject = AreaObject & {
   id: string;
   name: string;
-  scenarios: {
-    animation?: string;
-    message: string;
-  }[];
+  scenarios: Scenario[];
 };
 
 export type AreaItemObject = AreaObject & {
@@ -91,6 +88,7 @@ export type Fanart = {
 export type GraphicsQuality = "high" | "low" | "middle";
 
 export type Scenario = {
+  actions?: string[];
   animations?: string[][];
   branches?: {
     message: string;

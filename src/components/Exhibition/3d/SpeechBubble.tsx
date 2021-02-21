@@ -197,10 +197,17 @@ const Choices = React.memo<{
 
 export const Exhibition3dSpeechBubble: React.FC<{
   name: string;
+  onChangeActions: (actions: string[]) => void;
   onChangeAnimations: (animations: string[][]) => void;
   onComplete: () => void;
   scenarios: Scenario[];
-}> = ({ name, onChangeAnimations, onComplete, scenarios: _scenarios }) => {
+}> = ({
+  name,
+  onChangeActions,
+  onChangeAnimations,
+  onComplete,
+  scenarios: _scenarios,
+}) => {
   const [characterCount, setCharacterCount] = useState(0);
   const [characterTimer, setCharacterTimer] = useState<number | null>(null);
   const [currentScenarioIndex, setCurrentScenarioIndex] = useState(0);
@@ -241,7 +248,11 @@ export const Exhibition3dSpeechBubble: React.FC<{
     if (scenario && scenario.animations) {
       onChangeAnimations(scenario.animations);
     }
-  }, [onChangeAnimations, scenario]);
+
+    if (scenario && scenario.actions) {
+      onChangeActions(scenario.actions);
+    }
+  }, [onChangeActions, onChangeAnimations, scenario]);
 
   useEffect(() => {
     if (!scenario || characterCount >= scenario.message.length) {
