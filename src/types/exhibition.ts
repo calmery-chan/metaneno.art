@@ -22,7 +22,7 @@ export type Area = {
     points: Light[];
   };
   objects: {
-    characters: AreaObject[];
+    characters: AreaCharacterObject[];
     decorations: AreaObject[];
     works: AreaWorkObject[];
   };
@@ -55,13 +55,20 @@ export type AreaObject = {
   url: string;
 };
 
+export type AreaCharacterObject = AreaObject & {
+  scenarios: {
+    animation?: string;
+    message: string;
+  }[];
+};
+
 export type AreaWorkObject = AreaObject & {
   characters: string[];
   comment: string;
   date: string;
   id: string;
   imageUrl: string;
-  title: string
+  title: string;
 };
 
 export type GraphicsQuality = "high" | "low" | "middle";

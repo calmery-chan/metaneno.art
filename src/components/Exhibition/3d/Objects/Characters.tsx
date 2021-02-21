@@ -1,14 +1,21 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useFrame } from "react-three-fiber";
 import { AnimationMixer, Scene } from "three";
 import * as Three from "three";
-import { AreaObject } from "~/types/exhibition";
+import { Exhibition3dScene } from "../Scene";
+import { AreaCharacterObject } from "~/types/exhibition";
 import { getGltf } from "~/utils/exhibition";
 
-const Character = React.memo<AreaObject>(
-  ({ position, rotation, scale, url }) => {
+const Character = React.memo<AreaCharacterObject>(
+  ({ position, rotation, scale, scenarios, url }) => {
     const [mixer, setMixer] = useState<AnimationMixer>();
     const [scene, setScene] = useState<Scene>();
+
+    // Events
+
+    const handleClick = useCallback(() => {
+      console.log("click", url);
+    }, []);
 
     // Side Effects
 
@@ -55,16 +62,17 @@ const Character = React.memo<AreaObject>(
 
     // Render
 
-    if (!scene) {
-      return null;
-    }
-
-    return <primitive object={scene} />;
+    return (
+      <Exhibition3dScene
+        onClick={scenarios.length ? handleClick : undefined}
+        scene={scene}
+      />
+    );
   }
 );
 
 export const Exhibition3dObjectsCharacters: React.FC<{
-  objects: AreaObject[];
+  objects: AreaCharacterObject[];
 }> = ({ objects }) => (
   <>
     {objects.map((object) => (

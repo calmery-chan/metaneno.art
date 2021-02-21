@@ -61,6 +61,7 @@
           "y": 0.25,
           "z": 0.25
         },
+        "scenarios": [],
         "url": "http://localhost:8000/objects/characters/noneme_sitting.glb"
       },
       {
@@ -79,6 +80,7 @@
           "y": 0.2,
           "z": 0.2
         },
+        "scenarios": [],
         "url": "http://localhost:8000/objects/characters/flower_sheep.glb"
       },
       {
@@ -97,6 +99,7 @@
           "y": 0.2,
           "z": 0.2
         },
+        "scenarios": [],
         "url": "http://localhost:8000/objects/characters/water_sheep.glb"
       },
       {
@@ -115,6 +118,7 @@
           "y": 0.25,
           "z": 0.25
         },
+        "scenarios": [],
         "url": "http://localhost:8000/objects/characters/ameri.glb"
       },
       {
@@ -133,6 +137,7 @@
           "y": 0.25,
           "z": 0.25
         },
+        "scenarios": [],
         "url": "http://localhost:8000/objects/characters/maid.glb"
       },
       {
@@ -151,6 +156,11 @@
           "y": 0.5,
           "z": 0.5
         },
+        "scenarios": [
+          {
+            "message": "こんにちは"
+          }
+        ],
         "url": "http://localhost:8000/objects/characters/hitugi.glb"
       }
     ],
