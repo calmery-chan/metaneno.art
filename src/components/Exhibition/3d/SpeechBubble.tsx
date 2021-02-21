@@ -184,7 +184,7 @@ const Choices = React.memo<{
 /* --- Types --- */
 
 type Scenario = {
-  animation?: string;
+  animations?: string[][];
   branches?: {
     message: string;
     scenarios: Scenario[];
@@ -195,9 +195,9 @@ type Scenario = {
 export const Exhibition3dSpeechBubble: React.FC<{
   name: string;
   scenarios: Scenario[];
-  onChangeAnimation: (animation: string) => void;
+  onChangeAnimations: (animation: string[][]) => void;
   onComplete: () => void;
-}> = ({ name, scenarios: _scenarios, onChangeAnimation, onComplete }) => {
+}> = ({ name, scenarios: _scenarios, onChangeAnimations, onComplete }) => {
   const [scenarios, setScenarios] = useState(_scenarios);
   const [scenarioIndex, setScenarioIndex] = useState(0);
   const [characterCount, setCharacterCount] = useState(0);
@@ -240,10 +240,10 @@ export const Exhibition3dSpeechBubble: React.FC<{
   useEffect(() => {
     const scenario = scenarios[scenarioIndex];
 
-    if (scenario && scenario.animation) {
-      onChangeAnimation(scenario.animation);
+    if (scenario && scenario.animations) {
+      onChangeAnimations(scenario.animations);
     }
-  }, [onChangeAnimation, scenarioIndex]);
+  }, [onChangeAnimations, scenarioIndex]);
 
   useEffect(() => {
     if (characterCount >= scenario.message.length) {

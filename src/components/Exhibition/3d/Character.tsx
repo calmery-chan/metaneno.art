@@ -14,14 +14,14 @@ const container = css`
 
 export const Exhibition3dCharacter = React.memo<
   AreaCharacterObject & {
-    onChangeAnimation: (id: string, animation: string) => void;
+    onChangeAnimations: (id: string, animations: string[][]) => void;
     onClose: () => void;
   }
->(({ id, name, onClose, onChangeAnimation, scenarios }) => (
+>(({ id, name, onClose, onChangeAnimations, scenarios }) => (
   <Exhibition3dSpeechBubble
     name={name}
     scenarios={scenarios}
-    onChangeAnimation={(animation) => onChangeAnimation(id, animation)}
+    onChangeAnimations={(animations) => onChangeAnimations(id, animations)}
     onComplete={onClose}
   />
 ));

@@ -132,7 +132,11 @@ export const Exhibition3d: React.FC<{
         <Exhibition3dRenderer graphicsQuality={settings.graphicsQuality} />
       </Exhibition3dCanvas>
       {character && (
-        <Exhibition3dCharacter {...character} onClose={handleCloseCharacter} />
+        <Exhibition3dCharacter
+          {...character}
+          onChangeAnimations={(animations) => console.log(animations)}
+          onClose={handleCloseCharacter}
+        />
       )}
       {itemId && <Exhibition3dItem id={itemId} onClose={handleCloseItem} />}
       {work && (
