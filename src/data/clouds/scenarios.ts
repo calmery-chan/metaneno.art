@@ -4,7 +4,7 @@ import { Scenario } from "~/types/exhibition";
 
 export const MAID_SCENARIOS: Scenario[] = [
   {
-    animations: [["blink", "standing"]],
+    animations: [["blink", "meido_Standing"]],
     message: "はじめまして！あの…突然ですがちょっと料理を作りすぎてしまって…",
     name: "メイドさん",
   },
@@ -19,7 +19,7 @@ export const MAID_SCENARIOS: Scenario[] = [
                 message: "食べる",
                 scenarios: [
                   {
-                    animations: [["open mouth", "pose", "smile", "standing"]],
+                    animations: [["open mouth", "pose", "smile", "meido_Standing"]],
                     message:
                       "わぁ！ありがとうございます♪お口に合うといいのですが！",
                   },
@@ -33,7 +33,7 @@ export const MAID_SCENARIOS: Scenario[] = [
                 message: "頭にのせておく",
                 scenarios: [
                   {
-                    animations: [["komaru", "pose", "standing"]],
+                    animations: [["komaru", "pose", "meido_Standing"]],
                     branches: [
                       {
                         message: "乗せて！",
@@ -49,7 +49,7 @@ export const MAID_SCENARIOS: Scenario[] = [
                         message: "…やっぱり何でもないです…。",
                         scenarios: [
                           {
-                            animations: [["pose", "smile", "standing"]],
+                            animations: [["pose", "smile", "meido_Standing"]],
                             message: "あ、いえいえ…！(ほっ……)",
                           },
                         ],
@@ -74,7 +74,7 @@ export const MAID_SCENARIOS: Scenario[] = [
                 message: "食べる",
                 scenarios: [
                   {
-                    animations: [["open mouth", "pose", "smile", "standing"]],
+                    animations: [["open mouth", "pose", "smile", "meido_Standing"]],
                     message:
                       "わぁ！ありがとうございます♪お口に合うといいのですが！",
                   },
@@ -88,7 +88,7 @@ export const MAID_SCENARIOS: Scenario[] = [
                 message: "頭にのせておく",
                 scenarios: [
                   {
-                    animations: [["komaru", "pose", "standing"]],
+                    animations: [["komaru", "pose", "meido_Standing"]],
                     branches: [
                       {
                         message: "乗せて！",
@@ -104,7 +104,7 @@ export const MAID_SCENARIOS: Scenario[] = [
                         message: "…やっぱり何でもないです…。",
                         scenarios: [
                           {
-                            animations: [["pose", "smile", "standing"]],
+                            animations: [["pose", "smile", "meido_Standing"]],
                             message: "あ、いえいえ…！(ほっ……)",
                           },
                         ],

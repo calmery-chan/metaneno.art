@@ -93,8 +93,6 @@ export const Exhibition3d: React.FC<{
     []
   );
 
-  console.log(playerAccessory, characterAnimations);
-
   // Side Effects
 
   useEffect(() => {
@@ -143,6 +141,9 @@ export const Exhibition3d: React.FC<{
         <Exhibition3dFog {...area.fog} />
         <Exhibition3dLights {...area.lights} />
         <Exhibition3dObjectsCharacters
+          animations={characterId && characterAnimations ? {
+            [characterId]: characterAnimations
+          } : {}}
           objects={area.objects.characters}
           onClick={setCharacterId}
         />
