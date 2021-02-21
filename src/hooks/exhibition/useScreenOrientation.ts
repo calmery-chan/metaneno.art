@@ -23,12 +23,11 @@ export const useScreenOrientation = () => {
       return;
     }
 
-    addEventListener("deviceorientation", handleOrientation, true);
-
+    addEventListener("orientationchange", handleOrientation, true);
     handleOrientation();
 
     return () => {
-      removeEventListener("deviceorientation", handleOrientation, true);
+      removeEventListener("orientationchange", handleOrientation, true);
     };
   }, []);
 
