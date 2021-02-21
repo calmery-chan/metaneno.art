@@ -1,4 +1,3 @@
-import { css } from "@emotion/react";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { Exhibition3dSpeechBubbleCanvasContainer } from "./SpeechBubble/CanvasContainer";
 import { bounceIn, bounceOut } from "~/styles/animations";
@@ -37,10 +36,7 @@ const Background: React.FC = () => (
 
 const TEXT_FONT_SIZE = 10;
 
-const Text: React.FC<{ center?: boolean }> = ({
-  center = false,
-  children,
-}) => (
+const Text: React.FC<{ center?: boolean }> = ({ center = false, children }) => (
   <text
     dominantBaseline="central"
     fill="#7E395B"
@@ -112,7 +108,8 @@ const CHOICE_MAXIMUM_WIDTH = 128;
 
 const Choices = React.memo<{
   messages: string[];
-}>(({ messages }) => {
+  onClick: (index: number) => void;
+}>(({ messages, onClick }) => {
   const width = useMemo(() => {
     const maximumWidth =
       EXHIBITION_3D_CANVAS_WIDTH - MARGIN * messages.length - MARGIN * 2;
@@ -142,6 +139,16 @@ const Choices = React.memo<{
     return NAME_Y - height - MARGIN;
   }, [height]);
 
+  const handleClickMessage = useCallback(
+    (event: React.MouseEvent, index: number) => {
+      event.preventDefault();
+      event.stopPropagation();
+
+      onClick(index);
+    },
+    [onClick]
+  );
+
   return (
     <>
       {messages.map((message, index) => (
@@ -149,6 +156,7 @@ const Choices = React.memo<{
           className="cursor-pointer"
           key={index}
           height={height}
+          onClick={(event) => handleClickMessage(event, index)}
           width={width}
           x={x + (width + MARGIN) * index}
           y={y}
@@ -181,21 +189,42 @@ export const Exhibition3dSpeechBubble: React.FC<{
   scenarios: Scenario[];
   onChangeAnimation: (animation: string) => void;
   onComplete: () => void;
-}> = ({ name, scenarios, onChangeAnimation, onComplete }) => {
+}> = ({
+  name,
+  scenarios: originalScenarios,
+  onChangeAnimation,
+  onComplete,
+}) => {
+  const [scenarios, setScenarios] = useState(originalScenarios);
   const [isCompleted, setIsCompleted] = useState(false);
   const [scenarioIndex, setScenarioIndex] = useState(0);
   const [characterCount, setCharacterCount] = useState(0);
   const [characterTimer, setCharacterTimer] = useState<number | null>(null);
-  const [isChoosing, setIsChoosing] = useState(false);
 
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const scenario = scenarios[scenarioIndex]!;
+  const isChoosing = !!scenario?.branches;
 
+  // 上位コンポーネントからの scenarios が変更されたとき、scenarios を更新して最初から始める
   useEffect(() => {
-    if (scenario.branches) {
-      setIsChoosing(true);
+    setScenarios(originalScenarios);
+  }, [originalScenarios]);
+
+  // scenarios が更新された、現在の位置をリセットする
+  useEffect(() => {
+    if (!scenarios.length) {
+      setIsCompleted(true);
+      return;
     }
-  }, [scenario]);
+
+    if (characterTimer) {
+      clearTimeout(characterTimer);
+      setCharacterTimer(null);
+    }
+
+    setCharacterCount(0);
+    setScenarioIndex(0);
+  }, [scenarios]);
 
   useEffect(() => {
     if (isCompleted) {
@@ -229,6 +258,10 @@ export const Exhibition3dSpeechBubble: React.FC<{
 
   const handleOnClickSpeechBubble = useCallback(() => {
     if (characterCount >= scenario.message.length) {
+      if (isChoosing) {
+        return;
+      }
+
       const nextScenarioIndex = scenarioIndex + 1;
       const scenario = scenarios[nextScenarioIndex];
 
@@ -253,11 +286,18 @@ export const Exhibition3dSpeechBubble: React.FC<{
     scenarios.length,
     scenario.message,
     characterTimer,
+    isChoosing,
   ]);
 
-  // Render
+  const handleClickMessage = useCallback(
+    (index: number) => {
+      const { scenarios } = scenario.branches![index];
+      setScenarios(scenarios);
+    },
+    [scenario]
+  );
 
-  console.log("Render");
+  // Render
 
   return (
     <div
@@ -277,9 +317,10 @@ export const Exhibition3dSpeechBubble: React.FC<{
           <Background />
           <Name>{name}</Name>
           <Message>{scenario.message.slice(0, characterCount)}</Message>
-          {isChoosing && (
+          {isChoosing && scenario.branches && (
             <Choices
               messages={scenario.branches!.map(({ message }) => message)}
+              onClick={handleClickMessage}
             />
           )}
         </svg>
