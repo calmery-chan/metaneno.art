@@ -37,12 +37,18 @@ const Background: React.FC = () => (
 
 const TEXT_FONT_SIZE = 10;
 
-const Text: React.FC = ({ children }) => (
+const Text: React.FC<{ center?: boolean }> = ({
+  center = false,
+  children,
+}) => (
   <text
-    dominantBaseline="hanging"
+    dominantBaseline="central"
     fill="#7E395B"
     fontFamily="Uzura"
     fontSize={TEXT_FONT_SIZE}
+    textAnchor={center ? "middle" : "start"}
+    x={center ? "50%" : undefined}
+    y="50%"
   >
     {children}
   </text>
@@ -59,35 +65,16 @@ const NAME_HEIGHT = (NAME_ORIGINAL_HEIGHT * NAME_WIDTH) / NAME_ORIGINAL_WIDTH;
 const NAME_X = MARGIN * 3;
 const NAME_Y = BACKGROUND_Y - NAME_HEIGHT / 2;
 
-const NAME_OFFSET_Y = 1.5;
-const NAME_TEXT_OFFSET_X = 5;
-
-const Name = React.memo<{ children: string }>(({ children }) => {
-  const x = useMemo(() => {
-    if (children.length > 5) {
-      return 0;
-    }
-
-    return NAME_TEXT_OFFSET_X + (TEXT_FONT_SIZE / 2) * (5 - children.length);
-  }, [children]);
-
-  const y = useMemo(() => {
-    return (NAME_HEIGHT - TEXT_FONT_SIZE) / 2 + NAME_OFFSET_Y;
-  }, []);
-
-  return (
-    <g transform={`translate(${NAME_X}, ${NAME_Y})`}>
-      <image
-        height={NAME_HEIGHT}
-        width={NAME_WIDTH}
-        xlinkHref="/exhibition/3d/bubble/name.png"
-      />
-      <g transform={`translate(${x}, ${y})`}>
-        <Text>{children}</Text>
-      </g>
-    </g>
-  );
-});
+const Name = React.memo<{ children: string }>(({ children }) => (
+  <svg height={NAME_HEIGHT} width={NAME_WIDTH} x={NAME_X} y={NAME_Y}>
+    <image
+      height="100%"
+      width="100%"
+      xlinkHref="/exhibition/3d/bubble/name.png"
+    />
+    <Text center>{children}</Text>
+  </svg>
+));
 
 /* --- Message --- */
 
@@ -97,69 +84,83 @@ const MESSAGE_Y = BACKGROUND_Y + MARGIN * 3;
 const Message = React.memo<{ children: string }>(({ children }) => {
   return (
     <>
-      <g transform={`translate(${MESSAGE_X}, ${MESSAGE_Y})`}>
+      <svg
+        x={MESSAGE_X}
+        y={MESSAGE_Y}
+        height={TEXT_FONT_SIZE}
+        width={TEXT_FONT_SIZE * 30}
+      >
         <Text>{children.slice(0, 30)}</Text>
-      </g>
-      <g
-        transform={`translate(${MESSAGE_X}, ${
-          MESSAGE_Y + TEXT_FONT_SIZE + MARGIN / 2
-        })`}
+      </svg>
+      <svg
+        x={MESSAGE_X}
+        y={MESSAGE_Y + TEXT_FONT_SIZE + MARGIN / 2}
+        height={TEXT_FONT_SIZE}
+        width={TEXT_FONT_SIZE * 30}
       >
         <Text>{children.slice(30, 60)}</Text>
-      </g>
+      </svg>
     </>
   );
 });
 
 /* --- Choice --- */
 
-const clickable = css`
-  cursor: pointer;
-  transition: ${Mixin.ANIMATION_DURATION.seconds}s ease;
-
-  &:hover {
-    transform: scale(1.02);
-  }
-`;
-
 const CHOICE_ORIGINAL_HEIGHT = 71;
 const CHOICE_ORIGINAL_WIDTH = 384;
+const CHOICE_MAXIMUM_WIDTH = 128;
 
-const CHOICE_WIDTH = 128;
-const CHOICE_HEIGHT =
-  CHOICE_ORIGINAL_HEIGHT * (CHOICE_WIDTH / CHOICE_ORIGINAL_WIDTH);
+const Choices = React.memo<{
+  messages: string[];
+}>(({ messages }) => {
+  const width = useMemo(() => {
+    const maximumWidth =
+      EXHIBITION_3D_CANVAS_WIDTH - MARGIN * messages.length - MARGIN * 2;
+    const currentChoiceWidth = maximumWidth / messages.length;
 
-const CHOICE_X = 64;
-const CHOICE_Y = NAME_Y - CHOICE_HEIGHT - MARGIN;
+    if (currentChoiceWidth < CHOICE_MAXIMUM_WIDTH) {
+      return currentChoiceWidth;
+    }
 
-const Choice = React.memo<{
-  left: string;
-  onClickLeft: () => void;
-  onClickRight: () => void;
-  right: string;
-}>(({ left, onClickLeft, onClickRight, right }) => {
+    return CHOICE_MAXIMUM_WIDTH;
+  }, [messages.length]);
+
+  const height = useMemo(() => {
+    return CHOICE_ORIGINAL_HEIGHT * (width / CHOICE_ORIGINAL_WIDTH);
+  }, [width]);
+
+  const x = useMemo(() => {
+    return (
+      (EXHIBITION_3D_CANVAS_WIDTH -
+        width * messages.length -
+        MARGIN * (messages.length - 1)) /
+      2
+    );
+  }, [messages.length, width]);
+
+  const y = useMemo(() => {
+    return NAME_Y - height - MARGIN;
+  }, [height]);
+
   return (
     <>
-      <g transform={`translate(${CHOICE_X}, ${CHOICE_Y})`}>
-        <image
-          css={clickable}
-          height={CHOICE_HEIGHT}
-          width={CHOICE_WIDTH}
-          xlinkHref="/exhibition/3d/bubble/choice.png"
-        />
-      </g>
-      <g
-        transform={`translate(${
-          CHOICE_X + CHOICE_WIDTH + MARGIN * 2
-        }, ${CHOICE_Y})`}
-      >
-        <image
-          css={clickable}
-          height={CHOICE_HEIGHT}
-          width={CHOICE_WIDTH}
-          xlinkHref="/exhibition/3d/bubble/choice.png"
-        />
-      </g>
+      {messages.map((message, index) => (
+        <svg
+          className="cursor-pointer"
+          key={index}
+          height={height}
+          width={width}
+          x={x + (width + MARGIN) * index}
+          y={y}
+        >
+          <image
+            height="100%"
+            width="100%"
+            xlinkHref="/exhibition/3d/bubble/choice.png"
+          />
+          <Text center>{message}</Text>
+        </svg>
+      ))}
     </>
   );
 });
@@ -276,6 +277,11 @@ export const Exhibition3dSpeechBubble: React.FC<{
           <Background />
           <Name>{name}</Name>
           <Message>{scenario.message.slice(0, characterCount)}</Message>
+          {isChoosing && (
+            <Choices
+              messages={scenario.branches!.map(({ message }) => message)}
+            />
+          )}
         </svg>
       </Exhibition3dSpeechBubbleCanvasContainer>
     </div>

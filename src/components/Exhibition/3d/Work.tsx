@@ -59,7 +59,7 @@ const workTitle = css`
 
 const toggle = css`
   ${Typography.S};
-  background: rgba(0, 0, 0, .24);
+  background: rgba(0, 0, 0, 0.24);
   border-radius: 100%;
   color: ${Colors.white};
   height: 32px;
@@ -75,8 +75,22 @@ const view = css`
 
 // Main
 
-export const Exhibition3dWork = React.memo<Pick<AreaWorkObject, "characters" | "comment" | "date" | "imageUrl" | "title" | "url"> & { graphicsQuality: GraphicsQuality, onClose: () => void }>(
-  ({ characters, comment, date, graphicsQuality, imageUrl, onClose, title, url }) => {
+export const Exhibition3dWork = React.memo<
+  Pick<
+    AreaWorkObject,
+    "characters" | "comment" | "date" | "imageUrl" | "title" | "url"
+  > & { graphicsQuality: GraphicsQuality; onClose: () => void }
+>(
+  ({
+    characters,
+    comment,
+    date,
+    graphicsQuality,
+    imageUrl,
+    onClose,
+    title,
+    url,
+  }) => {
     const [scene, setScene] = useState<Scene>();
     const [mode, setMode] = useState<"2d" | "3d">("2d");
 
@@ -106,10 +120,7 @@ export const Exhibition3dWork = React.memo<Pick<AreaWorkObject, "characters" | "
         <div className="flex h-full" css={contents}>
           <div className="relative w-1/2" css={view}>
             {mode === "2d" && (
-              <img
-                className="h-full object-contain w-full"
-                src={imageUrl}
-              />
+              <img className="h-full object-contain w-full" src={imageUrl} />
             )}
             {mode === "3d" && (
               <Exhibition3dCanvas>
