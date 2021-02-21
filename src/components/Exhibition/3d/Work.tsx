@@ -91,11 +91,11 @@ export const Exhibition3dWork = React.memo<
     title,
     url,
   }) => {
-    const { isMobile, orientation } = useScreenOrientation();
+    const { orientation } = useScreenOrientation();
     const [scene, setScene] = useState<Scene>();
     const [mode, setMode] = useState<"2d" | "3d">("2d");
 
-    const isPortrait = isMobile && orientation === "portrait";
+    const isPortrait = orientation === "portrait";
 
     // Events
 

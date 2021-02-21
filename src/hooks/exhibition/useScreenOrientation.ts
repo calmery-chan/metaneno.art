@@ -1,38 +1,28 @@
 import { useCallback, useEffect, useState } from "react";
-import { isMobile } from "react-device-detect";
 
 export const useScreenOrientation = () => {
-  const [orientation, setOrientation] = useState<
-    "portrait" | "landscape" | null
-  >(null);
+  const [orientation, setOrientation] = useState<"portrait" | "landscape">(
+    "landscape"
+  );
 
-  const handleOrientation = useCallback(() => {
-    switch (window.screen.orientation.type) {
-      case "landscape-primary":
-      case "landscape-secondary":
-        return setOrientation("landscape");
-
-      case "portrait-primary":
-      case "portrait-secondary":
-        return setOrientation("portrait");
+  const handleResize = useCallback(() => {
+    if (window.innerWidth < window.innerHeight) {
+      setOrientation("portrait");
+    } else {
+      setOrientation("landscape");
     }
   }, []);
 
   useEffect(() => {
-    if (!isMobile) {
-      return;
-    }
-
-    addEventListener("orientationchange", handleOrientation, true);
-    handleOrientation();
+    addEventListener("resize", handleResize, true);
+    handleResize();
 
     return () => {
-      removeEventListener("orientationchange", handleOrientation, true);
+      removeEventListener("resize", handleResize, true);
     };
   }, []);
 
   return {
-    isMobile,
     orientation,
   };
 };
