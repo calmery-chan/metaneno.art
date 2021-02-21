@@ -36,6 +36,13 @@ a {
     url("/exhibition/2d/fonts/PixelMplus.ttf") format("ttf");
 }
 
+@font-face {
+  font-family: "Uzura";
+  src: url("/exhibition/3d/fonts/uzura.woff2") format("woff2"),
+    url("/exhibition/3d/fonts/uzura.woff") format("woff"),
+    url("/exhibition/3d/fonts/uzura.ttf") format("ttf");
+}
+
 // https://animate.style/
 
 @-webkit-keyframes fadeIn {

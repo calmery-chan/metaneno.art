@@ -1,5 +1,6 @@
 import { css } from "@emotion/react";
 import React from "react";
+import { Exhibition3dSpeechBubble } from "./SpeechBubble";
 import { Spacing } from "~/styles/spacing";
 import { AreaCharacterObject } from "~/types/exhibition";
 
@@ -15,10 +16,16 @@ export const Exhibition3dCharacter = React.memo<
   AreaCharacterObject & { onClose: () => void }
 >(({ onClose, scenarios }) => {
   return (
-    <div className="bottom-0 fixed h-full left-0 right-0 top-0 w-full">
-      <div className="absolute bottom-0 w-full" css={container}>
-        <div className="bg-white w-full">Hello</div>
-      </div>
-    </div>
+    <Exhibition3dSpeechBubble
+      scenarios={[
+        { message: "こんにちは", animation: "1" },
+        { message: "x" },
+        { message: "Message Test 2", animation: "2" },
+      ]}
+      onChangeAnimation={(animation) => {
+        console.log(animation);
+      }}
+      onComplete={onClose}
+    />
   );
 });
