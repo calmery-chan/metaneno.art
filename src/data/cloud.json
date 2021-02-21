@@ -263,24 +263,6 @@
       },
       {
         "position": {
-          "x": 10.75,
-          "y": 5.5,
-          "z": 2.65
-        },
-        "rotation": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        },
-        "scale": {
-          "x": 1,
-          "y": 1,
-          "z": 1
-        },
-        "url": "http://localhost:8000/objects/areas/cloud/post.glb"
-      },
-      {
-        "position": {
           "x": 0,
           "y": 0,
           "z": 0
@@ -314,6 +296,27 @@
           "z": 1
         },
         "url": "http://localhost:8000/objects/areas/cloud/terrain.glb"
+      }
+    ],
+    "items": [
+      {
+        "id": "fanarts",
+        "position": {
+          "x": 10.75,
+          "y": 5.5,
+          "z": 2.65
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "scale": {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        "url": "http://localhost:8000/objects/areas/cloud/post.glb"
       }
     ],
     "works": [

@@ -24,6 +24,7 @@ export type Area = {
   objects: {
     characters: AreaCharacterObject[];
     decorations: AreaObject[];
+    items: AreaItemObject[];
     works: AreaWorkObject[];
   };
   player: {
@@ -63,6 +64,10 @@ export type AreaCharacterObject = AreaObject & {
   }[];
 };
 
+export type AreaItemObject = AreaObject & {
+  id: string;
+};
+
 export type AreaWorkObject = AreaObject & {
   characters: string[];
   comment: string;
@@ -70,6 +75,16 @@ export type AreaWorkObject = AreaObject & {
   id: string;
   imageUrl: string;
   title: string;
+};
+
+export type Fanart = {
+  imageUrl: string;
+  referenceUrl: string;
+  user: {
+    iconUrl: string;
+    name: string;
+    url: string;
+  };
 };
 
 export type GraphicsQuality = "high" | "low" | "middle";

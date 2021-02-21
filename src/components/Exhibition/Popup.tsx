@@ -36,7 +36,12 @@ const header = css`
   margin-bottom: ${Spacing.s}px;
 `;
 
-const labelIcon = css`
+const popupLabel = css`
+  ${Typography.L};
+  color: ${Colors.black};
+`;
+
+const popupLabelIcon = css`
   height: 20px;
   image-rendering: crisp-edges;
   margin-right: ${Spacing.s}px;
@@ -85,8 +90,8 @@ export const ExhibitionPopup = React.memo<{
         `}
       >
         <div className="flex items-center" css={header}>
-          <div className="flex" css={Typography.L}>
-            {icon && <img alt="アイコン" css={labelIcon} src={icon} />}
+          <div className="flex" css={popupLabel}>
+            {icon && <img alt="アイコン" css={popupLabelIcon} src={icon} />}
             {label}
           </div>
           <div className="ml-auto" css={close} onClick={handleClickCloseButton}>

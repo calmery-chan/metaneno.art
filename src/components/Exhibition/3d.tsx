@@ -3,9 +3,11 @@ import { Exhibition3dBackground } from "./3d/Background";
 import { Exhibition3dCanvas } from "./3d/Canvas";
 import { Exhibition3dCharacter } from "./3d/Character";
 import { Exhibition3dFog } from "./3d/Fog";
+import { Exhibition3dItem } from "./3d/Item";
 import { Exhibition3dLights } from "./3d/Lights";
 import { Exhibition3dObjectsCharacters } from "./3d/Objects/Characters";
 import { Exhibition3dObjectsDecorations } from "./3d/Objects/Decorations";
+import { Exhibition3dObjectsItems } from "./3d/Objects/Items";
 import { Exhibition3dObjectsWorks } from "./3d/Objects/Works";
 import { Exhibition3dPlayer } from "./3d/Player";
 import { Exhibition3dRenderer } from "./3d/Renderer";
@@ -27,6 +29,7 @@ export const Exhibition3d: React.FC<{
 }> = ({ area, settings }) => {
   const { audio } = useAudio(area.sound.url, { loop: true });
   const [characterId, setCharacterId] = useState<string | null>(null);
+  const [itemId, setItemId] = useState<string | null>(null);
   const [ready, setReady] = useState(false);
   const [workId, setWorkId] = useState<string | null>(null);
 
@@ -54,6 +57,10 @@ export const Exhibition3d: React.FC<{
     setCharacterId(null);
   }, []);
 
+  const handleCloseItem = useCallback(() => {
+    setItemId(null);
+  }, []);
+
   const handleCloseWork = useCallback(() => {
     setWorkId(null);
   }, []);
@@ -67,6 +74,7 @@ export const Exhibition3d: React.FC<{
       area.collider,
       ...area.objects.characters,
       ...area.objects.decorations,
+      ...area.objects.items,
       ...area.objects.works,
     ];
 
@@ -108,6 +116,10 @@ export const Exhibition3d: React.FC<{
           onClick={setCharacterId}
         />
         <Exhibition3dObjectsDecorations objects={area.objects.decorations} />
+        <Exhibition3dObjectsItems
+          objects={area.objects.items}
+          onClick={setItemId}
+        />
         <Exhibition3dObjectsWorks
           objects={area.objects.works}
           onClick={setWorkId}
@@ -122,6 +134,7 @@ export const Exhibition3d: React.FC<{
       {character && (
         <Exhibition3dCharacter {...character} onClose={handleCloseCharacter} />
       )}
+      {itemId && <Exhibition3dItem id={itemId} onClose={handleCloseItem} />}
       {work && (
         <Exhibition3dWork
           {...work}
