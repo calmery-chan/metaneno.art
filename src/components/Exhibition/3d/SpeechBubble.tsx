@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { Exhibition3dSpeechBubbleCanvasContainer } from "./SpeechBubble/CanvasContainer";
-import { bounceIn } from "~/styles/animations";
+import { bounceIn, bounceOut } from "~/styles/animations";
+import { Mixin } from "~/styles/mixin";
 
 // Constants
 
@@ -123,16 +124,26 @@ type Scenario = {
 };
 
 export const Exhibition3dSpeechBubble: React.FC<{
+  name: string;
   scenarios: Scenario[];
   onChangeAnimation: (animation: string) => void;
   onComplete: () => void;
-}> = ({ scenarios, onChangeAnimation, onComplete }) => {
+}> = ({ name, scenarios, onChangeAnimation, onComplete }) => {
+  const [isCompleted, setIsCompleted] = useState(false);
   const [scenarioIndex, setScenarioIndex] = useState(0);
   const [characterCount, setCharacterCount] = useState(0);
   const [characterTimer, setCharacterTimer] = useState<number | null>(null);
 
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const scenario = scenarios[scenarioIndex]!;
+
+  useEffect(() => {
+    if (isCompleted) {
+      setTimeout(() => {
+        onComplete();
+      }, Mixin.ANIMATION_DURATION.milliseconds);
+    }
+  }, [isCompleted, onComplete]);
 
   useEffect(() => {
     const scenario = scenarios[scenarioIndex];
@@ -162,7 +173,7 @@ export const Exhibition3dSpeechBubble: React.FC<{
       const scenario = scenarios[nextScenarioIndex];
 
       if (!scenario) {
-        onComplete();
+        setIsCompleted(true);
       } else {
         setScenarioIndex(nextScenarioIndex);
         setCharacterCount(0);
@@ -190,13 +201,14 @@ export const Exhibition3dSpeechBubble: React.FC<{
     <div className="bottom-0 cursor-pointer fixed h-full left-0 right-0 select-none top-0 w-full">
       <Exhibition3dSpeechBubbleCanvasContainer>
         <svg
-          css={bounceIn}
+          css={isCompleted ? bounceOut : bounceIn}
           onClick={handleOnClickSpeechBubble}
+          overflow="visible"
           viewBox={`0 0 ${EXHIBITION_3D_CANVAS_WIDTH} ${EXHIBITION_3D_CANVAS_HEIGHT}`}
           xmlns="http://www.w3.org/2000/svg"
         >
           <Background />
-          <Name>ノネメちあ</Name>
+          <Name>{name}</Name>
           <Message>{scenario.message.slice(0, characterCount)}</Message>
         </svg>
       </Exhibition3dSpeechBubbleCanvasContainer>

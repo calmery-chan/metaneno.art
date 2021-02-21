@@ -47,6 +47,7 @@
     "characters": [
       {
         "id": "noneme_sitting",
+        "name": "",
         "position": {
           "x": 12.15,
           "y": 5.825,
@@ -67,6 +68,7 @@
       },
       {
         "id": "flower_sheep",
+        "name": "",
         "position": {
           "x": -1.68,
           "y": 6,
@@ -87,6 +89,7 @@
       },
       {
         "id": "water_sheep",
+        "name": "",
         "position": {
           "x": -2.725,
           "y": 6,
@@ -147,6 +150,7 @@
       },
       {
         "id": "hitugi",
+        "name": "棺",
         "position": {
           "x": -2.2,
           "y": 6,
@@ -164,7 +168,10 @@
         },
         "scenarios": [
           {
-            "message": "こんにちは"
+            "message": "こんにちは！"
+          },
+          {
+            "message": "こんにちは！"
           }
         ],
         "url": "http://localhost:8000/objects/characters/hitsugi.glb"

@@ -40,7 +40,7 @@ export const Exhibition3dSpeechBubbleCanvasContainer: React.FC<{
     <>
       <Exhibition3dSpeechBubbleResizeObserver onResize={handleResize} />
       <div
-        className="absolute overflow-hidden"
+        className="absolute"
         style={{
           height: `${height}px`,
           left: `${x}px`,
