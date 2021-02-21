@@ -8,9 +8,9 @@ import { Exhibition3dRenderer } from "./Renderer";
 import { Colors } from "~/styles/colors";
 import { Spacing } from "~/styles/spacing";
 import { Typography } from "~/styles/typography";
+import { AreaWorkObject, GraphicsQuality } from "~/types/exhibition";
 import { getGltf } from "~/utils/exhibition";
 import { Sentry } from "~/utils/sentry";
-import { AreaWorkObject, GraphicsQuality } from "~/types/exhibition";
 
 // Styles
 
@@ -35,14 +35,13 @@ const commentTitle = css`
 `;
 
 const contents = css`
-  grid-template-columns: 1fr 1fr;
-  gap: ${Spacing.s}px;
   padding-top: ${Spacing.s}px;
 `;
 
 const description = css`
   ${Typography.S};
   padding: ${Spacing.m}px 0;
+  padding-left: ${Spacing.s}px;
 `;
 
 const workCharacter = css`
@@ -152,8 +151,10 @@ export const Exhibition3dWork = React.memo<
             </div>
             <hr css={border} />
             <div className="flex">
-              {characters.map((character) => (
-                <div css={workCharacter}>{character}</div>
+              {characters.map((character, index) => (
+                <div css={workCharacter} key={index}>
+                  {character}
+                </div>
               ))}
             </div>
             <div css={column}>

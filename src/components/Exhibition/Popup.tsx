@@ -98,7 +98,9 @@ export const ExhibitionPopup = React.memo<{
             <img src="/exhibition/close.svg" />
           </div>
         </div>
-        <div className="flex-grow overflow-scroll relative">{children}</div>
+        <div className="flex-grow h-full overflow-scroll relative">
+          {children}
+        </div>
       </div>
     </div>
   );
