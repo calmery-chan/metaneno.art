@@ -187,7 +187,7 @@ export const Exhibition3dSpeechBubble: React.FC<{
   // Render
 
   return (
-    <div className="bottom-0 cursor-pointer fixed h-full left-0 right-0 top-0 w-full">
+    <div className="bottom-0 cursor-pointer fixed h-full left-0 right-0 select-none top-0 w-full">
       <Exhibition3dSpeechBubbleCanvasContainer>
         <svg
           css={bounceIn}
