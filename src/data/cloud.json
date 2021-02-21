@@ -168,10 +168,28 @@
         },
         "scenarios": [
           {
-            "message": "こんにちは！"
-          },
-          {
-            "message": "こんにちは！"
+            "branches": [
+              {
+                "message": "好きなお菓子のはなし",
+                "scenarios": [
+                  {
+                    "message": "…私はグミが好き。"
+                  },
+                  {
+                    "message": "食感がグミグミしてて何だか気持ちいいから…。"
+                  }
+                ]
+              },
+              {
+                "message": "この世界について",
+                "scenarios": [
+                  {
+                    "message": "どんなことが知りたい？"
+                  }
+                ]
+              }
+            ],
+            "message": "………ここは甘いにおいがする。"
           }
         ],
         "url": "http://localhost:8000/objects/characters/hitsugi.glb"

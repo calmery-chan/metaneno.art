@@ -1,3 +1,4 @@
+import { css } from "@emotion/react";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { Exhibition3dSpeechBubbleCanvasContainer } from "./SpeechBubble/CanvasContainer";
 import { bounceIn, bounceOut } from "~/styles/animations";
@@ -110,16 +111,67 @@ const Message = React.memo<{ children: string }>(({ children }) => {
   );
 });
 
+/* --- Choice --- */
+
+const clickable = css`
+  cursor: pointer;
+  transition: ${Mixin.ANIMATION_DURATION.seconds}s ease;
+
+  &:hover {
+    transform: scale(1.02);
+  }
+`;
+
+const CHOICE_ORIGINAL_HEIGHT = 71;
+const CHOICE_ORIGINAL_WIDTH = 384;
+
+const CHOICE_WIDTH = 128;
+const CHOICE_HEIGHT =
+  CHOICE_ORIGINAL_HEIGHT * (CHOICE_WIDTH / CHOICE_ORIGINAL_WIDTH);
+
+const CHOICE_X = 64;
+const CHOICE_Y = NAME_Y - CHOICE_HEIGHT - MARGIN;
+
+const Choice = React.memo<{
+  left: string;
+  onClickLeft: () => void;
+  onClickRight: () => void;
+  right: string;
+}>(({ left, onClickLeft, onClickRight, right }) => {
+  return (
+    <>
+      <g transform={`translate(${CHOICE_X}, ${CHOICE_Y})`}>
+        <image
+          css={clickable}
+          height={CHOICE_HEIGHT}
+          width={CHOICE_WIDTH}
+          xlinkHref="/exhibition/3d/bubble/choice.png"
+        />
+      </g>
+      <g
+        transform={`translate(${
+          CHOICE_X + CHOICE_WIDTH + MARGIN * 2
+        }, ${CHOICE_Y})`}
+      >
+        <image
+          css={clickable}
+          height={CHOICE_HEIGHT}
+          width={CHOICE_WIDTH}
+          xlinkHref="/exhibition/3d/bubble/choice.png"
+        />
+      </g>
+    </>
+  );
+});
+
 /* --- Types --- */
 
 type Scenario = {
   animation?: string;
-  branches?: [
-    {
-      message: string;
-      scenarios: Scenario[];
-    }
-  ];
+  branches?: {
+    message: string;
+    scenarios: Scenario[];
+  }[];
   message: string;
 };
 
@@ -133,9 +185,16 @@ export const Exhibition3dSpeechBubble: React.FC<{
   const [scenarioIndex, setScenarioIndex] = useState(0);
   const [characterCount, setCharacterCount] = useState(0);
   const [characterTimer, setCharacterTimer] = useState<number | null>(null);
+  const [isChoosing, setIsChoosing] = useState(false);
 
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const scenario = scenarios[scenarioIndex]!;
+
+  useEffect(() => {
+    if (scenario.branches) {
+      setIsChoosing(true);
+    }
+  }, [scenario]);
 
   useEffect(() => {
     if (isCompleted) {
@@ -197,8 +256,15 @@ export const Exhibition3dSpeechBubble: React.FC<{
 
   // Render
 
+  console.log("Render");
+
   return (
-    <div className="bottom-0 cursor-pointer fixed h-full left-0 right-0 select-none top-0 w-full">
+    <div
+      className={
+        "bottom-0 fixed h-full left-0 right-0 select-none top-0 w-full " +
+        (isChoosing ? "cursor-default" : "cursor-pointer")
+      }
+    >
       <Exhibition3dSpeechBubbleCanvasContainer>
         <svg
           css={isCompleted ? bounceOut : bounceIn}
