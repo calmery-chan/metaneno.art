@@ -89,3 +89,12 @@ export type Fanart = {
 };
 
 export type GraphicsQuality = "high" | "low" | "middle";
+
+export type Scenario = {
+  animations?: string[][];
+  branches?: {
+    message: string;
+    scenarios: Scenario[];
+  }[];
+  message: string;
+};

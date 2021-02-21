@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { Exhibition3dSpeechBubbleCanvasContainer } from "./SpeechBubble/CanvasContainer";
 import { bounceIn, bounceOut, fadeIn, fadeOut } from "~/styles/animations";
 import { Mixin } from "~/styles/mixin";
+import { Scenario } from "~/types/exhibition";
 
 // Constants
 
@@ -36,12 +37,16 @@ const Background: React.FC = () => (
 
 const TEXT_FONT_SIZE = 10;
 
-const Text: React.FC<{ center?: boolean }> = ({ center = false, children }) => (
+const Text: React.FC<{ center?: boolean; size?: number }> = ({
+  center = false,
+  children,
+  size,
+}) => (
   <text
     dominantBaseline="central"
     fill="#7E395B"
     fontFamily="Uzura"
-    fontSize={TEXT_FONT_SIZE}
+    fontSize={size || TEXT_FONT_SIZE}
     textAnchor={center ? "middle" : "start"}
     x={center ? "50%" : undefined}
     y="50%"
@@ -77,28 +82,30 @@ const Name = React.memo<{ children: string }>(({ children }) => (
 const MESSAGE_X = BACKGROUND_X + MARGIN * 5;
 const MESSAGE_Y = BACKGROUND_Y + MARGIN * 3;
 
-const Message = React.memo<{ children: string }>(({ children }) => {
-  return (
-    <>
-      <svg
-        x={MESSAGE_X}
-        y={MESSAGE_Y}
-        height={TEXT_FONT_SIZE}
-        width={TEXT_FONT_SIZE * 30}
-      >
-        <Text>{children.slice(0, 30)}</Text>
-      </svg>
-      <svg
-        x={MESSAGE_X}
-        y={MESSAGE_Y + TEXT_FONT_SIZE + MARGIN / 2}
-        height={TEXT_FONT_SIZE}
-        width={TEXT_FONT_SIZE * 30}
-      >
-        <Text>{children.slice(30, 60)}</Text>
-      </svg>
-    </>
-  );
-});
+const Message = React.memo<{ children: string; size?: number }>(
+  ({ children }) => {
+    return (
+      <>
+        <svg
+          x={MESSAGE_X}
+          y={MESSAGE_Y}
+          height={TEXT_FONT_SIZE}
+          width={TEXT_FONT_SIZE * 30}
+        >
+          <Text>{children.slice(0, 30)}</Text>
+        </svg>
+        <svg
+          x={MESSAGE_X}
+          y={MESSAGE_Y + TEXT_FONT_SIZE + MARGIN / 2}
+          height={TEXT_FONT_SIZE}
+          width={TEXT_FONT_SIZE * 30}
+        >
+          <Text>{children.slice(30, 60)}</Text>
+        </svg>
+      </>
+    );
+  }
+);
 
 /* --- Choice --- */
 
@@ -152,7 +159,10 @@ const Choices = React.memo<{
 
   useEffect(() => {
     if (chose !== null) {
-      setTimeout(() => onClick(chose), Mixin.ANIMATION_DURATION.milliseconds);
+      setTimeout(() => {
+        setChose(null);
+        onClick(chose);
+      }, Mixin.ANIMATION_DURATION.milliseconds);
     }
   }, [chose, onClick]);
 
@@ -174,79 +184,67 @@ const Choices = React.memo<{
             width="100%"
             xlinkHref="/exhibition/3d/bubble/choice.png"
           />
-          <Text center>{message}</Text>
+          <Text center size={6}>
+            {message}
+          </Text>
         </svg>
       ))}
     </>
   );
 });
 
-/* --- Types --- */
-
-type Scenario = {
-  animations?: string[][];
-  branches?: {
-    message: string;
-    scenarios: Scenario[];
-  }[];
-  message: string;
-};
+// Components
 
 export const Exhibition3dSpeechBubble: React.FC<{
   name: string;
-  scenarios: Scenario[];
-  onChangeAnimations: (animation: string[][]) => void;
+  onChangeAnimations: (animations: string[][]) => void;
   onComplete: () => void;
-}> = ({ name, scenarios: _scenarios, onChangeAnimations, onComplete }) => {
-  const [scenarios, setScenarios] = useState(_scenarios);
-  const [scenarioIndex, setScenarioIndex] = useState(0);
+  scenarios: Scenario[];
+}> = ({ name, onChangeAnimations, onComplete, scenarios: _scenarios }) => {
   const [characterCount, setCharacterCount] = useState(0);
   const [characterTimer, setCharacterTimer] = useState<number | null>(null);
-  const [isCompleted, setIsCompleted] = useState(false);
+  const [currentScenarioIndex, setCurrentScenarioIndex] = useState(0);
   const [isChoosing, setIsChoosing] = useState(false);
+  const [isCompleted, setIsCompleted] = useState(false);
+  const [scenarios, setScenarios] = useState<Scenario[]>(_scenarios);
 
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const scenario = scenarios[scenarioIndex]!;
+  const scenario: Scenario | undefined = scenarios[currentScenarioIndex];
 
-  // 上位コンポーネントからの scenarios が変更されたとき、scenarios を更新して最初から始める
+  // Side Effects
+
   useEffect(() => {
     setScenarios(_scenarios);
   }, [_scenarios]);
 
-  // scenarios が更新された、現在の位置をリセットする
   useEffect(() => {
-    if (!scenarios.length) {
-      setIsCompleted(true);
-      return;
-    }
-
     if (characterTimer) {
-      clearTimeout(characterTimer);
+      window.clearTimeout(characterTimer);
     }
 
     setCharacterCount(0);
     setCharacterTimer(null);
-    setScenarioIndex(0);
+    setCurrentScenarioIndex(0);
+    setIsChoosing(false);
+
+    if (!scenarios.length) {
+      setIsCompleted(true);
+    }
   }, [scenarios]);
 
   useEffect(() => {
     if (isCompleted) {
-      setTimeout(() => {
-        onComplete();
-      }, Mixin.ANIMATION_DURATION.milliseconds);
+      setTimeout(onComplete, Mixin.ANIMATION_DURATION.milliseconds);
     }
   }, [isCompleted, onComplete]);
 
   useEffect(() => {
-    const scenario = scenarios[scenarioIndex];
-
     if (scenario && scenario.animations) {
       onChangeAnimations(scenario.animations);
     }
-  }, [onChangeAnimations, scenarioIndex]);
+  }, [onChangeAnimations, scenario]);
 
   useEffect(() => {
-    if (characterCount >= scenario.message.length) {
+    if (!scenario || characterCount >= scenario.message.length) {
       return;
     }
 
@@ -259,42 +257,51 @@ export const Exhibition3dSpeechBubble: React.FC<{
 
   // Events
 
-  const handleOnClickSpeechBubble = useCallback(() => {
-    if (characterCount >= scenario.message.length) {
-      if (isChoosing) return;
-
-      const nextScenarioIndex = scenarioIndex + 1;
-      const scenario = scenarios[nextScenarioIndex];
-
-      if (!scenario) {
-        setIsCompleted(true);
-        return;
-      }
-
-      setCharacterCount(0);
-      setScenarioIndex(nextScenarioIndex);
-      setIsChoosing(!!scenario?.branches);
-
+  const handleClick = useCallback(() => {
+    if (!scenario) {
       return;
     }
 
-    if (characterTimer) {
-      clearTimeout(characterTimer);
+    if (characterCount < scenario.message.length) {
+      if (characterTimer) {
+        clearTimeout(characterTimer);
+      }
+
+      setCharacterCount(scenario.message.length);
+      return;
     }
 
-    setCharacterCount(scenario.message.length);
-    setIsChoosing(!!scenario?.branches);
+    // 選択肢のある画面ではクリックでメッセージの遷移を行わない
+    if (isChoosing) {
+      return;
+    }
+
+    const nextScenarioIndex = currentScenarioIndex + 1;
+    const nextScenario = scenarios[nextScenarioIndex];
+
+    if (!nextScenario) {
+      setIsCompleted(true);
+      return;
+    }
+
+    setCharacterCount(0);
+    setCurrentScenarioIndex(nextScenarioIndex);
+    setIsChoosing(!!nextScenario.branches);
   }, [
     characterCount,
     characterTimer,
-    scenarioIndex,
-    scenario,
-    scenarios.length,
+    currentScenarioIndex,
     isChoosing,
+    scenario,
+    scenarios,
   ]);
 
-  const handleClickMessage = useCallback(
+  const handleChoice = useCallback(
     (index: number) => {
+      if (!scenario) {
+        return;
+      }
+
       const { scenarios } = scenario.branches![index];
       setScenarios(scenarios);
     },
@@ -302,6 +309,10 @@ export const Exhibition3dSpeechBubble: React.FC<{
   );
 
   // Render
+
+  if (!scenario) {
+    return null;
+  }
 
   return (
     <div
@@ -313,7 +324,7 @@ export const Exhibition3dSpeechBubble: React.FC<{
       <Exhibition3dSpeechBubbleCanvasContainer>
         <svg
           css={isCompleted ? bounceOut : bounceIn}
-          onClick={handleOnClickSpeechBubble}
+          onClick={handleClick}
           overflow="visible"
           viewBox={`0 0 ${EXHIBITION_3D_CANVAS_WIDTH} ${EXHIBITION_3D_CANVAS_HEIGHT}`}
           xmlns="http://www.w3.org/2000/svg"
@@ -324,7 +335,7 @@ export const Exhibition3dSpeechBubble: React.FC<{
           {isChoosing && scenario.branches && (
             <Choices
               messages={scenario.branches!.map(({ message }) => message)}
-              onClick={handleClickMessage}
+              onClick={handleChoice}
             />
           )}
         </svg>
