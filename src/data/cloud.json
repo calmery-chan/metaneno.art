@@ -46,6 +46,7 @@
   "objects": {
     "characters": [
       {
+        "id": "noneme_sitting",
         "position": {
           "x": 12.15,
           "y": 5.825,
@@ -65,6 +66,7 @@
         "url": "http://localhost:8000/objects/characters/noneme_sitting.glb"
       },
       {
+        "id": "flower_sheep",
         "position": {
           "x": -1.68,
           "y": 6,
@@ -84,6 +86,7 @@
         "url": "http://localhost:8000/objects/characters/flower_sheep.glb"
       },
       {
+        "id": "water_sheep",
         "position": {
           "x": -2.725,
           "y": 6,
@@ -103,6 +106,7 @@
         "url": "http://localhost:8000/objects/characters/water_sheep.glb"
       },
       {
+        "id": "ameri",
         "position": {
           "x": 15.05,
           "y": 6.155,
@@ -122,6 +126,7 @@
         "url": "http://localhost:8000/objects/characters/ameri.glb"
       },
       {
+        "id": "maid",
         "position": {
           "x": 7.75,
           "y": 5.79,
@@ -141,6 +146,7 @@
         "url": "http://localhost:8000/objects/characters/maid.glb"
       },
       {
+        "id": "hitugi",
         "position": {
           "x": -2.2,
           "y": 6,
@@ -161,7 +167,7 @@
             "message": "こんにちは"
           }
         ],
-        "url": "http://localhost:8000/objects/characters/hitugi.glb"
+        "url": "http://localhost:8000/objects/characters/hitsugi.glb"
       }
     ],
     "decorations": [

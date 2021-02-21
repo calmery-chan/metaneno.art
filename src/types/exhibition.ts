@@ -56,6 +56,7 @@ export type AreaObject = {
 };
 
 export type AreaCharacterObject = AreaObject & {
+  id: string;
   scenarios: {
     animation?: string;
     message: string;
