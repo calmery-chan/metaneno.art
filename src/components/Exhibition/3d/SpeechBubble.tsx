@@ -245,12 +245,10 @@ export const Exhibition3dSpeechBubble: React.FC<{
 
   useEffect(() => {
     if (scenario && scenario.animations) {
-      console.log("Change Animations:", JSON.stringify(scenario.animations));
       onChangeAnimations(scenario.animations);
     }
 
     if (scenario && scenario.actions) {
-      console.log("Change Actions:", JSON.stringify(scenario.actions));
       onChangeActions(scenario.actions);
     }
 
