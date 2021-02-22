@@ -90,7 +90,14 @@ export const getGltf = (
     );
   });
 
-export const preload = (url: string) => axios.get(url);
+export const preload = (url: string) =>
+  axios.get(
+    `${
+      process.env.NODE_ENV === "production"
+        ? "https://assets.metaneno.art"
+        : "http://localhost:8000"
+    }${url}`
+  );
 
 export const rewriteMaterials = (scene: Scene) => {
   const helper = (objects: Object3D[]) => {

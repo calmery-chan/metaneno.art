@@ -16,7 +16,13 @@ export const useAudio = (
     const newAudio = new Howl({
       ...options,
       preload: true,
-      src: [url],
+      src: [
+        `${
+          process.env.NODE_ENV === "production"
+            ? "https://assets.metaneno.art"
+            : "http://localhost:8000"
+        }${url}`,
+      ],
     });
 
     // Events

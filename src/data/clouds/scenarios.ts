@@ -19,7 +19,9 @@ export const MAID_SCENARIOS: Scenario[] = [
                 message: "食べる",
                 scenarios: [
                   {
-                    animations: [["open mouth", "pose", "smile", "meido_Standing"]],
+                    animations: [
+                      ["open mouth", "pose", "smile", "meido_Standing"],
+                    ],
                     message:
                       "わぁ！ありがとうございます♪お口に合うといいのですが！",
                   },
@@ -74,7 +76,9 @@ export const MAID_SCENARIOS: Scenario[] = [
                 message: "食べる",
                 scenarios: [
                   {
-                    animations: [["open mouth", "pose", "smile", "meido_Standing"]],
+                    animations: [
+                      ["open mouth", "pose", "smile", "meido_Standing"],
+                    ],
                     message:
                       "わぁ！ありがとうございます♪お口に合うといいのですが！",
                   },

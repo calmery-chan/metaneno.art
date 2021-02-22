@@ -240,9 +240,7 @@ export const Exhibition3dPlayer = React.memo<
           ) {
             onChangeArea("cloud");
           }
-        }
-
-        if (areas?.meadow) {
+        } else if (areas?.meadow) {
           const { maximumX, maximumZ, minimumX, minimumZ } = areas.meadow;
 
           if (
@@ -253,9 +251,7 @@ export const Exhibition3dPlayer = React.memo<
           ) {
             onChangeArea("meadow");
           }
-        }
-
-        if (areas?.sea) {
+        } else if (areas?.sea) {
           const { maximumX, maximumZ, minimumX, minimumZ } = areas.sea;
 
           if (

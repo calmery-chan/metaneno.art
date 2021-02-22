@@ -122,7 +122,12 @@ export const Exhibition3d: React.FC<{
     setItemId(null);
     setWorkId(null);
 
-    const objects: { url: string }[] = [
+    const objects = [
+      ...[
+        "/exhibition/3d/bubble/background.png",
+        "/exhibition/3d/bubble/choice.png",
+        "/exhibition/3d/bubble/name.png",
+      ].map((url) => ({ url })),
       { url: area.collider.url },
       { url: area.player.url },
       ...area.objects.characters,
