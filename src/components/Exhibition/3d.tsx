@@ -90,6 +90,14 @@ export const Exhibition3d: React.FC<{
           case "move_to_cloud":
             onChangeArea("cloud");
             return;
+
+          case "move_to_meadow":
+            onChangeArea("meadow");
+            return;
+
+          case "move_to_sea":
+            onChangeArea("sea");
+            return;
         }
       });
     },

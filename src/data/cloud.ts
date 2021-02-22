@@ -89,7 +89,31 @@ const area: Area = {
           y: 0.2,
           z: 0.2,
         },
-        scenarios: [],
+        scenarios: [
+          {
+            branches: [
+              {
+                message: "行く",
+                scenarios: [
+                  {
+                    actions: ["move_to_meadow"],
+                    message: "…",
+                  },
+                ],
+              },
+              {
+                message: "止めとく",
+                scenarios: [
+                  {
+                    message: "…",
+                  },
+                ],
+              },
+            ],
+            name: null,
+            message: "どうやら草原に連れて行ってくれるようだ。",
+          },
+        ],
         url: "http://localhost:8000/objects/characters/flower_sheep.glb",
       },
       {
@@ -110,7 +134,31 @@ const area: Area = {
           y: 0.2,
           z: 0.2,
         },
-        scenarios: [],
+        scenarios: [
+          {
+            branches: [
+              {
+                message: "行く",
+                scenarios: [
+                  {
+                    actions: ["move_to_sea"],
+                    message: "…",
+                  },
+                ],
+              },
+              {
+                message: "止めとく",
+                scenarios: [
+                  {
+                    message: "…",
+                  },
+                ],
+              },
+            ],
+            name: null,
+            message: "どうやら水中遺跡に連れて行ってくれるようだ。",
+          },
+        ],
         url: "http://localhost:8000/objects/characters/water_sheep.glb",
       },
       {
