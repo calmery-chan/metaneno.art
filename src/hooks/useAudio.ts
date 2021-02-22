@@ -9,7 +9,11 @@ export const useAudio = (
   const [error, setError] = useState<Error>();
 
   useEffect(() => {
-    const audio = new Howl({
+    if (audio) {
+      audio.stop();
+    }
+
+    const newAudio = new Howl({
       ...options,
       preload: true,
       src: [url],
@@ -17,8 +21,8 @@ export const useAudio = (
 
     // Events
 
-    audio.once("load", () => setAudio(audio));
-    audio.once("loaderror", () => setError(new Error()));
+    newAudio.once("load", () => setAudio(newAudio));
+    newAudio.once("loaderror", () => setError(new Error()));
   }, [url]);
 
   useEffect(() => {
