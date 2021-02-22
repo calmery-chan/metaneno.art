@@ -67,7 +67,13 @@ const NAME_X = MARGIN * 3;
 const NAME_Y = BACKGROUND_Y - NAME_HEIGHT / 2;
 
 const Name = React.memo<{ children: string }>(({ children }) => (
-  <svg height={NAME_HEIGHT} width={NAME_WIDTH} x={NAME_X} y={NAME_Y}>
+  <svg
+    height={NAME_HEIGHT}
+    width={NAME_WIDTH}
+    overflow="visible"
+    x={NAME_X}
+    y={NAME_Y}
+  >
     <image
       height="100%"
       width="100%"
@@ -87,6 +93,7 @@ const Message = React.memo<{ children: string; size?: number }>(
     return (
       <>
         <svg
+          overflow="visible"
           x={MESSAGE_X}
           y={MESSAGE_Y}
           height={TEXT_FONT_SIZE}
@@ -95,6 +102,7 @@ const Message = React.memo<{ children: string; size?: number }>(
           <Text>{children.slice(0, 30)}</Text>
         </svg>
         <svg
+          overflow="visible"
           x={MESSAGE_X}
           y={MESSAGE_Y + TEXT_FONT_SIZE + MARGIN / 2}
           height={TEXT_FONT_SIZE}
