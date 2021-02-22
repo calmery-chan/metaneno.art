@@ -283,7 +283,14 @@ const area: Area = {
         url: "http://localhost:8000/objects/characters/water_sheep.glb",
       },
     ],
-    components: ["water"],
+    components: [
+      {
+        name: "water",
+        props: {
+          y: 1.22,
+        },
+      },
+    ],
     decorations: [
       {
         position: {

@@ -3,11 +3,12 @@ import React, { useCallback, useState } from "react";
 import { Exhibition3d } from "~/components/Exhibition/3d";
 import { ExhibitionMenu } from "~/components/Exhibition/Menu";
 import cloud from "~/data/cloud";
+import meadow from "~/data/meadow";
 import sea from "~/data/sea";
 import { GraphicsQuality } from "~/types/exhibition";
 
 const Exhibition: NextPage = () => {
-  const [area, setArea] = useState<"cloud" | "meadow" | "sea">("sea");
+  const [area, setArea] = useState<"cloud" | "meadow" | "sea">("meadow");
 
   const [graphicsQuality, setGraphicsQuality] = useState<GraphicsQuality>(
     "high"
@@ -23,7 +24,7 @@ const Exhibition: NextPage = () => {
   return (
     <>
       <Exhibition3d
-        area={area === "sea" ? sea : cloud}
+        area={area === "sea" ? sea : area === "cloud" ? cloud : meadow}
         onChangeArea={setArea}
         settings={{ graphicsQuality }}
       />

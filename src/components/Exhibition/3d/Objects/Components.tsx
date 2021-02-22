@@ -3,7 +3,7 @@ import { useThree } from "react-three-fiber";
 import { MathUtils, PlaneGeometry, Vector2 } from "three";
 import { Water as Water2 } from "~/externals/Water2";
 
-const Water = React.memo(() => {
+const Water = React.memo<{ y: number }>(({ y }) => {
   const { scene } = useThree();
 
   useEffect(() => {
@@ -16,26 +16,26 @@ const Water = React.memo(() => {
       textureWidth: 512,
     });
 
-    water.position.y = 1.22;
+    water.position.y = y;
     water.rotation.x = MathUtils.degToRad(-90);
     scene.add(water);
 
     return () => {
       scene.remove(water);
     };
-  }, [scene]);
+  }, [scene, y]);
 
   return null;
 });
 
 export const Exhibition3dObjectsComponents: React.FC<{
-  components: string[];
+  components: { name: string; props: Record<string, any> }[];
 }> = ({ components }) => (
   <>
-    {components.map((component) => {
-      switch (component) {
+    {components.map(({ name, props }) => {
+      switch (name) {
         case "water":
-          return <Water />;
+          return <Water {...props} />;
 
         default:
           return null;

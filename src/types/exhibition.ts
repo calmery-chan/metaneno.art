@@ -31,7 +31,7 @@ export type Area = {
   };
   objects: {
     characters: AreaCharacterObject[];
-    components: string[];
+    components: { name: string; props: Record<string, any> }[];
     decorations: AreaObject[];
     items: AreaItemObject[];
     works: AreaWorkObject[];
