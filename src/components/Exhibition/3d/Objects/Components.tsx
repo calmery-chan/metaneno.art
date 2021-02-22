@@ -35,7 +35,7 @@ export const Exhibition3dObjectsComponents: React.FC<{
     {components.map(({ name, props }) => {
       switch (name) {
         case "water":
-          return <Water {...props} />;
+          return <Water y={props.y} />;
 
         default:
           return null;
