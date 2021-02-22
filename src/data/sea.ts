@@ -29,7 +29,7 @@ const area: Area = {
       y: 1,
       z: 1,
     },
-    url: "",
+    url: "/objects/areas/sea/collider.glb",
   },
   fog: {
     color: "#2CDDEE",
