@@ -5,10 +5,10 @@ import { ExhibitionMenu } from "~/components/Exhibition/Menu";
 import cloud from "~/data/cloud";
 import meadow from "~/data/meadow";
 import sea from "~/data/sea";
-import { GraphicsQuality } from "~/types/exhibition";
+import { AreaName, GraphicsQuality } from "~/types/exhibition";
 
 const Exhibition: NextPage = () => {
-  const [area, setArea] = useState<"cloud" | "meadow" | "sea">("meadow");
+  const [area, setArea] = useState<AreaName>("meadow");
 
   const [graphicsQuality, setGraphicsQuality] = useState<GraphicsQuality>(
     "high"

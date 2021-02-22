@@ -13,7 +13,7 @@ import {
 } from "three";
 import GLTFLoader from "three-gltf-loader";
 import { useKeyboard } from "~/hooks/exhibition/useKeyboard";
-import { Area, AreaObject } from "~/types/exhibition";
+import { Area, AreaName, AreaObject } from "~/types/exhibition";
 import { getGltf } from "~/utils/exhibition";
 
 CameraControls.install({ THREE });
@@ -59,7 +59,7 @@ export const Exhibition3dPlayer = React.memo<
     areas: Area["areas"];
     accessory: "fried_egg" | "pancake" | null;
     collider: AreaObject;
-    onChangeArea: (area: "cloud" | "meadow" | "sea") => void;
+    onChangeArea: (area: AreaName) => void;
     operable: boolean;
   }
 >(

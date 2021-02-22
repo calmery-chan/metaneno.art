@@ -9,9 +9,11 @@ export type Light = {
   position: Transform;
 };
 
+export type AreaName = "meadow" | "sea" | "cloud";
+
 export type Area = {
   areas: {
-    [key in "meadow" | "sea" | "cloud"]?: {
+    [key in AreaName]?: {
       minimumX: number;
       minimumZ: number;
       maximumX: number;

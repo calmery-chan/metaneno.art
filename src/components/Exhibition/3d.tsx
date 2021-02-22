@@ -17,6 +17,7 @@ import { useAudio } from "~/hooks/useAudio";
 import {
   Area,
   AreaCharacterObject,
+  AreaName,
   AreaWorkObject,
   GraphicsQuality,
 } from "~/types/exhibition";
@@ -25,7 +26,7 @@ import { Sentry } from "~/utils/sentry";
 
 export const Exhibition3d: React.FC<{
   area: Area;
-  onChangeArea: (area: "cloud" | "meadow" | "cloud") => void;
+  onChangeArea: (area: AreaName) => void;
   settings: { graphicsQuality: GraphicsQuality };
 }> = ({ area, onChangeArea, settings }) => {
   const { audio } = useAudio(area.sound.url, { loop: true });
