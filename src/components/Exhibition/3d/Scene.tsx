@@ -16,7 +16,7 @@ export const Exhibition3dScene = React.memo<{
   // Side Effects
 
   useEffect(() => {
-    if (isMobile || !onClick) {
+    if (isMobile || !onClick || !gl.domElement) {
       return;
     }
 

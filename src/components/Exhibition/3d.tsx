@@ -115,6 +115,10 @@ export const Exhibition3d: React.FC<{
 
   useEffect(() => {
     setReady(false);
+    setCharacterId(null);
+    setCharacterAnimations(null);
+    setItemId(null);
+    setWorkId(null);
 
     const objects: { url: string }[] = [
       { url: area.collider.url },
@@ -134,7 +138,7 @@ export const Exhibition3d: React.FC<{
         setReady(true);
       }
     })();
-  }, []);
+  }, [area]);
 
   useEffect(() => {
     if (audio && ready) {
