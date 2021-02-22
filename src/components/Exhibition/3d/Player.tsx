@@ -224,6 +224,8 @@ export const Exhibition3dPlayer = React.memo<
 
         // 他のエリアに移動可能かチェックする
 
+        console.log(nextPosition);
+
         if (areas?.cloud) {
           const { maximumX, maximumZ, minimumX, minimumZ } = areas.cloud;
 

@@ -74,19 +74,26 @@ export const Exhibition3d: React.FC<{
 
   //
 
-  const handleAction = useCallback((actions: string[]) => {
-    actions.forEach((action) => {
-      switch (action) {
-        case "pancake":
-          setPlayerAccessory("pancake");
-          return;
+  const handleAction = useCallback(
+    (actions: string[]) => {
+      actions.forEach((action) => {
+        switch (action) {
+          case "pancake":
+            setPlayerAccessory("pancake");
+            return;
 
-        case "fried_egg":
-          setPlayerAccessory("fried_egg");
-          return;
-      }
-    });
-  }, []);
+          case "fried_egg":
+            setPlayerAccessory("fried_egg");
+            return;
+
+          case "move_to_cloud":
+            onChangeArea("cloud");
+            return;
+        }
+      });
+    },
+    [onChangeArea]
+  );
 
   const handleChangeCharacterAnimations = useCallback(
     (animations: string[][]) => {

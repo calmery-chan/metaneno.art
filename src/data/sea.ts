@@ -1,3 +1,4 @@
+import { ABOUT_THIS_WORLD } from "./common/scenarios";
 import { Area } from "~/types/exhibition";
 
 const area: Area = {
@@ -59,7 +60,81 @@ const area: Area = {
           y: 160,
           z: 0,
         },
-        scenarios: [],
+        scenarios: [
+          {
+            animations: [["smile", "starnding"]],
+            branches: [
+              {
+                message: "ここって水中だよね…？",
+                scenarios: [
+                  {
+                    animations: [["smile", "standing"]],
+                    branches: [
+                      {
+                        message: "泳ぐの苦手…。",
+                        scenarios: [
+                          {
+                            animations: [["blink", "standing"]],
+                            message: "………カナヅチ？",
+                          },
+                          {
+                            animations: [["blink", "smile"]],
+                            message:
+                              "ここでは普通に歩けるから無理して泳ぐ必要はないよ。良かったね…。",
+                          },
+                        ],
+                      },
+                      {
+                        message: "目が痛くなってきた…。",
+                        scenarios: [
+                          {
+                            animations: [["blink", "standing"]],
+                            message: "水中で目を開けることに慣れてないの…？",
+                          },
+                          {
+                            animations: [["smile", "standing"]],
+                            message: "大丈夫…夢の中だし、多分気のせいです。",
+                          },
+                        ],
+                      },
+                    ],
+                    message: "水中にいるのが不思議？ふふ…",
+                  },
+                ],
+              },
+              {
+                message: "あなたは誰？",
+                scenarios: [
+                  {
+                    message: "私は…棺(ひつぎ)。",
+                  },
+                  {
+                    message:
+                      "色々な世界を見て回って面白いことや楽しいことを探しているの。",
+                  },
+                  {
+                    message:
+                      "過去にも未来にも何処にだって行くことが出来るの…。",
+                  },
+                  {
+                    message:
+                      "旅をしていると、いろんな物、景色、生き物…いろんな発見があって、それぞれにストーリーがあってとっても面白いの。",
+                  },
+                  {
+                    message:
+                      "あなたも、この世界で何かお気に入りの物が見つかるといいね…。",
+                  },
+                ],
+              },
+              {
+                message: "この世界について",
+                scenarios: ABOUT_THIS_WORLD,
+              },
+            ],
+            message: "………水中遺跡って何だか探求心がくすぐられますよね…",
+            name: "棺",
+          },
+        ],
         scale: {
           x: 0.5,
           y: 0.5,
@@ -161,6 +236,51 @@ const area: Area = {
           z: 0.25,
         },
         url: "http://localhost:8000/objects/characters/noneme.glb",
+      },
+      {
+        id: "water_sheep",
+        name: "",
+        position: {
+          x: -27.9,
+          y: 1.375,
+          z: 8.75,
+        },
+        rotation: {
+          x: 0,
+          y: 210,
+          z: 0,
+        },
+        scenarios: [
+          {
+            branches: [
+              {
+                message: "行く",
+                scenarios: [
+                  {
+                    actions: ["move_to_cloud"],
+                    message: "…",
+                  },
+                ],
+              },
+              {
+                message: "止めとく",
+                scenarios: [
+                  {
+                    message: "…",
+                  },
+                ],
+              },
+            ],
+            name: null,
+            message: "どうやら雲の上に連れて行ってくれるみたいだ。",
+          },
+        ],
+        scale: {
+          x: 0.2,
+          y: 0.2,
+          z: 0.2,
+        },
+        url: "http://localhost:8000/objects/characters/water_sheep.glb",
       },
     ],
     components: ["water"],
