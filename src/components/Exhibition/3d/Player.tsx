@@ -92,6 +92,11 @@ export const Exhibition3dPlayer = React.memo<
     // Side Effects
 
     useEffect(() => {
+      if (!_accessory) {
+        setAccessory(null);
+        return;
+      }
+
       (async () => {
         const { scene: accessory } = await getGltf(
           `/objects/accessories/${_accessory}.glb`
