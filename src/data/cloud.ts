@@ -737,9 +737,9 @@ const area: Area = {
   },
   player: {
     defaultPosition: {
-      x: 0,
+      x: -2.95,
       y: 5.7,
-      z: 0,
+      z: 13,
     },
     defaultRotation: {
       x: 0,
