@@ -137,7 +137,7 @@ export const Exhibition3dPlayer = React.memo<
         setCameraOffset(
           new Vector3(
             0,
-            new Box3().setFromObject(scene).getSize(new Vector3()).y / 4,
+            new Box3().setFromObject(scene).getSize(new Vector3()).y / 4 + 0.25,
             0
           )
         );
