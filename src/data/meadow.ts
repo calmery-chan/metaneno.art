@@ -47,6 +47,51 @@ const area: Area = {
   objects: {
     characters: [
       {
+        id: "flower_sheep",
+        name: "",
+        position: {
+          x: 9.1,
+          y: 3.8,
+          z: -11,
+        },
+        rotation: {
+          x: 0,
+          y: 140,
+          z: 0,
+        },
+        scenarios: [
+          {
+            branches: [
+              {
+                message: "行く",
+                scenarios: [
+                  {
+                    actions: ["move_to_cloud"],
+                    message: "…",
+                  },
+                ],
+              },
+              {
+                message: "止めとく",
+                scenarios: [
+                  {
+                    message: "…",
+                  },
+                ],
+              },
+            ],
+            name: null,
+            message: "どうやら雲の上に連れて行ってくれるみたいだ。",
+          },
+        ],
+        scale: {
+          x: 0.25,
+          y: 0.25,
+          z: 0.25,
+        },
+        url: "http://localhost:8000/objects/characters/flower_sheep.glb",
+      },
+      {
         id: "ameri_swing",
         name: "",
         position: {
