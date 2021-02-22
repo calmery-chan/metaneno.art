@@ -2,6 +2,7 @@ import { MAID_SCENARIOS } from "./clouds/scenarios";
 import { Area } from "~/types/exhibition";
 
 const area: Area = {
+  areas: {},
   background: {
     color: "#FFCFCB",
   },
@@ -259,6 +260,7 @@ const area: Area = {
         url: "http://localhost:8000/objects/characters/hitsugi.glb",
       },
     ],
+    components: [],
     decorations: [
       {
         position: {

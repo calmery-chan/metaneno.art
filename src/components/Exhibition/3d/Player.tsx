@@ -56,16 +56,20 @@ const useCamera = (
 
 export const Exhibition3dPlayer = React.memo<
   Area["player"] & {
+    areas: Area["areas"];
     accessory: "fried_egg" | "pancake" | null;
     collider: AreaObject;
+    onChangeArea: (area: "cloud" | "meadow" | "sea") => void;
     operable: boolean;
   }
 >(
   ({
+    areas,
     collider,
     defaultPosition,
     defaultRotation,
     defaultScale,
+    onChangeArea,
     operable,
     url,
   }) => {
@@ -216,6 +220,47 @@ export const Exhibition3dPlayer = React.memo<
 
         if (isMoveable) {
           scene.position.set(nextPosition.x, nextPosition.y, nextPosition.z);
+        }
+
+        // 他のエリアに移動可能かチェックする
+
+        if (areas?.cloud) {
+          const { maximumX, maximumZ, minimumX, minimumZ } = areas.cloud;
+
+          if (
+            minimumX <= nextPosition.x &&
+            nextPosition.x <= maximumX &&
+            minimumZ <= nextPosition.z &&
+            nextPosition.z <= maximumZ
+          ) {
+            onChangeArea("cloud");
+          }
+        }
+
+        if (areas?.meadow) {
+          const { maximumX, maximumZ, minimumX, minimumZ } = areas.meadow;
+
+          if (
+            minimumX <= nextPosition.x &&
+            nextPosition.x <= maximumX &&
+            minimumZ <= nextPosition.z &&
+            nextPosition.z <= maximumZ
+          ) {
+            onChangeArea("meadow");
+          }
+        }
+
+        if (areas?.sea) {
+          const { maximumX, maximumZ, minimumX, minimumZ } = areas.sea;
+
+          if (
+            minimumX <= nextPosition.x &&
+            nextPosition.x <= maximumX &&
+            minimumZ <= nextPosition.z &&
+            nextPosition.z <= maximumZ
+          ) {
+            onChangeArea("sea");
+          }
         }
       }
     });

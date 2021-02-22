@@ -6,6 +6,7 @@ import { Exhibition3dFog } from "./3d/Fog";
 import { Exhibition3dItem } from "./3d/Item";
 import { Exhibition3dLights } from "./3d/Lights";
 import { Exhibition3dObjectsCharacters } from "./3d/Objects/Characters";
+import { Exhibition3dObjectsComponents } from "./3d/Objects/Components";
 import { Exhibition3dObjectsDecorations } from "./3d/Objects/Decorations";
 import { Exhibition3dObjectsItems } from "./3d/Objects/Items";
 import { Exhibition3dObjectsWorks } from "./3d/Objects/Works";
@@ -24,8 +25,9 @@ import { Sentry } from "~/utils/sentry";
 
 export const Exhibition3d: React.FC<{
   area: Area;
+  onChangeArea: (area: "cloud" | "meadow" | "cloud") => void;
   settings: { graphicsQuality: GraphicsQuality };
-}> = ({ area, settings }) => {
+}> = ({ area, onChangeArea, settings }) => {
   const { audio } = useAudio(area.sound.url, { loop: true });
   const [characterId, setCharacterId] = useState<string | null>(null);
   const [characterAnimations, setCharacterAnimations] = useState<
@@ -141,12 +143,17 @@ export const Exhibition3d: React.FC<{
         <Exhibition3dFog {...area.fog} />
         <Exhibition3dLights {...area.lights} />
         <Exhibition3dObjectsCharacters
-          animations={characterId && characterAnimations ? {
-            [characterId]: characterAnimations
-          } : {}}
+          animations={
+            characterId && characterAnimations
+              ? {
+                  [characterId]: characterAnimations,
+                }
+              : {}
+          }
           objects={area.objects.characters}
           onClick={setCharacterId}
         />
+        <Exhibition3dObjectsComponents components={area.objects.components} />
         <Exhibition3dObjectsDecorations objects={area.objects.decorations} />
         <Exhibition3dObjectsItems
           objects={area.objects.items}
@@ -158,7 +165,9 @@ export const Exhibition3d: React.FC<{
         />
         <Exhibition3dPlayer
           {...area.player}
+          areas={area.areas}
           accessory={playerAccessory}
+          onChangeArea={onChangeArea}
           collider={area.collider}
           operable={!workId}
         />

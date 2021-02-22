@@ -10,6 +10,14 @@ export type Light = {
 };
 
 export type Area = {
+  areas: {
+    [key in "meadow" | "sea" | "cloud"]?: {
+      minimumX: number;
+      minimumZ: number;
+      maximumX: number;
+      maximumZ: number;
+    };
+  };
   background: {
     color: string;
   };
@@ -23,6 +31,7 @@ export type Area = {
   };
   objects: {
     characters: AreaCharacterObject[];
+    components: string[];
     decorations: AreaObject[];
     items: AreaItemObject[];
     works: AreaWorkObject[];
