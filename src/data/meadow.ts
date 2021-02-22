@@ -28,7 +28,7 @@ const area: Area = {
       y: 1,
       z: 1,
     },
-    url: "http://localhost:8000/objects/areas/meadow/collider.glb",
+    url: "/objects/areas/meadow/collider.glb",
   },
   fog: {
     color: "#F8FFC9",
@@ -89,7 +89,7 @@ const area: Area = {
           y: 0.25,
           z: 0.25,
         },
-        url: "http://localhost:8000/objects/characters/flower_sheep.glb",
+        url: "/objects/characters/flower_sheep.glb",
       },
       {
         id: "ameri_swing",
@@ -110,7 +110,7 @@ const area: Area = {
           y: 0.25,
           z: 0.25,
         },
-        url: "http://localhost:8000/objects/areas/meadow/ameri_swing.glb",
+        url: "/objects/areas/meadow/ameri_swing.glb",
       },
       {
         id: "noneme_piano",
@@ -131,7 +131,7 @@ const area: Area = {
           y: 0.595,
           z: 0.595,
         },
-        url: "http://localhost:8000/objects/areas/meadow/noneme_piano.glb",
+        url: "/objects/areas/meadow/noneme_piano.glb",
       },
       {
         id: "hitugi",
@@ -152,7 +152,7 @@ const area: Area = {
           y: 0.5,
           z: 0.5,
         },
-        url: "http://localhost:8000/objects/characters/hitugi.glb",
+        url: "/objects/characters/hitugi.glb",
       },
       {
         id: "neminko",
@@ -173,7 +173,7 @@ const area: Area = {
           y: 0.5,
           z: 0.5,
         },
-        url: "http://localhost:8000/objects/characters/neminko.glb",
+        url: "/objects/characters/neminko.glb",
       },
     ],
     components: [
@@ -201,7 +201,7 @@ const area: Area = {
           y: 1,
           z: 1,
         },
-        url: "http://localhost:8000/objects/areas/meadow/boards.glb",
+        url: "/objects/areas/meadow/boards.glb",
       },
       {
         position: {
@@ -219,7 +219,7 @@ const area: Area = {
           y: 1,
           z: 1,
         },
-        url: "http://localhost:8000/objects/areas/meadow/terrain.glb",
+        url: "/objects/areas/meadow/terrain.glb",
       },
       {
         position: {
@@ -237,7 +237,7 @@ const area: Area = {
           y: 1,
           z: 1,
         },
-        url: "http://localhost:8000/objects/areas/meadow/bushes.glb",
+        url: "/objects/areas/meadow/bushes.glb",
       },
       {
         position: {
@@ -255,7 +255,7 @@ const area: Area = {
           y: 1,
           z: 1,
         },
-        url: "http://localhost:8000/objects/areas/meadow/flowers.glb",
+        url: "/objects/areas/meadow/flowers.glb",
       },
       {
         position: {
@@ -273,7 +273,7 @@ const area: Area = {
           y: 1,
           z: 1,
         },
-        url: "http://localhost:8000/objects/areas/meadow/grasses.glb",
+        url: "/objects/areas/meadow/grasses.glb",
       },
       {
         position: {
@@ -291,7 +291,7 @@ const area: Area = {
           y: 1,
           z: 1,
         },
-        url: "http://localhost:8000/objects/areas/meadow/trees.glb",
+        url: "/objects/areas/meadow/trees.glb",
       },
       {
         position: {
@@ -309,7 +309,7 @@ const area: Area = {
           y: 1,
           z: 1,
         },
-        url: "http://localhost:8000/objects/areas/meadow/waterlily.glb",
+        url: "/objects/areas/meadow/waterlily.glb",
       },
       {
         position: {
@@ -327,7 +327,7 @@ const area: Area = {
           y: 1,
           z: 1,
         },
-        url: "http://localhost:8000/objects/areas/meadow/tulips.glb",
+        url: "/objects/areas/meadow/tulips.glb",
       },
       {
         position: {
@@ -345,7 +345,7 @@ const area: Area = {
           y: 1,
           z: 1,
         },
-        url: "http://localhost:8000/objects/areas/meadow/stones.glb",
+        url: "/objects/areas/meadow/stones.glb",
       },
       {
         position: {
@@ -363,7 +363,7 @@ const area: Area = {
           y: 1,
           z: 1,
         },
-        url: "http://localhost:8000/objects/areas/meadow/sunflowers.glb",
+        url: "/objects/areas/meadow/sunflowers.glb",
       },
       {
         position: {
@@ -381,7 +381,7 @@ const area: Area = {
           y: 1,
           z: 1,
         },
-        url: "http://localhost:8000/objects/areas/meadow/stumps.glb",
+        url: "/objects/areas/meadow/stumps.glb",
       },
       {
         position: {
@@ -399,7 +399,7 @@ const area: Area = {
           y: 1,
           z: 1,
         },
-        url: "http://localhost:8000/objects/areas/meadow/piano.glb",
+        url: "/objects/areas/meadow/piano.glb",
       },
       {
         position: {
@@ -417,7 +417,7 @@ const area: Area = {
           y: 3.2,
           z: 3.2,
         },
-        url: "http://localhost:8000/objects/areas/meadow/chair.glb",
+        url: "/objects/areas/meadow/chair.glb",
       },
     ],
     items: [],
@@ -444,7 +444,7 @@ const area: Area = {
           z: 1,
         },
         title: "",
-        url: "http://localhost:8000/objects/areas/meadow/ameri_sunflower.glb",
+        url: "/objects/areas/meadow/ameri_sunflower.glb",
       },
       {
         characters: [],
@@ -468,7 +468,7 @@ const area: Area = {
           z: 1,
         },
         title: "",
-        url: "http://localhost:8000/objects/areas/meadow/easter_egg.glb",
+        url: "/objects/areas/meadow/easter_egg.glb",
       },
       {
         characters: [],
@@ -492,7 +492,7 @@ const area: Area = {
           z: 1,
         },
         title: "",
-        url: "http://localhost:8000/objects/areas/meadow/koishi.glb",
+        url: "/objects/areas/meadow/koishi.glb",
       },
       {
         characters: [],
@@ -516,7 +516,7 @@ const area: Area = {
           z: 1,
         },
         title: "",
-        url: "http://localhost:8000/objects/areas/meadow/koishi_hydrangea.glb",
+        url: "/objects/areas/meadow/koishi_hydrangea.glb",
       },
       {
         characters: [],
@@ -540,7 +540,7 @@ const area: Area = {
           z: 1,
         },
         title: "",
-        url: "http://localhost:8000/objects/areas/meadow/koishi_sakura.glb",
+        url: "/objects/areas/meadow/koishi_sakura.glb",
       },
       {
         characters: [],
@@ -564,7 +564,7 @@ const area: Area = {
           z: 1,
         },
         title: "",
-        url: "http://localhost:8000/objects/areas/meadow/koishi_sunflower.glb",
+        url: "/objects/areas/meadow/koishi_sunflower.glb",
       },
       {
         characters: [],
@@ -588,7 +588,7 @@ const area: Area = {
           z: 1,
         },
         title: "",
-        url: "http://localhost:8000/objects/areas/meadow/lee_white_clover.glb",
+        url: "/objects/areas/meadow/lee_white_clover.glb",
       },
       {
         characters: [],
@@ -612,7 +612,7 @@ const area: Area = {
           z: 1,
         },
         title: "",
-        url: "http://localhost:8000/objects/areas/meadow/noneme_dry.glb",
+        url: "/objects/areas/meadow/noneme_dry.glb",
       },
       {
         characters: [],
@@ -636,7 +636,7 @@ const area: Area = {
           z: 1,
         },
         title: "",
-        url: "http://localhost:8000/objects/areas/meadow/noneme_sunflower.glb",
+        url: "/objects/areas/meadow/noneme_sunflower.glb",
       },
       {
         characters: [],
@@ -660,7 +660,7 @@ const area: Area = {
           z: 1,
         },
         title: "",
-        url: "http://localhost:8000/objects/areas/meadow/rainy_season.glb",
+        url: "/objects/areas/meadow/rainy_season.glb",
       },
       {
         characters: [],
@@ -684,7 +684,7 @@ const area: Area = {
           z: 1,
         },
         title: "",
-        url: "http://localhost:8000/objects/areas/meadow/red_gerbera.glb",
+        url: "/objects/areas/meadow/red_gerbera.glb",
       },
       {
         characters: [],
@@ -708,7 +708,7 @@ const area: Area = {
           z: 1,
         },
         title: "",
-        url: "http://localhost:8000/objects/areas/meadow/red_spider_lily.glb",
+        url: "/objects/areas/meadow/red_spider_lily.glb",
       },
       {
         characters: [],
@@ -732,7 +732,7 @@ const area: Area = {
           z: 1,
         },
         title: "",
-        url: "http://localhost:8000/objects/areas/meadow/sakura.glb",
+        url: "/objects/areas/meadow/sakura.glb",
       },
     ],
   },
@@ -752,10 +752,10 @@ const area: Area = {
       y: 0.5,
       z: 0.5,
     },
-    url: "http://localhost:8000/objects/player.glb",
+    url: "/objects/player.glb",
   },
   sound: {
-    url: "http://localhost:8000/sounds/meadow.mp3",
+    url: "/sounds/meadow.mp3",
   },
 };
 

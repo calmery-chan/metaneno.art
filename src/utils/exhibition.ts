@@ -74,7 +74,11 @@ export const getGltf = (
 }> =>
   new Promise((resolve, reject) => {
     new GLTFLoader().load(
-      url,
+      `${
+        process.env.NODE_ENV === "production"
+          ? "https://assets.metaneno.art"
+          : "http://localhost:8000"
+      }${url}`,
       (gltf) =>
         resolve({
           animations: gltf.animations,

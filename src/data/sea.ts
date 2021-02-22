@@ -140,7 +140,7 @@ const area: Area = {
           y: 0.5,
           z: 0.5,
         },
-        url: "http://localhost:8000/objects/characters/hitsugi.glb",
+        url: "/objects/characters/hitsugi.glb",
       },
       {
         id: "noneme",
@@ -235,7 +235,7 @@ const area: Area = {
           y: 0.25,
           z: 0.25,
         },
-        url: "http://localhost:8000/objects/characters/noneme.glb",
+        url: "/objects/characters/noneme.glb",
       },
       {
         id: "water_sheep",
@@ -280,7 +280,7 @@ const area: Area = {
           y: 0.2,
           z: 0.2,
         },
-        url: "http://localhost:8000/objects/characters/water_sheep.glb",
+        url: "/objects/characters/water_sheep.glb",
       },
     ],
     components: [
@@ -308,7 +308,7 @@ const area: Area = {
           y: 1,
           z: 1,
         },
-        url: "http://localhost:8000/objects/areas/sea/board.glb",
+        url: "/objects/areas/sea/board.glb",
       },
       {
         position: {
@@ -326,7 +326,7 @@ const area: Area = {
           y: 1,
           z: 1,
         },
-        url: "http://localhost:8000/objects/areas/sea/terrain.glb",
+        url: "/objects/areas/sea/terrain.glb",
       },
       {
         position: {
@@ -344,7 +344,7 @@ const area: Area = {
           y: 1,
           z: 1,
         },
-        url: "http://localhost:8000/objects/areas/sea/beams.glb",
+        url: "/objects/areas/sea/beams.glb",
       },
       {
         position: {
@@ -362,7 +362,7 @@ const area: Area = {
           y: 1,
           z: 1,
         },
-        url: "http://localhost:8000/objects/areas/sea/bottles.glb",
+        url: "/objects/areas/sea/bottles.glb",
       },
       {
         position: {
@@ -380,7 +380,7 @@ const area: Area = {
           y: 1,
           z: 1,
         },
-        url: "http://localhost:8000/objects/areas/sea/cages.glb",
+        url: "/objects/areas/sea/cages.glb",
       },
       {
         position: {
@@ -398,7 +398,7 @@ const area: Area = {
           y: 1,
           z: 1,
         },
-        url: "http://localhost:8000/objects/areas/sea/columns.glb",
+        url: "/objects/areas/sea/columns.glb",
       },
       {
         position: {
@@ -416,7 +416,7 @@ const area: Area = {
           y: 1,
           z: 1,
         },
-        url: "http://localhost:8000/objects/areas/sea/crystals.glb",
+        url: "/objects/areas/sea/crystals.glb",
       },
       {
         position: {
@@ -434,7 +434,7 @@ const area: Area = {
           y: 1,
           z: 1,
         },
-        url: "http://localhost:8000/objects/areas/sea/cups.glb",
+        url: "/objects/areas/sea/cups.glb",
       },
       {
         position: {
@@ -452,7 +452,7 @@ const area: Area = {
           y: 1,
           z: 1,
         },
-        url: "http://localhost:8000/objects/areas/sea/grasses.glb",
+        url: "/objects/areas/sea/grasses.glb",
       },
       {
         position: {
@@ -470,7 +470,7 @@ const area: Area = {
           y: 1,
           z: 1,
         },
-        url: "http://localhost:8000/objects/areas/sea/pillars.glb",
+        url: "/objects/areas/sea/pillars.glb",
       },
       {
         position: {
@@ -488,7 +488,7 @@ const area: Area = {
           y: 1,
           z: 1,
         },
-        url: "http://localhost:8000/objects/areas/sea/ruins.glb",
+        url: "/objects/areas/sea/ruins.glb",
       },
       {
         position: {
@@ -506,7 +506,7 @@ const area: Area = {
           y: 1,
           z: 1,
         },
-        url: "http://localhost:8000/objects/areas/sea/stones.glb",
+        url: "/objects/areas/sea/stones.glb",
       },
       {
         position: {
@@ -524,7 +524,7 @@ const area: Area = {
           y: 1,
           z: 1,
         },
-        url: "http://localhost:8000/objects/areas/sea/tables.glb",
+        url: "/objects/areas/sea/tables.glb",
       },
       {
         position: {
@@ -542,7 +542,7 @@ const area: Area = {
           y: 1,
           z: 1,
         },
-        url: "http://localhost:8000/objects/areas/sea/walls.glb",
+        url: "/objects/areas/sea/walls.glb",
       },
     ],
     items: [],
@@ -569,7 +569,7 @@ const area: Area = {
           z: 1,
         },
         title: "",
-        url: "http://localhost:8000/objects/areas/sea/aquarium.glb",
+        url: "/objects/areas/sea/aquarium.glb",
       },
       {
         characters: [],
@@ -593,7 +593,7 @@ const area: Area = {
           z: 1,
         },
         title: "",
-        url: "http://localhost:8000/objects/areas/sea/cirno.glb",
+        url: "/objects/areas/sea/cirno.glb",
       },
       {
         characters: [],
@@ -617,7 +617,7 @@ const area: Area = {
           z: 1,
         },
         title: "",
-        url: "http://localhost:8000/objects/areas/sea/deep_sea.glb",
+        url: "/objects/areas/sea/deep_sea.glb",
       },
       {
         characters: [],
@@ -641,7 +641,7 @@ const area: Area = {
           z: 1,
         },
         title: "",
-        url: "http://localhost:8000/objects/areas/sea/flowers.glb",
+        url: "/objects/areas/sea/flowers.glb",
       },
       {
         characters: [],
@@ -665,7 +665,7 @@ const area: Area = {
           z: 1,
         },
         title: "",
-        url: "http://localhost:8000/objects/areas/sea/gear.glb",
+        url: "/objects/areas/sea/gear.glb",
       },
       {
         characters: [],
@@ -689,7 +689,7 @@ const area: Area = {
           z: 1,
         },
         title: "",
-        url: "http://localhost:8000/objects/areas/sea/goldfish.glb",
+        url: "/objects/areas/sea/goldfish.glb",
       },
       {
         characters: [],
@@ -713,7 +713,7 @@ const area: Area = {
           z: 1,
         },
         title: "",
-        url: "http://localhost:8000/objects/areas/sea/hydrangea.glb",
+        url: "/objects/areas/sea/hydrangea.glb",
       },
       {
         characters: [],
@@ -737,7 +737,7 @@ const area: Area = {
           z: 1,
         },
         title: "",
-        url: "http://localhost:8000/objects/areas/sea/melon_soda.glb",
+        url: "/objects/areas/sea/melon_soda.glb",
       },
       {
         characters: [],
@@ -761,7 +761,7 @@ const area: Area = {
           z: 1,
         },
         title: "",
-        url: "http://localhost:8000/objects/areas/sea/submerged.glb",
+        url: "/objects/areas/sea/submerged.glb",
       },
     ],
   },
@@ -781,10 +781,10 @@ const area: Area = {
       y: 0.5,
       z: 0.5,
     },
-    url: "http://localhost:8000/objects/player.glb",
+    url: "/objects/player.glb",
   },
   sound: {
-    url: "http://localhost:8000/sounds/sea.mp3",
+    url: "/sounds/sea.mp3",
   },
 };
 

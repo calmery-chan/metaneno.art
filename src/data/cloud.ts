@@ -23,7 +23,7 @@ const area: Area = {
       y: 1,
       z: 1,
     },
-    url: "http://localhost:8000/objects/areas/cloud/collider.glb",
+    url: "/objects/areas/cloud/collider.glb",
   },
   fog: {
     color: "#FFCFCB",
@@ -69,7 +69,7 @@ const area: Area = {
           z: 0.25,
         },
         scenarios: [],
-        url: "http://localhost:8000/objects/characters/noneme_sitting.glb",
+        url: "/objects/characters/noneme_sitting.glb",
       },
       {
         id: "flower_sheep",
@@ -114,7 +114,7 @@ const area: Area = {
             message: "どうやら草原に連れて行ってくれるようだ。",
           },
         ],
-        url: "http://localhost:8000/objects/characters/flower_sheep.glb",
+        url: "/objects/characters/flower_sheep.glb",
       },
       {
         id: "water_sheep",
@@ -159,7 +159,7 @@ const area: Area = {
             message: "どうやら水中遺跡に連れて行ってくれるようだ。",
           },
         ],
-        url: "http://localhost:8000/objects/characters/water_sheep.glb",
+        url: "/objects/characters/water_sheep.glb",
       },
       {
         id: "ameri",
@@ -180,7 +180,7 @@ const area: Area = {
           z: 0.25,
         },
         scenarios: [],
-        url: "http://localhost:8000/objects/characters/ameri.glb",
+        url: "/objects/characters/ameri.glb",
       },
       {
         id: "maid",
@@ -201,7 +201,7 @@ const area: Area = {
           z: 0.25,
         },
         scenarios: MAID_SCENARIOS,
-        url: "http://localhost:8000/objects/characters/maid.glb",
+        url: "/objects/characters/maid.glb",
       },
       {
         id: "hitugi",
@@ -243,7 +243,7 @@ const area: Area = {
             message: "………ここは甘いにおいがする。",
           },
         ],
-        url: "http://localhost:8000/objects/characters/hitsugi.glb",
+        url: "/objects/characters/hitsugi.glb",
       },
     ],
     components: [],
@@ -264,7 +264,7 @@ const area: Area = {
           y: 1,
           z: 1,
         },
-        url: "http://localhost:8000/objects/areas/cloud/balloons.glb",
+        url: "/objects/areas/cloud/balloons.glb",
       },
       {
         position: {
@@ -282,7 +282,7 @@ const area: Area = {
           y: 1,
           z: 1,
         },
-        url: "http://localhost:8000/objects/areas/cloud/candy.glb",
+        url: "/objects/areas/cloud/candy.glb",
       },
       {
         position: {
@@ -300,7 +300,7 @@ const area: Area = {
           y: 1,
           z: 1,
         },
-        url: "http://localhost:8000/objects/areas/cloud/clouds.glb",
+        url: "/objects/areas/cloud/clouds.glb",
       },
       {
         position: {
@@ -318,7 +318,7 @@ const area: Area = {
           y: 1,
           z: 1,
         },
-        url: "http://localhost:8000/objects/areas/cloud/neminko_sleeping.glb",
+        url: "/objects/areas/cloud/neminko_sleeping.glb",
       },
       {
         position: {
@@ -336,7 +336,7 @@ const area: Area = {
           y: 1,
           z: 1,
         },
-        url: "http://localhost:8000/objects/areas/cloud/pc.glb",
+        url: "/objects/areas/cloud/pc.glb",
       },
       {
         position: {
@@ -354,7 +354,7 @@ const area: Area = {
           y: 1,
           z: 1,
         },
-        url: "http://localhost:8000/objects/areas/cloud/sweets.glb",
+        url: "/objects/areas/cloud/sweets.glb",
       },
       {
         position: {
@@ -372,7 +372,7 @@ const area: Area = {
           y: 1,
           z: 1,
         },
-        url: "http://localhost:8000/objects/areas/cloud/terrain.glb",
+        url: "/objects/areas/cloud/terrain.glb",
       },
     ],
     items: [
@@ -393,7 +393,7 @@ const area: Area = {
           y: 1,
           z: 1,
         },
-        url: "http://localhost:8000/objects/areas/cloud/post.glb",
+        url: "/objects/areas/cloud/post.glb",
       },
     ],
     works: [
@@ -418,7 +418,7 @@ const area: Area = {
           y: 1,
           z: 1,
         },
-        url: "http://localhost:8000/objects/areas/cloud/calmery_chan.glb",
+        url: "/objects/areas/cloud/calmery_chan.glb",
         title: "タイトル",
       },
       {
@@ -442,7 +442,7 @@ const area: Area = {
           y: 1,
           z: 1,
         },
-        url: "http://localhost:8000/objects/areas/cloud/fried_egg.glb",
+        url: "/objects/areas/cloud/fried_egg.glb",
         title: "タイトル",
       },
       {
@@ -465,7 +465,7 @@ const area: Area = {
           y: 1,
           z: 1,
         },
-        url: "http://localhost:8000/objects/areas/cloud/koishi.glb",
+        url: "/objects/areas/cloud/koishi.glb",
         imageUrl: "/logo.png",
         title: "タイトル",
       },
@@ -489,7 +489,7 @@ const area: Area = {
           y: 1,
           z: 1,
         },
-        url: "http://localhost:8000/objects/areas/cloud/lee_mai.glb",
+        url: "/objects/areas/cloud/lee_mai.glb",
         imageUrl: "/logo.png",
         title: "タイトル",
       },
@@ -513,7 +513,7 @@ const area: Area = {
           y: 1,
           z: 1,
         },
-        url: "http://localhost:8000/objects/areas/cloud/maid.glb",
+        url: "/objects/areas/cloud/maid.glb",
         imageUrl: "/logo.png",
         title: "タイトル",
       },
@@ -538,7 +538,7 @@ const area: Area = {
           y: 1,
           z: 1,
         },
-        url: "http://localhost:8000/objects/areas/cloud/maid_gas_mask.glb",
+        url: "/objects/areas/cloud/maid_gas_mask.glb",
         title: "タイトル",
       },
       {
@@ -562,7 +562,7 @@ const area: Area = {
           y: 1,
           z: 1,
         },
-        url: "http://localhost:8000/objects/areas/cloud/maid_pancake.glb",
+        url: "/objects/areas/cloud/maid_pancake.glb",
         title: "タイトル",
       },
       {
@@ -586,7 +586,7 @@ const area: Area = {
           y: 1,
           z: 1,
         },
-        url: "http://localhost:8000/objects/areas/cloud/main_visual.glb",
+        url: "/objects/areas/cloud/main_visual.glb",
         title: "タイトル",
       },
       {
@@ -610,7 +610,7 @@ const area: Area = {
           y: 1,
           z: 1,
         },
-        url: "http://localhost:8000/objects/areas/cloud/moment.glb",
+        url: "/objects/areas/cloud/moment.glb",
         title: "タイトル",
       },
       {
@@ -634,7 +634,7 @@ const area: Area = {
           y: 1,
           z: 1,
         },
-        url: "http://localhost:8000/objects/areas/cloud/neminko.glb",
+        url: "/objects/areas/cloud/neminko.glb",
         title: "タイトル",
       },
       {
@@ -658,7 +658,7 @@ const area: Area = {
           y: 1,
           z: 1,
         },
-        url: "http://localhost:8000/objects/areas/cloud/okusuri.glb",
+        url: "/objects/areas/cloud/okusuri.glb",
         title: "タイトル",
       },
       {
@@ -682,7 +682,7 @@ const area: Area = {
           y: 1,
           z: 1,
         },
-        url: "http://localhost:8000/objects/areas/cloud/pancake.glb",
+        url: "/objects/areas/cloud/pancake.glb",
         title: "タイトル",
       },
       {
@@ -706,7 +706,7 @@ const area: Area = {
           y: 1,
           z: 1,
         },
-        url: "http://localhost:8000/objects/areas/cloud/satori_koishi.glb",
+        url: "/objects/areas/cloud/satori_koishi.glb",
         title: "タイトル",
       },
       {
@@ -730,7 +730,7 @@ const area: Area = {
           y: 1,
           z: 1,
         },
-        url: "http://localhost:8000/objects/areas/cloud/strawberry_cake.glb",
+        url: "/objects/areas/cloud/strawberry_cake.glb",
         title: "タイトル",
       },
       {
@@ -754,7 +754,7 @@ const area: Area = {
           y: 1,
           z: 1,
         },
-        url: "http://localhost:8000/objects/areas/cloud/tabenemi.glb",
+        url: "/objects/areas/cloud/tabenemi.glb",
         title: "タイトル",
       },
       {
@@ -778,7 +778,7 @@ const area: Area = {
           y: 1,
           z: 1,
         },
-        url: "http://localhost:8000/objects/areas/cloud/yumekawa.glb",
+        url: "/objects/areas/cloud/yumekawa.glb",
         title: "タイトル",
       },
     ],
@@ -799,10 +799,10 @@ const area: Area = {
       y: 0.5,
       z: 0.5,
     },
-    url: "http://localhost:8000/objects/player.glb",
+    url: "/objects/player.glb",
   },
   sound: {
-    url: "http://localhost:8000/sounds/cloud.mp3",
+    url: "/sounds/cloud.mp3",
   },
 };
 

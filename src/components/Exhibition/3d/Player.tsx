@@ -11,7 +11,6 @@ import {
   Scene,
   Vector3,
 } from "three";
-import GLTFLoader from "three-gltf-loader";
 import { ControllerKeys } from "./Controller";
 import { Area, AreaName, AreaObject } from "~/types/exhibition";
 import { getGltf } from "~/utils/exhibition";
@@ -104,7 +103,9 @@ export const Exhibition3dPlayer = React.memo<
     }, [collider]);
 
     useEffect(() => {
-      new GLTFLoader().load(url, ({ animations, scene }) => {
+      (async () => {
+        const { animations, scene } = await getGltf(url);
+
         scene.scale.set(0.5, 0.5, 0.5);
 
         setAnimations(animations);
@@ -117,7 +118,7 @@ export const Exhibition3dPlayer = React.memo<
         );
         setMixer(new AnimationMixer(scene));
         setScene(scene);
-      });
+      })();
     }, []);
 
     useEffect(() => {
