@@ -13,7 +13,7 @@ import {
 } from "three";
 import { ControllerKeys } from "./Controller";
 import { Area, AreaName, AreaObject } from "~/types/exhibition";
-import { getGltf } from "~/utils/exhibition";
+import { getGltf, rewriteMaterials } from "~/utils/exhibition";
 
 CameraControls.install({ THREE });
 
@@ -64,6 +64,7 @@ export const Exhibition3dPlayer = React.memo<
     }
 >(
   ({
+    accessory: _accessory,
     areas,
     down,
     collider,
@@ -84,10 +85,29 @@ export const Exhibition3dPlayer = React.memo<
     const [state, setState] = useState<"running" | "standing" | "walking">(
       "standing"
     );
+    const [accessory, setAccessory] = useState<Scene | null>(null);
     const [scene, setScene] = useState<Scene>();
     const camera = useCamera(scene?.position, cameraOffset);
 
     // Side Effects
+
+    useEffect(() => {
+      (async () => {
+        const { scene: accessory } = await getGltf(
+          `/objects/accessories/${_accessory}.glb`
+        );
+
+        rewriteMaterials(accessory);
+
+        accessory.position.set(
+          scene?.position.x || 0,
+          (scene?.position.y || 0) + 0.95,
+          scene?.position.z || 0
+        );
+
+        setAccessory(accessory);
+      })();
+    }, [_accessory]);
 
     useEffect(() => {
       (async () => {
@@ -225,6 +245,15 @@ export const Exhibition3dPlayer = React.memo<
 
         if (isMoveable) {
           scene.position.set(nextPosition.x, nextPosition.y, nextPosition.z);
+
+          if (accessory) {
+            accessory.position.set(
+              nextPosition.x,
+              nextPosition.y + 0.95,
+              nextPosition.z
+            );
+            accessory.rotation.y = Math.atan2(rotation.x, rotation.z);
+          }
         }
 
         // 他のエリアに移動可能かチェックする
@@ -272,6 +301,11 @@ export const Exhibition3dPlayer = React.memo<
       return null;
     }
 
-    return <primitive object={scene} />;
+    return (
+      <>
+        <primitive object={scene} />
+        {accessory && <primitive object={accessory} />}
+      </>
+    );
   }
 );

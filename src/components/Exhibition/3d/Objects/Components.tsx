@@ -32,10 +32,10 @@ export const Exhibition3dObjectsComponents: React.FC<{
   components: { name: string; props: Record<string, any> }[];
 }> = ({ components }) => (
   <>
-    {components.map(({ name, props }) => {
+    {components.map(({ name, props }, index) => {
       switch (name) {
         case "water":
-          return <Water y={props.y} />;
+          return <Water key={index} y={props.y} />;
 
         default:
           return null;
