@@ -12,7 +12,7 @@ import {
   Vector3,
 } from "three";
 import GLTFLoader from "three-gltf-loader";
-import { useKeyboard } from "~/hooks/exhibition/useKeyboard";
+import { ControllerKeys } from "./Controller";
 import { Area, AreaName, AreaObject } from "~/types/exhibition";
 import { getGltf } from "~/utils/exhibition";
 
@@ -55,22 +55,27 @@ const useCamera = (
 };
 
 export const Exhibition3dPlayer = React.memo<
-  Area["player"] & {
-    areas: Area["areas"];
-    accessory: "fried_egg" | "pancake" | null;
-    collider: AreaObject;
-    onChangeArea: (area: AreaName) => void;
-    operable: boolean;
-  }
+  Area["player"] &
+    ControllerKeys & {
+      areas: Area["areas"];
+      accessory: "fried_egg" | "pancake" | null;
+      collider: AreaObject;
+      onChangeArea: (area: AreaName) => void;
+      operable: boolean;
+    }
 >(
   ({
     areas,
+    down,
     collider,
     defaultPosition,
     defaultRotation,
     defaultScale,
+    left,
+    right,
     onChangeArea,
     operable,
+    up,
     url,
   }) => {
     const [animations, setAnimations] = useState<AnimationClip[]>();
@@ -82,7 +87,6 @@ export const Exhibition3dPlayer = React.memo<
     );
     const [scene, setScene] = useState<Scene>();
     const camera = useCamera(scene?.position, cameraOffset);
-    const { down, left, right, up } = useKeyboard();
 
     // Side Effects
 

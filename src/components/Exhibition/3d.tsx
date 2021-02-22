@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { Exhibition3dBackground } from "./3d/Background";
 import { Exhibition3dCanvas } from "./3d/Canvas";
 import { Exhibition3dCharacter } from "./3d/Character";
+import { defaultControllerKeys, Exhibition3dController } from "./3d/Controller";
 import { Exhibition3dFog } from "./3d/Fog";
 import { Exhibition3dItem } from "./3d/Item";
 import { Exhibition3dLights } from "./3d/Lights";
@@ -30,6 +31,7 @@ export const Exhibition3d: React.FC<{
   settings: { graphicsQuality: GraphicsQuality };
 }> = ({ area, onChangeArea, settings }) => {
   const { audio } = useAudio(area.sound.url, { loop: true });
+  const [keys, setKeys] = useState(defaultControllerKeys);
   const [characterId, setCharacterId] = useState<string | null>(null);
   const [characterAnimations, setCharacterAnimations] = useState<
     string[][] | null
@@ -185,6 +187,7 @@ export const Exhibition3d: React.FC<{
         />
         <Exhibition3dPlayer
           {...area.player}
+          {...keys}
           areas={area.areas}
           accessory={playerAccessory}
           onChangeArea={onChangeArea}
@@ -209,6 +212,7 @@ export const Exhibition3d: React.FC<{
           onClose={handleCloseWork}
         />
       )}
+      <Exhibition3dController onChange={setKeys} />
     </>
   );
 };
