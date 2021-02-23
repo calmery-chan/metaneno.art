@@ -1,18 +1,15 @@
 import { NextPage } from "next";
-import React, { useCallback, useEffect, useState } from "react";
-import { isMobileSafari } from "react-device-detect";
+import React, { useCallback, useState } from "react";
 import { Exhibition2dMorning } from "~/components/Exhibition/2d/Morning";
 import { Exhibition2dNight } from "~/components/Exhibition/2d/Night";
 import { Exhibition3d } from "~/components/Exhibition/3d";
 import { ExhibitionMenu } from "~/components/Exhibition/Menu";
 import { ExhibitionOkusuriLandNotifications } from "~/components/Exhibition/OkusuriLandNotifications";
-import { useScreenOrientation } from "~/hooks/exhibition/useScreenOrientation";
 import { GraphicsQuality } from "~/types/exhibition";
 import { useOkusuriLand } from "~/utils/okusuri.land";
 import { Disease } from "~/utils/okusuri.land/types";
 
 const Exhibition: NextPage = () => {
-  const { orientation } = useScreenOrientation();
   const [creamsoda, setCreamsoda] = useState<"flower" | "water" | null>(null);
   const [diseases, setDiseases] = useState<Disease[]>([]);
   const [location, setLocation] = useState<"2d-morning" | "2d-night" | "3d">(
@@ -46,14 +43,6 @@ const Exhibition: NextPage = () => {
 
   const okusuriLand = useOkusuriLand(setDiseases);
 
-  // Side Effects
-
-  useEffect(() => {
-    if (isMobileSafari && orientation === "landscape") {
-      window.scrollTo(0, 1);
-    }
-  }, [orientation]);
-
   // Render
 
   return (
@@ -73,7 +62,6 @@ const Exhibition: NextPage = () => {
         okusuriLand={okusuriLand}
         onChangeGraphicsQuality={handleChangeQuality}
       />
-
       <ExhibitionOkusuriLandNotifications
         diseases={diseases}
         onAnimationCompleted={handleResetDisease}

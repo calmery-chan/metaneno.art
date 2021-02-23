@@ -325,9 +325,12 @@ export const Exhibition2dMorning: React.FC = () => {
   const isInteracting = !wokeUp || !!scenarios || sleep;
 
   return (
-    <div className="bg-black h-full w-full">
+    <div className="bg-black h-screen w-screen">
       {ready && (
-        <div className="absolute h-full w-full" css={sleep ? fadeOut : fadeIn}>
+        <div
+          className="absolute h-screen w-screen"
+          css={sleep ? fadeOut : fadeIn}
+        >
           <Exhibition2dCanvas
             creamsoda={null}
             onComplete={() => undefined}

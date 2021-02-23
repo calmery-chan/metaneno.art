@@ -289,99 +289,99 @@ export const Exhibition2dNight: React.FC<{
 
   // Render
 
-  if (!ready) {
-    return null;
-  }
-
   return (
-    <div className="bg-black h-full w-full">
-      <div className="absolute h-full w-full" css={fadeIn}>
-        <Exhibition2dCanvas
-          creamsoda={selectedCreamSoda}
-          onComplete={handleComplete}
-          onMove={handleTouchMove}
-          onMoveEnd={handleTouchMoveEnd}
-          walked={walked}
-        >
-          <Exhibition2dBackground
-            restricted={restricted}
-            wakeup={wakeup}
-            step={step}
-          />
-          <Exhibition2DItemsKey
-            onClick={handleClickKey}
-            restricted={restricted}
-            step={step}
-            x={520}
-          />
-          {wakeup && (
-            <Exhibition2dCharacter
+    <div className="bg-black h-screen w-screen">
+      {ready && (
+        <div className="absolute h-screen w-screen" css={fadeIn}>
+          <Exhibition2dCanvas
+            creamsoda={selectedCreamSoda}
+            onComplete={handleComplete}
+            onMove={handleTouchMove}
+            onMoveEnd={handleTouchMoveEnd}
+            walked={walked}
+          >
+            <Exhibition2dBackground
+              restricted={restricted}
+              wakeup={wakeup}
+              step={step}
+            />
+            <Exhibition2DItemsKey
+              onClick={handleClickKey}
+              restricted={restricted}
+              step={step}
+              x={520}
+            />
+            {wakeup && (
+              <Exhibition2dCharacter
+                creamsoda={selectedCreamSoda}
+                direction={direction}
+                restricted={restricted}
+                step={step}
+              />
+            )}
+            {!wakeup && (
+              <Exhibition2dWakeupCaharcter onComplete={handleWakeup} />
+            )}
+            <Exhibition2dForeground
               creamsoda={selectedCreamSoda}
-              direction={direction}
               restricted={restricted}
               step={step}
             />
-          )}
-          {!wakeup && <Exhibition2dWakeupCaharcter onComplete={handleWakeup} />}
-          <Exhibition2dForeground
-            creamsoda={selectedCreamSoda}
-            restricted={restricted}
-            step={step}
-          />
-        </Exhibition2dCanvas>
-        <div
-          className="absolute bg-black h-full opacity-0 top-0 w-full"
-          css={
-            walked
-              ? selectedCreamSoda
-                ? fadeOutImage
-                : fadeInImage
-              : undefined
-          }
-          style={{
-            display: walked && !selectedCreamSoda ? "block" : "none",
-          }}
-        >
-          <Exhibition2dCanvasContainer>
-            <img
-              className="h-full object-contain w-full"
-              css={creamsoda}
-              src="/exhibition/2d/night/creamsoda/background.png"
-              style={{ imageRendering: "pixelated" }}
+          </Exhibition2dCanvas>
+          <div
+            className="absolute bg-black h-full opacity-0 top-0 w-full"
+            css={
+              walked
+                ? selectedCreamSoda
+                  ? fadeOutImage
+                  : fadeInImage
+                : undefined
+            }
+            style={{
+              display: walked && !selectedCreamSoda ? "block" : "none",
+            }}
+          >
+            <Exhibition2dCanvasContainer>
+              <img
+                className="h-full object-contain w-full"
+                css={creamsoda}
+                src="/exhibition/2d/night/creamsoda/background.png"
+                style={{ imageRendering: "pixelated" }}
+              />
+              <div className="absolute cursor-pointer flex h-full top-0 w-full">
+                <div className="w-full" onClick={handleClickWaterIceCreamSoda}>
+                  <img
+                    className="h-full object-contain w-full"
+                    css={clickable}
+                    src="/exhibition/2d/night/creamsoda/water.png"
+                    style={{ imageRendering: "pixelated" }}
+                  />
+                </div>
+                <div className="w-full" onClick={handleClickFlowerIceCreamSoda}>
+                  <img
+                    className="h-full object-contain w-full"
+                    css={clickable}
+                    src="/exhibition/2d/night/creamsoda/flower.png"
+                    style={{ imageRendering: "pixelated" }}
+                  />
+                </div>
+              </div>
+            </Exhibition2dCanvasContainer>
+          </div>
+          {!restricted && !isReadScenario && (
+            <Exhibition2dSpeechBubble
+              scenarios={EXHIBITION_2D_KEY_SCENARIO}
+              onComplete={handleReadScenario}
             />
-            <div className="absolute cursor-pointer flex h-full top-0 w-full">
-              <div className="w-full" onClick={handleClickWaterIceCreamSoda}>
-                <img
-                  className="h-full object-contain w-full"
-                  css={clickable}
-                  src="/exhibition/2d/night/creamsoda/water.png"
-                  style={{ imageRendering: "pixelated" }}
-                />
-              </div>
-              <div className="w-full" onClick={handleClickFlowerIceCreamSoda}>
-                <img
-                  className="h-full object-contain w-full"
-                  css={clickable}
-                  src="/exhibition/2d/night/creamsoda/flower.png"
-                  style={{ imageRendering: "pixelated" }}
-                />
-              </div>
-            </div>
-          </Exhibition2dCanvasContainer>
+          )}
+          {!restricted && walked && zoom && !isReadSelectScenario && (
+            <Exhibition2dSpeechBubble
+              scenarios={EXHIBITION_2D_SELECT_ICE_CREAMSODA_SCENARIO}
+              onComplete={handleReadSelectScenario}
+            />
+          )}
         </div>
-        {!restricted && !isReadScenario && (
-          <Exhibition2dSpeechBubble
-            scenarios={EXHIBITION_2D_KEY_SCENARIO}
-            onComplete={handleReadScenario}
-          />
-        )}
-        {!restricted && walked && zoom && !isReadSelectScenario && (
-          <Exhibition2dSpeechBubble
-            scenarios={EXHIBITION_2D_SELECT_ICE_CREAMSODA_SCENARIO}
-            onComplete={handleReadSelectScenario}
-          />
-        )}
-      </div>
+      )}
     </div>
   );
 };
