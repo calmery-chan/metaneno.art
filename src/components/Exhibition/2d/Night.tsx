@@ -115,6 +115,8 @@ export const Exhibition2dNight: React.FC<{
   const [wakeup, setWakeup] = useState(false);
   const [zoom, setZoom] = useState(false);
   const [isMoving, setIsMoving] = useState(false);
+  const [isReadScenario, setReadScenario] = useState(false);
+  const [isReadSelectScenario, setReadSelectScenario] = useState(false);
 
   const handleClickWaterIceCreamSoda = useCallback(() => {
     if (selectedCreamSoda) {
@@ -135,7 +137,7 @@ export const Exhibition2dNight: React.FC<{
   const handleClickKey = useCallback(() => setRestricted(false), []);
 
   const handleMove = useCallback(() => {
-    if (!wakeup || walked) {
+    if (!wakeup || walked || (!restricted && !isReadScenario)) {
       return;
     }
 
@@ -166,7 +168,7 @@ export const Exhibition2dNight: React.FC<{
         setZoom(true);
       }, EXHIBITION_2D_FADEIN_ANIMATION_DELAY * 1000);
     }
-  }, [direction, restricted, step, wakeup, walked]);
+  }, [direction, isReadScenario, restricted, step, wakeup, walked]);
 
   useEffect(() => {
     if (isMoving) {
@@ -176,15 +178,22 @@ export const Exhibition2dNight: React.FC<{
     }
   }, [isMoving, handleMove]);
 
-  const handleKeydown = useCallback(({ key }: KeyboardEvent) => {
-    const isLeft = key === "a" || key === "ArrowLeft";
-    const isRight = key === "d" || key === "ArrowRight";
+  const handleKeydown = useCallback(
+    ({ key }: KeyboardEvent) => {
+      if (!restricted && !isReadScenario) {
+        return;
+      }
 
-    if (isLeft) setDirection("left");
-    if (isRight) setDirection("right");
+      const isLeft = key === "a" || key === "ArrowLeft";
+      const isRight = key === "d" || key === "ArrowRight";
 
-    setIsMoving(isLeft || isRight);
-  }, []);
+      if (isLeft) setDirection("left");
+      if (isRight) setDirection("right");
+
+      setIsMoving(isLeft || isRight);
+    },
+    [isReadScenario, restricted]
+  );
 
   const handleKeyup = useCallback(({ key }: KeyboardEvent) => {
     if (
@@ -203,9 +212,6 @@ export const Exhibition2dNight: React.FC<{
 
   useKeydown(handleKeydown);
   useKeyup(handleKeyup);
-
-  const [isReadScenario, setReadScenario] = useState(false);
-  const [isReadSelectScenario, setReadSelectScenario] = useState(false);
 
   const handleReadScenario = useCallback(() => {
     setReadScenario(true);
