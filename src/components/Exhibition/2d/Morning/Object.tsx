@@ -29,13 +29,14 @@ const getObjectX = (step: number) => {
 };
 
 export const Exhibition2dMorningObject: React.FC<{
+  height?: number;
   onClick?: () => void;
   speed?: number;
   step: number;
   url?: string;
   x?: number;
   y?: number;
-}> = ({ children, onClick, speed, step, url, x, y }) => (
+}> = ({ children, height, onClick, speed, step, url, x, y }) => (
   <g
     className={onClick ? "cursor-pointer" : undefined}
     onClick={onClick}
@@ -45,7 +46,7 @@ export const Exhibition2dMorningObject: React.FC<{
   >
     {url && (
       <image
-        height={EXHIBITION_2D_CANVAS_HEIGHT}
+        height={height || EXHIBITION_2D_CANVAS_HEIGHT}
         style={{
           imageRendering: "pixelated",
         }}

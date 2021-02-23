@@ -11,6 +11,8 @@ import {
   EXHIBITION_2D_MOVING_DISTANCE_PER_STEP,
 } from "~/constants/exhibition";
 import { useKeydown, useKeyup } from "~/hooks/useKeyboard";
+import { Exhibition2dSpeechBubble } from "./SpeechBubble";
+import { ChekiScenario } from "~/domains/cheki/models";
 
 const fadeInKeyframes = keyframes`
   from {
@@ -36,6 +38,7 @@ export const Exhibition2dMorning: React.FC = () => {
     EXHIBITION_2D_CHARACTER_CENTER_X / EXHIBITION_2D_MOVING_DISTANCE_PER_STEP
   );
   const [isMoving, setIsMoving] = useState(false);
+  const [scenarios, setScenarios] = useState<ChekiScenario[] | null>(null);
 
   const handleKeydown = useCallback(({ key }: KeyboardEvent) => {
     const isLeft = key === "a" || key === "ArrowLeft";
@@ -82,6 +85,20 @@ export const Exhibition2dMorning: React.FC = () => {
     setIsMoving(false);
   }, []);
 
+  const handleCompleteScenarios = useCallback(() => {
+    setScenarios(null);
+  }, []);
+
+  // Click
+
+  const handleClickPc = useCallback(() => {
+    setScenarios([
+      {
+        "message": "画面には可愛いサイトが開かれていて、グッズが紹介されている。イラスト本、アクリルキーホルダー、シール………などなど。"
+      }
+    ])
+  }, []);
+
   // Hooks
 
   useKeydown(handleKeydown);
@@ -104,12 +121,13 @@ export const Exhibition2dMorning: React.FC = () => {
       <div className="absolute h-full w-full" css={fadeIn}>
         <Exhibition2dCanvas
           creamsoda={null}
+          onComplete={() => {}}
           onMove={handleTouchMove}
           onMoveEnd={handleTouchMoveEnd}
           walked={false}
         >
           <Exhibition2dMorningBackground step={step} />
-          <Exhibition2dItemsPc onClick={() => console.log("PC")} step={step} />
+          <Exhibition2dItemsPc isInteracting={!!scenarios} onClick={handleClickPc} step={step} />
           <Exhibition2dCharacter
             creamsoda={null}
             direction={direction}
@@ -117,6 +135,10 @@ export const Exhibition2dMorning: React.FC = () => {
             step={step}
           />
         </Exhibition2dCanvas>
+        {scenarios && <Exhibition2dSpeechBubble
+            scenarios={scenarios}
+            onComplete={handleCompleteScenarios}
+          />}
       </div>
     </div>
   );

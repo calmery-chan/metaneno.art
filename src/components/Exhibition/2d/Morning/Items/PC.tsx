@@ -9,13 +9,14 @@ import {
 
 const KEY_IMAGE_HEIGHT = 345;
 const KEY_IMAGE_WIDTH = 178;
-const KEY_HEIGHT = EXHIBITION_2D_CANVAS_HEIGHT;
+const KEY_HEIGHT = 194.5;
 const KEY_WIDTH = (KEY_IMAGE_WIDTH * KEY_HEIGHT) / KEY_IMAGE_HEIGHT;
 
 export const Exhibition2dItemsPc = React.memo<{
+  isInteracting: boolean
   onClick: () => void;
   step: number;
-}>(({ onClick, step: currentStep }) => {
+}>(({ isInteracting, onClick, step: currentStep }) => {
   const [frame, setFrame] = useState(0);
 
   useEffect(() => {
@@ -34,15 +35,17 @@ export const Exhibition2dItemsPc = React.memo<{
 
   return (
     <Exhibition2dMorningObject
+      height={KEY_HEIGHT}
       onClick={isPickable ? onClick : undefined}
       step={currentStep}
       url={`/exhibition/2d/morning/items/pc/${frame}.png`}
       x={0}
+      y={68.5}
     >
-      {isPickable && (
+      {!isInteracting && isPickable && (
         <Exhibition2DPickable
           x={(KEY_WIDTH - EXHIBITION_2D_PICKABLE_WIDTH) / 2}
-          y={190}
+          y={50}
         />
       )}
     </Exhibition2dMorningObject>
