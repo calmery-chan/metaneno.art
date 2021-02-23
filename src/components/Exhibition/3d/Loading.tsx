@@ -85,11 +85,6 @@ export const Exhibition3dLoading = React.memo<{
     }
 
     if (loading) {
-      console.log(
-        loading.previous,
-        loading.next,
-        detect(loading.previous, loading.next)
-      );
       setAnimationType(detect(loading.previous, loading.next));
       setIsVisible(true);
     } else {

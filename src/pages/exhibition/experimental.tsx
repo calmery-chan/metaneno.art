@@ -1,15 +1,19 @@
+import classnames from "classnames";
 import { NextPage } from "next";
 import React, { useCallback, useState } from "react";
+import { isMobileSafari } from "react-device-detect";
 import { Exhibition2dMorning } from "~/components/Exhibition/2d/Morning";
 import { Exhibition2dNight } from "~/components/Exhibition/2d/Night";
 import { Exhibition3d } from "~/components/Exhibition/3d";
 import { ExhibitionMenu } from "~/components/Exhibition/Menu";
 import { ExhibitionOkusuriLandNotifications } from "~/components/Exhibition/OkusuriLandNotifications";
+import { useScreenOrientation } from "~/hooks/exhibition/useScreenOrientation";
 import { GraphicsQuality } from "~/types/exhibition";
 import { useOkusuriLand } from "~/utils/okusuri.land";
 import { Disease } from "~/utils/okusuri.land/types";
 
 const Exhibition: NextPage = () => {
+  const { orientation } = useScreenOrientation();
   const [creamsoda, setCreamsoda] = useState<"flower" | "water" | null>(null);
   const [diseases, setDiseases] = useState<Disease[]>([]);
   const [location, setLocation] = useState<"2d-morning" | "2d-night" | "3d">(
@@ -46,7 +50,11 @@ const Exhibition: NextPage = () => {
   // Render
 
   return (
-    <div className="h-screen w-screen">
+    <div
+      className={classnames("bg-black h-full w-full", {
+        "h-screen w-screen": isMobileSafari && orientation === "landscape",
+      })}
+    >
       {location === "3d" && creamsoda && (
         <Exhibition3d
           creamsoda={creamsoda}

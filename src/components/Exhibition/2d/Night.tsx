@@ -1,5 +1,7 @@
 import { css } from "@emotion/react";
+import classnames from "classnames";
 import React, { useCallback, useEffect, useState } from "react";
+import { isMobileSafari } from "react-device-detect";
 import { Exhibition2dBackground } from "~/components/Exhibition/2d/Background";
 import { Exhibition2dCanvas } from "~/components/Exhibition/2d/Canvas";
 import { Exhibition2dCanvasContainer } from "~/components/Exhibition/2d/CanvasContainer";
@@ -20,6 +22,7 @@ import {
   EXHIBITION_2D_SELECT_ICE_CREAMSODA_SCENARIO,
   EXHIBITION_2D_ZOOM_ANIMATION_STEP,
 } from "~/constants/exhibition";
+import { useScreenOrientation } from "~/hooks/exhibition/useScreenOrientation";
 import { useKeydown, useKeyup } from "~/hooks/useKeyboard";
 import { fadeIn, fadeOut } from "~/styles/animations";
 import { Mixin } from "~/styles/mixin";
@@ -138,6 +141,7 @@ const fadeOutImage = css`
 export const Exhibition2dNight: React.FC<{
   onComplete: (creansoda: "flower" | "water") => void;
 }> = ({ onComplete }) => {
+  const { orientation } = useScreenOrientation();
   const [ready, setReady] = useState(false);
   const [restricted, setRestricted] = useState(true);
   const [direction, setDirection] = useState<"left" | "right">(
@@ -290,9 +294,18 @@ export const Exhibition2dNight: React.FC<{
   // Render
 
   return (
-    <div className="bg-black h-screen w-screen">
+    <div
+      className={classnames("bg-black h-full w-full", {
+        "h-screen w-screen": isMobileSafari && orientation === "landscape",
+      })}
+    >
       {ready && (
-        <div className="absolute h-screen w-screen" css={fadeIn}>
+        <div
+          className={classnames("absolute h-full w-full", {
+            "h-screen w-screen": isMobileSafari && orientation === "landscape",
+          })}
+          css={fadeIn}
+        >
           <Exhibition2dCanvas
             creamsoda={selectedCreamSoda}
             onComplete={handleComplete}

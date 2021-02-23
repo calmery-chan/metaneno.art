@@ -1,6 +1,8 @@
 import { css, keyframes } from "@emotion/react";
+import classnames from "classnames";
 import { useRouter } from "next/router";
 import React, { useCallback, useEffect, useState } from "react";
+import { isMobileSafari } from "react-device-detect";
 import { Exhibition2dMorningBackground } from "./Morning/Background";
 import {
   Exhibition2dCurtainClosed,
@@ -24,6 +26,7 @@ import {
   EXHIBITION_2D_CHARACTER_MAX_STEP_WHEN_MORNING,
 } from "~/constants/exhibition";
 import { ChekiScenario } from "~/domains/cheki/models";
+import { useScreenOrientation } from "~/hooks/exhibition/useScreenOrientation";
 import { useKeydown, useKeyup } from "~/hooks/useKeyboard";
 import { fadeIn } from "~/styles/animations";
 
@@ -149,6 +152,7 @@ const Exhibition2dWakeupCaharcter: React.FC<{ onComplete: () => void }> = ({
 // Main
 
 export const Exhibition2dMorning: React.FC = () => {
+  const { orientation } = useScreenOrientation();
   const { push } = useRouter();
   const [ready, setReady] = useState(false);
   const [isOpenedCurtain, setIsOpenedCurtain] = useState(false);
@@ -325,10 +329,16 @@ export const Exhibition2dMorning: React.FC = () => {
   const isInteracting = !wokeUp || !!scenarios || sleep;
 
   return (
-    <div className="bg-black h-screen w-screen">
+    <div
+      className={classnames("bg-black h-full w-full", {
+        "h-screen w-screen": isMobileSafari && orientation === "landscape",
+      })}
+    >
       {ready && (
         <div
-          className="absolute h-screen w-screen"
+          className={classnames("absolute h-full w-full", {
+            "h-screen w-screen": isMobileSafari && orientation === "landscape",
+          })}
           css={sleep ? fadeOut : fadeIn}
         >
           <Exhibition2dCanvas
