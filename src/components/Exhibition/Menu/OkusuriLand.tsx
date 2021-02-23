@@ -124,23 +124,20 @@ export const OkusuriLand: React.FC<
     {!error && !busy && record && (
       <div>
         <div className="flex">
-          <div className="flex items-center">
-            <img css={profileIcon} alt="アイコン" src={record.image} />
-            <div css={profileName}>
-              {record.name}（@{record.screenName}）
-            </div>
-          </div>
-          <div className="flex ml-auto">
-            <a
-              className="text-center"
-              href={`https://okusuri.land/~${record.screenName}/`}
-              rel="noreferrer"
-              target="_blank"
-            >
-              <div className="bg-blue-400" css={myPageButton}>
-                マイページ
+          <a
+            href={`https://okusuri.land/~${record.screenName}/`}
+            rel="noreferrer"
+            target="_blank"
+          >
+            <div className="flex items-center">
+              <img css={profileIcon} alt="アイコン" src={record.image} />
+              <div css={profileName}>
+                <div css={Typography.S}>{record.name}</div>
+                <div css={Typography.XS}>@{record.screenName}</div>
               </div>
-            </a>
+            </div>
+          </a>
+          <div className="flex ml-auto">
             <div className="bg-red-400" css={logOutButton} onClick={logOut}>
               ログアウトする
             </div>
