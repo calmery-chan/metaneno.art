@@ -99,81 +99,79 @@ const profileName = css`
   margin-left: ${Spacing.s}px;
 `;
 
-export const OkusuriLand: React.FC<{
-  onClose: () => void;
-}> = ({ onClose }) => {
-  const { busy, diseases, error, logIn, logOut, record } = useOkusuriLand();
-
-  return (
-    <ExhibitionPopup
-      onClose={onClose}
-      label="おくすりランド"
-      icon="/exhibition/okusuri.land/icon.png"
-    >
-      <div className="text-center" css={logo}>
-        <img
-          alt="ロゴ"
-          className="inline"
-          src="/exhibition/okusuri.land/logo.png"
-        />
+export const OkusuriLand: React.FC<
+  ReturnType<typeof useOkusuriLand> & {
+    onClose: () => void;
+  }
+> = ({ busy, diseases, error, logIn, logOut, record, onClose }) => (
+  <ExhibitionPopup
+    onClose={onClose}
+    label="おくすりランド"
+    icon="/exhibition/okusuri.land/icon.png"
+  >
+    <div className="text-center" css={logo}>
+      <img
+        alt="ロゴ"
+        className="inline"
+        src="/exhibition/okusuri.land/logo.png"
+      />
+    </div>
+    {error && (
+      <div className="text-center">
+        おくすりランドでエラーが発生しました！（{error.message}）
       </div>
-      {error && (
-        <div className="text-center">
-          おくすりランドでエラーが発生しました！（{error.message}）
-        </div>
-      )}
-      {!error && !busy && record && (
-        <div>
-          <div className="flex">
-            <div className="flex items-center">
-              <img css={profileIcon} alt="アイコン" src={record.image} />
-              <div css={profileName}>
-                {record.name}（@{record.screenName}）
-              </div>
-            </div>
-            <div className="flex ml-auto">
-              <a
-                className="text-center"
-                href={`https://okusuri.land/~${record.screenName}/`}
-                rel="noreferrer"
-                target="_blank"
-              >
-                <div className="bg-blue-400" css={myPageButton}>
-                  マイページ
-                </div>
-              </a>
-              <div className="bg-red-400" css={logOutButton} onClick={logOut}>
-                ログアウトする
-              </div>
+    )}
+    {!error && !busy && record && (
+      <div>
+        <div className="flex">
+          <div className="flex items-center">
+            <img css={profileIcon} alt="アイコン" src={record.image} />
+            <div css={profileName}>
+              {record.name}（@{record.screenName}）
             </div>
           </div>
-          {diseases.map(({ description, id, medicines, name }) => (
-            <div css={disease} key={id}>
-              <div css={diseaseName}>{name}</div>
-              <div css={diseaseDescription}>{description}</div>
-              {medicines.map(({ description, icon, name }, index) => (
-                <div className="flex" css={medicine} key={index}>
-                  <img css={medicineIcon} src={icon.url} />
-                  <div>
-                    <div className="font-bold" css={medicineName}>
-                      {name}
-                    </div>
-                    <div css={medicineDescription}>{description}</div>
+          <div className="flex ml-auto">
+            <a
+              className="text-center"
+              href={`https://okusuri.land/~${record.screenName}/`}
+              rel="noreferrer"
+              target="_blank"
+            >
+              <div className="bg-blue-400" css={myPageButton}>
+                マイページ
+              </div>
+            </a>
+            <div className="bg-red-400" css={logOutButton} onClick={logOut}>
+              ログアウトする
+            </div>
+          </div>
+        </div>
+        {diseases.map(({ description, id, medicines, name }) => (
+          <div css={disease} key={id}>
+            <div css={diseaseName}>{name}</div>
+            <div css={diseaseDescription}>{description}</div>
+            {medicines.map(({ description, icon, name }, index) => (
+              <div className="flex" css={medicine} key={index}>
+                <img css={medicineIcon} src={icon.url} />
+                <div>
+                  <div className="font-bold" css={medicineName}>
+                    {name}
                   </div>
+                  <div css={medicineDescription}>{description}</div>
                 </div>
-              ))}
-            </div>
-          ))}
-        </div>
-      )}
-      {!error && !busy && !record && (
-        <div className="grid place-items-center">
-          <div className="flex" css={loginButton} onClick={logIn}>
-            <img src="/exhibition/okusuri.land/twitter.svg" />
-            Twitterでログインする
+              </div>
+            ))}
           </div>
+        ))}
+      </div>
+    )}
+    {!error && !busy && !record && (
+      <div className="grid place-items-center">
+        <div className="flex" css={loginButton} onClick={logIn}>
+          <img src="/exhibition/okusuri.land/twitter.svg" />
+          Twitterでログインする
         </div>
-      )}
-    </ExhibitionPopup>
-  );
-};
+      </div>
+    )}
+  </ExhibitionPopup>
+);

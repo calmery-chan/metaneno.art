@@ -8,6 +8,7 @@ import { Colors } from "~/styles/colors";
 import { Mixin } from "~/styles/mixin";
 import { Spacing } from "~/styles/spacing";
 import { GraphicsQuality } from "~/types/exhibition";
+import { useOkusuriLand } from "~/utils/okusuri.land";
 
 const menu = css`
   right: ${Spacing.m}px;
@@ -87,8 +88,9 @@ const saveSettings = (
 };
 
 export const ExhibitionMenu: React.FC<{
+  okusuriLand: ReturnType<typeof useOkusuriLand>;
   onChangeGraphicsQuality: (quality: GraphicsQuality) => void;
-}> = ({ onChangeGraphicsQuality }) => {
+}> = ({ okusuriLand, onChangeGraphicsQuality }) => {
   const [currentAudioVolume, setCurrentAudioVolume] = useState(Howler.volume());
   const [currentGraphicsQuality, setCurrentGraphicsQuality] = useState<
     "high" | "low" | "middle"
@@ -200,7 +202,9 @@ export const ExhibitionMenu: React.FC<{
           />
         </div>
       </div>
-      {isOpenOkusuriLand && <OkusuriLand onClose={handleCloseOkusuriLand} />}
+      {isOpenOkusuriLand && (
+        <OkusuriLand {...okusuriLand} onClose={handleCloseOkusuriLand} />
+      )}
       {isOpenSettings && (
         <Settings
           currentAudioVolume={currentAudioVolume}

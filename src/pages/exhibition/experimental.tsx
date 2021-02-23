@@ -4,10 +4,14 @@ import { Exhibition2dMorning } from "~/components/Exhibition/2d/Morning";
 import { Exhibition2dNight } from "~/components/Exhibition/2d/Night";
 import { Exhibition3d } from "~/components/Exhibition/3d";
 import { ExhibitionMenu } from "~/components/Exhibition/Menu";
+import { ExhibitionOkusuriLandNotifications } from "~/components/Exhibition/OkusuriLandNotifications";
 import { GraphicsQuality } from "~/types/exhibition";
+import { useOkusuriLand } from "~/utils/okusuri.land";
+import { Disease } from "~/utils/okusuri.land/types";
 
 const Exhibition: NextPage = () => {
   const [creamsoda, setCreamsoda] = useState<"flower" | "water" | null>(null);
+  const [diseases, setDiseases] = useState<Disease[]>([]);
   const [location, setLocation] = useState<"2d-morning" | "2d-night" | "3d">(
     "2d-night"
   );
@@ -33,6 +37,12 @@ const Exhibition: NextPage = () => {
     setLocation("2d-morning");
   }, []);
 
+  const handleResetDisease = useCallback(() => setDiseases([]), []);
+
+  // Okusuri.land
+
+  const okusuriLand = useOkusuriLand(setDiseases);
+
   // Render
 
   return (
@@ -48,7 +58,16 @@ const Exhibition: NextPage = () => {
         <Exhibition2dNight onComplete={handleComplete2dNight} />
       )}
       {location === "2d-morning" && <Exhibition2dMorning />}
-      <ExhibitionMenu onChangeGraphicsQuality={handleChangeQuality} />
+      <ExhibitionMenu
+        okusuriLand={okusuriLand}
+        onChangeGraphicsQuality={handleChangeQuality}
+      />
+      {diseases.length && (
+        <ExhibitionOkusuriLandNotifications
+          diseases={diseases}
+          onAnimationCompleted={handleResetDisease}
+        />
+      )}
     </>
   );
 };
