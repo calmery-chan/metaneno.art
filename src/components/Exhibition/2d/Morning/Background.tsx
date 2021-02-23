@@ -11,7 +11,7 @@ export const Exhibition2dMorningBackground: React.FC<{
     />
     <Exhibition2dMorningObject
       {...props}
-      url="/exhibition/2d/morning/background/base.png"
+      url="/exhibition/2d/morning/background/furniture.png"
     />
   </>
 ));
