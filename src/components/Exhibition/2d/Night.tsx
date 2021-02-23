@@ -21,8 +21,51 @@ import {
   EXHIBITION_2D_ZOOM_ANIMATION_STEP,
 } from "~/constants/exhibition";
 import { useKeydown, useKeyup } from "~/hooks/useKeyboard";
-import { fadeIn } from "~/styles/animations";
-import { fadeOut, Mixin } from "~/styles/mixin";
+import { fadeIn, fadeOut } from "~/styles/animations";
+import { Mixin } from "~/styles/mixin";
+
+const preload = () =>
+  Promise.all(
+    [
+      "/background/0.png",
+      "/background/1.png",
+      "/background/comforter.png",
+      "/background/corridor.jpg",
+      "/background/door.png",
+      "/background/light.png",
+      "/background/lights.png",
+      "/character/0.png",
+      "/character/1.png",
+      "/character/2.png",
+      "/character/3.png",
+      "/character/wakeup/0.png",
+      "/character/wakeup/1.png",
+      "/character/wakeup/2.png",
+      "/character/wakeup/3.png",
+      "/character/flower.png",
+      "/character/water.png",
+      "/creamsoda/background.png",
+      "/creamsoda/flower.png",
+      "/creamsoda/water.png",
+      "/effects/twinkle/0.png",
+      "/effects/twinkle/1.png",
+      "/effects/twinkle/2.png",
+      "/effects/twinkle/3.png",
+      "/effects/twinkle/4.png",
+      "/effects/twinkle/5.png",
+      "/foreground/creamsoda/flower.png",
+      "/foreground/creamsoda/water.png",
+      "/foreground/bag.png",
+      "/foreground/book.png",
+      "/foreground/corridor.png",
+      "/foreground/creamsoda.png",
+      "/foreground/door.jpg",
+      "/foreground/garbage.png",
+      "/items/key.png",
+    ]
+      .map((url) => `/exhibition/2d/night${url}`)
+      .map((url) => fetch(url))
+  );
 
 // Components
 
@@ -88,6 +131,7 @@ const fadeOutImage = css`
 export const Exhibition2dNight: React.FC<{
   onComplete: (creansoda: "flower" | "water") => void;
 }> = ({ onComplete }) => {
+  const [ready, setReady] = useState(false);
   const [restricted, setRestricted] = useState(true);
   const [direction, setDirection] = useState<"left" | "right">(
     EXHIBITION_2D_CHARACTER_DEFAULT_DIRECTION
@@ -219,11 +263,28 @@ export const Exhibition2dNight: React.FC<{
 
   const handleComplete = useCallback(() => {
     if (selectedCreamSoda) {
-      onComplete(selectedCreamSoda);
+      setTimeout(
+        () => onComplete(selectedCreamSoda),
+        Mixin.ANIMATION_DURATION.milliseconds
+      );
     }
   }, [onComplete, selectedCreamSoda]);
 
+  useEffect(() => {
+    (async () => {
+      try {
+        await preload();
+      } finally {
+        setReady(true);
+      }
+    })();
+  }, []);
+
   // Render
+
+  if (!ready) {
+    return null;
+  }
 
   return (
     <div className="bg-black h-full w-full">

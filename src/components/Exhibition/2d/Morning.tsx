@@ -27,6 +27,42 @@ import { ChekiScenario } from "~/domains/cheki/models";
 import { useKeydown, useKeyup } from "~/hooks/useKeyboard";
 import { fadeIn } from "~/styles/animations";
 
+const preload = () =>
+  Promise.all(
+    [
+      "/background/curtain/close/0.png",
+      "/background/curtain/close/1.png",
+      "/background/curtain/open/0.png",
+      "/background/curtain/open/1.png",
+      "/background/curtain/open/2.png",
+      "/background/lights/0.png",
+      "/background/lights/1.png",
+      "/background/lights/2.png",
+      "/background/0.png",
+      "/background/furniture.png",
+      "/character/0.png",
+      "/character/1.png",
+      "/character/2.png",
+      "/character/3.png",
+      "/character/sleep/0.png",
+      "/character/sleep/1.png",
+      "/character/sleep/2.png",
+      "/character/sleep/3.png",
+      "/character/wakeup/0.png",
+      "/character/wakeup/1.png",
+      "/character/wakeup/2.png",
+      "/character/wakeup/3.png",
+      "/items/pc/0.png",
+      "/items/pc/1.png",
+      "/items/bag.png",
+      "/items/cheki.png",
+      "/items/letter.png",
+      "/items/poster.png",
+    ]
+      .map((url) => `/exhibition/2d/morning${url}`)
+      .map((url) => fetch(url))
+  );
+
 const fadeOutKeyframes = keyframes`
   from {
     opacity: 1;
@@ -107,6 +143,7 @@ const Exhibition2dWakeupCaharcter: React.FC<{ onComplete: () => void }> = ({
 
 export const Exhibition2dMorning: React.FC = () => {
   const { push } = useRouter();
+  const [ready, setReady] = useState(false);
   const [isOpenedCurtain, setIsOpenedCurtain] = useState(false);
   const [direction, setDirection] = useState<"left" | "right">("left");
   const [step, setStep] = useState(190);
@@ -122,6 +159,16 @@ export const Exhibition2dMorning: React.FC = () => {
   >(null);
   const [wokeUp, setWorkUp] = useState(false);
   const [sleep, setSleep] = useState(false);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        await preload();
+      } finally {
+        setReady(true);
+      }
+    })();
+  }, []);
 
   const handleKeydown = useCallback(({ key }: KeyboardEvent) => {
     const isLeft = key === "a" || key === "ArrowLeft";
@@ -272,79 +319,83 @@ export const Exhibition2dMorning: React.FC = () => {
 
   return (
     <div className="bg-black h-full w-full">
-      <div className="absolute h-full w-full" css={sleep ? fadeOut : fadeIn}>
-        <Exhibition2dCanvas
-          creamsoda={null}
-          onComplete={() => undefined}
-          onMove={handleTouchMove}
-          onMoveEnd={handleTouchMoveEnd}
-          walked={false}
-        >
-          <Exhibition2dMorningBackground step={step} />
-          {!isOpenedCurtain && (
-            <Exhibition2dCurtainClosed
+      {ready && (
+        <div className="absolute h-full w-full" css={sleep ? fadeOut : fadeIn}>
+          <Exhibition2dCanvas
+            creamsoda={null}
+            onComplete={() => undefined}
+            onMove={handleTouchMove}
+            onMoveEnd={handleTouchMoveEnd}
+            walked={false}
+          >
+            <Exhibition2dMorningBackground step={step} />
+            {!isOpenedCurtain && (
+              <Exhibition2dCurtainClosed
+                isInteracting={isInteracting}
+                onClick={handleClickCurtain}
+                step={step}
+              />
+            )}
+            {isOpenedCurtain && (
+              <Exhibition2dCurtainOpened
+                isInteracting={isInteracting}
+                onClick={handleClickCurtain}
+                step={step}
+              />
+            )}
+            <Exhibition2dItemsPc
               isInteracting={isInteracting}
-              onClick={handleClickCurtain}
+              onClick={handleClickPc}
               step={step}
             />
-          )}
-          {isOpenedCurtain && (
-            <Exhibition2dCurtainOpened
+            <Exhibition2dItemsPoster
               isInteracting={isInteracting}
-              onClick={handleClickCurtain}
+              onClick={handleClickPoster}
               step={step}
             />
-          )}
-          <Exhibition2dItemsPc
-            isInteracting={isInteracting}
-            onClick={handleClickPc}
-            step={step}
-          />
-          <Exhibition2dItemsPoster
-            isInteracting={isInteracting}
-            onClick={handleClickPoster}
-            step={step}
-          />
-          <Exhibition2dItemsCheki
-            isInteracting={isInteracting}
-            onClick={handleClickCheki}
-            step={step}
-          />
-          <Exhibition2dItemsBed
-            isInteracting={isInteracting}
-            onClick={handleClickBed}
-            step={step}
-          />
-          {wokeUp && !sleep && (
-            <Exhibition2dCharacter
-              morning
-              creamsoda={null}
-              direction={direction}
-              restricted={false}
+            <Exhibition2dItemsCheki
+              isInteracting={isInteracting}
+              onClick={handleClickCheki}
               step={step}
             />
+            <Exhibition2dItemsBed
+              isInteracting={isInteracting}
+              onClick={handleClickBed}
+              step={step}
+            />
+            {wokeUp && !sleep && (
+              <Exhibition2dCharacter
+                morning
+                creamsoda={null}
+                direction={direction}
+                restricted={false}
+                step={step}
+              />
+            )}
+            {!wokeUp && (
+              <Exhibition2dWakeupCaharcter onComplete={handleWokeUp} />
+            )}
+            {sleep && <Exhibition2dSleepCharacter step={step} />}
+            <Exhibition2dItemsLetter
+              isInteracting={isInteracting}
+              onClick={handleClickLetter}
+              step={step}
+            />
+            <Exhibition2dItemsBag
+              isInteracting={isInteracting}
+              onClick={handleClickBag}
+              step={step}
+            />
+          </Exhibition2dCanvas>
+          {!sleep && scenarios && (
+            <Exhibition2dSpeechBubble
+              scenarios={scenarios}
+              onComplete={handleCompleteScenarios}
+              onEnter={handleOnEnter}
+            />
           )}
-          {!wokeUp && <Exhibition2dWakeupCaharcter onComplete={handleWokeUp} />}
-          {sleep && <Exhibition2dSleepCharacter step={step} />}
-          <Exhibition2dItemsLetter
-            isInteracting={isInteracting}
-            onClick={handleClickLetter}
-            step={step}
-          />
-          <Exhibition2dItemsBag
-            isInteracting={isInteracting}
-            onClick={handleClickBag}
-            step={step}
-          />
-        </Exhibition2dCanvas>
-        {!sleep && scenarios && (
-          <Exhibition2dSpeechBubble
-            scenarios={scenarios}
-            onComplete={handleCompleteScenarios}
-            onEnter={handleOnEnter}
-          />
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 };
