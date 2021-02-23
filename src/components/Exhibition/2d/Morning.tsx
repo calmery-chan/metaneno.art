@@ -8,6 +8,7 @@ import {
   EXHIBITION_2D_CHARACTER_CENTER_X,
   EXHIBITION_2D_CHARACTER_DEFAULT_DIRECTION,
   EXHIBITION_2D_CHARACTER_MAX_STEP,
+  EXHIBITION_2D_CHARACTER_MAX_STEP_WHEN_MORNING,
   EXHIBITION_2D_MOVING_DISTANCE_PER_STEP,
 } from "~/constants/exhibition";
 import { useKeydown, useKeyup } from "~/hooks/useKeyboard";
@@ -73,7 +74,7 @@ export const Exhibition2dMorning: React.FC = () => {
 
     const nextStep = step + difference;
 
-    if (nextStep < 0 || nextStep > EXHIBITION_2D_CHARACTER_MAX_STEP) {
+    if (nextStep < 0 || nextStep > EXHIBITION_2D_CHARACTER_MAX_STEP_WHEN_MORNING) {
       return;
     }
 

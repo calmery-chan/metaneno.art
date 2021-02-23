@@ -11,14 +11,15 @@ import {
   EXHIBITION_2D_BACKGROUND_MAX_STEP,
   EXHIBITION_2D_BACKGROUND_MAX_STEP_WHEN_RESTRICTED,
   EXHIBITION_2D_CHARACTER_MORNING_WALKING_ANIMATION_IMAGES,
+  EXHIBITION_2D_MORNING_BACKGROUND_MAX_STEP,
 } from "~/constants/exhibition";
 
-const getCharacterX = (restricted: boolean, step: number) => {
+const getCharacterX = (restricted: boolean, step: number, isMorning: boolean) => {
   if (step < EXHIBITION_2D_CHARACTER_HORIZONTAL_MARGIN_IN_STEP) {
     return step * EXHIBITION_2D_MOVING_DISTANCE_PER_STEP;
   }
 
-  const MAX_STEP = restricted
+  const MAX_STEP = isMorning ? EXHIBITION_2D_MORNING_BACKGROUND_MAX_STEP : restricted
     ? EXHIBITION_2D_BACKGROUND_MAX_STEP_WHEN_RESTRICTED
     : EXHIBITION_2D_BACKGROUND_MAX_STEP;
 
@@ -42,7 +43,7 @@ export const Exhibition2dCharacter = React.memo<{
   const IMAGES = morning ? EXHIBITION_2D_CHARACTER_MORNING_WALKING_ANIMATION_IMAGES : EXHIBITION_2D_CHARACTER_WALKING_ANIMATION_IMAGES
 
   return (
-  <svg x={getCharacterX(restricted, step)} y={EXHIBITION_2D_CHARACTER_CENTER_Y + (morning ? (-1) : 0)}>
+  <svg x={getCharacterX(restricted, step, morning)} y={EXHIBITION_2D_CHARACTER_CENTER_Y + (morning ? (-1.5) : 0)}>
     <image
       height={EXHIBITION_2D_CHARACTER_HEIGHT}
       style={{ imageRendering: "pixelated" }}
