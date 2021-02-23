@@ -11,6 +11,7 @@ export const useAudio = (
   useEffect(() => {
     if (audio) {
       audio.stop();
+      setAudio(undefined);
     }
 
     const newAudio = new Howl({

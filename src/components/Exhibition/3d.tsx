@@ -44,7 +44,7 @@ export const Exhibition3d: React.FC<{
   const [currentAreaName, setCurrentAreaName] = useState<AreaName>("cloud");
   const area = areas[currentAreaName];
 
-  useAudio(area.sound.url, { autoplay: true, loop: true });
+  const { audio } = useAudio(area.sound.url, { loop: true });
   const [keys, setKeys] = useState(defaultControllerKeys);
   const [characterId, setCharacterId] = useState<string | null>(null);
   const [characterAnimations, setCharacterAnimations] = useState<
@@ -101,13 +101,26 @@ export const Exhibition3d: React.FC<{
           previous: currentAreaName,
           next: area,
         });
+
+        if (audio) {
+          audio.fade(
+            audio.volume(),
+            0,
+            Mixin.ANIMATION_DURATION.milliseconds * 2
+          );
+        }
       }
 
       setTimeout(() => {
         setCurrentAreaName(area);
-      }, Mixin.ANIMATION_DURATION.milliseconds);
+
+        if (audio) {
+          audio.stop();
+          audio.unload();
+        }
+      }, Mixin.ANIMATION_DURATION.milliseconds * 2);
     },
-    [currentAreaName]
+    [audio, currentAreaName]
   );
 
   //
@@ -115,7 +128,6 @@ export const Exhibition3d: React.FC<{
   const handleAction = useCallback(
     (actions: string[]) => {
       actions.forEach((action) => {
-        console.log(action);
         switch (action) {
           case "pancake":
             setPlayerAccessory("pancake");
@@ -185,10 +197,16 @@ export const Exhibition3d: React.FC<{
 
         setTimeout(() => {
           setLoading(null);
-        }, 2400);
+        }, 3200);
       }
     })();
   }, [area]);
+
+  useEffect(() => {
+    if (audio) {
+      audio.play();
+    }
+  }, [audio]);
 
   // Render
 
