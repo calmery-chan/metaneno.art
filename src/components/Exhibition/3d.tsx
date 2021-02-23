@@ -122,12 +122,13 @@ export const Exhibition3d: React.FC<{
     setItemId(null);
     setWorkId(null);
 
+    const urls = [
+      "/exhibition/3d/bubble/background.png",
+      "/exhibition/3d/bubble/choice.png",
+      "/exhibition/3d/bubble/name.png",
+    ];
+
     const objects = [
-      ...[
-        "/exhibition/3d/bubble/background.png",
-        "/exhibition/3d/bubble/choice.png",
-        "/exhibition/3d/bubble/name.png",
-      ].map((url) => ({ url })),
       { url: area.collider.url },
       { url: area.player.url },
       ...area.objects.characters,
@@ -139,6 +140,7 @@ export const Exhibition3d: React.FC<{
     (async () => {
       try {
         await Promise.all(objects.map(({ url }) => url).map(preload));
+        await Promise.all(urls.map((url) => fetch(url)));
       } catch (error) {
         Sentry.captureException(error);
       } finally {
