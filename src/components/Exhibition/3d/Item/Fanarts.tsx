@@ -2,20 +2,21 @@ import { css } from "@emotion/react";
 import React, { useState } from "react";
 import { ExhibitionPopup } from "../../Popup";
 import fanarts from "~/data/fanarts.json";
+import { useScreenOrientation } from "~/hooks/exhibition/useScreenOrientation";
 import { Colors } from "~/styles/colors";
 import { Spacing } from "~/styles/spacing";
 import { Typography } from "~/styles/typography";
 
 const image = css`
   background: ${Colors.lightGray};
-  height: calc(100% - 24px - ${Spacing.s}px);
+  height: calc(100% - 24px - ${Spacing.m}px);
 `;
 
 const information = css`
   ${Typography.S};
   color: ${Colors.black};
   height: 24px;
-  margin-top: ${Spacing.s}px;
+  margin-top: ${Spacing.m}px;
 `;
 
 const informationIcon = css`
@@ -44,9 +45,109 @@ const thumbnails = css`
   width: 128px;
 `;
 
+const portraitInformation = css`
+  ${Typography.S};
+  color: ${Colors.black};
+  height: 24px;
+  margin-top: ${Spacing.m}px;
+`;
+
+const portraitInformationIcon = css`
+  border-radius: 100%;
+  margin-right: ${Spacing.s}px;
+`;
+
+const portraitInformationUrl = css`
+  ${Typography.XS};
+  color: ${Colors.gray};
+`;
+
+const portraitThumbnail = css`
+  background: gray;
+  height: 96px;
+  margin-left: ${Spacing.s}px;
+  width: 128px;
+  flex-shrink: 0;
+
+  &:first-child {
+    margin-left: 0;
+  }
+`;
+
+const portraitThumbnails = css`
+  margin-top: ${Spacing.m}px;
+  height: 96px;
+`;
+
+const portraitView = css`
+  background: ${Colors.lightGray};
+  height: calc(100% - 96px - 24px - ${Spacing.l * 2}px);
+`;
+
 export const Fanarts: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const fanart = fanarts[currentIndex];
+  const { orientation } = useScreenOrientation();
+
+  const isPortrait = orientation === "portrait";
+
+  if (isPortrait) {
+    return (
+      <ExhibitionPopup
+        icon="/exhibition/fanarts/twitter.svg"
+        label="#めたねのあーと"
+        onClose={onClose}
+      >
+        <div className="flex h-full flex-col">
+          <div className="relative flex-grow w-full" css={portraitView}>
+            <img
+              className="h-full object-contain w-full"
+              src={fanart.imageUrl}
+            />
+          </div>
+          <div className="flex" css={portraitInformation}>
+            <a href={fanart.user.url} rel="noopener noreferrer" target="_blank">
+              <div className="cursor-pointer flex h-full items-center">
+                <img
+                  className="h-full inline"
+                  css={portraitInformationIcon}
+                  src={fanart.user.iconUrl}
+                />
+                {fanart.user.name}
+              </div>
+            </a>
+            <a
+              className="ml-auto"
+              href={fanart.referenceUrl}
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <div
+                className="cursor-pointer flex h-full items-center"
+                css={portraitInformationUrl}
+              >
+                ツイートを見る
+              </div>
+            </a>
+          </div>
+          <div className="flex overflow-scroll" css={portraitThumbnails}>
+            {fanarts.map((fanart, index) => (
+              <div
+                className="cursor-pointer"
+                css={portraitThumbnail}
+                key={fanart.imageUrl}
+                onClick={() => setCurrentIndex(index)}
+                style={{
+                  background: `url("${fanart.imageUrl}")`,
+                  backgroundSize: "cover",
+                }}
+              />
+            ))}
+          </div>
+        </div>
+      </ExhibitionPopup>
+    );
+  }
 
   return (
     <ExhibitionPopup
@@ -83,7 +184,7 @@ export const Fanarts: React.FC<{ onClose: () => void }> = ({ onClose }) => {
                 className="cursor-pointer flex h-full items-center"
                 css={informationUrl}
               >
-                {fanart.referenceUrl}
+                ツイートを見る
               </div>
             </a>
           </div>
