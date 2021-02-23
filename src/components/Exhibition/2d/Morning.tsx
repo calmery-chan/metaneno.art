@@ -25,20 +25,7 @@ import {
 } from "~/constants/exhibition";
 import { ChekiScenario } from "~/domains/cheki/models";
 import { useKeydown, useKeyup } from "~/hooks/useKeyboard";
-
-const fadeInKeyframes = keyframes`
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
-`;
-
-const fadeIn = css`
-  animation-name: ${fadeInKeyframes};
-`;
+import { fadeIn } from "~/styles/animations";
 
 const fadeOutKeyframes = keyframes`
   from {

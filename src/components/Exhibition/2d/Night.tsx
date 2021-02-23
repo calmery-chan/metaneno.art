@@ -1,4 +1,4 @@
-import { css, keyframes } from "@emotion/react";
+import { css } from "@emotion/react";
 import React, { useCallback, useEffect, useState } from "react";
 import { Exhibition2dBackground } from "~/components/Exhibition/2d/Background";
 import { Exhibition2dCanvas } from "~/components/Exhibition/2d/Canvas";
@@ -21,6 +21,7 @@ import {
   EXHIBITION_2D_ZOOM_ANIMATION_STEP,
 } from "~/constants/exhibition";
 import { useKeydown, useKeyup } from "~/hooks/useKeyboard";
+import { fadeIn } from "~/styles/animations";
 import { fadeOut, Mixin } from "~/styles/mixin";
 
 // Components
@@ -32,20 +33,6 @@ const clickable = css`
   &:hover {
     transform: scale(1.04);
   }
-`;
-
-const fadeInKeyframes = keyframes`
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
-`;
-
-const fadeIn = css`
-  animation-name: ${fadeInKeyframes};
 `;
 
 const Exhibition2dWakeupCaharcter: React.FC<{ onComplete: () => void }> = ({
