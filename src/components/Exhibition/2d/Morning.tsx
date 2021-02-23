@@ -7,6 +7,7 @@ import { Exhibition2dCharacter } from "~/components/Exhibition/2d/Character";
 import {
   EXHIBITION_2D_CHARACTER_CENTER_X,
   EXHIBITION_2D_CHARACTER_DEFAULT_DIRECTION,
+  EXHIBITION_2D_CHARACTER_HEIGHT,
   EXHIBITION_2D_CHARACTER_MAX_STEP,
   EXHIBITION_2D_CHARACTER_MAX_STEP_WHEN_MORNING,
   EXHIBITION_2D_MOVING_DISTANCE_PER_STEP,
@@ -33,17 +34,47 @@ const fadeIn = css`
   animation-name: ${fadeInKeyframes};
 `;
 
+
+const Exhibition2dWakeupCaharcter: React.FC<{ onComplete: () => void }> = ({
+  onComplete,
+}) => {
+  const [frame, setFrame] = useState(0);
+
+  useEffect(() => {
+    setTimeout(
+      () => {
+        if (frame > 2) {
+          onComplete();
+          return;
+        }
+
+        setFrame(frame + 1);
+      },
+      frame === 0 || frame === 1 ? 2400 : 800
+    );
+  }, [frame, onComplete]);
+
+  return (
+    <image
+      height={EXHIBITION_2D_CHARACTER_HEIGHT}
+      style={{ imageRendering: "pixelated" }}
+      x={320}
+      y={116.5}
+      xlinkHref={`/exhibition/2d/morning/character/wakeup/${frame}.png`}
+    />
+  );
+};
+
 // Main
 
 export const Exhibition2dMorning: React.FC = () => {
   const [direction, setDirection] = useState<"left" | "right">(
-    EXHIBITION_2D_CHARACTER_DEFAULT_DIRECTION
+    "left"
   );
-  const [step, setStep] = useState(
-    EXHIBITION_2D_CHARACTER_CENTER_X / EXHIBITION_2D_MOVING_DISTANCE_PER_STEP
-  );
+  const [step, setStep] = useState(190);
   const [isMoving, setIsMoving] = useState(false);
   const [scenarios, setScenarios] = useState<ChekiScenario[] | null>(null);
+  const [wokeUp, setWorkUp] = useState(false);
 
   const handleKeydown = useCallback(({ key }: KeyboardEvent) => {
     const isLeft = key === "a" || key === "ArrowLeft";
@@ -93,6 +124,10 @@ export const Exhibition2dMorning: React.FC = () => {
   const handleCompleteScenarios = useCallback(() => {
     setScenarios(null);
   }, []);
+
+  const handleWokeUp = useCallback(() => {
+    setWorkUp(true);
+  }, [])
 
   // Click
 
@@ -167,14 +202,15 @@ export const Exhibition2dMorning: React.FC = () => {
           <Exhibition2dItemsPc isInteracting={!!scenarios} onClick={handleClickPc} step={step} />
           <Exhibition2dItemsPoster isInteracting={!!scenarios} onClick={handleClickPoster} step={step} />
           <Exhibition2dItemsCheki isInteracting={!!scenarios} onClick={handleClickCheki} step={step} />
-          <Exhibition2dCharacter
+          {wokeUp &&<Exhibition2dCharacter
             morning
             creamsoda={null}
             direction={direction}
             restricted={false}
             step={step}
-          />
-          <Exhibition2dItemsLetter isInteracting={!!scenarios} onClick={handleClickLetter} step={step} />
+          />}
+          {!wokeUp && <Exhibition2dWakeupCaharcter onComplete={handleWokeUp} />}
+          <Exhibition2dItemsLetter isInteracting={!wokeUp || !!scenarios} onClick={handleClickLetter} step={step} />
           <Exhibition2dItemsBag isInteracting={!!scenarios} onClick={handleClickBag} step={step} />
         </Exhibition2dCanvas>
         {scenarios && <Exhibition2dSpeechBubble
