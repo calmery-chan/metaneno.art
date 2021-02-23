@@ -98,7 +98,9 @@ const fadeOutImage = css`
   animation-duration: ${EXHIBITION_2D_FADE_ANIMATION_DURATION}s;
 `;
 
-export const Exhibition2dNight: React.FC = () => {
+export const Exhibition2dNight: React.FC<{
+  onComplete: (creansoda: "blue" | "flower") => void;
+}> = ({ onComplete }) => {
   const [restricted, setRestricted] = useState(true);
   const [direction, setDirection] = useState<"left" | "right">(
     EXHIBITION_2D_CHARACTER_DEFAULT_DIRECTION
@@ -222,6 +224,12 @@ export const Exhibition2dNight: React.FC = () => {
     setIsMoving(false);
   }, []);
 
+  const handleComplete = useCallback(() => {
+    if (selectedCreamSoda) {
+      onComplete(selectedCreamSoda);
+    }
+  }, [onComplete, selectedCreamSoda]);
+
   // Render
 
   return (
@@ -229,6 +237,7 @@ export const Exhibition2dNight: React.FC = () => {
       <div className="absolute h-full w-full" css={fadeIn}>
         <Exhibition2dCanvas
           creamsoda={selectedCreamSoda}
+          onComplete={handleComplete}
           onMove={handleTouchMove}
           onMoveEnd={handleTouchMoveEnd}
           walked={walked}

@@ -33,7 +33,15 @@ const detect = (previous: AreaName, next: AreaName): AnimationType => {
     return "meadow-to-sea";
   }
 
-  return "sea-to-meadow";
+  if (previous === "sea" && next === "meadow") {
+    return "sea-to-meadow";
+  }
+
+  if (previous === "meadow" && next === "meadow") {
+    return "sea-to-meadow";
+  }
+
+  return "meadow-to-sea";
 };
 
 const Animation = React.memo<{ animationType: string }>(({ animationType }) => {

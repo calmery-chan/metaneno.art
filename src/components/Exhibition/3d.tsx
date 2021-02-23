@@ -39,9 +39,12 @@ const areas = {
 };
 
 export const Exhibition3d: React.FC<{
+  creamsoda: "flower" | "water";
   settings: { graphicsQuality: GraphicsQuality };
-}> = ({ settings }) => {
-  const [currentAreaName, setCurrentAreaName] = useState<AreaName>("cloud");
+}> = ({ creamsoda, settings }) => {
+  const defaultArea = creamsoda === "flower" ? "meadow" : "sea";
+
+  const [currentAreaName, setCurrentAreaName] = useState<AreaName>(defaultArea);
   const area = areas[currentAreaName];
 
   const { audio } = useAudio(area.sound.url, { loop: true });
@@ -59,7 +62,10 @@ export const Exhibition3d: React.FC<{
   const [loading, setLoading] = useState<{
     previous: AreaName;
     next: AreaName;
-  } | null>(null);
+  } | null>({
+    previous: defaultArea,
+    next: defaultArea,
+  });
 
   // Find
 

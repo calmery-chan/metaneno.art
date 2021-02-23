@@ -67,10 +67,11 @@ const zoomOut = css`
 
 export const Exhibition2dCanvas: React.FC<{
   creamsoda: string | null;
+  onComplete: () => void;
   onMove: (direction: "left" | "right") => void;
   onMoveEnd: () => void;
   walked: boolean;
-}> = ({ children, creamsoda, onMove, onMoveEnd, walked }) => {
+}> = ({ children, creamsoda, onComplete, onMove, onMoveEnd, walked }) => {
   const ref = useRef<SVGSVGElement>(null);
   const [displayMagnification, setDisplayMagnification] = useState<number>(0);
   const [startX, setStartX] = useState<number | null>(null);
@@ -154,6 +155,12 @@ export const Exhibition2dCanvas: React.FC<{
       e.removeEventListener("touchmove", handleTouchMove);
     };
   }, [ref, handleTouchMove]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      onComplete();
+    }, (EXHIBITION_2D_FADE_ANIMATION_DURATION + EXHIBITION_2D_ZOOM_OUT_ANIMATION_DURATION) * 1000);
+  }, [creamsoda]);
 
   return (
     <Exhibition2dCanvasContainer
