@@ -1,7 +1,40 @@
 import { css, keyframes } from "@emotion/react";
 import React, { useEffect } from "react";
+import { Colors } from "~/styles/colors";
 import { Spacing } from "~/styles/spacing";
+import { Typography } from "~/styles/typography";
 import { Disease } from "~/utils/okusuri.land/types";
+
+const ellipsis = css`
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 126px;
+`;
+
+const description = css`
+  ${ellipsis};
+  ${Typography.S};
+`;
+
+const diseaseInformation = css`
+  padding-top: ${Spacing.s}px;
+`;
+
+const medicineInformation = css`
+  padding-top: ${Spacing.s}px;
+`;
+
+const medicineInformationIcon = css`
+  image-rendering: pixelated;
+  height: 30px;
+  padding-right: ${Spacing.s}px;
+`;
+
+const name = css`
+  ${ellipsis};
+  ${Typography.S};
+`;
 
 const notificationKeyframes = keyframes`
   from {
@@ -22,7 +55,10 @@ const notificationKeyframes = keyframes`
 
 const notification = css`
   animation: ${notificationKeyframes} 4s ease forwards;
+  border-radius: 2px;
+  color: ${Colors.black};
   padding: ${Spacing.m}px;
+  width: 196px;
 `;
 
 const notifications = css`
@@ -39,7 +75,7 @@ export const ExhibitionOkusuriLandNotifications = React.memo<{
   useEffect(() => {
     if (diseases.length) {
       setTimeout(() => {
-        onAnimationCompleted();
+        // onAnimationCompleted();
       }, 4000);
     }
   }, [diseases, onAnimationCompleted]);
@@ -48,7 +84,22 @@ export const ExhibitionOkusuriLandNotifications = React.memo<{
     <div className="absolute grid" css={notifications}>
       {diseases.map((disease) => (
         <div className="bg-white" css={notification} key={disease.id}>
-          notification 1
+          <div css={Typography.S}>おくすりを貰いました！</div>
+          <div css={diseaseInformation}>
+            <div>
+              <div css={name}>{disease.name}</div>
+              <div css={description}>{disease.description}</div>
+            </div>
+            {disease.medicines.map((medicine, index) => (
+              <div className="flex" css={medicineInformation} key={index}>
+                <img src={medicine.icon.url} css={medicineInformationIcon} />
+                <div>
+                  <div css={name}>{medicine.name}</div>
+                  <div css={description}>{medicine.description}</div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       ))}
     </div>
