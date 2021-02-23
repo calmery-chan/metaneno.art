@@ -13,6 +13,7 @@ import {
 import { useKeydown, useKeyup } from "~/hooks/useKeyboard";
 import { Exhibition2dSpeechBubble } from "./SpeechBubble";
 import { ChekiScenario } from "~/domains/cheki/models";
+import { Exhibition2dItemsPoster } from "./Morning/Items/Poster";
 
 const fadeInKeyframes = keyframes`
   from {
@@ -99,6 +100,14 @@ export const Exhibition2dMorning: React.FC = () => {
     ])
   }, []);
 
+  const handleClickPoster = useCallback(() => {
+    setScenarios([
+      {
+        "message": "ポスターだ。制服の女の子と天使の女の子が描いてある。"
+      }
+    ])
+  }, []);
+
   // Hooks
 
   useKeydown(handleKeydown);
@@ -128,6 +137,7 @@ export const Exhibition2dMorning: React.FC = () => {
         >
           <Exhibition2dMorningBackground step={step} />
           <Exhibition2dItemsPc isInteracting={!!scenarios} onClick={handleClickPc} step={step} />
+          <Exhibition2dItemsPoster isInteracting={!!scenarios} onClick={handleClickPoster} step={step} />
           <Exhibition2dCharacter
             creamsoda={null}
             direction={direction}
