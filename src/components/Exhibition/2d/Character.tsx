@@ -10,6 +10,7 @@ import {
   EXHIBITION_2D_CHARACTER_CENTER_X,
   EXHIBITION_2D_BACKGROUND_MAX_STEP,
   EXHIBITION_2D_BACKGROUND_MAX_STEP_WHEN_RESTRICTED,
+  EXHIBITION_2D_CHARACTER_MORNING_WALKING_ANIMATION_IMAGES,
 } from "~/constants/exhibition";
 
 const getCharacterX = (restricted: boolean, step: number) => {
@@ -34,10 +35,14 @@ const getCharacterX = (restricted: boolean, step: number) => {
 export const Exhibition2dCharacter = React.memo<{
   creamsoda: "flower" | "water" | null;
   direction: "left" | "right";
+  morning?: boolean
   restricted: boolean;
   step: number;
-}>(({ creamsoda, direction, restricted, step }) => (
-  <svg x={getCharacterX(restricted, step)} y={EXHIBITION_2D_CHARACTER_CENTER_Y}>
+}>(({ creamsoda, direction, morning = false, restricted, step }) => {
+  const IMAGES = morning ? EXHIBITION_2D_CHARACTER_MORNING_WALKING_ANIMATION_IMAGES : EXHIBITION_2D_CHARACTER_WALKING_ANIMATION_IMAGES
+
+  return (
+  <svg x={getCharacterX(restricted, step)} y={EXHIBITION_2D_CHARACTER_CENTER_Y + (morning ? (-1) : 0)}>
     <image
       height={EXHIBITION_2D_CHARACTER_HEIGHT}
       style={{ imageRendering: "pixelated" }}
@@ -50,10 +55,10 @@ export const Exhibition2dCharacter = React.memo<{
       xlinkHref={
         creamsoda
           ? `/exhibition/2d/night/character/${creamsoda}.png`
-          : EXHIBITION_2D_CHARACTER_WALKING_ANIMATION_IMAGES[
+          : IMAGES[
               Math.floor(
                 (step %
-                  (EXHIBITION_2D_CHARACTER_WALKING_ANIMATION_IMAGES.length *
+                  ((IMAGES).length *
                     EXHIBITION_2D_CHARACTER_FRAME_PER_ANIMATION)) /
                   EXHIBITION_2D_CHARACTER_FRAME_PER_ANIMATION
               )
@@ -61,4 +66,4 @@ export const Exhibition2dCharacter = React.memo<{
       }
     />
   </svg>
-));
+)});

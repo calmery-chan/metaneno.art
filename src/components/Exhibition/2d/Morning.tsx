@@ -16,6 +16,7 @@ import { ChekiScenario } from "~/domains/cheki/models";
 import { Exhibition2dItemsPoster } from "./Morning/Items/Poster";
 import { Exhibition2dItemsLetter } from "./Morning/Items/Letter";
 import { Exhibition2dItemsBag } from "./Morning/Items/Bag";
+import { Exhibition2dItemsCheki } from "./Morning/Items/Cheki";
 
 const fadeInKeyframes = keyframes`
   from {
@@ -126,6 +127,14 @@ export const Exhibition2dMorning: React.FC = () => {
     ])
   }, []);
 
+  const handleClickCheki = useCallback(() => {
+    setScenarios([
+      {
+        message: "チェキだ。天使の女の子が写っている。"
+      }
+    ])
+  }, []);
+
   // Hooks
 
   useKeydown(handleKeydown);
@@ -156,7 +165,9 @@ export const Exhibition2dMorning: React.FC = () => {
           <Exhibition2dMorningBackground step={step} />
           <Exhibition2dItemsPc isInteracting={!!scenarios} onClick={handleClickPc} step={step} />
           <Exhibition2dItemsPoster isInteracting={!!scenarios} onClick={handleClickPoster} step={step} />
+          <Exhibition2dItemsCheki isInteracting={!!scenarios} onClick={handleClickCheki} step={step} />
           <Exhibition2dCharacter
+            morning
             creamsoda={null}
             direction={direction}
             restricted={false}

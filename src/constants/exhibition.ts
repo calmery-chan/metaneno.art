@@ -58,6 +58,12 @@ export const EXHIBITION_2D_CHARACTER_WALKING_ANIMATION_IMAGES = [
   "/exhibition/2d/night/character/2.png",
   "/exhibition/2d/night/character/3.png",
 ];
+export const EXHIBITION_2D_CHARACTER_MORNING_WALKING_ANIMATION_IMAGES = [
+  "/exhibition/2d/morning/character/0.png",
+  "/exhibition/2d/morning/character/1.png",
+  "/exhibition/2d/morning/character/2.png",
+  "/exhibition/2d/morning/character/3.png",
+];
 
 // Character (Direction)
 
