@@ -30,7 +30,7 @@ export const Exhibition3d: React.FC<{
   onChangeArea: (area: AreaName) => void;
   settings: { graphicsQuality: GraphicsQuality };
 }> = ({ area, onChangeArea, settings }) => {
-  useAudio(area.sound.url, { autoplay: true });
+  useAudio(area.sound.url, { autoplay: true, loop: true });
   const [keys, setKeys] = useState(defaultControllerKeys);
   const [characterId, setCharacterId] = useState<string | null>(null);
   const [characterAnimations, setCharacterAnimations] = useState<
