@@ -46,9 +46,16 @@ const Text: React.FC<{ line: number }> = ({ children, line }) => (
 );
 
 export const Exhibition2dSpeechBubble: React.FC<{
-  scenarios: ChekiScenario[];
+  scenarios: (ChekiScenario & {
+    confirm?: {
+      enter: string;
+      cancel: string;
+    };
+  })[];
+  onEnter?: () => void;
+  onCancel?: () => void;
   onComplete: () => void;
-}> = ({ scenarios, onComplete }) => {
+}> = ({ scenarios, onCancel, onComplete, onEnter }) => {
   const [scenarioIndex, setScenarioIndex] = useState(0);
   const [characterCount, setCharacterCount] = useState(0);
   const [characterTimer, setCharacterTimer] = useState<number | null>(null);
@@ -107,6 +114,56 @@ export const Exhibition2dSpeechBubble: React.FC<{
         xmlns="http://www.w3.org/2000/svg"
       >
         <rect fillOpacity="0" height="100%" width="100%" />
+        {scenario.confirm && (
+          <>
+            <g
+              transform="translate(68, 220)"
+              className="cursor-pointer select-none"
+            >
+              <svg
+                height="26"
+                width="128"
+                onClick={onCancel ? onCancel : undefined}
+              >
+                <rect fill="#000" height="100%" width="100%" />
+                <text
+                  dominantBaseline="central"
+                  fill="#FFF"
+                  fontFamily="PixelMplus"
+                  fontSize={SPEECH_BUBBLE_FONT_SIZE}
+                  textAnchor={"middle"}
+                  x="50%"
+                  y="50%"
+                >
+                  {scenario.confirm.cancel}
+                </text>
+              </svg>
+            </g>
+            <g
+              transform="translate(204, 220)"
+              className="cursor-pointer select-none"
+            >
+              <svg
+                height="26"
+                width="128"
+                onClick={onEnter ? onEnter : undefined}
+              >
+                <rect fill="#000" height="100%" width="100%" />
+                <text
+                  dominantBaseline="central"
+                  fill="#FFF"
+                  fontFamily="PixelMplus"
+                  fontSize={SPEECH_BUBBLE_FONT_SIZE}
+                  textAnchor={"middle"}
+                  x="50%"
+                  y="50%"
+                >
+                  {scenario.confirm.enter}
+                </text>
+              </svg>
+            </g>
+          </>
+        )}
         <g transform="translate(8, 254)" className="cursor-pointer select-none">
           <rect height={SPEECH_BUBBLE_HEIGHT} width={SPEECH_BUBBLE_WIDTH} />
           <image

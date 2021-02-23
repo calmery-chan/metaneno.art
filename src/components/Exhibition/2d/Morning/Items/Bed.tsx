@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Exhibition2DPickable } from "../../Pickable";
 import { Exhibition2dMorningObject } from "../Object";
 import {
@@ -10,11 +10,11 @@ import {
 
 const X = 100;
 const STEP = X / EXHIBITION_2D_MOVING_DISTANCE_PER_STEP;
-const MIN_STEP = STEP - EXHIBITION_2D_PICKABLE_STEP_RANGE + 10
+const MIN_STEP = STEP - EXHIBITION_2D_PICKABLE_STEP_RANGE + 10;
 const MAX_STEP = STEP + EXHIBITION_2D_PICKABLE_STEP_RANGE + 10;
 
 export const Exhibition2dItemsBed = React.memo<{
-  isInteracting: boolean
+  isInteracting: boolean;
   onClick: () => void;
   step: number;
 }>(({ isInteracting, onClick, step: currentStep }) => {
@@ -26,16 +26,18 @@ export const Exhibition2dItemsBed = React.memo<{
       step={currentStep}
       x={X}
     >
-      {!isInteracting && isPickable && <Exhibition2DPickable
-        x={(172 - EXHIBITION_2D_PICKABLE_WIDTH) / 2 + 8}
-        y={170}
-      />}
+      {!isInteracting && isPickable && (
+        <Exhibition2DPickable
+          x={(172 - EXHIBITION_2D_PICKABLE_WIDTH) / 2 + 8}
+          y={170}
+        />
+      )}
       <rect
         className="cursor-pointer"
         width="172"
         height="100%"
         fillOpacity="0"
-        onClick={isPickable ? onClick : undefined}
+        onClick={isPickable && !isInteracting ? onClick : undefined}
       />
     </Exhibition2dMorningObject>
   );

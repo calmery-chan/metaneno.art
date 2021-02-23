@@ -5,7 +5,7 @@ import {
   EXHIBITION_2D_MOVING_DISTANCE_PER_STEP,
 } from "~/constants/exhibition";
 
-const getObjectX = (step: number) => {
+export const getObjectX = (step: number) => {
   // キャラクターが画面中央に存在しないとき、スクロールしない
   if (step < EXHIBITION_2D_CHARACTER_HORIZONTAL_MARGIN_IN_STEP) {
     return 0;
