@@ -6,6 +6,7 @@ import { defaultControllerKeys, Exhibition3dController } from "./3d/Controller";
 import { Exhibition3dFog } from "./3d/Fog";
 import { Exhibition3dItem } from "./3d/Item";
 import { Exhibition3dLights } from "./3d/Lights";
+import { Exhibition3dLoading } from "./3d/Loading";
 import { Exhibition3dObjectsCharacters } from "./3d/Objects/Characters";
 import { Exhibition3dObjectsComponents } from "./3d/Objects/Components";
 import { Exhibition3dObjectsDecorations } from "./3d/Objects/Decorations";
@@ -15,6 +16,7 @@ import { Exhibition3dPlayer } from "./3d/Player";
 import { Exhibition3dRenderer } from "./3d/Renderer";
 import { Exhibition3dWork } from "./3d/Work";
 import { useAudio } from "~/hooks/useAudio";
+import { Mixin } from "~/styles/mixin";
 import {
   Area,
   AreaCharacterObject,
@@ -42,6 +44,7 @@ export const Exhibition3d: React.FC<{
   >(null);
   const [ready, setReady] = useState(false);
   const [workId, setWorkId] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   // Find
 
@@ -106,6 +109,17 @@ export const Exhibition3d: React.FC<{
     [onChangeArea]
   );
 
+  const handleChangeArea = useCallback(
+    (area: AreaName) => {
+      setIsLoading(true);
+
+      setTimeout(() => {
+        onChangeArea(area);
+      }, Mixin.ANIMATION_DURATION.milliseconds);
+    },
+    [onChangeArea]
+  );
+
   const handleChangeCharacterAnimations = useCallback(
     (animations: string[][]) => {
       setCharacterAnimations(animations);
@@ -145,71 +159,80 @@ export const Exhibition3d: React.FC<{
         Sentry.captureException(error);
       } finally {
         setReady(true);
+
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 1600);
       }
     })();
   }, [area]);
 
   // Render
 
-  if (!ready) {
-    return <div>Loading</div>;
-  }
-
   return (
     <>
-      <Exhibition3dCanvas>
-        <Exhibition3dBackground {...area.background} />
-        <Exhibition3dFog {...area.fog} />
-        <Exhibition3dLights {...area.lights} />
-        <Exhibition3dObjectsCharacters
-          animations={
-            characterId && characterAnimations
-              ? {
-                  [characterId]: characterAnimations,
-                }
-              : {}
-          }
-          objects={area.objects.characters}
-          onClick={setCharacterId}
-        />
-        <Exhibition3dObjectsComponents components={area.objects.components} />
-        <Exhibition3dObjectsDecorations objects={area.objects.decorations} />
-        <Exhibition3dObjectsItems
-          objects={area.objects.items}
-          onClick={setItemId}
-        />
-        <Exhibition3dObjectsWorks
-          objects={area.objects.works}
-          onClick={setWorkId}
-        />
-        <Exhibition3dPlayer
-          {...area.player}
-          {...keys}
-          areas={area.areas}
-          accessory={playerAccessory}
-          onChangeArea={onChangeArea}
-          collider={area.collider}
-          operable={!workId}
-        />
-        <Exhibition3dRenderer graphicsQuality={settings.graphicsQuality} />
-      </Exhibition3dCanvas>
-      {character && (
-        <Exhibition3dCharacter
-          onChangeActions={handleAction}
-          onChangeAnimations={handleChangeCharacterAnimations}
-          onClose={handleCloseCharacter}
-          scenarios={character.scenarios}
-        />
+      {ready && (
+        <div className="h-full w-full">
+          <Exhibition3dCanvas>
+            <Exhibition3dBackground {...area.background} />
+            <Exhibition3dFog {...area.fog} />
+            <Exhibition3dLights {...area.lights} />
+            <Exhibition3dObjectsCharacters
+              animations={
+                characterId && characterAnimations
+                  ? {
+                      [characterId]: characterAnimations,
+                    }
+                  : {}
+              }
+              objects={area.objects.characters}
+              onClick={setCharacterId}
+            />
+            <Exhibition3dObjectsComponents
+              components={area.objects.components}
+            />
+            <Exhibition3dObjectsDecorations
+              objects={area.objects.decorations}
+            />
+            <Exhibition3dObjectsItems
+              objects={area.objects.items}
+              onClick={setItemId}
+            />
+            <Exhibition3dObjectsWorks
+              objects={area.objects.works}
+              onClick={setWorkId}
+            />
+            <Exhibition3dPlayer
+              {...area.player}
+              {...keys}
+              areas={area.areas}
+              accessory={playerAccessory}
+              onChangeArea={handleChangeArea}
+              collider={area.collider}
+              operable={!workId}
+            />
+            <Exhibition3dRenderer graphicsQuality={settings.graphicsQuality} />
+          </Exhibition3dCanvas>
+          {character && (
+            <Exhibition3dCharacter
+              onChangeActions={handleAction}
+              onChangeAnimations={handleChangeCharacterAnimations}
+              onClose={handleCloseCharacter}
+              scenarios={character.scenarios}
+            />
+          )}
+          {itemId && <Exhibition3dItem id={itemId} onClose={handleCloseItem} />}
+          {work && (
+            <Exhibition3dWork
+              {...work}
+              graphicsQuality={settings.graphicsQuality}
+              onClose={handleCloseWork}
+            />
+          )}
+          <Exhibition3dController onChange={setKeys} />
+        </div>
       )}
-      {itemId && <Exhibition3dItem id={itemId} onClose={handleCloseItem} />}
-      {work && (
-        <Exhibition3dWork
-          {...work}
-          graphicsQuality={settings.graphicsQuality}
-          onClose={handleCloseWork}
-        />
-      )}
-      <Exhibition3dController onChange={setKeys} />
+      <Exhibition3dLoading isLoading={isLoading} />
     </>
   );
 };

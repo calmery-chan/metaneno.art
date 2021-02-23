@@ -8,7 +8,7 @@ import sea from "~/data/sea";
 import { AreaName, GraphicsQuality } from "~/types/exhibition";
 
 const Exhibition: NextPage = () => {
-  const [area, setArea] = useState<AreaName>("cloud");
+  const [area, setArea] = useState<AreaName>("sea");
 
   const [graphicsQuality, setGraphicsQuality] = useState<GraphicsQuality>(
     "high"
