@@ -14,6 +14,7 @@ import { useKeydown, useKeyup } from "~/hooks/useKeyboard";
 import { Exhibition2dSpeechBubble } from "./SpeechBubble";
 import { ChekiScenario } from "~/domains/cheki/models";
 import { Exhibition2dItemsPoster } from "./Morning/Items/Poster";
+import { Exhibition2dItemsLetter } from "./Morning/Items/Letter";
 
 const fadeInKeyframes = keyframes`
   from {
@@ -108,6 +109,14 @@ export const Exhibition2dMorning: React.FC = () => {
     ])
   }, []);
 
+  const handleClickLetter = useCallback(() => {
+    setScenarios([
+      {
+        message: "手紙だ。中身は”あなたにとって良い現実逃避の時間となりましたように。”…と書いてある。"
+      }
+    ])
+  }, [])
+
   // Hooks
 
   useKeydown(handleKeydown);
@@ -144,6 +153,7 @@ export const Exhibition2dMorning: React.FC = () => {
             restricted={false}
             step={step}
           />
+          <Exhibition2dItemsLetter isInteracting={!!scenarios} onClick={handleClickLetter} step={step} />
         </Exhibition2dCanvas>
         {scenarios && <Exhibition2dSpeechBubble
             scenarios={scenarios}
