@@ -1,5 +1,6 @@
 import { css, keyframes } from "@emotion/react";
 import React, { useCallback, useEffect, useRef, useState } from "react";
+import { isMobile } from "react-device-detect";
 import { ControllerKeys, defaultControllerKeys } from "../3d/Controller";
 import { Exhibition2dCanvasContainer } from "./CanvasContainer";
 import {
@@ -313,7 +314,7 @@ export const Exhibition2dCanvas: React.FC<{
           {children}
         </svg>
       </Exhibition2dCanvasContainer>
-      {!walked && <Mobile onChange={handleChangeKeys} />}
+      {!walked && isMobile && <Mobile onChange={handleChangeKeys} />}
     </>
   );
 };
