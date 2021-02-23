@@ -19,6 +19,7 @@ import { Exhibition2dItemsPoster } from "./Morning/Items/Poster";
 import { Exhibition2dItemsLetter } from "./Morning/Items/Letter";
 import { Exhibition2dItemsBag } from "./Morning/Items/Bag";
 import { Exhibition2dItemsCheki } from "./Morning/Items/Cheki";
+import { Exhibition2dItemsBed } from "./Morning/Items/Bed";
 
 const fadeInKeyframes = keyframes`
   from {
@@ -202,6 +203,10 @@ export const Exhibition2dMorning: React.FC = () => {
     ])
   }, []);
 
+  const handleClickBed = useCallback(() => {
+    console.log("call")
+  }, []);
+
   // Hooks
 
   useKeydown(handleKeydown);
@@ -233,6 +238,7 @@ export const Exhibition2dMorning: React.FC = () => {
           <Exhibition2dItemsPc isInteracting={!!scenarios} onClick={handleClickPc} step={step} />
           <Exhibition2dItemsPoster isInteracting={!!scenarios} onClick={handleClickPoster} step={step} />
           <Exhibition2dItemsCheki isInteracting={!!scenarios} onClick={handleClickCheki} step={step} />
+          <Exhibition2dItemsBed isInteracting={!!scenarios} onClick={handleClickBed} step={step} />
           {wokeUp && !sleep &&<Exhibition2dCharacter
             morning
             creamsoda={null}
