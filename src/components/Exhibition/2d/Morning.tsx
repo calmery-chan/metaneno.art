@@ -15,6 +15,7 @@ import { Exhibition2dSpeechBubble } from "./SpeechBubble";
 import { ChekiScenario } from "~/domains/cheki/models";
 import { Exhibition2dItemsPoster } from "./Morning/Items/Poster";
 import { Exhibition2dItemsLetter } from "./Morning/Items/Letter";
+import { Exhibition2dItemsBag } from "./Morning/Items/Bag";
 
 const fadeInKeyframes = keyframes`
   from {
@@ -117,6 +118,14 @@ export const Exhibition2dMorning: React.FC = () => {
     ])
   }, [])
 
+  const handleClickBag = useCallback(() => {
+    setScenarios([
+      {
+        message: "カバンに教科書を入れておこう…"
+      }
+    ])
+  }, []);
+
   // Hooks
 
   useKeydown(handleKeydown);
@@ -154,6 +163,7 @@ export const Exhibition2dMorning: React.FC = () => {
             step={step}
           />
           <Exhibition2dItemsLetter isInteracting={!!scenarios} onClick={handleClickLetter} step={step} />
+          <Exhibition2dItemsBag isInteracting={!!scenarios} onClick={handleClickBag} step={step} />
         </Exhibition2dCanvas>
         {scenarios && <Exhibition2dSpeechBubble
             scenarios={scenarios}
