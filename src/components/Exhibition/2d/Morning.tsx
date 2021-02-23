@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { Exhibition2dMorningBackground } from "./Morning/Background";
 import { Exhibition2dItemsPc } from "./Morning/Items/PC";
 import { Exhibition2dCanvas } from "~/components/Exhibition/2d/Canvas";
-import { Exhibition2dCharacter } from "~/components/Exhibition/2d/Character";
+import { Exhibition2dCharacter, getCharacterX } from "~/components/Exhibition/2d/Character";
 import {
   EXHIBITION_2D_CHARACTER_CENTER_X,
   EXHIBITION_2D_CHARACTER_DEFAULT_DIRECTION,
@@ -34,6 +34,36 @@ const fadeIn = css`
   animation-name: ${fadeInKeyframes};
 `;
 
+const Exhibition2dSleepCaharcter: React.FC<{ onComplete: () => void, step: number }> = ({
+  onComplete,
+  step
+}) => {
+  const [frame, setFrame] = useState(0);
+
+  useEffect(() => {
+    setTimeout(
+      () => {
+        if (frame > 2) {
+          onComplete();
+          return;
+        }
+
+        setFrame(frame + 1);
+      },
+      800
+    );
+  }, [frame, onComplete]);
+
+  return (
+    <image
+      height={EXHIBITION_2D_CHARACTER_HEIGHT}
+      style={{ imageRendering: "pixelated" }}
+      x={frame === 0 ? getCharacterX(false, step, true) : 109}
+      y={116.5}
+      xlinkHref={`/exhibition/2d/morning/character/sleep/${frame}.png`}
+    />
+  );
+};
 
 const Exhibition2dWakeupCaharcter: React.FC<{ onComplete: () => void }> = ({
   onComplete,
@@ -75,6 +105,7 @@ export const Exhibition2dMorning: React.FC = () => {
   const [isMoving, setIsMoving] = useState(false);
   const [scenarios, setScenarios] = useState<ChekiScenario[] | null>(null);
   const [wokeUp, setWorkUp] = useState(false);
+  const [sleep, setSleep] = useState(false);
 
   const handleKeydown = useCallback(({ key }: KeyboardEvent) => {
     const isLeft = key === "a" || key === "ArrowLeft";
@@ -202,7 +233,7 @@ export const Exhibition2dMorning: React.FC = () => {
           <Exhibition2dItemsPc isInteracting={!!scenarios} onClick={handleClickPc} step={step} />
           <Exhibition2dItemsPoster isInteracting={!!scenarios} onClick={handleClickPoster} step={step} />
           <Exhibition2dItemsCheki isInteracting={!!scenarios} onClick={handleClickCheki} step={step} />
-          {wokeUp &&<Exhibition2dCharacter
+          {wokeUp && !sleep &&<Exhibition2dCharacter
             morning
             creamsoda={null}
             direction={direction}
@@ -210,6 +241,7 @@ export const Exhibition2dMorning: React.FC = () => {
             step={step}
           />}
           {!wokeUp && <Exhibition2dWakeupCaharcter onComplete={handleWokeUp} />}
+          {sleep && <Exhibition2dSleepCaharcter onComplete={handleWokeUp} step={step} />}
           <Exhibition2dItemsLetter isInteracting={!wokeUp || !!scenarios} onClick={handleClickLetter} step={step} />
           <Exhibition2dItemsBag isInteracting={!!scenarios} onClick={handleClickBag} step={step} />
         </Exhibition2dCanvas>

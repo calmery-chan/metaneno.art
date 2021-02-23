@@ -14,7 +14,7 @@ import {
   EXHIBITION_2D_MORNING_BACKGROUND_MAX_STEP,
 } from "~/constants/exhibition";
 
-const getCharacterX = (restricted: boolean, step: number, isMorning: boolean) => {
+export const getCharacterX = (restricted: boolean, step: number, isMorning: boolean) => {
   if (step < EXHIBITION_2D_CHARACTER_HORIZONTAL_MARGIN_IN_STEP) {
     return step * EXHIBITION_2D_MOVING_DISTANCE_PER_STEP;
   }
