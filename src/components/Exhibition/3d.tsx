@@ -1,3 +1,4 @@
+import { css, keyframes } from "@emotion/react";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { Exhibition3dBackground } from "./3d/Background";
 import { Exhibition3dCanvas } from "./3d/Canvas";
@@ -32,6 +33,20 @@ import {
 import { preload } from "~/utils/exhibition";
 import { Sentry } from "~/utils/sentry";
 
+const fadeOutKeyframes = keyframes`
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+`;
+
+export const fadeOut = css`
+  animation: ${fadeOutKeyframes} 4.8s ease forwards;
+`;
+
 const areas = {
   cloud,
   meadow,
@@ -40,12 +55,14 @@ const areas = {
 
 export const Exhibition3d: React.FC<{
   creamsoda: "flower" | "water";
+  onComplete: () => void;
   settings: { graphicsQuality: GraphicsQuality };
-}> = ({ creamsoda, settings }) => {
+}> = ({ creamsoda, onComplete, settings }) => {
   const defaultArea = creamsoda === "flower" ? "meadow" : "sea";
 
-  const [currentAreaName, setCurrentAreaName] = useState<AreaName>(defaultArea);
+  const [currentAreaName, setCurrentAreaName] = useState<AreaName>("cloud");
   const area = areas[currentAreaName];
+  const [completed, setCompleted] = useState(false);
 
   const { audio } = useAudio(area.sound.url, { loop: true });
   const [keys, setKeys] = useState(defaultControllerKeys);
@@ -167,6 +184,16 @@ export const Exhibition3d: React.FC<{
     []
   );
 
+  const handleOnComplete = useCallback(() => {
+    setCompleted(true);
+
+    if (audio) {
+      audio.fade(audio.volume(), 0, 4800);
+    }
+
+    setTimeout(onComplete, 4800);
+  }, [audio, onComplete]);
+
   // Side Effects
 
   useEffect(() => {
@@ -217,9 +244,9 @@ export const Exhibition3d: React.FC<{
   // Render
 
   return (
-    <>
+    <div className="bg-black h-full w-full">
       {ready && (
-        <div className="h-full w-full">
+        <div className="h-full w-full" css={completed ? fadeOut : undefined}>
           <Exhibition3dCanvas>
             <Exhibition3dBackground {...area.background} />
             <Exhibition3dFog {...area.fog} />
@@ -252,8 +279,11 @@ export const Exhibition3d: React.FC<{
             <Exhibition3dPlayer
               {...area.player}
               {...keys}
+              areaName={currentAreaName}
               areas={area.areas}
               accessory={playerAccessory}
+              completed={completed}
+              onComplete={handleOnComplete}
               onChangeArea={handleChangeArea}
               collider={area.collider}
               operable={!workId}
@@ -280,6 +310,6 @@ export const Exhibition3d: React.FC<{
         </div>
       )}
       <Exhibition3dLoading loading={loading} />
-    </>
+    </div>
   );
 };

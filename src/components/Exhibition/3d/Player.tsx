@@ -56,9 +56,12 @@ const useCamera = (
 export const Exhibition3dPlayer = React.memo<
   Area["player"] &
     ControllerKeys & {
+      areaName: AreaName;
       areas: Area["areas"];
       accessory: "fried_egg" | "pancake" | null;
+      completed: boolean;
       collider: AreaObject;
+      onComplete: () => void;
       onChangeArea: (area: AreaName) => void;
       operable: boolean;
     }
@@ -66,6 +69,8 @@ export const Exhibition3dPlayer = React.memo<
   ({
     accessory: _accessory,
     areas,
+    areaName,
+    completed,
     down,
     collider,
     defaultPosition,
@@ -73,6 +78,7 @@ export const Exhibition3dPlayer = React.memo<
     defaultScale,
     left,
     right,
+    onComplete,
     onChangeArea,
     operable,
     up,
@@ -201,7 +207,7 @@ export const Exhibition3dPlayer = React.memo<
         mixer.update(delta);
       }
 
-      if (!operable) {
+      if (!operable || completed) {
         return;
       }
 
@@ -295,6 +301,17 @@ export const Exhibition3dPlayer = React.memo<
             nextPosition.z <= maximumZ
           ) {
             onChangeArea("sea");
+          }
+        }
+
+        if (areaName === "cloud") {
+          if (
+            -12.5 <= nextPosition.x &&
+            nextPosition.x <= -7.5 &&
+            -22 <= nextPosition.z &&
+            nextPosition.z <= -18
+          ) {
+            onComplete();
           }
         }
       }

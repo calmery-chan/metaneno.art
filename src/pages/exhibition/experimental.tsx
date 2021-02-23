@@ -9,7 +9,7 @@ import { GraphicsQuality } from "~/types/exhibition";
 const Exhibition: NextPage = () => {
   const [creamsoda, setCreamsoda] = useState<"flower" | "water" | null>(null);
   const [location, setLocation] = useState<"2d-morning" | "2d-night" | "3d">(
-    "2d-morning"
+    "2d-night"
   );
   const [graphicsQuality, setGraphicsQuality] = useState<GraphicsQuality>(
     "high"
@@ -29,19 +29,25 @@ const Exhibition: NextPage = () => {
     setLocation("3d");
   }, []);
 
+  const handleComplete3d = useCallback(() => {
+    setLocation("2d-morning");
+  }, []);
+
   // Render
 
   return (
     <>
       {location === "3d" && creamsoda && (
-        <Exhibition3d creamsoda={creamsoda} settings={{ graphicsQuality }} />
+        <Exhibition3d
+          creamsoda={creamsoda}
+          onComplete={handleComplete3d}
+          settings={{ graphicsQuality }}
+        />
       )}
       {location === "2d-night" && (
         <Exhibition2dNight onComplete={handleComplete2dNight} />
       )}
-      {location === "2d-morning" && (
-        <Exhibition2dMorning />
-      )}
+      {location === "2d-morning" && <Exhibition2dMorning />}
       <ExhibitionMenu onChangeGraphicsQuality={handleChangeQuality} />
     </>
   );
