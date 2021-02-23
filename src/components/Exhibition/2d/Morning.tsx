@@ -2,6 +2,10 @@ import { css, keyframes } from "@emotion/react";
 import { useRouter } from "next/router";
 import React, { useCallback, useEffect, useState } from "react";
 import { Exhibition2dMorningBackground } from "./Morning/Background";
+import {
+  Exhibition2dCurtainClosed,
+  Exhibition2dCurtainOpened,
+} from "./Morning/Curtain";
 import { Exhibition2dItemsBag } from "./Morning/Items/Bag";
 import { Exhibition2dItemsBed } from "./Morning/Items/Bed";
 import { Exhibition2dItemsCheki } from "./Morning/Items/Cheki";
@@ -116,6 +120,7 @@ const Exhibition2dWakeupCaharcter: React.FC<{ onComplete: () => void }> = ({
 
 export const Exhibition2dMorning: React.FC = () => {
   const { push } = useRouter();
+  const [isOpenedCurtain, setIsOpenedCurtain] = useState(false);
   const [direction, setDirection] = useState<"left" | "right">("left");
   const [step, setStep] = useState(190);
   const [isMoving, setIsMoving] = useState(false);
@@ -255,9 +260,9 @@ export const Exhibition2dMorning: React.FC = () => {
     }, SLEEP_ANIMATION_SPEED);
   }, []);
 
-  const handleSlept = useCallback(() => {
-    push("/");
-  }, []);
+  const handleClickCurtain = useCallback(() => {
+    setIsOpenedCurtain(!isOpenedCurtain);
+  }, [isOpenedCurtain]);
 
   // Hooks
 
@@ -289,6 +294,20 @@ export const Exhibition2dMorning: React.FC = () => {
           walked={false}
         >
           <Exhibition2dMorningBackground step={step} />
+          {!isOpenedCurtain && (
+            <Exhibition2dCurtainClosed
+              isInteracting={isInteracting}
+              onClick={handleClickCurtain}
+              step={step}
+            />
+          )}
+          {isOpenedCurtain && (
+            <Exhibition2dCurtainOpened
+              isInteracting={isInteracting}
+              onClick={handleClickCurtain}
+              step={step}
+            />
+          )}
           <Exhibition2dItemsPc
             isInteracting={isInteracting}
             onClick={handleClickPc}
