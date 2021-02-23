@@ -19,15 +19,6 @@ const Container = styled.div`
   color: ${Colors.black};
 `;
 
-const Logo = styled.div`
-  text-align: center;
-  margin-bottom: ${Spacing.l}px;
-
-  img {
-    height: 96px;
-  }
-`;
-
 const Title = styled.h1`
   ${Typography.L};
 
