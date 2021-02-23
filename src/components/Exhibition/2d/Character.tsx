@@ -32,7 +32,7 @@ const getCharacterX = (restricted: boolean, step: number) => {
 };
 
 export const Exhibition2dCharacter = React.memo<{
-  creamsoda: "blue" | "flower" | null;
+  creamsoda: "flower" | "water" | null;
   direction: "left" | "right";
   restricted: boolean;
   step: number;

@@ -5,14 +5,16 @@ import { Exhibition3d } from "~/components/Exhibition/3d";
 import { ExhibitionMenu } from "~/components/Exhibition/Menu";
 import { GraphicsQuality } from "~/types/exhibition";
 
-type Location = "2d-morning" | "2d-night" | "3d";
-
 const Exhibition: NextPage = () => {
   const [creamsoda, setCreamsoda] = useState<"flower" | "water" | null>(null);
-  const [location, setLocation] = useState<Location>("2d-night");
+  const [location, setLocation] = useState<"2d-morning" | "2d-night" | "3d">(
+    "2d-night"
+  );
   const [graphicsQuality, setGraphicsQuality] = useState<GraphicsQuality>(
     "high"
   );
+
+  // Events
 
   const handleChangeQuality = useCallback(
     (graphicsQuality: GraphicsQuality) => {
@@ -21,18 +23,12 @@ const Exhibition: NextPage = () => {
     []
   );
 
-  const handleComplete2dNight = useCallback((creamsoda: "blue" | "flower") => {
-    if (creamsoda === "blue") {
-      setCreamsoda("water");
-    } else {
-      setCreamsoda("flower");
-    }
-
+  const handleComplete2dNight = useCallback((creamsoda: "flower" | "water") => {
+    setCreamsoda(creamsoda);
     setLocation("3d");
   }, []);
 
-  const is2d = location === "2d-night" || location === "2d-morning";
-  const is3d = !is2d;
+  // Render
 
   return (
     <>
@@ -42,10 +38,7 @@ const Exhibition: NextPage = () => {
       {location === "2d-night" && (
         <Exhibition2dNight onComplete={handleComplete2dNight} />
       )}
-      <ExhibitionMenu
-        mode={is2d ? "2d" : "3d"}
-        onChangeGraphicsQuality={handleChangeQuality}
-      />
+      <ExhibitionMenu onChangeGraphicsQuality={handleChangeQuality} />
     </>
   );
 };

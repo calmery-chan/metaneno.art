@@ -87,9 +87,8 @@ const saveSettings = (
 };
 
 export const ExhibitionMenu: React.FC<{
-  mode: "2d" | "3d";
   onChangeGraphicsQuality: (quality: GraphicsQuality) => void;
-}> = ({ mode, onChangeGraphicsQuality }) => {
+}> = ({ onChangeGraphicsQuality }) => {
   const [currentAudioVolume, setCurrentAudioVolume] = useState(Howler.volume());
   const [currentGraphicsQuality, setCurrentGraphicsQuality] = useState<
     "high" | "low" | "middle"
@@ -188,20 +187,18 @@ export const ExhibitionMenu: React.FC<{
             src="/exhibition/book.svg"
           />
         </div>
-        {mode === "3d" && (
-          <div className="flex" css={menuGroup}>
-            <img
-              alt="音量"
-              onClick={handleClickMuteAudioToggle}
-              src={`/exhibition/audio-${muted ? "off" : "on"}.svg`}
-            />
-            <img
-              alt="設定"
-              onClick={handleClickOpenSettings}
-              src="/exhibition/settings.svg"
-            />
-          </div>
-        )}
+        <div className="flex" css={menuGroup}>
+          <img
+            alt="音量"
+            onClick={handleClickMuteAudioToggle}
+            src={`/exhibition/audio-${muted ? "off" : "on"}.svg`}
+          />
+          <img
+            alt="設定"
+            onClick={handleClickOpenSettings}
+            src="/exhibition/settings.svg"
+          />
+        </div>
       </div>
       {isOpenOkusuriLand && <OkusuriLand onClose={handleCloseOkusuriLand} />}
       {isOpenSettings && (

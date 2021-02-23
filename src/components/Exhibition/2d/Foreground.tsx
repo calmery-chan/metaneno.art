@@ -3,7 +3,7 @@ import { Exhibition2DEffectsTwinkle } from "./Effects/Twinkle";
 import { Exhibition2dObject } from "./Object";
 
 export const Exhibition2dForeground: React.FC<{
-  creamsoda: "blue" | "flower" | null;
+  creamsoda: "flower" | "water" | null;
   restricted: boolean;
   step: number;
 }> = React.memo((props) => (

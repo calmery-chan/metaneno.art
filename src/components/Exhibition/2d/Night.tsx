@@ -99,14 +99,14 @@ const fadeOutImage = css`
 `;
 
 export const Exhibition2dNight: React.FC<{
-  onComplete: (creansoda: "blue" | "flower") => void;
+  onComplete: (creansoda: "flower" | "water") => void;
 }> = ({ onComplete }) => {
   const [restricted, setRestricted] = useState(true);
   const [direction, setDirection] = useState<"left" | "right">(
     EXHIBITION_2D_CHARACTER_DEFAULT_DIRECTION
   );
   const [selectedCreamSoda, setSelectedCreamSoda] = useState<
-    "blue" | "flower" | null
+    "flower" | "water" | null
   >(null);
   const [step, setStep] = useState(
     EXHIBITION_2D_CHARACTER_CENTER_X / EXHIBITION_2D_MOVING_DISTANCE_PER_STEP
@@ -116,12 +116,12 @@ export const Exhibition2dNight: React.FC<{
   const [zoom, setZoom] = useState(false);
   const [isMoving, setIsMoving] = useState(false);
 
-  const handleClickBlueIceCreamSoda = useCallback(() => {
+  const handleClickWaterIceCreamSoda = useCallback(() => {
     if (selectedCreamSoda) {
       return;
     }
 
-    setSelectedCreamSoda("blue");
+    setSelectedCreamSoda("water");
   }, [selectedCreamSoda]);
 
   const handleClickFlowerIceCreamSoda = useCallback(() => {
@@ -289,11 +289,11 @@ export const Exhibition2dNight: React.FC<{
               style={{ imageRendering: "pixelated" }}
             />
             <div className="absolute cursor-pointer flex h-full top-0 w-full">
-              <div className="w-full" onClick={handleClickBlueIceCreamSoda}>
+              <div className="w-full" onClick={handleClickWaterIceCreamSoda}>
                 <img
                   className="h-full object-contain w-full"
                   css={clickable}
-                  src="/exhibition/2d/night/creamsoda/blue.png"
+                  src="/exhibition/2d/night/creamsoda/water.png"
                   style={{ imageRendering: "pixelated" }}
                 />
               </div>
