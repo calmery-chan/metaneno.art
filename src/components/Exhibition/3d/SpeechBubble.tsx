@@ -28,7 +28,7 @@ const Background: React.FC = () => (
     height={BACKGROUND_HEIGHT}
     width={BACKGROUND_WIDTH}
     x={BACKGROUND_X}
-    xlinkHref="/exhibition/3d/bubble/background.png"
+    href="/exhibition/3d/bubble/background.png"
     y={BACKGROUND_Y}
   />
 );
@@ -74,11 +74,7 @@ const Name = React.memo<{ children: string }>(({ children }) => (
     x={NAME_X}
     y={NAME_Y}
   >
-    <image
-      height="100%"
-      width="100%"
-      xlinkHref="/exhibition/3d/bubble/name.png"
-    />
+    <image height="100%" width="100%" href="/exhibition/3d/bubble/name.png" />
     <Text center>{children}</Text>
   </svg>
 ));
@@ -190,7 +186,7 @@ const Choices = React.memo<{
           <image
             height="100%"
             width="100%"
-            xlinkHref="/exhibition/3d/bubble/choice.png"
+            href="/exhibition/3d/bubble/choice.png"
           />
           <Text center size={6}>
             {message}

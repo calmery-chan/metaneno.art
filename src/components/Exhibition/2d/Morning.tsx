@@ -60,6 +60,13 @@ const preload = () =>
       "/items/poster.png",
     ]
       .map((url) => `/exhibition/2d/morning${url}`)
+      .concat([
+        "/exhibition/2d/pickable/0.png",
+        "/exhibition/2d/pickable/1.png",
+        "/exhibition/2d/pickable/2.png",
+        "/exhibition/2d/pickable/3.png",
+        "/exhibition/2d/cherry.png",
+      ])
       .map((url) => fetch(url))
   );
 
@@ -104,7 +111,7 @@ const Exhibition2dSleepCharacter: React.FC<{ step: number }> = ({ step }) => {
         frame === 0 ? getCharacterX(false, step, true) : getObjectX(step) + 109
       }
       y={116.5}
-      xlinkHref={`/exhibition/2d/morning/character/sleep/${frame}.png`}
+      href={`/exhibition/2d/morning/character/sleep/${frame}.png`}
     />
   );
 };
@@ -134,7 +141,7 @@ const Exhibition2dWakeupCaharcter: React.FC<{ onComplete: () => void }> = ({
       style={{ imageRendering: "pixelated" }}
       x={320}
       y={116.5}
-      xlinkHref={`/exhibition/2d/morning/character/wakeup/${frame}.png`}
+      href={`/exhibition/2d/morning/character/wakeup/${frame}.png`}
     />
   );
 };

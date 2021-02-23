@@ -171,7 +171,7 @@ export const Exhibition2dSpeechBubble: React.FC<{
             style={{ imageRendering: "pixelated" }}
             width={SPEECH_BUBBLE_CHERRY_WIDTH}
             x={SPEECH_BUBBLE_CHERRY_X}
-            xlinkHref="/exhibition/2d/cherry.png"
+            href="/exhibition/2d/cherry.png"
             y={SPEECH_BUBBLE_CHERRY_Y}
           />
           <Text line={1}>

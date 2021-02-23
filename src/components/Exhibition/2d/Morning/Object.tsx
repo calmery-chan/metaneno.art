@@ -50,7 +50,7 @@ export const Exhibition2dMorningObject: React.FC<{
         style={{
           imageRendering: "pixelated",
         }}
-        xlinkHref={url}
+        href={url}
       />
     )}
     {children}

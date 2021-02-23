@@ -64,6 +64,13 @@ const preload = () =>
       "/items/key.png",
     ]
       .map((url) => `/exhibition/2d/night${url}`)
+      .concat([
+        "/exhibition/2d/pickable/0.png",
+        "/exhibition/2d/pickable/1.png",
+        "/exhibition/2d/pickable/2.png",
+        "/exhibition/2d/pickable/3.png",
+        "/exhibition/2d/cherry.png",
+      ])
       .map((url) => fetch(url))
   );
 
@@ -103,7 +110,7 @@ const Exhibition2dWakeupCaharcter: React.FC<{ onComplete: () => void }> = ({
       style={{ imageRendering: "pixelated" }}
       x={105}
       y={117}
-      xlinkHref={`/exhibition/2d/night/character/wakeup/${frame}.png`}
+      href={`/exhibition/2d/night/character/wakeup/${frame}.png`}
     />
   );
 };
