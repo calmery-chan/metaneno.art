@@ -1,5 +1,6 @@
 import { css, keyframes } from "@emotion/react";
 import React, { useCallback, useEffect, useRef, useState } from "react";
+import { ControllerKeys, defaultControllerKeys } from "../3d/Controller";
 import { Exhibition2dCanvasContainer } from "./CanvasContainer";
 import {
   EXHIBITION_2D_CANVAS_HEIGHT,
@@ -9,12 +10,167 @@ import {
   EXHIBITION_2D_ZOOM_ANIMATION_DURATION,
   EXHIBITION_2D_ZOOM_OUT_ANIMATION_DURATION,
 } from "~/constants/exhibition";
+import { fadeIn, fadeOut } from "~/styles/animations";
 import { Mixin } from "~/styles/mixin";
 import {
   convertEventToCursorPositions,
   MouseRelatedEvent,
   TouchRelatedEvent,
 } from "~/utils/cheki";
+
+const mobileContainer = css`
+  background: rgba(255, 255, 255, 0.24);
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  border-radius: 100%;
+  bottom: 64px;
+  height: 48px;
+  left: 64px;
+  width: 48px;
+`;
+
+const mobileCursor = css`
+  background: rgba(255, 255, 255, 0.24);
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  border-radius: 100%;
+  height: 24px;
+  width: 24px;
+`;
+
+const Mobile = React.memo<{ onChange: (keys: ControllerKeys) => void }>(
+  ({ onChange }) => {
+    const ref = useRef<HTMLDivElement>(null);
+
+    const [baseX, setBaseX] = useState<number | null>(null);
+    const [baseY, setBaseY] = useState<number | null>(null);
+    const [currentX, setCurrentX] = useState(0);
+    const [currentY, setCurrentY] = useState(0);
+    const [isMoving, setIsMoving] = useState(false);
+    const [timer, setTimer] = useState<number | null>(null);
+
+    // Events
+
+    const handleResetTimer = useCallback(() => setTimer(null), []);
+    const handleTouchEnd = useCallback(() => {
+      setIsMoving(false);
+      onChange(defaultControllerKeys);
+    }, [onChange]);
+    const handleTouchStart = useCallback(() => setIsMoving(true), []);
+
+    const handleTouchMove = useCallback(
+      (event: MouseRelatedEvent | TouchRelatedEvent) => {
+        event.preventDefault();
+        event.stopPropagation();
+
+        const [{ x, y }] = convertEventToCursorPositions(event);
+
+        setCurrentX(x);
+        setCurrentY(y);
+
+        if (!isMoving || timer || !baseX || !baseY) {
+          return;
+        }
+
+        setTimer(window.setTimeout(handleResetTimer, 80));
+
+        const angle = Math.atan2(y - baseY, x - baseX) * (180 / Math.PI);
+
+        /* -180 ~ 180 の間を 8 分割する */
+
+        let down = false;
+        let left = false;
+        let right = false;
+        let up = false;
+
+        if (67.5 < angle && angle < 112.5) {
+          down = true;
+        } else if (
+          (157.5 < angle && angle < 180) ||
+          (-180 < angle && angle < -157.5)
+        ) {
+          left = true;
+        } else if (-22.5 < angle && angle < 22.5) {
+          right = true;
+        } else if (-112.5 < angle && angle < -67.5) {
+          up = true;
+        } else if (112.5 <= angle && angle <= 157.5) {
+          down = true;
+          left = true;
+        } else if (22.5 <= angle && angle <= 67.5) {
+          down = true;
+          right = true;
+        } else if (-157.5 <= angle && angle <= -112.5) {
+          left = true;
+          up = true;
+        } else if (-67.5 <= angle && angle <= -22.5) {
+          right = true;
+          up = true;
+        }
+
+        onChange({ down, left, right, up });
+      },
+      [baseX, baseY, isMoving, onChange, timer]
+    );
+
+    const handleResize = useCallback(() => {
+      const e = ref.current;
+
+      if (!e) {
+        return;
+      }
+
+      const { height, width, x, y } = e.getBoundingClientRect();
+      setBaseX(x + width / 2);
+      setBaseY(y + height / 2);
+    }, [ref]);
+
+    // Side Effects
+
+    useEffect(() => {
+      const e = ref.current;
+
+      if (!e) {
+        return;
+      }
+
+      handleResize();
+
+      e.addEventListener("touchmove", handleTouchMove, { passive: false });
+      addEventListener("resize", handleResize);
+
+      return () => {
+        e.removeEventListener("touchmove", handleTouchMove);
+        removeEventListener("resize", handleResize);
+      };
+    }, [handleTouchMove, ref]);
+
+    // Render
+
+    return (
+      <>
+        <div
+          className="fixed"
+          css={css`
+            ${mobileContainer};
+            ${isMoving ? fadeOut : fadeIn}
+          `}
+          onTouchEnd={handleTouchEnd}
+          onTouchStart={handleTouchStart}
+          ref={ref}
+        />
+        {isMoving && (
+          <div
+            className="absolute"
+            css={mobileCursor}
+            style={{
+              left: `${currentX - 12}px`,
+              top: `${currentY - 12}px`,
+            }}
+          />
+        )}
+      </>
+    );
+  }
+);
 
 const zoomCommonTransform = css`
   transform: translate(-50%, -36%) scale(2);
@@ -72,184 +228,92 @@ export const Exhibition2dCanvas: React.FC<{
   onMoveEnd: () => void;
   walked: boolean;
 }> = ({ children, creamsoda, onComplete, onMove, onMoveEnd, walked }) => {
-  const ref = useRef<SVGSVGElement>(null);
-  const [displayMagnification, setDisplayMagnification] = useState<number>(0);
-  const [startX, setStartX] = useState<number | null>(null);
-  const [startY, setStartY] = useState<number | null>(null);
-  const [currentX, setCurrentX] = useState<number | null>(null);
-  const [currentY, setCurrentY] = useState<number | null>(null);
-  const [offsetX, setOffsetX] = useState<number>(0);
-  const [offsetY, setOffsetY] = useState<number>(0);
-
-  const handleChangeDisplayMagnification = useCallback(
-    ({
-      displayMagnification,
-      x,
-      y,
-    }: {
-      displayMagnification: number;
-      x: number;
-      y: number;
-    }) => {
-      setDisplayMagnification(displayMagnification);
-      setOffsetX(x);
-      setOffsetY(y);
-    },
-    []
-  );
-
-  const handleTouchEnd = useCallback(() => {
-    setCurrentX(null);
-    setCurrentY(null);
-    setStartX(null);
-    setStartY(null);
-    onMoveEnd();
-  }, [onMoveEnd]);
-
-  const handleTouchMove = useCallback(
-    (event: MouseRelatedEvent | TouchRelatedEvent) => {
-      event.preventDefault();
-      event.stopPropagation();
-
-      if (!startX || !startY) {
-        return;
-      }
-
-      const [{ x, y }] = convertEventToCursorPositions(event);
-
-      const currentX = (x - offsetX) * displayMagnification;
-      const currentY = (y - offsetY) * displayMagnification;
-
-      setCurrentX(currentX);
-      setCurrentY(currentY);
-
-      onMove(currentX - startX > 0 ? "right" : "left");
-    },
-    [displayMagnification, offsetX, offsetY, onMove, startX, startY]
-  );
-
-  const handleTouchStart = useCallback(
-    (event: MouseRelatedEvent | TouchRelatedEvent) => {
-      event.preventDefault();
-      event.stopPropagation();
-
-      const [{ x, y }] = convertEventToCursorPositions(event);
-
-      const startX = (x - offsetX) * displayMagnification;
-      const startY = (y - offsetY) * displayMagnification;
-
-      setStartX(startX);
-      setStartY(startY);
-    },
-    [displayMagnification, offsetX, offsetY]
-  );
-
-  useEffect(() => {
-    const e = ref.current;
-
-    if (!e || !handleTouchMove) return;
-
-    e.addEventListener("touchmove", handleTouchMove, { passive: false });
-
-    return () => {
-      e.removeEventListener("touchmove", handleTouchMove);
-    };
-  }, [ref, handleTouchMove]);
-
   useEffect(() => {
     setTimeout(() => {
       onComplete();
     }, (EXHIBITION_2D_FADE_ANIMATION_DURATION + EXHIBITION_2D_ZOOM_OUT_ANIMATION_DURATION) * 1000);
   }, [creamsoda]);
 
+  const handleChangeKeys = useCallback(
+    ({ left, right }: ControllerKeys) => {
+      if (left) {
+        onMove("left");
+        return;
+      }
+
+      if (right) {
+        onMove("right");
+        return;
+      }
+
+      onMoveEnd();
+    },
+    [onMove, onMoveEnd]
+  );
+
   return (
-    <Exhibition2dCanvasContainer
-      onChangeDisplayMagnification={handleChangeDisplayMagnification}
-    >
-      <svg
-        css={walked ? (creamsoda ? zoomOut : zoomIn) : undefined}
-        onTouchEnd={handleTouchEnd}
-        onTouchStart={handleTouchStart}
-        ref={ref}
-        viewBox={`0 0 ${EXHIBITION_2D_CANVAS_WIDTH} ${EXHIBITION_2D_CANVAS_HEIGHT}`}
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <defs>
-          <filter id="glitch" x="0" y="0">
-            <feColorMatrix
-              in="SourceGraphic"
-              mode="matrix"
-              values="1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0"
-              result="r"
-            />
-            <feOffset in="r" result="r" dx="-5">
-              <animate
-                attributeName="dx"
-                attributeType="XML"
-                values="0; -5; 0; -18; -2; -4; 0 ;-3; 0"
-                dur="0.2s"
-                repeatCount="indefinite"
+    <>
+      <Exhibition2dCanvasContainer>
+        <svg
+          css={walked ? (creamsoda ? zoomOut : zoomIn) : undefined}
+          viewBox={`0 0 ${EXHIBITION_2D_CANVAS_WIDTH} ${EXHIBITION_2D_CANVAS_HEIGHT}`}
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <defs>
+            <filter id="glitch" x="0" y="0">
+              <feColorMatrix
+                in="SourceGraphic"
+                mode="matrix"
+                values="1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0"
+                result="r"
               />
-            </feOffset>
-            <feColorMatrix
-              in="SourceGraphic"
-              mode="matrix"
-              values="0 0 0 0 0  0 1 0 0 0  0 0 0 0 0  0 0 0 1 0"
-              result="g"
-            />
-            <feOffset in="g" result="g" dx="-5" dy="1">
-              <animate
-                attributeName="dx"
-                attributeType="XML"
-                values="0; 0; 0; -3; 0; 8; 0 ;-1; 0"
-                dur="0.15s"
-                repeatCount="indefinite"
+              <feOffset in="r" result="r" dx="-5">
+                <animate
+                  attributeName="dx"
+                  attributeType="XML"
+                  values="0; -5; 0; -18; -2; -4; 0 ;-3; 0"
+                  dur="0.2s"
+                  repeatCount="indefinite"
+                />
+              </feOffset>
+              <feColorMatrix
+                in="SourceGraphic"
+                mode="matrix"
+                values="0 0 0 0 0  0 1 0 0 0  0 0 0 0 0  0 0 0 1 0"
+                result="g"
               />
-            </feOffset>
-            <feColorMatrix
-              in="SourceGraphic"
-              mode="matrix"
-              values="0 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0"
-              result="b"
-            />
-            <feOffset in="b" result="b" dx="5" dy="2">
-              <animate
-                attributeName="dx"
-                attributeType="XML"
-                values="0; 3; -1; 4; 0; 2; 0 ;18; 0"
-                dur="0.35s"
-                repeatCount="indefinite"
+              <feOffset in="g" result="g" dx="-5" dy="1">
+                <animate
+                  attributeName="dx"
+                  attributeType="XML"
+                  values="0; 0; 0; -3; 0; 8; 0 ;-1; 0"
+                  dur="0.15s"
+                  repeatCount="indefinite"
+                />
+              </feOffset>
+              <feColorMatrix
+                in="SourceGraphic"
+                mode="matrix"
+                values="0 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0"
+                result="b"
               />
-            </feOffset>
-            <feBlend in="r" in2="g" mode="screen" result="blend" />
-            <feBlend in="blend" in2="b" mode="screen" result="blend" />
-          </filter>
-        </defs>
-        {children}
-        {startX && startY && (
-          <svg height="48" width="48" overflow="visible" x={startX} y={startY}>
-            <circle fill="#fff" fillOpacity="0.12" r={24} />
-          </svg>
-        )}
-        {currentX && currentY && (
-          <svg
-            height="24"
-            width="24"
-            overflow="visible"
-            x={currentX}
-            y={currentY}
-          >
-            <circle
-              fill="#fff"
-              stroke="#fff"
-              strokeWidth={2}
-              strokeOpacity="0.12"
-              fillOpacity="0"
-              r={12}
-            />
-          </svg>
-        )}
-      </svg>
-    </Exhibition2dCanvasContainer>
+              <feOffset in="b" result="b" dx="5" dy="2">
+                <animate
+                  attributeName="dx"
+                  attributeType="XML"
+                  values="0; 3; -1; 4; 0; 2; 0 ;18; 0"
+                  dur="0.35s"
+                  repeatCount="indefinite"
+                />
+              </feOffset>
+              <feBlend in="r" in2="g" mode="screen" result="blend" />
+              <feBlend in="blend" in2="b" mode="screen" result="blend" />
+            </filter>
+          </defs>
+          {children}
+        </svg>
+      </Exhibition2dCanvasContainer>
+      {!walked && <Mobile onChange={handleChangeKeys} />}
+    </>
   );
 };
