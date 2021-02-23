@@ -13,6 +13,10 @@ const group = css`
   color: ${Colors.black};
   gap: ${Spacing.s}px;
   margin-bottom: ${Spacing.m}px;
+
+  a {
+    text-decoration: underline;
+  }
 `;
 
 const groupTitle = css`
@@ -124,6 +128,20 @@ export const Settings: React.FC<{
           <option value="middle">中</option>
           <option value="high">高</option>
         </select>
+      </Group>
+      <Group>
+        <GroupTitle>お問い合わせ</GroupTitle>
+        <div css={Typography.S}>
+          ご意見やご感想、バグの報告などは
+          <a
+            href="https://forms.gle/ighGcbwMwKC8nvt76"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            こちらの Google フォーム
+          </a>
+          からお願いします！
+        </div>
       </Group>
     </ExhibitionPopup>
   );
