@@ -6,7 +6,10 @@ import { defaultControllerKeys, Exhibition3dController } from "./3d/Controller";
 import { Exhibition3dFog } from "./3d/Fog";
 import { Exhibition3dItem } from "./3d/Item";
 import { Exhibition3dLights } from "./3d/Lights";
-import { Exhibition3dLoading } from "./3d/Loading";
+import {
+  Exhibition3dLoading,
+  preload as preloadLoadingImages,
+} from "./3d/Loading";
 import { Exhibition3dObjectsCharacters } from "./3d/Objects/Characters";
 import { Exhibition3dObjectsComponents } from "./3d/Objects/Components";
 import { Exhibition3dObjectsDecorations } from "./3d/Objects/Decorations";
@@ -15,10 +18,12 @@ import { Exhibition3dObjectsWorks } from "./3d/Objects/Works";
 import { Exhibition3dPlayer } from "./3d/Player";
 import { Exhibition3dRenderer } from "./3d/Renderer";
 import { Exhibition3dWork } from "./3d/Work";
+import cloud from "~/data/cloud";
+import meadow from "~/data/meadow";
+import sea from "~/data/sea";
 import { useAudio } from "~/hooks/useAudio";
 import { Mixin } from "~/styles/mixin";
 import {
-  Area,
   AreaCharacterObject,
   AreaName,
   AreaWorkObject,
@@ -27,11 +32,18 @@ import {
 import { preload } from "~/utils/exhibition";
 import { Sentry } from "~/utils/sentry";
 
+const areas = {
+  cloud,
+  meadow,
+  sea,
+};
+
 export const Exhibition3d: React.FC<{
-  area: Area;
-  onChangeArea: (area: AreaName) => void;
   settings: { graphicsQuality: GraphicsQuality };
-}> = ({ area, onChangeArea, settings }) => {
+}> = ({ settings }) => {
+  const [currentAreaName, setCurrentAreaName] = useState<AreaName>("cloud");
+  const area = areas[currentAreaName];
+
   useAudio(area.sound.url, { autoplay: true, loop: true });
   const [keys, setKeys] = useState(defaultControllerKeys);
   const [characterId, setCharacterId] = useState<string | null>(null);
@@ -44,7 +56,10 @@ export const Exhibition3d: React.FC<{
   >(null);
   const [ready, setReady] = useState(false);
   const [workId, setWorkId] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [loading, setLoading] = useState<{
+    previous: AreaName;
+    next: AreaName;
+  } | null>(null);
 
   // Find
 
@@ -78,11 +93,29 @@ export const Exhibition3d: React.FC<{
     setWorkId(null);
   }, []);
 
+  const handleChangeArea = useCallback(
+    (area: AreaName) => {
+      // 2 回呼ばれることがある...
+      if (currentAreaName !== area) {
+        setLoading({
+          previous: currentAreaName,
+          next: area,
+        });
+      }
+
+      setTimeout(() => {
+        setCurrentAreaName(area);
+      }, Mixin.ANIMATION_DURATION.milliseconds);
+    },
+    [currentAreaName]
+  );
+
   //
 
   const handleAction = useCallback(
     (actions: string[]) => {
       actions.forEach((action) => {
+        console.log(action);
         switch (action) {
           case "pancake":
             setPlayerAccessory("pancake");
@@ -93,31 +126,20 @@ export const Exhibition3d: React.FC<{
             return;
 
           case "move_to_cloud":
-            onChangeArea("cloud");
+            handleChangeArea("cloud");
             return;
 
           case "move_to_meadow":
-            onChangeArea("meadow");
+            handleChangeArea("meadow");
             return;
 
           case "move_to_sea":
-            onChangeArea("sea");
+            handleChangeArea("sea");
             return;
         }
       });
     },
-    [onChangeArea]
-  );
-
-  const handleChangeArea = useCallback(
-    (area: AreaName) => {
-      setIsLoading(true);
-
-      setTimeout(() => {
-        onChangeArea(area);
-      }, Mixin.ANIMATION_DURATION.milliseconds);
-    },
-    [onChangeArea]
+    [handleChangeArea]
   );
 
   const handleChangeCharacterAnimations = useCallback(
@@ -155,14 +177,15 @@ export const Exhibition3d: React.FC<{
       try {
         await Promise.all(objects.map(({ url }) => url).map(preload));
         await Promise.all(urls.map((url) => fetch(url)));
+        await preloadLoadingImages();
       } catch (error) {
         Sentry.captureException(error);
       } finally {
         setReady(true);
 
         setTimeout(() => {
-          setIsLoading(false);
-        }, 1600);
+          setLoading(null);
+        }, 2400);
       }
     })();
   }, [area]);
@@ -232,7 +255,7 @@ export const Exhibition3d: React.FC<{
           <Exhibition3dController onChange={setKeys} />
         </div>
       )}
-      <Exhibition3dLoading isLoading={isLoading} />
+      <Exhibition3dLoading loading={loading} />
     </>
   );
 };
