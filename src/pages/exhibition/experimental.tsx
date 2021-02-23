@@ -46,7 +46,7 @@ const Exhibition: NextPage = () => {
   // Render
 
   return (
-    <>
+    <div className="h-screen w-screen">
       {location === "3d" && creamsoda && (
         <Exhibition3d
           creamsoda={creamsoda}
@@ -62,13 +62,12 @@ const Exhibition: NextPage = () => {
         okusuriLand={okusuriLand}
         onChangeGraphicsQuality={handleChangeQuality}
       />
-      {diseases.length && (
-        <ExhibitionOkusuriLandNotifications
-          diseases={diseases}
-          onAnimationCompleted={handleResetDisease}
-        />
-      )}
-    </>
+
+      <ExhibitionOkusuriLandNotifications
+        diseases={diseases}
+        onAnimationCompleted={handleResetDisease}
+      />
+    </div>
   );
 };
 
