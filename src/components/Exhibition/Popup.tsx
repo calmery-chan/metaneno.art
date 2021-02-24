@@ -21,6 +21,12 @@ const body = css`
   padding: ${Spacing.m}px;
 `;
 
+const bodySmall = css`
+  ${body};
+  max-height: 192px;
+  max-width: 256px;
+`;
+
 const close = css`
   ${Mixin.clickable};
   height: 24px;
@@ -54,7 +60,8 @@ export const ExhibitionPopup = React.memo<{
   icon?: string;
   label?: string;
   onClose: () => void;
-}>(({ children, icon, label, onClose }) => {
+  small?: boolean;
+}>(({ children, icon, label, onClose, small = false }) => {
   const [isVisible, setIsVisible] = useState(true);
 
   // Events
@@ -85,7 +92,7 @@ export const ExhibitionPopup = React.memo<{
       <div
         className="bg-white flex flex-col h-full w-full"
         css={css`
-          ${body};
+          ${small ? bodySmall : body};
           ${isVisible ? fadeInUp : fadeOutDown}
         `}
       >
