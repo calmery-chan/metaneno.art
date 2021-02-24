@@ -17,11 +17,13 @@ import { Exhibition3dObjectsDecorations } from "./3d/Objects/Decorations";
 import { Exhibition3dObjectsItems } from "./3d/Objects/Items";
 import { Exhibition3dObjectsWorks } from "./3d/Objects/Works";
 import { Exhibition3dPlayer } from "./3d/Player";
+import { Exhibition3dPlayers } from "./3d/Players";
 import { Exhibition3dRenderer } from "./3d/Renderer";
 import { Exhibition3dWork } from "./3d/Work";
 import cloud from "~/data/cloud";
 import meadow from "~/data/meadow";
 import sea from "~/data/sea";
+import { useMultiplay } from "~/hooks/exhibition/useMultuplay";
 import { useAudio } from "~/hooks/useAudio";
 import { Mixin } from "~/styles/mixin";
 import {
@@ -32,8 +34,6 @@ import {
 } from "~/types/exhibition";
 import { preload } from "~/utils/exhibition";
 import { Sentry } from "~/utils/sentry";
-import { useMultiplay } from "~/hooks/exhibition/useMultuplay";
-import { Exhibition3dPlayers } from "./3d/Players";
 
 const fadeOutKeyframes = keyframes`
   0% {
@@ -57,7 +57,7 @@ const areas = {
 
 export const Exhibition3d: React.FC<{
   creamsoda: "flower" | "water";
-  multiplay: ReturnType<typeof useMultiplay>
+  multiplay: ReturnType<typeof useMultiplay>;
   onComplete: () => void;
   settings: { graphicsQuality: GraphicsQuality };
 }> = ({ creamsoda, multiplay, onComplete, settings }) => {
@@ -213,6 +213,7 @@ export const Exhibition3d: React.FC<{
     ];
 
     const objects = [
+      { url: "/objects/other_player.glb" },
       { url: area.collider.url },
       { url: area.player.url },
       ...area.objects.characters,
