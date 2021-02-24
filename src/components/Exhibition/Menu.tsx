@@ -224,7 +224,7 @@ export const ExhibitionMenu: React.FC<{
           />
         </div>
       </div>
-      {isOpenMultiplay && <Multiplay onClose={handleCloseMultiplay} />}
+      {isOpenMultiplay && <Multiplay {...multiplay} onClose={handleCloseMultiplay} />}
       {isOpenOkusuriLand && (
         <OkusuriLand {...okusuriLand} onClose={handleCloseOkusuriLand} />
       )}

@@ -32,6 +32,8 @@ import {
 } from "~/types/exhibition";
 import { preload } from "~/utils/exhibition";
 import { Sentry } from "~/utils/sentry";
+import { useMultiplay } from "~/hooks/exhibition/useMultuplay";
+import { Exhibition3dPlayers } from "./3d/Players";
 
 const fadeOutKeyframes = keyframes`
   0% {
@@ -55,9 +57,10 @@ const areas = {
 
 export const Exhibition3d: React.FC<{
   creamsoda: "flower" | "water";
+  multiplay: ReturnType<typeof useMultiplay>
   onComplete: () => void;
   settings: { graphicsQuality: GraphicsQuality };
-}> = ({ creamsoda, onComplete, settings }) => {
+}> = ({ creamsoda, multiplay, onComplete, settings }) => {
   const defaultArea = creamsoda === "flower" ? "meadow" : "sea";
 
   const [currentAreaName, setCurrentAreaName] = useState<AreaName>(defaultArea);
@@ -285,8 +288,13 @@ export const Exhibition3d: React.FC<{
               completed={completed}
               onComplete={handleOnComplete}
               onChangeArea={handleChangeArea}
+              onUpdate={multiplay.update}
               collider={area.collider}
               operable={!workId}
+            />
+            <Exhibition3dPlayers
+              areaName={currentAreaName}
+              players={multiplay.players}
             />
             <Exhibition3dRenderer graphicsQuality={settings.graphicsQuality} />
           </Exhibition3dCanvas>

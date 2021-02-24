@@ -90,6 +90,11 @@ export const getGltf = (
     );
   });
 
+export const getScene = async (url: string) => {
+  const { scene } = await getGltf(url);
+  return scene;
+}
+
 export const preload = (url: string) =>
   axios.get(
     `${

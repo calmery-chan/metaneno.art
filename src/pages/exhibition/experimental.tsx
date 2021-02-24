@@ -16,10 +16,10 @@ import { Disease } from "~/utils/okusuri.land/types";
 const Exhibition: NextPage = () => {
   const { orientation } = useScreenOrientation();
   const multiplay = useMultiplay();
-  const [creamsoda, setCreamsoda] = useState<"flower" | "water" | null>(null);
+  const [creamsoda, setCreamsoda] = useState<"flower" | "water" | null>("water");
   const [diseases, setDiseases] = useState<Disease[]>([]);
   const [location, setLocation] = useState<"2d-morning" | "2d-night" | "3d">(
-    "2d-night"
+    "3d"
   );
   const [graphicsQuality, setGraphicsQuality] = useState<GraphicsQuality>(
     "high"
@@ -60,6 +60,7 @@ const Exhibition: NextPage = () => {
       {location === "3d" && creamsoda && (
         <Exhibition3d
           creamsoda={creamsoda}
+          multiplay={multiplay}
           onComplete={handleComplete3d}
           settings={{ graphicsQuality }}
         />

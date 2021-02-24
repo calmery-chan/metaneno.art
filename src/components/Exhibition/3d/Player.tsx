@@ -1,5 +1,5 @@
 import CameraControls from "camera-controls";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useFrame, useThree } from "react-three-fiber";
 import * as THREE from "three";
 import {
@@ -14,6 +14,7 @@ import {
 import { ControllerKeys } from "./Controller";
 import { Area, AreaName, AreaObject } from "~/types/exhibition";
 import { getGltf, rewriteMaterials } from "~/utils/exhibition";
+import { useMultiplay } from "~/hooks/exhibition/useMultuplay";
 
 CameraControls.install({ THREE });
 
@@ -63,6 +64,7 @@ export const Exhibition3dPlayer = React.memo<
       collider: AreaObject;
       onComplete: () => void;
       onChangeArea: (area: AreaName) => void;
+      onUpdate: ReturnType<typeof useMultiplay>["update"]
       operable: boolean;
     }
 >(
@@ -80,6 +82,7 @@ export const Exhibition3dPlayer = React.memo<
     right,
     onComplete,
     onChangeArea,
+    onUpdate,
     operable,
     up,
     url,
@@ -94,6 +97,21 @@ export const Exhibition3dPlayer = React.memo<
     const [accessory, setAccessory] = useState<Scene | null>(null);
     const [scene, setScene] = useState<Scene>();
     const camera = useCamera(scene?.position, cameraOffset);
+
+    const handleUpdate = useCallback(() => {
+      if (scene) {
+        const isIdling = left || right || up || down;
+
+        onUpdate({
+          area: areaName,
+          position: scene.position,
+          rotation: {
+            y: scene.rotation.y
+          },
+          state: isIdling ? "idle" : "run"
+        })
+      }
+    }, [areaName, scene]);
 
     // Side Effects
 
@@ -190,6 +208,8 @@ export const Exhibition3dPlayer = React.memo<
     }, [animations, mixer, state]);
 
     useEffect(() => {
+      handleUpdate();
+
       if (!operable) {
         return;
       }
@@ -200,7 +220,7 @@ export const Exhibition3dPlayer = React.memo<
       }
 
       setState("standing");
-    }, [down, left, operable, right, up]);
+    }, [down, left, operable, handleUpdate, right, up]);
 
     useFrame((_, delta) => {
       if (mixer) {
