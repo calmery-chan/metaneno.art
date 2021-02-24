@@ -17,7 +17,7 @@ type S = Scene & {
   updatedAt: number;
 };
 
-const FRAME_COUNT = 10;
+const FRAME_COUNT = 16;
 const ALPFA = 1 / FRAME_COUNT;
 
 const setAnimation = (
