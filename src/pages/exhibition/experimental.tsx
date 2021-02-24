@@ -1,5 +1,6 @@
 import classnames from "classnames";
 import { NextPage } from "next";
+import Head from "next/head";
 import React, { useCallback, useState } from "react";
 import { isMobileSafari } from "react-device-detect";
 import { Exhibition2dMorning } from "~/components/Exhibition/2d/Morning";
@@ -54,33 +55,41 @@ const Exhibition: NextPage = () => {
   // Render
 
   return (
-    <div
-      className={classnames("bg-black h-full w-full", {
-        "h-screen w-screen": isMobileSafari && orientation === "landscape",
-      })}
-    >
-      {location === "3d" && creamsoda && (
-        <Exhibition3d
-          creamsoda={creamsoda}
-          multiplay={multiplay}
-          onComplete={handleComplete3d}
-          settings={{ graphicsQuality }}
+    <>
+      <Head>
+        <meta
+          name="viewport"
+          content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, width=device-width"
         />
-      )}
-      {location === "2d-night" && (
-        <Exhibition2dNight onComplete={handleComplete2dNight} />
-      )}
-      {location === "2d-morning" && <Exhibition2dMorning />}
-      <ExhibitionMenu
-        multiplay={multiplay}
-        okusuriLand={okusuriLand}
-        onChangeGraphicsQuality={handleChangeQuality}
-      />
-      <ExhibitionOkusuriLandNotifications
-        diseases={diseases}
-        onAnimationCompleted={handleResetDisease}
-      />
-    </div>
+      </Head>
+      <div
+        className={classnames("bg-black h-full w-full", {
+          "h-screen w-screen": isMobileSafari && orientation === "landscape",
+        })}
+      >
+        {location === "3d" && creamsoda && (
+          <Exhibition3d
+            creamsoda={creamsoda}
+            multiplay={multiplay}
+            onComplete={handleComplete3d}
+            settings={{ graphicsQuality }}
+          />
+        )}
+        {location === "2d-night" && (
+          <Exhibition2dNight onComplete={handleComplete2dNight} />
+        )}
+        {location === "2d-morning" && <Exhibition2dMorning />}
+        <ExhibitionMenu
+          multiplay={multiplay}
+          okusuriLand={okusuriLand}
+          onChangeGraphicsQuality={handleChangeQuality}
+        />
+        <ExhibitionOkusuriLandNotifications
+          diseases={diseases}
+          onAnimationCompleted={handleResetDisease}
+        />
+      </div>
+    </>
   );
 };
 
