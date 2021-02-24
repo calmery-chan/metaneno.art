@@ -7,6 +7,7 @@ import { Exhibition2dNight } from "~/components/Exhibition/2d/Night";
 import { Exhibition3d } from "~/components/Exhibition/3d";
 import { ExhibitionMenu } from "~/components/Exhibition/Menu";
 import { ExhibitionOkusuriLandNotifications } from "~/components/Exhibition/OkusuriLandNotifications";
+import { useMultiplay } from "~/hooks/exhibition/useMultuplay";
 import { useScreenOrientation } from "~/hooks/exhibition/useScreenOrientation";
 import { GraphicsQuality } from "~/types/exhibition";
 import { useOkusuriLand } from "~/utils/okusuri.land";
@@ -14,6 +15,7 @@ import { Disease } from "~/utils/okusuri.land/types";
 
 const Exhibition: NextPage = () => {
   const { orientation } = useScreenOrientation();
+  const multiplay = useMultiplay();
   const [creamsoda, setCreamsoda] = useState<"flower" | "water" | null>(null);
   const [diseases, setDiseases] = useState<Disease[]>([]);
   const [location, setLocation] = useState<"2d-morning" | "2d-night" | "3d">(
@@ -67,6 +69,7 @@ const Exhibition: NextPage = () => {
       )}
       {location === "2d-morning" && <Exhibition2dMorning />}
       <ExhibitionMenu
+        multiplay={multiplay}
         okusuriLand={okusuriLand}
         onChangeGraphicsQuality={handleChangeQuality}
       />

@@ -1,8 +1,10 @@
 import { css } from "@emotion/react";
 import { Howler } from "howler";
 import React, { useCallback, useEffect, useState } from "react";
+import { Multiplay } from "./Menu/Multiplay";
 import { OkusuriLand } from "./Menu/OkusuriLand";
 import { Settings } from "./Menu/Settings";
+import { useMultiplay } from "~/hooks/exhibition/useMultuplay";
 import { fadeIn, fadeOut } from "~/styles/animations";
 import { Colors } from "~/styles/colors";
 import { Mixin } from "~/styles/mixin";
@@ -10,13 +12,13 @@ import { Spacing } from "~/styles/spacing";
 import { GraphicsQuality } from "~/types/exhibition";
 import { useOkusuriLand } from "~/utils/okusuri.land";
 
-const menu = css`
+const menuGroup = css`
   right: ${Spacing.m}px;
   top: ${Spacing.m}px;
   z-index: 10;
 `;
 
-const menuGroup = css`
+const menu = css`
   ${Mixin.animation};
 
   background: ${Colors.blackTransparent};
@@ -88,14 +90,16 @@ const saveSettings = (
 };
 
 export const ExhibitionMenu: React.FC<{
+  multiplay: ReturnType<typeof useMultiplay>;
   okusuriLand: ReturnType<typeof useOkusuriLand>;
   onChangeGraphicsQuality: (quality: GraphicsQuality) => void;
-}> = ({ okusuriLand, onChangeGraphicsQuality }) => {
+}> = ({ multiplay, okusuriLand, onChangeGraphicsQuality }) => {
   const [currentAudioVolume, setCurrentAudioVolume] = useState(Howler.volume());
   const [currentGraphicsQuality, setCurrentGraphicsQuality] = useState<
     "high" | "low" | "middle"
   >("high");
   const [muted, setMuted] = useState(false);
+  const [isOpenMultiplay, setIsOpenMultiplay] = useState(false);
   const [isOpenOkusuriLand, setIsOpenOkusuriLand] = useState(false);
   const [isOpenSettings, setIsOpenSettings] = useState(false);
 
@@ -122,12 +126,19 @@ export const ExhibitionMenu: React.FC<{
     setMuted(!muted);
   }, [currentAudioVolume, muted]);
 
+  const handleCloseMultiplay = useCallback(() => setIsOpenMultiplay(false), []);
+
   const handleCloseOkusuriLand = useCallback(
     () => setIsOpenOkusuriLand(false),
     []
   );
 
   const handleCloseSettings = useCallback(() => setIsOpenSettings(false), []);
+
+  const handleClickOpenMultiplay = useCallback(
+    () => setIsOpenMultiplay(true),
+    []
+  );
 
   const handleClickOpenOkusuriLand = useCallback(
     () => setIsOpenOkusuriLand(true),
@@ -178,23 +189,34 @@ export const ExhibitionMenu: React.FC<{
       <div
         className="fixed flex"
         css={css`
-          ${menu};
+          ${menuGroup};
           ${isOpenOkusuriLand || isOpenSettings ? fadeOut : fadeIn}
         `}
       >
-        <div className="flex" css={menuGroup}>
+        <div css={menu}>
+          <img
+            alt="マルチプレイ"
+            onClick={handleClickOpenMultiplay}
+            src={`/exhibition/multiplay-${
+              multiplay.players ? "on" : "off"
+            }.svg`}
+          />
+        </div>
+        <div css={menu}>
           <img
             alt="おくすりランド"
             onClick={handleClickOpenOkusuriLand}
             src="/exhibition/book.svg"
           />
         </div>
-        <div className="flex" css={menuGroup}>
+        <div css={menu}>
           <img
             alt="音量"
             onClick={handleClickMuteAudioToggle}
             src={`/exhibition/audio-${muted ? "off" : "on"}.svg`}
           />
+        </div>
+        <div css={menu}>
           <img
             alt="設定"
             onClick={handleClickOpenSettings}
@@ -202,6 +224,7 @@ export const ExhibitionMenu: React.FC<{
           />
         </div>
       </div>
+      {isOpenMultiplay && <Multiplay onClose={handleCloseMultiplay} />}
       {isOpenOkusuriLand && (
         <OkusuriLand {...okusuriLand} onClose={handleCloseOkusuriLand} />
       )}
