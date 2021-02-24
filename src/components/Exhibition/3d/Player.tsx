@@ -100,7 +100,7 @@ export const Exhibition3dPlayer = React.memo<
 
     const handleUpdate = useCallback(() => {
       if (scene) {
-        const isIdling = left || right || up || down;
+        const isRunning = left || right || up || down;
 
         onUpdate({
           accessory: _accessory,
@@ -109,10 +109,10 @@ export const Exhibition3dPlayer = React.memo<
           rotation: {
             y: scene.rotation.y,
           },
-          state: isIdling ? "idle" : "run",
+          state: isRunning ? "run" : "idle",
         });
       }
-    }, [_accessory, areaName, scene]);
+    }, [_accessory, areaName, scene, left, right, up, down]);
 
     // Side Effects
 

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Scene, Vector3 } from "three";
+import { useFrame } from "react-three-fiber";
+import { AnimationMixer, LoopRepeat, Scene, Vector3 } from "three";
 import { UpdateResponse, useMultiplay } from "~/hooks/exhibition/useMultuplay";
 import { AreaName } from "~/types/exhibition";
 import { getGltf, rewriteMaterials } from "~/utils/exhibition";
@@ -7,15 +8,37 @@ import { getGltf, rewriteMaterials } from "~/utils/exhibition";
 type S = Scene & {
   accessory: "fried_egg" | "pancake" | null;
   hasAccessory: boolean;
+  mixer: AnimationMixer;
   nextPosition: Vector3 | null;
   lerpAlpha: number;
   lerpTimer: number | null;
   ready: boolean;
+  state: "idle" | "run" | "walk";
   updatedAt: number;
 };
 
 const FRAME_COUNT = 10;
 const ALPFA = 1 / FRAME_COUNT;
+
+const setAnimation = (
+  scene: S,
+  payload: UpdateResponse,
+  name?: "idle" | "run" | "walk"
+) => {
+  scene.mixer.stopAllAction();
+
+  const animation = scene.mixer.clipAction(
+    scene.animations.find(
+      (animation) => animation.name.toLowerCase() === (name || payload.state)
+    )!
+  );
+
+  animation.clampWhenFinished = true;
+  animation.loop = LoopRepeat;
+  animation.play();
+
+  scene.state = payload.state;
+};
 
 const applyPlayerTransform = async (scene: S, payload: UpdateResponse) => {
   // First Update
@@ -23,14 +46,23 @@ const applyPlayerTransform = async (scene: S, payload: UpdateResponse) => {
   if (!scene.ready) {
     scene.accessory = null;
     scene.hasAccessory = false;
+    scene.mixer = new AnimationMixer(scene);
     scene.nextPosition = null;
     scene.position.set(
       payload.position.x,
       payload.position.y,
       payload.position.z
     );
-    scene.ready = true;
+    scene.state = "idle";
     scene.updatedAt = payload.updatedAt;
+  }
+
+  // Animations
+
+  if (!scene.ready) {
+    setAnimation(scene, payload);
+  } else if (scene.state !== payload.state) {
+    setAnimation(scene, payload, payload.state === "idle" ? "run" : "idle");
   }
 
   // Accessory
@@ -82,6 +114,7 @@ const applyPlayerTransform = async (scene: S, payload: UpdateResponse) => {
     scene.lerpTimer = window.setInterval(() => {
       if (scene.lerpAlpha >= 1) {
         scene.nextPosition = null;
+        setAnimation(scene, payload, "idle");
       }
 
       const position = scene.position.lerp(nextPosition, scene.lerpAlpha);
@@ -103,6 +136,10 @@ const applyPlayerTransform = async (scene: S, payload: UpdateResponse) => {
 
   scene.rotation.set(0, payload.rotation.y, 0);
   scene.scale.set(0.5, 0.5, 0.5);
+
+  if (!scene.ready) {
+    scene.ready = true;
+  }
 
   return scene;
 };
@@ -154,6 +191,10 @@ export const Exhibition3dPlayers = React.memo<{
       );
     })();
   }, [areaName, players]);
+
+  useFrame((_, delta) => {
+    Object.values(scenes).forEach((scene) => scene.mixer.update(delta));
+  });
 
   // Render
 

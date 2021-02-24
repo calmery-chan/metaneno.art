@@ -79,11 +79,14 @@ export const getGltf = (
           ? "https://assets.metaneno.art"
           : "http://localhost:8000"
       }${url}`,
-      (gltf) =>
-        resolve({
-          animations: gltf.animations,
-          scene: gltf.scene,
-        }),
+      ({ animations, scene }) => {
+        scene.animations = animations;
+
+        return resolve({
+          animations,
+          scene,
+        });
+      },
       // eslint-disable-next-line @typescript-eslint/no-empty-function
       () => {},
       reject
@@ -93,7 +96,7 @@ export const getGltf = (
 export const getScene = async (url: string) => {
   const { scene } = await getGltf(url);
   return scene;
-}
+};
 
 export const preload = (url: string) =>
   axios.get(
