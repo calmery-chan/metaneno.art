@@ -23,7 +23,7 @@ const border = css`
 const column = css`
   ${Typography.S};
   border-bottom: 1px solid ${Colors.lightGray};
-  padding: ${Spacing.m}px 0;
+  margin: ${Spacing.m}px 0;
 
   &:last-child {
     border: none;
@@ -179,13 +179,15 @@ export const Exhibition3dWork = React.memo<
               <div className="ml-auto">{date}</div>
             </div>
             <hr css={border} />
-            <div className="flex">
-              {characters.map((character, index) => (
-                <div css={workCharacter} key={index}>
-                  {character}
-                </div>
-              ))}
-            </div>
+            {characters.length ? (
+              <div className="flex">
+                {characters.map((character, index) => (
+                  <div css={workCharacter} key={index}>
+                    {character}
+                  </div>
+                ))}
+              </div>
+            ) : null}
             <div css={column}>
               <div css={commentTitle}>コメント</div>
               <div className="whitespace-pre-line">{comment}</div>
