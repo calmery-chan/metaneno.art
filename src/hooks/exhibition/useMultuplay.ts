@@ -14,10 +14,15 @@ export type UpdatePayload = {
   state: "idle" | "run" | "walk";
 };
 
-const socket = io("http://localhost:5000", {
-  autoConnect: false,
-  path: "/a/dream",
-});
+const socket = io(
+  process.env.NODE_ENV === "production"
+    ? "https://multiplay.creamsoda.in"
+    : "http://localhost:5000",
+  {
+    autoConnect: false,
+    path: "/a/dream",
+  }
+);
 
 //
 
