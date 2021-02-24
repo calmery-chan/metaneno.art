@@ -17,12 +17,10 @@ import { Disease } from "~/utils/okusuri.land/types";
 const Exhibition: NextPage = () => {
   const { orientation } = useScreenOrientation();
   const multiplay = useMultiplay();
-  const [creamsoda, setCreamsoda] = useState<"flower" | "water" | null>(
-    "water"
-  );
+  const [creamsoda, setCreamsoda] = useState<"flower" | "water" | null>(null);
   const [diseases, setDiseases] = useState<Disease[]>([]);
   const [location, setLocation] = useState<"2d-morning" | "2d-night" | "3d">(
-    "3d"
+    "2d-night"
   );
   const [graphicsQuality, setGraphicsQuality] = useState<GraphicsQuality>(
     "high"
