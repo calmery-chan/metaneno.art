@@ -67,16 +67,19 @@ export const useMultiplay = () => {
         update(lastUpdate);
       }
     },
-    [lastUpdate]
+    [convertPlayerIdsToState, lastUpdate]
   );
 
-  const handleSocketLeave = useCallback((playerIds?: string[]) => {
-    if (!playerIds) {
-      return;
-    }
+  const handleSocketLeave = useCallback(
+    (playerIds?: string[]) => {
+      if (!playerIds) {
+        return;
+      }
 
-    setPlayers(convertPlayerIdsToState(playerIds));
-  }, []);
+      setPlayers(convertPlayerIdsToState(playerIds));
+    },
+    [convertPlayerIdsToState]
+  );
 
   const handleSocketUpdate = useCallback(
     ({ playerId, payload }: { playerId: string; payload: UpdateResponse }) => {
