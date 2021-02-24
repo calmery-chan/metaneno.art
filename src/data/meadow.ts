@@ -423,7 +423,7 @@ const area: Area = {
     items: [],
     works: [
       {
-        characters: ["かるめりちゃん"],
+        characters: ["かるめりちゃん（parent/Calmeryさん）"],
         comment:
           "Calmeryさんのオリジナルキャラクター、かるめりちゃんを描く機会をいただいて描いた一枚です。\n夏！向日葵！日差し！シャッターチャンス！\n制服と向日葵…青春ですね！！",
         date: "2020/07",
