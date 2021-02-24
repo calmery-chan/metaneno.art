@@ -135,7 +135,14 @@ export const Exhibition3dWork = React.memo<
             css={view}
           >
             {mode === "2d" && (
-              <img className="h-full object-contain w-full" src={imageUrl} />
+              <img
+                className="h-full object-contain w-full"
+                src={`${
+                  (process.env.NODE_ENV === "production"
+                    ? "https://assets.metaneno.art"
+                    : "http://localhost:8000") + imageUrl
+                }`}
+              />
             )}
             {mode === "3d" && (
               <Exhibition3dCanvas>
@@ -181,7 +188,7 @@ export const Exhibition3dWork = React.memo<
             </div>
             <div css={column}>
               <div css={commentTitle}>コメント</div>
-              <div>{comment}</div>
+              <div className="whitespace-pre-line">{comment}</div>
             </div>
           </div>
         </div>
