@@ -250,6 +250,24 @@ const area: Area = {
     decorations: [
       {
         position: {
+          x: -10.175,
+          y: 6.75,
+          z: -19.8,
+        },
+        rotation: {
+          x: -11,
+          y: 0,
+          z: 0,
+        },
+        scale: {
+          x: 1,
+          y: 1,
+          z: 1,
+        },
+        url: "/objects/areas/cloud/main_visual.glb",
+      },
+      {
+        position: {
           x: 0,
           y: 0,
           z: 0,
@@ -398,11 +416,36 @@ const area: Area = {
     ],
     works: [
       {
-        characters: ["ノネメちゃん"],
-        comment: "コメント",
-        date: "2020/01",
+        characters: ["okusuri"],
+        comment: "",
+        date: "2019/11",
+        id: "okusuri",
+        imageUrl: "/images/okusuri.png",
+        position: {
+          x: -8.9,
+          y: 6.85,
+          z: 1.85,
+        },
+        rotation: {
+          x: -11,
+          y: 0,
+          z: 0,
+        },
+        scale: {
+          x: 1,
+          y: 1,
+          z: 1,
+        },
+        url: "/objects/areas/cloud/okusuri.glb",
+        title: "okusuri",
+      },
+      {
+        characters: ["かるめりちゃん"],
+        comment:
+          "Calmeryさんのオリジナルキャラクター、かるめりちゃんを描く機会をいただいて描いた一枚です。\n\n授業中、プリントを後ろの席に回すときに見えた彼女の姿。\n\n学校のカーテンって薄黄色で光をほどよく通してくれて好きでした。\n窓際の席になると喜んでいましたが、風が強い日にはカーテンが暴れまくってカオスだった記憶があります。\n\nノートに落書きしている子を見ると何を落書きしてるんだろう…っていつも気になっちゃう。\n自分はノートではなく学校の机にシャーペンで落書きするのが好きでした。",
+        date: "2019/11",
         id: "calmery_chan",
-        imageUrl: "/og.png",
+        imageUrl: "/images/calmery_chan.png",
         position: {
           x: 3.25,
           y: 6.85,
@@ -419,14 +462,15 @@ const area: Area = {
           z: 1,
         },
         url: "/objects/areas/cloud/calmery_chan.glb",
-        title: "タイトル",
+        title: "春色のキミ",
       },
       {
-        characters: ["ノネメちゃん"],
-        comment: "コメント",
-        date: "2020/01",
+        characters: ["あれ…？"],
+        comment:
+          "見た通りですね。\n何を思ってこの絵を描いたのかは思い出せません…。(汗\n卵とかが頭に乗っている女の子は可愛い！流行らせましょう！\n\n目玉焼きは黄身は半熟のままで白身パリパリになるまで焼くのが好きです。",
+        date: "2016/11",
         id: "fried_egg",
-        imageUrl: "/og.png",
+        imageUrl: "/images/fried_egg.png",
         position: {
           x: 12.6,
           y: 6.87,
@@ -443,13 +487,14 @@ const area: Area = {
           z: 1,
         },
         url: "/objects/areas/cloud/fried_egg.glb",
-        title: "タイトル",
+        title: "目玉焼き乗せガール",
       },
       {
-        characters: ["ノネメちゃん"],
-        comment: "コメント",
+        characters: ["古明地こいし（東方Project）"],
+        comment:
+          "※こちらの作品は二次創作作品です。\n\n寝そべっているこいしちゃんです。\nサードアイのコードをどこに伸ばすかでいつもとても悩みます。\nとても楽しい時間です。",
         date: "2020/01",
-        id: "koishi",
+        id: "koishi_lie",
         position: {
           x: -3.75,
           y: 6.85,
@@ -466,13 +511,14 @@ const area: Area = {
           z: 1,
         },
         url: "/objects/areas/cloud/koishi.glb",
-        imageUrl: "/logo.png",
-        title: "タイトル",
+        imageUrl: "/images/koishi_lie.png",
+        title: "こいしちゃん",
       },
       {
-        characters: ["ノネメちゃん"],
-        comment: "コメント",
-        date: "2020/01",
+        characters: ["りぃちゃん", "まいちゃん"],
+        comment:
+          "りぃちゃん(→)「ねぇねぇ！写真撮ろ～！」\nまいちゃん(←)「えっ今…？？しょうがないなぁ…」\nうさぎの姉妹ちゃんです。\n右が姉で左が妹です。\nポーズや服装で仲良し感を、表情で関係性を感じてもらえたら嬉しいです。",
+        date: "2020/04",
         id: "lee_mai",
         position: {
           x: 6.95,
@@ -490,13 +536,14 @@ const area: Area = {
           z: 1,
         },
         url: "/objects/areas/cloud/lee_mai.glb",
-        imageUrl: "/logo.png",
-        title: "タイトル",
+        imageUrl: "/images/lee_mai.png",
+        title: "兎姉妹",
       },
       {
-        characters: ["ノネメちゃん"],
-        comment: "コメント",
-        date: "2020/01",
+        characters: ["羽琉（はる）さん"],
+        comment:
+          "ロングスカートのメイドさんはいいぞ。\nでもあの服装って実際動きづらそうですよね…。\n沢山怪我して転んだりして、頑張り屋さんだけどちょっとカッコ悪いメイドさんもいいと思います。",
+        date: "2019/08",
         id: "maid",
         position: {
           x: 1.7,
@@ -514,15 +561,16 @@ const area: Area = {
           z: 1,
         },
         url: "/objects/areas/cloud/maid.glb",
-        imageUrl: "/logo.png",
-        title: "タイトル",
+        imageUrl: "/images/maid.png",
+        title: "ドジッ子メイドさん",
       },
       {
-        characters: ["ノネメちゃん"],
-        comment: "コメント",
+        characters: ["円華（まどか）さん"],
+        comment:
+          "ガスマスクを装着しているメイドさん。\n玉ねぎと包丁を持って…一体何バーグを作ってご主人様に振る舞うつもりなんだ…！？\n\n自分も玉ねぎのみじん切りに毎回泣かされてます、つらい…。",
         date: "2020/01",
         id: "maid_gas_mask",
-        imageUrl: "/og.png",
+        imageUrl: "/images/maid_gas_mask.png",
         position: {
           x: 9.2,
           y: 6.85,
@@ -539,14 +587,15 @@ const area: Area = {
           z: 1,
         },
         url: "/objects/areas/cloud/maid_gas_mask.glb",
-        title: "タイトル",
+        title: "ガスマスクメイドさん",
       },
       {
-        characters: ["ノネメちゃん"],
-        comment: "コメント",
-        date: "2020/01",
+        characters: ["羽琉（はる）さん"],
+        comment:
+          "美味しそうなパンケーキを目の前にして目を輝かさずにはいられないメイドさん。\n女の子はキラキラで可愛い食べ物に弱いのだ！！(たぶん！)\n無事倒さず運ぶことが出来るのか…！？\n\n食べ物を描くとキャラクターより描く時間がかかってしまいます…。\n食欲を犠牲にしながら描く食べ物は楽しいです。",
+        date: "2020/05",
         id: "maid_pancake",
-        imageUrl: "/og.png",
+        imageUrl: "/images/maid_pancake.png",
         position: {
           x: -10.65,
           y: 6.87,
@@ -563,38 +612,14 @@ const area: Area = {
           z: 1,
         },
         url: "/objects/areas/cloud/maid_pancake.glb",
-        title: "タイトル",
+        title: "キラキラふわふわパンケーキ",
       },
       {
         characters: ["ノネメちゃん"],
-        comment: "コメント",
-        date: "2020/01",
-        id: "main_visual",
-        imageUrl: "/og.png",
-        position: {
-          x: -10.175,
-          y: 6.75,
-          z: -19.8,
-        },
-        rotation: {
-          x: -11,
-          y: 0,
-          z: 0,
-        },
-        scale: {
-          x: 1,
-          y: 1,
-          z: 1,
-        },
-        url: "/objects/areas/cloud/main_visual.glb",
-        title: "タイトル",
-      },
-      {
-        characters: ["ノネメちゃん"],
-        comment: "コメント",
-        date: "2020/01",
+        comment: "",
+        date: "2021/02",
         id: "moment",
-        imageUrl: "/og.png",
+        imageUrl: "/images/moment.png",
         position: {
           x: -0.615,
           y: 6.85,
@@ -611,14 +636,15 @@ const area: Area = {
           z: 1,
         },
         url: "/objects/areas/cloud/moment.glb",
-        title: "タイトル",
+        title: "moment",
       },
       {
-        characters: ["ノネメちゃん"],
-        comment: "コメント",
-        date: "2020/01",
+        characters: ["ねみん子ちゃん"],
+        comment:
+          "ひつじパジャマ姿のねみん子ちゃん。\nもこもこな服って可愛い…！！\n\nソシャゲのSRでよくあるキラキラカード感を表現したかったのですが、なかなか難しいですね…。",
+        date: "2019/10",
         id: "neminko",
-        imageUrl: "/og.png",
+        imageUrl: "/images/neminko.png",
         position: {
           x: -14,
           y: 6.925,
@@ -635,38 +661,15 @@ const area: Area = {
           z: 1,
         },
         url: "/objects/areas/cloud/neminko.glb",
-        title: "タイトル",
+        title: "すやすやワールド",
       },
       {
-        characters: ["ノネメちゃん"],
-        comment: "コメント",
-        date: "2020/01",
-        id: "okusuri",
-        imageUrl: "/og.png",
-        position: {
-          x: -8.9,
-          y: 6.85,
-          z: 1.85,
-        },
-        rotation: {
-          x: -11,
-          y: 0,
-          z: 0,
-        },
-        scale: {
-          x: 1,
-          y: 1,
-          z: 1,
-        },
-        url: "/objects/areas/cloud/okusuri.glb",
-        title: "タイトル",
-      },
-      {
-        characters: ["ノネメちゃん"],
-        comment: "コメント",
-        date: "2020/01",
+        characters: ["ねみん子ちゃん", "たべん子ちゃん（parent/猫谷さん）"],
+        comment:
+          "食欲を犠牲に描いた一枚です。\n食べ物とちびキャラのセットって可愛いですよね…！",
+        date: "2017/04",
         id: "pancake",
-        imageUrl: "/og.png",
+        imageUrl: "/images/pancake.png",
         position: {
           x: -15.28,
           y: 6.88,
@@ -683,14 +686,18 @@ const area: Area = {
           z: 1,
         },
         url: "/objects/areas/cloud/pancake.glb",
-        title: "タイトル",
+        title: "たべねみパンケーキ！",
       },
       {
-        characters: ["ノネメちゃん"],
-        comment: "コメント",
+        characters: [
+          "古明地こいし（東方Project）",
+          "古明地さとり（東方Project）",
+        ],
+        comment:
+          "※こちらの作品は二次創作作品です。\n\nロリータアレンジした古明地姉妹です。\n東方の子は原作の衣装がシンプル目なので、衣装アレンジするのがとても楽しい…！！",
         date: "2020/01",
         id: "satori_koishi",
-        imageUrl: "/og.png",
+        imageUrl: "/images/satori_koishi.png",
         position: {
           x: -0.37,
           y: 6.85,
@@ -707,14 +714,15 @@ const area: Area = {
           z: 1,
         },
         url: "/objects/areas/cloud/satori_koishi.glb",
-        title: "タイトル",
+        title: "古明地姉妹（lolita arrange）",
       },
       {
-        characters: ["ノネメちゃん"],
-        comment: "コメント",
-        date: "2020/01",
+        characters: ["天玖（てく）ちゃん"],
+        comment:
+          "天使の天玖ちゃんとショートケーキ。\n彼女のデザイン時にショートケーキをイメージしていたので一緒に描くとかなり映えますね！\n白くて甘くて幸せな気持ちにさせてくれるショートケーキって天使さんみたいだなって思います。",
+        date: "2016/12",
         id: "strawberry_cake",
-        imageUrl: "/og.png",
+        imageUrl: "/images/strawberry_cake.png",
         position: {
           x: -21.5,
           y: 6.85,
@@ -731,14 +739,15 @@ const area: Area = {
           z: 1,
         },
         url: "/objects/areas/cloud/strawberry_cake.glb",
-        title: "タイトル",
+        title: "イチゴのショートケーキ",
       },
       {
-        characters: ["ノネメちゃん"],
-        comment: "コメント",
-        date: "2020/01",
+        characters: ["ねみん子ちゃん", "たべん子ちゃん（parent/猫谷さん）"],
+        comment:
+          "ねみん子ちゃんと仲良しのたべん子ちゃんと自撮りしてます。\n自撮りって女子高生っぽくていいですよね…！(コメントのおじいちゃん感…。)",
+        date: "2021/02",
         id: "tabenemi",
-        imageUrl: "/og.png",
+        imageUrl: "/images/tabenemi.png",
         position: {
           x: -17.95,
           y: 6.85,
@@ -755,14 +764,15 @@ const area: Area = {
           z: 1,
         },
         url: "/objects/areas/cloud/tabenemi.glb",
-        title: "タイトル",
+        title: "撮るよ～！",
       },
       {
-        characters: ["ノネメちゃん"],
-        comment: "コメント",
-        date: "2020/01",
+        characters: ["ねみん子ちゃん"],
+        comment:
+          "こちらのイラストはギャラリーIYN様のグループ展「ふしぎな魔法少女展」に参加させていただいた絵です。\n\nねみん子ちゃん（夢の中Ver）。夢の中でくらい魔法少女に変身して活躍してもいいよねっ！\nこのくらいの時期からイラストの描き込みを増やしていきました。\nゆめかわいいお菓子に囲まれてみたいけど、実際お砂糖の匂いだけで胸焼けしそうになりそう…。（現実的…。）\n\nねみん子ちゃん「あ！この間の夢で出てきたお菓子の国だぁ～。ユニコーンに乗って移動したり、可愛いお菓子をいっぱい食べたりしたよ～。え？魔法少女になって何をしたのかって…？うーん…覚えてないや！」",
+        date: "2019/12",
         id: "yumekawa",
-        imageUrl: "/og.png",
+        imageUrl: "/images/yumekawa.png",
         position: {
           x: -18.4,
           y: 6.89,
@@ -779,7 +789,7 @@ const area: Area = {
           z: 1,
         },
         url: "/objects/areas/cloud/yumekawa.glb",
-        title: "タイトル",
+        title: "ゆめかわお菓子の国は夢",
       },
     ],
   },
