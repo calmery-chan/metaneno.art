@@ -7,6 +7,7 @@ export type UpdateResponse = UpdatePayload & {
 };
 
 export type UpdatePayload = {
+  accessory: "fried_egg" | "pancake" | null;
   area: AreaName;
   position: { x: number; y: number; z: number };
   rotation: { y: number };

@@ -63,7 +63,7 @@ export const Exhibition3d: React.FC<{
 }> = ({ creamsoda, multiplay, onComplete, settings }) => {
   const defaultArea = creamsoda === "flower" ? "meadow" : "sea";
 
-  const [currentAreaName, setCurrentAreaName] = useState<AreaName>(defaultArea);
+  const [currentAreaName, setCurrentAreaName] = useState<AreaName>("cloud");
   const area = areas[currentAreaName];
   const [completed, setCompleted] = useState(false);
 

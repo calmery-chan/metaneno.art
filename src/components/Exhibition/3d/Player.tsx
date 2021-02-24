@@ -12,9 +12,9 @@ import {
   Vector3,
 } from "three";
 import { ControllerKeys } from "./Controller";
+import { useMultiplay } from "~/hooks/exhibition/useMultuplay";
 import { Area, AreaName, AreaObject } from "~/types/exhibition";
 import { getGltf, rewriteMaterials } from "~/utils/exhibition";
-import { useMultiplay } from "~/hooks/exhibition/useMultuplay";
 
 CameraControls.install({ THREE });
 
@@ -64,7 +64,7 @@ export const Exhibition3dPlayer = React.memo<
       collider: AreaObject;
       onComplete: () => void;
       onChangeArea: (area: AreaName) => void;
-      onUpdate: ReturnType<typeof useMultiplay>["update"]
+      onUpdate: ReturnType<typeof useMultiplay>["update"];
       operable: boolean;
     }
 >(
@@ -103,15 +103,16 @@ export const Exhibition3dPlayer = React.memo<
         const isIdling = left || right || up || down;
 
         onUpdate({
+          accessory: _accessory,
           area: areaName,
           position: scene.position,
           rotation: {
-            y: scene.rotation.y
+            y: scene.rotation.y,
           },
-          state: isIdling ? "idle" : "run"
-        })
+          state: isIdling ? "idle" : "run",
+        });
       }
-    }, [areaName, scene]);
+    }, [_accessory, areaName, scene]);
 
     // Side Effects
 

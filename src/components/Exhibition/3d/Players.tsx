@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import { Scene, Vector3 } from "three";
 import { UpdateResponse, useMultiplay } from "~/hooks/exhibition/useMultuplay";
 import { AreaName } from "~/types/exhibition";
-import { getGltf } from "~/utils/exhibition";
+import { getGltf, rewriteMaterials } from "~/utils/exhibition";
 
 type S = Scene & {
+  accessory: "fried_egg" | "pancake" | null;
+  hasAccessory: boolean;
   nextPosition: Vector3 | null;
   lerpAlpha: number;
   lerpTimer: number | null;
@@ -19,6 +21,8 @@ const applyPlayerTransform = async (scene: S, payload: UpdateResponse) => {
   // First Update
 
   if (!scene.ready) {
+    scene.accessory = null;
+    scene.hasAccessory = false;
     scene.nextPosition = null;
     scene.position.set(
       payload.position.x,
@@ -27,6 +31,29 @@ const applyPlayerTransform = async (scene: S, payload: UpdateResponse) => {
     );
     scene.ready = true;
     scene.updatedAt = payload.updatedAt;
+  }
+
+  // Accessory
+
+  if (scene.accessory !== payload.accessory) {
+    if (scene.hasAccessory) {
+      scene.children = scene.children.slice(0, scene.children.length - 1);
+    }
+
+    if (payload.accessory === "pancake" || payload.accessory === "fried_egg") {
+      const { scene: accessory } = await getGltf(
+        `/objects/accessories/${payload.accessory}.glb`
+      );
+      rewriteMaterials(accessory);
+      accessory.position.set(
+        scene.position.x || 0,
+        (scene.position.y || 0) + 0.95,
+        scene.position.z || 0
+      );
+      scene.children.push(accessory);
+      scene.accessory = payload.accessory;
+      scene.hasAccessory = true;
+    }
   }
 
   // Update Position
@@ -57,8 +84,16 @@ const applyPlayerTransform = async (scene: S, payload: UpdateResponse) => {
         scene.nextPosition = null;
       }
 
-      scene.position.lerp(nextPosition, scene.lerpAlpha);
+      const position = scene.position.lerp(nextPosition, scene.lerpAlpha);
       scene.lerpAlpha += ALPFA;
+
+      if (scene.hasAccessory) {
+        scene.children[scene.children.length - 1].position.set(
+          position.x,
+          position.y + 0.95,
+          position.z
+        );
+      }
     }, (payload.updatedAt - scene.updatedAt) / FRAME_COUNT);
     scene.nextPosition = nextPosition;
     scene.updatedAt = payload.updatedAt;
