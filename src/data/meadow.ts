@@ -1,3 +1,10 @@
+import {
+  CALMERY_CHAN_SCENARIOS,
+  HITSUGI_SCENARIOS,
+  NEMINKO_SCENARIOS,
+  NONEME_SCENARIOS,
+  SHEEP_SCENARIOS,
+} from "./meadow/scenarios";
 import { Area } from "~/types/exhibition";
 
 const area: Area = {
@@ -59,31 +66,7 @@ const area: Area = {
           y: 140,
           z: 0,
         },
-        scenarios: [
-          {
-            branches: [
-              {
-                message: "行く",
-                scenarios: [
-                  {
-                    actions: ["move_to_cloud"],
-                    message: "…",
-                  },
-                ],
-              },
-              {
-                message: "止めとく",
-                scenarios: [
-                  {
-                    message: "…",
-                  },
-                ],
-              },
-            ],
-            name: null,
-            message: "どうやら雲の上に連れて行ってくれるみたいだ。",
-          },
-        ],
+        scenarios: SHEEP_SCENARIOS,
         scale: {
           x: 0.25,
           y: 0.25,
@@ -93,7 +76,7 @@ const area: Area = {
       },
       {
         id: "ameri_swing",
-        name: "",
+        name: "かるめりちゃん",
         position: {
           x: -21,
           y: 4.15,
@@ -104,17 +87,17 @@ const area: Area = {
           y: -124,
           z: 0,
         },
-        scenarios: [],
+        scenarios: CALMERY_CHAN_SCENARIOS,
         scale: {
-          x: 0.25,
-          y: 0.25,
-          z: 0.25,
+          x: 0.2,
+          y: 0.2,
+          z: 0.2,
         },
         url: "/objects/areas/meadow/ameri_swing.glb",
       },
       {
         id: "noneme_piano",
-        name: "",
+        name: "ノネメ",
         position: {
           x: -1.365,
           y: 3.85,
@@ -125,7 +108,7 @@ const area: Area = {
           y: -257,
           z: 0,
         },
-        scenarios: [],
+        scenarios: NONEME_SCENARIOS,
         scale: {
           x: 0.595,
           y: 0.595,
@@ -134,8 +117,8 @@ const area: Area = {
         url: "/objects/areas/meadow/noneme_piano.glb",
       },
       {
-        id: "hitugi",
-        name: "",
+        id: "hitsugi",
+        name: "棺（ひつぎ）",
         position: {
           x: -22.65,
           y: 3.9,
@@ -146,17 +129,17 @@ const area: Area = {
           y: -137,
           z: 0,
         },
-        scenarios: [],
+        scenarios: HITSUGI_SCENARIOS,
         scale: {
           x: 0.5,
           y: 0.5,
           z: 0.5,
         },
-        url: "/objects/characters/hitugi.glb",
+        url: "/objects/characters/hitsugi.glb",
       },
       {
         id: "neminko",
-        name: "",
+        name: "ねみん子",
         position: {
           x: 0,
           y: 3.8,
@@ -167,7 +150,7 @@ const area: Area = {
           y: -137,
           z: 0,
         },
-        scenarios: [],
+        scenarios: NEMINKO_SCENARIOS,
         scale: {
           x: 0.5,
           y: 0.5,
