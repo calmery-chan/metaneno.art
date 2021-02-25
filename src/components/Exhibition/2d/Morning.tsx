@@ -29,6 +29,7 @@ import { ChekiScenario } from "~/domains/cheki/models";
 import { useScreenOrientation } from "~/hooks/exhibition/useScreenOrientation";
 import { useKeydown, useKeyup } from "~/hooks/useKeyboard";
 import { fadeIn } from "~/styles/animations";
+import * as GA from "~/utils/exhibition/google-analytics";
 
 const preload = () =>
   Promise.all(
@@ -244,6 +245,7 @@ export const Exhibition2dMorning: React.FC = () => {
   // Click
 
   const handleClickPc = useCallback(() => {
+    GA.click("pc");
     setScenarios([
       {
         message:
@@ -253,6 +255,7 @@ export const Exhibition2dMorning: React.FC = () => {
   }, []);
 
   const handleClickPoster = useCallback(() => {
+    GA.click("poster");
     setScenarios([
       {
         message: "ポスターだ。制服の女の子と天使の女の子が描いてある。",
@@ -261,6 +264,7 @@ export const Exhibition2dMorning: React.FC = () => {
   }, []);
 
   const handleClickLetter = useCallback(() => {
+    GA.click("letter");
     setScenarios([
       {
         message:
@@ -270,6 +274,7 @@ export const Exhibition2dMorning: React.FC = () => {
   }, []);
 
   const handleClickBag = useCallback(() => {
+    GA.click("bag");
     setScenarios([
       {
         message: "カバンに教科書を入れておこう…",
@@ -278,6 +283,7 @@ export const Exhibition2dMorning: React.FC = () => {
   }, []);
 
   const handleClickCheki = useCallback(() => {
+    GA.click("cheki");
     setScenarios([
       {
         message: "チェキだ。天使の女の子が写っている。",
@@ -286,6 +292,7 @@ export const Exhibition2dMorning: React.FC = () => {
   }, []);
 
   const handleClickBed = useCallback(() => {
+    GA.click("bed");
     setScenarios([
       {
         confirm: {
@@ -306,7 +313,15 @@ export const Exhibition2dMorning: React.FC = () => {
   }, []);
 
   const handleClickCurtain = useCallback(() => {
-    setIsOpenedCurtain(!isOpenedCurtain);
+    const nextOpen = !isOpenedCurtain;
+
+    if (nextOpen) {
+      GA.click("closed_curtain");
+    } else {
+      GA.click("opened_curtain");
+    }
+
+    setIsOpenedCurtain(nextOpen);
   }, [isOpenedCurtain]);
 
   // Hooks

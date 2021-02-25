@@ -36,12 +36,12 @@ export const startMultiplay = () => sendExhibitionEvent("start_multiplay", {});
 
 export const stopMultiplay = () => sendExhibitionEvent("stop_multiplay", {});
 
-export const viewWork = (workId: string) =>
+export const view = (workId: string) =>
   sendExhibitionEvent("view", {
     label: workId,
   });
 
-export const clickItem = (item: string) =>
+export const click = (item: string) =>
   sendExhibitionEvent("click", {
     label: item,
   });

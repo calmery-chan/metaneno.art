@@ -26,6 +26,7 @@ import { useScreenOrientation } from "~/hooks/exhibition/useScreenOrientation";
 import { useKeydown, useKeyup } from "~/hooks/useKeyboard";
 import { fadeIn, fadeOut } from "~/styles/animations";
 import { Mixin } from "~/styles/mixin";
+import * as GA from "~/utils/exhibition/google-analytics";
 
 const preload = () =>
   Promise.all(
@@ -176,7 +177,10 @@ export const Exhibition2dNight: React.FC<{
     setSelectedCreamSoda("flower");
   }, [selectedCreamSoda]);
 
-  const handleClickKey = useCallback(() => setRestricted(false), []);
+  const handleClickKey = useCallback(() => {
+    GA.click("key");
+    setRestricted(false);
+  }, []);
 
   const handleMove = useCallback(() => {
     if (!wakeup || walked || (!restricted && !isReadScenario)) {
@@ -342,7 +346,7 @@ export const Exhibition2dNight: React.FC<{
             />
           </Exhibition2dCanvas>
           <div
-            className="absolute bg-black h-full opacity-0 top-0 w-full"
+            className="absolute top-0 w-full h-full bg-black opacity-0"
             css={
               walked
                 ? selectedCreamSoda
@@ -356,15 +360,15 @@ export const Exhibition2dNight: React.FC<{
           >
             <Exhibition2dCanvasContainer>
               <img
-                className="h-full object-contain w-full"
+                className="object-contain w-full h-full"
                 css={creamsoda}
                 src="/exhibition/2d/night/creamsoda/background.png"
                 style={{ imageRendering: "pixelated" }}
               />
-              <div className="absolute cursor-pointer flex h-full top-0 w-full">
+              <div className="absolute top-0 flex w-full h-full cursor-pointer">
                 <div className="w-full" onClick={handleClickWaterIceCreamSoda}>
                   <img
-                    className="h-full object-contain w-full"
+                    className="object-contain w-full h-full"
                     css={clickable}
                     src="/exhibition/2d/night/creamsoda/water.png"
                     style={{ imageRendering: "pixelated" }}
@@ -372,7 +376,7 @@ export const Exhibition2dNight: React.FC<{
                 </div>
                 <div className="w-full" onClick={handleClickFlowerIceCreamSoda}>
                   <img
-                    className="h-full object-contain w-full"
+                    className="object-contain w-full h-full"
                     css={clickable}
                     src="/exhibition/2d/night/creamsoda/flower.png"
                     style={{ imageRendering: "pixelated" }}
