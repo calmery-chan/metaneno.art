@@ -1,4 +1,5 @@
-import { ABOUT_THIS_WORLD } from "./common/scenarios";
+import { SHEEP_MEADOW_AND_SEA_SCENARIOS } from "./common/scenarios";
+import { HITSUGI_SCENARIOS, NONEME_SCENARIOS } from "./sea/scenarios";
 import { Area } from "~/types/exhibition";
 
 const area: Area = {
@@ -60,81 +61,7 @@ const area: Area = {
           y: 160,
           z: 0,
         },
-        scenarios: [
-          {
-            animations: [["smile", "starnding"]],
-            branches: [
-              {
-                message: "ここって水中だよね…？",
-                scenarios: [
-                  {
-                    animations: [["smile", "standing"]],
-                    branches: [
-                      {
-                        message: "泳ぐの苦手…。",
-                        scenarios: [
-                          {
-                            animations: [["blink", "standing"]],
-                            message: "………カナヅチ？",
-                          },
-                          {
-                            animations: [["blink", "smile"]],
-                            message:
-                              "ここでは普通に歩けるから無理して泳ぐ必要はないよ。良かったね…。",
-                          },
-                        ],
-                      },
-                      {
-                        message: "目が痛くなってきた…。",
-                        scenarios: [
-                          {
-                            animations: [["blink", "standing"]],
-                            message: "水中で目を開けることに慣れてないの…？",
-                          },
-                          {
-                            animations: [["smile", "standing"]],
-                            message: "大丈夫…夢の中だし、多分気のせいです。",
-                          },
-                        ],
-                      },
-                    ],
-                    message: "水中にいるのが不思議？ふふ…",
-                  },
-                ],
-              },
-              {
-                message: "あなたは誰？",
-                scenarios: [
-                  {
-                    message: "私は…棺(ひつぎ)。",
-                  },
-                  {
-                    message:
-                      "色々な世界を見て回って面白いことや楽しいことを探しているの。",
-                  },
-                  {
-                    message:
-                      "過去にも未来にも何処にだって行くことが出来るの…。",
-                  },
-                  {
-                    message:
-                      "旅をしていると、いろんな物、景色、生き物…いろんな発見があって、それぞれにストーリーがあってとっても面白いの。",
-                  },
-                  {
-                    message:
-                      "あなたも、この世界で何かお気に入りの物が見つかるといいね…。",
-                  },
-                ],
-              },
-              {
-                message: "この世界について",
-                scenarios: ABOUT_THIS_WORLD,
-              },
-            ],
-            message: "………水中遺跡って何だか探求心がくすぐられますよね…",
-            name: "棺",
-          },
-        ],
+        scenarios: HITSUGI_SCENARIOS,
         scale: {
           x: 0.5,
           y: 0.5,
@@ -155,81 +82,7 @@ const area: Area = {
           y: -20,
           z: 0,
         },
-        scenarios: [
-          {
-            branches: [
-              {
-                message: "君は溺れないの？",
-                scenarios: [
-                  {
-                    message: "私は天使だから大丈夫だけど………。",
-                  },
-                  {
-                    message: "こちらを不思議そうな目で見られた。",
-                    name: null,
-                  },
-                ],
-              },
-              {
-                message: "何してるの？",
-                scenarios: [
-                  {
-                    message: "………！",
-                  },
-                  {
-                    message: "気まずい空気が流れた。",
-                    name: null,
-                  },
-                ],
-              },
-              {
-                message: "何だかここって不思議な場所だね…",
-                scenarios: [
-                  {
-                    message: "………うん…",
-                  },
-                  {
-                    message: "………",
-                  },
-                  {
-                    branches: [
-                      {
-                        message: "よく行くの？",
-                        scenarios: [
-                          {
-                            branches: [
-                              {
-                                message: "サボるんだ…",
-                                scenarios: [
-                                  {
-                                    message: "……えへへ。",
-                                  },
-                                ],
-                              },
-                            ],
-                            message:
-                              "ん～…まあね…ちょっとサボりたいときとか…。",
-                          },
-                        ],
-                      },
-                      {
-                        message: "そうなんだ...",
-                        scenarios: [
-                          {
-                            message: "うん…。",
-                          },
-                        ],
-                      },
-                    ],
-                    message: "こんな感じの古びた雰囲気…結構好き～。",
-                  },
-                ],
-              },
-            ],
-            message: "～♪(歌を歌っている…)",
-            name: "ノネメ",
-          },
-        ],
+        scenarios: NONEME_SCENARIOS,
         scale: {
           x: 0.25,
           y: 0.25,
@@ -250,31 +103,7 @@ const area: Area = {
           y: 210,
           z: 0,
         },
-        scenarios: [
-          {
-            branches: [
-              {
-                message: "行く",
-                scenarios: [
-                  {
-                    actions: ["move_to_cloud"],
-                    message: "…",
-                  },
-                ],
-              },
-              {
-                message: "止めとく",
-                scenarios: [
-                  {
-                    message: "…",
-                  },
-                ],
-              },
-            ],
-            name: null,
-            message: "どうやら雲の上に連れて行ってくれるみたいだ。",
-          },
-        ],
+        scenarios: SHEEP_MEADOW_AND_SEA_SCENARIOS,
         scale: {
           x: 0.2,
           y: 0.2,

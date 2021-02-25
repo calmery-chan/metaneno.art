@@ -1,9 +1,9 @@
+import { SHEEP_MEADOW_AND_SEA_SCENARIOS } from "./common/scenarios";
 import {
   CALMERY_CHAN_SCENARIOS,
   HITSUGI_SCENARIOS,
   NEMINKO_SCENARIOS,
   NONEME_SCENARIOS,
-  SHEEP_SCENARIOS,
 } from "./meadow/scenarios";
 import { Area } from "~/types/exhibition";
 
@@ -66,7 +66,7 @@ const area: Area = {
           y: 140,
           z: 0,
         },
-        scenarios: SHEEP_SCENARIOS,
+        scenarios: SHEEP_MEADOW_AND_SEA_SCENARIOS,
         scale: {
           x: 0.25,
           y: 0.25,
