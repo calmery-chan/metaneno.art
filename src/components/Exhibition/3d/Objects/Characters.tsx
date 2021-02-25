@@ -11,7 +11,7 @@ import {
 import * as Three from "three";
 import { Exhibition3dScene } from "../Scene";
 import { AreaCharacterObject } from "~/types/exhibition";
-import { getGltf } from "~/utils/exhibition";
+import { getGltf, rewriteMaterials } from "~/utils/exhibition";
 
 type A = AnimationAction & {
   name: string;
@@ -139,6 +139,7 @@ const Character = React.memo<
       (async () => {
         const { animations, scene } = await getGltf(url);
 
+        rewriteMaterials(scene);
         setAnimations(animations);
         setScene(scene);
       })();
