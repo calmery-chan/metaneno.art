@@ -26,6 +26,10 @@ type ApiResponse<T> = {
 // Functions
 
 export const examine = async (token: string, key: string, value: number) => {
+  if (process.env.NODE_ENV === "development") {
+    console.log("okusuri.land", key, value, !!token);
+  }
+
   const { data } = await axios.post<
     ApiResponse<{
       prescription: Prescription;
@@ -51,6 +55,10 @@ export const forceExamine = async (
   token: string,
   symptoms: Record<string, number>
 ) => {
+  if (process.env.NODE_ENV === "development") {
+    console.log("okusuri.land", symptoms);
+  }
+
   const { data } = await axios.post<
     ApiResponse<{
       prescription: Prescription;

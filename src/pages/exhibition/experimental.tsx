@@ -1,7 +1,7 @@
 import classnames from "classnames";
 import { NextPage } from "next";
 import Head from "next/head";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { isMobileSafari } from "react-device-detect";
 import { Exhibition2dMorning } from "~/components/Exhibition/2d/Morning";
 import { Exhibition2dNight } from "~/components/Exhibition/2d/Night";
@@ -13,11 +13,14 @@ import { useScreenOrientation } from "~/hooks/exhibition/useScreenOrientation";
 import { GraphicsQuality } from "~/types/exhibition";
 import { useOkusuriLand } from "~/utils/okusuri.land";
 import { Disease } from "~/utils/okusuri.land/types";
+import * as share from "~/utils/share";
 
 const Exhibition: NextPage = () => {
   const { orientation } = useScreenOrientation();
   const multiplay = useMultiplay();
-  const [creamsoda, setCreamsoda] = useState<"flower" | "water" | null>("flower");
+  const [creamsoda, setCreamsoda] = useState<"flower" | "water" | null>(
+    "flower"
+  );
   const [diseases, setDiseases] = useState<Disease[]>([]);
   const [location, setLocation] = useState<"2d-morning" | "2d-night" | "3d">(
     "3d"
@@ -49,6 +52,29 @@ const Exhibition: NextPage = () => {
   // Okusuri.land
 
   const okusuriLand = useOkusuriLand(setDiseases);
+
+  useEffect(() => {
+    (async () => {
+      if (share.get()) {
+        await okusuriLand.examine("METANENO_ART_NUMBER_OF_TIMES_SHARED", 1);
+        share.remove();
+      }
+    })();
+  }, []);
+
+  useEffect(() => {
+    if (location === "3d") {
+      okusuriLand.examine("METANENO_ART_NUMBER_OF_TRIPS", 1);
+
+      const minTime = new Date("2021/02/27 21:00:00").getTime();
+      const currentTime = new Date().getTime();
+      const maxTime = new Date("2021/02/28 23:59:59").getTime();
+
+      if (minTime <= currentTime && currentTime <= maxTime) {
+        okusuriLand.examine("METANENO_ART_EARLY_ADOPTER", 1);
+      }
+    }
+  }, [location]);
 
   // Render
 

@@ -2,6 +2,7 @@ import { ABOUT_HITSUGI_SCENARIOS, ABOUT_THIS_WORLD } from "../common/scenarios";
 
 export const HITSUGI_SCENARIOS = [
   {
+    action: ["talk_with_hitsugi"],
     animations: [["smile"]],
     branches: [
       {
@@ -57,6 +58,7 @@ export const HITSUGI_SCENARIOS = [
 
 export const NONEME_SCENARIOS = [
   {
+    actions: ["talk_with_noneme"],
     branches: [
       {
         message: "君は溺れないの？",

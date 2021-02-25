@@ -65,6 +65,7 @@ export const FLOWER_SHEEP_SCENARIOS: Scenario[] = [
 
 export const HITSUGI_SCENARIOS: Scenario[] = [
   {
+    actions: ["talk_with_hitsugi"],
     branches: [
       {
         message: "好きなお菓子のはなし",
@@ -211,6 +212,7 @@ export const MAID_SCENARIOS: Scenario[] = [
 
 export const NEMINKO_SCENARIOS: Scenario[] = [
   {
+    actions: ["talk_with_neminko"],
     animations: [["blink"]],
     branches: [
       {
@@ -303,6 +305,7 @@ export const NEMINKO_SCENARIOS: Scenario[] = [
 
 export const NONEME_SCENARIOS: Scenario[] = [
   {
+    actions: ["talk_with_noneme"],
     branches: [
       {
         message: "どんな味がするの？",

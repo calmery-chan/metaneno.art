@@ -33,8 +33,8 @@ import {
   GraphicsQuality,
 } from "~/types/exhibition";
 import { preload } from "~/utils/exhibition";
-import { Sentry } from "~/utils/sentry";
 import { useOkusuriLand } from "~/utils/okusuri.land";
+import { Sentry } from "~/utils/sentry";
 
 const fadeOutKeyframes = keyframes`
   0% {
@@ -58,11 +58,11 @@ const areas = {
 
 export const Exhibition3d: React.FC<{
   creamsoda: "flower" | "water";
-  examine: ReturnType<typeof useOkusuriLand>["examine"]
+  examine: ReturnType<typeof useOkusuriLand>["examine"];
   multiplay: ReturnType<typeof useMultiplay>;
   onComplete: () => void;
   settings: { graphicsQuality: GraphicsQuality };
-}> = ({ creamsoda,examine, multiplay, onComplete, settings }) => {
+}> = ({ creamsoda, examine, multiplay, onComplete, settings }) => {
   const defaultArea = creamsoda === "flower" ? "meadow" : "sea";
 
   const [currentAreaName, setCurrentAreaName] = useState<AreaName>(defaultArea);
@@ -92,18 +92,18 @@ export const Exhibition3d: React.FC<{
   useEffect(() => {
     switch (currentAreaName) {
       case "cloud":
-        examine("METANENO_ART_NUMBER_OF_TRIPS_TO_CLOUD", 1)
+        examine("METANENO_ART_NUMBER_OF_TRIPS_TO_CLOUD", 1);
         return;
-      
+
       case "meadow":
-        examine("METANENO_ART_NUMBER_OF_TRIPS_TO_MEADOW", 1)
+        examine("METANENO_ART_NUMBER_OF_TRIPS_TO_MEADOW", 1);
         return;
 
       case "sea":
         examine("METANENO_ART_NUMBER_OF_TRIPS_TO_SEA", 1);
         return;
     }
-  }, [currentAreaName, examine]);
+  }, [currentAreaName]);
 
   // Find
 
@@ -177,11 +177,25 @@ export const Exhibition3d: React.FC<{
             window.open("https://okusuri.land", "_blank");
             return;
 
+          case "talk_with_noneme":
+            examine("METANENO_ART_NUMBER_OF_TIMES_TALKED_TO_NONEME", 1);
+            return;
+
+          case "talk_with_neminko":
+            examine("METANENO_ART_NUMBER_OF_TIMES_TALKED_TO_NEMINKO", 1);
+            return;
+
+          case "talk_with_hitsugi":
+            examine("METANENO_ART_NUMBER_OF_TIMES_TALKED_TO_HITSUGI", 1);
+            return;
+
           case "pancake":
+            examine("METANENO_ART_PUT_PANCAKE", 1);
             setPlayerAccessory("pancake");
             return;
 
           case "fried_egg":
+            examine("METANENO_ART_PUT_FRIED_EGG", 1);
             setPlayerAccessory("fried_egg");
             return;
 
@@ -199,7 +213,7 @@ export const Exhibition3d: React.FC<{
         }
       });
     },
-    [handleChangeArea]
+    [examine, handleChangeArea]
   );
 
   const handleChangeCharacterAnimations = useCallback(

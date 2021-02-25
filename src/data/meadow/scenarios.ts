@@ -10,6 +10,7 @@ export const CALMERY_CHAN_SCENARIOS: Scenario[] = [
 
 export const HITSUGI_SCENARIOS: Scenario[] = [
   {
+    actions: ["talk_with_hitsugi"],
     animations: [["smile"]],
     branches: [
       {
@@ -28,6 +29,7 @@ export const HITSUGI_SCENARIOS: Scenario[] = [
 
 export const NEMINKO_SCENARIOS: Scenario[] = [
   {
+    actions: ["talk_with_neminko"],
     branches: [
       {
         message: "夢だよ！",
@@ -55,6 +57,7 @@ export const NEMINKO_SCENARIOS: Scenario[] = [
 
 export const NONEME_SCENARIOS: Scenario[] = [
   {
+    actions: ["talk_with_noneme"],
     name: null,
     message: "…ピアノを弾くのに夢中みたいだ。",
   },
