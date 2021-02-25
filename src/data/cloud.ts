@@ -1,5 +1,13 @@
-import { MAID_SCENARIOS } from "./clouds/scenarios";
-import { ABOUT_THIS_WORLD } from "./common/scenarios";
+import {
+  CALMERY_CHAN_SCENARIOS,
+  FLOWER_SHEEP_SCENARIOS,
+  HITSUGI_SCENARIOS,
+  MAID_SCENARIOS,
+  NEMINKO_SCENARIOS,
+  NONEME_SCENARIOS,
+  PC_SCENARIOS,
+  WATER_SHEEP_SCENARIOS,
+} from "./clouds/scenarios";
 import { Area } from "~/types/exhibition";
 
 const area: Area = {
@@ -51,6 +59,48 @@ const area: Area = {
   objects: {
     characters: [
       {
+        id: "neminko",
+        name: "",
+        position: {
+          x: -11.25,
+          y: 6.1,
+          z: -6.5,
+        },
+        rotation: {
+          x: 0,
+          y: -200,
+          z: 0,
+        },
+        scale: {
+          x: 0.5,
+          y: 0.5,
+          z: 0.5,
+        },
+        scenarios: NEMINKO_SCENARIOS,
+        url: "/objects/areas/cloud/neminko_sleeping.glb",
+      },
+      {
+        id: "pc",
+        name: "",
+        position: {
+          x: -7,
+          y: 6.1,
+          z: 2.25,
+        },
+        rotation: {
+          x: 0,
+          y: 0,
+          z: 0,
+        },
+        scale: {
+          x: 1,
+          y: 1,
+          z: 1,
+        },
+        scenarios: PC_SCENARIOS,
+        url: "/objects/areas/cloud/pc.glb",
+      },
+      {
         id: "noneme_sitting",
         name: "",
         position: {
@@ -64,12 +114,12 @@ const area: Area = {
           z: 0,
         },
         scale: {
-          x: 0.25,
-          y: 0.25,
-          z: 0.25,
+          x: 0.22,
+          y: 0.22,
+          z: 0.22,
         },
-        scenarios: [],
-        url: "/objects/characters/noneme_sitting.glb",
+        scenarios: NONEME_SCENARIOS,
+        url: "/objects/areas/cloud/noneme_sitting.glb",
       },
       {
         id: "flower_sheep",
@@ -89,31 +139,7 @@ const area: Area = {
           y: 0.2,
           z: 0.2,
         },
-        scenarios: [
-          {
-            branches: [
-              {
-                message: "行く",
-                scenarios: [
-                  {
-                    actions: ["move_to_meadow"],
-                    message: "…",
-                  },
-                ],
-              },
-              {
-                message: "止めとく",
-                scenarios: [
-                  {
-                    message: "…",
-                  },
-                ],
-              },
-            ],
-            name: null,
-            message: "どうやら草原に連れて行ってくれるようだ。",
-          },
-        ],
+        scenarios: FLOWER_SHEEP_SCENARIOS,
         url: "/objects/characters/flower_sheep.glb",
       },
       {
@@ -134,36 +160,12 @@ const area: Area = {
           y: 0.2,
           z: 0.2,
         },
-        scenarios: [
-          {
-            branches: [
-              {
-                message: "行く",
-                scenarios: [
-                  {
-                    actions: ["move_to_sea"],
-                    message: "…",
-                  },
-                ],
-              },
-              {
-                message: "止めとく",
-                scenarios: [
-                  {
-                    message: "…",
-                  },
-                ],
-              },
-            ],
-            name: null,
-            message: "どうやら水中遺跡に連れて行ってくれるようだ。",
-          },
-        ],
+        scenarios: WATER_SHEEP_SCENARIOS,
         url: "/objects/characters/water_sheep.glb",
       },
       {
-        id: "ameri",
-        name: "あめり",
+        id: "calmery_chan",
+        name: "かるめりちゃん",
         position: {
           x: 15.05,
           y: 6.155,
@@ -179,8 +181,8 @@ const area: Area = {
           y: 0.25,
           z: 0.25,
         },
-        scenarios: [],
-        url: "/objects/characters/ameri.glb",
+        scenarios: CALMERY_CHAN_SCENARIOS,
+        url: "/objects/characters/calmery_chan.glb",
       },
       {
         id: "maid",
@@ -221,28 +223,7 @@ const area: Area = {
           y: 0.5,
           z: 0.5,
         },
-        scenarios: [
-          {
-            branches: [
-              {
-                message: "好きなお菓子のはなし",
-                scenarios: [
-                  {
-                    message: "…私はグミが好き。",
-                  },
-                  {
-                    message: "食感がグミグミしてて何だか気持ちいいから…。",
-                  },
-                ],
-              },
-              {
-                message: "この世界について",
-                scenarios: ABOUT_THIS_WORLD,
-              },
-            ],
-            message: "………ここは甘いにおいがする。",
-          },
-        ],
+        scenarios: HITSUGI_SCENARIOS,
         url: "/objects/characters/hitsugi.glb",
       },
     ],
@@ -319,42 +300,6 @@ const area: Area = {
           z: 1,
         },
         url: "/objects/areas/cloud/clouds.glb",
-      },
-      {
-        position: {
-          x: 0,
-          y: 0,
-          z: 0,
-        },
-        rotation: {
-          x: 0,
-          y: 0,
-          z: 0,
-        },
-        scale: {
-          x: 1,
-          y: 1,
-          z: 1,
-        },
-        url: "/objects/areas/cloud/neminko_sleeping.glb",
-      },
-      {
-        position: {
-          x: 0,
-          y: 0,
-          z: 0,
-        },
-        rotation: {
-          x: 0,
-          y: 0,
-          z: 0,
-        },
-        scale: {
-          x: 1,
-          y: 1,
-          z: 1,
-        },
-        url: "/objects/areas/cloud/pc.glb",
       },
       {
         position: {

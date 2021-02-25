@@ -155,6 +155,10 @@ export const Exhibition3d: React.FC<{
     (actions: string[]) => {
       actions.forEach((action) => {
         switch (action) {
+          case "open_okusuri_land":
+            window.open("https://okusuri.land", "_blank");
+            return;
+
           case "pancake":
             setPlayerAccessory("pancake");
             return;
