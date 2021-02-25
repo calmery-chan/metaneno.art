@@ -32,7 +32,7 @@ const useCamera = (
     cameraControls.maxDistance = 3;
     cameraControls.maxPolarAngle = 80 * (Math.PI / 180);
     cameraControls.minDistance = 1;
-    cameraControls.minPolarAngle = 50 * (Math.PI / 180);
+    cameraControls.minPolarAngle = 40 * (Math.PI / 180);
     cameraControls.polarAngle = 50 * (Math.PI / 180);
 
     setCameraControls(cameraControls);
