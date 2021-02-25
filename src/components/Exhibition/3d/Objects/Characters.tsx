@@ -1,21 +1,61 @@
 import React, { useState, useEffect } from "react";
 import { useFrame } from "react-three-fiber";
-import { AnimationClip, AnimationMixer, Scene } from "three";
+import {
+  AnimationAction,
+  AnimationClip,
+  AnimationMixer,
+  LoopOnce,
+  LoopRepeat,
+  Scene,
+} from "three";
 import * as Three from "three";
 import { Exhibition3dScene } from "../Scene";
 import { AreaCharacterObject } from "~/types/exhibition";
 import { getGltf } from "~/utils/exhibition";
 
+type A = AnimationAction & {
+  name: string;
+};
+
 const playAnimations = (
   mixer: AnimationMixer,
-  animations: AnimationClip[]
+  animations: AnimationClip[],
+  loop = false
 ): Promise<void> =>
   new Promise((resolve) => {
-    animations.forEach((animation) => {
-      mixer.clipAction(animation).play();
+    const names: string[] = [];
+    const state: { [key in string]: boolean } = {};
+
+    animations.forEach(({ name }) => {
+      names.push(name);
+      state[name] = false;
     });
 
-    resolve();
+    if (!loop) {
+      mixer.addEventListener("finished", (event: Three.Event) => {
+        const { name } = event.action as A;
+
+        if (state[name] !== undefined) {
+          state[name] = true;
+        }
+
+        if (names.every((name) => state[name])) {
+          resolve();
+        }
+      });
+    }
+
+    animations.forEach((animation) => {
+      const action = mixer.clipAction(animation) as A;
+      action.clampWhenFinished = !loop;
+      action.loop = loop ? LoopRepeat : LoopOnce;
+      action.name = animation.name;
+      action.play();
+    });
+
+    if (loop) {
+      resolve();
+    }
   });
 
 const Character = React.memo<
@@ -74,7 +114,8 @@ const Character = React.memo<
               .map((animationName) =>
                 animations.find(({ name }) => name === animationName)
               )
-              .filter((x) => x instanceof AnimationClip) as AnimationClip[]
+              .filter((x) => x instanceof AnimationClip) as AnimationClip[],
+            i === currentAnimations.length - 1
           );
         }
       })();
