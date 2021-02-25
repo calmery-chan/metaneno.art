@@ -211,6 +211,7 @@ export const MAID_SCENARIOS: Scenario[] = [
 
 export const NEMINKO_SCENARIOS: Scenario[] = [
   {
+    animations: [["blink"]],
     branches: [
       {
         message: "この夢から覚めるには？",
@@ -225,13 +226,13 @@ export const NEMINKO_SCENARIOS: Scenario[] = [
               "なんてね。いつもたべん子ちゃんからは手とかほっぺをつねってもらってるよ。",
           },
           {
-            animations: [["sleep"]],
+            animations: [["idle"]],
             branches: [
               {
                 message: "この世界の出口はどこにあるの？",
                 scenarios: [
                   {
-                    animations: [["idle"]],
+                    animations: [["blink"]],
                     message:
                       "んー…ゴールっぽい場所ならここの奥の雲の先で見た気がするよ～。",
                   },
@@ -241,7 +242,7 @@ export const NEMINKO_SCENARIOS: Scenario[] = [
                 message: "ほっぺつねってくれませんか……？",
                 scenarios: [
                   {
-                    animations: [["idle"]],
+                    animations: [["blink"]],
                     message: "しょうがないなぁ～。一回だけだよ？えい、ぐいー。",
                   },
                   {
@@ -258,7 +259,7 @@ export const NEMINKO_SCENARIOS: Scenario[] = [
                       "そういえば、ここから奥に進むとゴール的なものがあった気がするよ～。",
                   },
                   {
-                    animations: [["sleep"]],
+                    animations: [["idle"]],
                     message:
                       "私はもう少しここで寝ていたいから…じゃあおやすみ～♪",
                   },
@@ -289,7 +290,7 @@ export const NEMINKO_SCENARIOS: Scenario[] = [
         message: "あっ、すいません…。",
         scenarios: [
           {
-            animations: [["sleep"]],
+            animations: [["idle"]],
             message: "ん……………Zzz",
           },
         ],
