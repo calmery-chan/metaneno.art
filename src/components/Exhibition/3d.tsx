@@ -34,6 +34,7 @@ import {
 } from "~/types/exhibition";
 import { preload } from "~/utils/exhibition";
 import { Sentry } from "~/utils/sentry";
+import { useOkusuriLand } from "~/utils/okusuri.land";
 
 const fadeOutKeyframes = keyframes`
   0% {
@@ -57,10 +58,11 @@ const areas = {
 
 export const Exhibition3d: React.FC<{
   creamsoda: "flower" | "water";
+  examine: ReturnType<typeof useOkusuriLand>["examine"]
   multiplay: ReturnType<typeof useMultiplay>;
   onComplete: () => void;
   settings: { graphicsQuality: GraphicsQuality };
-}> = ({ creamsoda, multiplay, onComplete, settings }) => {
+}> = ({ creamsoda,examine, multiplay, onComplete, settings }) => {
   const defaultArea = creamsoda === "flower" ? "meadow" : "sea";
 
   const [currentAreaName, setCurrentAreaName] = useState<AreaName>(defaultArea);
@@ -86,6 +88,22 @@ export const Exhibition3d: React.FC<{
     previous: defaultArea,
     next: defaultArea,
   });
+
+  useEffect(() => {
+    switch (currentAreaName) {
+      case "cloud":
+        examine("METANENO_ART_NUMBER_OF_TRIPS_TO_CLOUD", 1)
+        return;
+      
+      case "meadow":
+        examine("METANENO_ART_NUMBER_OF_TRIPS_TO_MEADOW", 1)
+        return;
+
+      case "sea":
+        examine("METANENO_ART_NUMBER_OF_TRIPS_TO_SEA", 1);
+        return;
+    }
+  }, [currentAreaName, examine]);
 
   // Find
 
@@ -252,9 +270,9 @@ export const Exhibition3d: React.FC<{
   // Render
 
   return (
-    <div className="bg-black h-full w-full">
+    <div className="w-full h-full bg-black">
       {ready && (
-        <div className="h-full w-full" css={completed ? fadeOut : undefined}>
+        <div className="w-full h-full" css={completed ? fadeOut : undefined}>
           <Exhibition3dCanvas>
             <Exhibition3dBackground {...area.background} />
             <Exhibition3dFog {...area.fog} />

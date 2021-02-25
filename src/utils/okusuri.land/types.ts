@@ -42,7 +42,5 @@ export type PatientRecord = {
 // Prescription
 
 export type Prescription = {
-  prescription: {
-    diseaseIds: string[];
-  };
+  diseaseIds: string[];
 };

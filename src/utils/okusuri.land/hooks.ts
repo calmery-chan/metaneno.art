@@ -90,8 +90,7 @@ export const useOkusuriLand = (handleChange: (diseases: Disease[]) => void) => {
       const symptoms = loadTemporary();
 
       if (symptoms) {
-        const { prescription } = await forceExamine(token, symptoms);
-        const { diseaseIds } = prescription;
+        const { diseaseIds } = await forceExamine(token, symptoms);
         const diseases = department!.diseases.filter(({ id }) =>
           diseaseIds.includes(id)
         );
@@ -139,8 +138,7 @@ export const useOkusuriLand = (handleChange: (diseases: Disease[]) => void) => {
         return;
       }
 
-      const { prescription } = await examine(token, key, value);
-      const { diseaseIds } = prescription;
+      const { diseaseIds } = await examine(token, key, value);
 
       if (diseaseIds.length) {
         await refresh();
