@@ -47,6 +47,30 @@ export const examine = async (token: string, key: string, value: number) => {
   return data.data.prescription;
 };
 
+export const forceExamine = async (
+  token: string,
+  symptoms: Record<string, number>
+) => {
+  const { data } = await axios.post<
+    ApiResponse<{
+      prescription: Prescription;
+    }>
+  >(
+    `/departments/${process.env.NEXT_PUBLIC_OKUSURI_LAND_DEPARTMENT_ID}`,
+    {
+      force: true,
+      symptoms,
+    },
+    {
+      headers: {
+        Authorization: `Token ${token}`,
+      },
+    }
+  );
+
+  return data.data.prescription;
+};
+
 export const getDepartment = async () => {
   const { data } = await axios.get<ApiResponse<Department>>(
     "/departments/ckksser080xz10a89ypu5ccjp"

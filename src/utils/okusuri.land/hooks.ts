@@ -1,6 +1,12 @@
 import { useCallback, useEffect, useState } from "react";
 import { Sentry } from "../sentry";
-import { examine, getDepartment, getPatient, postCredential } from "./api";
+import {
+  examine,
+  forceExamine,
+  getDepartment,
+  getPatient,
+  postCredential,
+} from "./api";
 import {
   firebase,
   getCredential,
@@ -9,6 +15,40 @@ import {
   logOut,
 } from "./authentication";
 import { Department, Disease, PatientRecord } from "./types";
+
+//
+
+const KEY = "okusuri.land-symptoms";
+
+const saveTemporary = (key: string, value: number) => {
+  const symptoms = loadTemporary() || {};
+
+  if (symptoms[key] === undefined) {
+    symptoms[key] = 0;
+  }
+
+  symptoms[key] += value;
+
+  localStorage.setItem(KEY, JSON.stringify(symptoms));
+};
+
+const loadTemporary = (): Record<string, number> | null => {
+  const string = localStorage.getItem(KEY);
+
+  if (!string) {
+    return null;
+  }
+
+  try {
+    return JSON.parse(string);
+  } catch (_) {
+    return null;
+  }
+};
+
+const removeTemporary = () => {
+  localStorage.removeItem(KEY);
+};
 
 // Main
 
@@ -46,6 +86,19 @@ export const useOkusuriLand = (handleChange: (diseases: Disease[]) => void) => {
 
       setDiseases(diseases);
       setRecord(patient.record);
+
+      const symptoms = loadTemporary();
+
+      if (symptoms) {
+        const { prescription } = await forceExamine(token, symptoms);
+        const { diseaseIds } = prescription;
+        const diseases = department!.diseases.filter(({ id }) =>
+          diseaseIds.includes(id)
+        );
+        removeTemporary();
+        handleChange(diseases);
+        if (diseaseIds.length) await refresh();
+      }
     } catch (error) {
       Sentry.captureException(error);
       setError(error);
@@ -81,7 +134,12 @@ export const useOkusuriLand = (handleChange: (diseases: Disease[]) => void) => {
 
   const handleExamine = useCallback(
     async (key: string, value: number) => {
-      const { prescription } = await examine(token!, key, value);
+      if (!token || !record) {
+        saveTemporary(key, value);
+        return;
+      }
+
+      const { prescription } = await examine(token, key, value);
       const { diseaseIds } = prescription;
 
       if (diseaseIds.length) {
@@ -94,7 +152,7 @@ export const useOkusuriLand = (handleChange: (diseases: Disease[]) => void) => {
 
       handleChange(diseases);
     },
-    [department, token]
+    [department, record, token]
   );
 
   return {
