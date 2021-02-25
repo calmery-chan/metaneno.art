@@ -1,8 +1,9 @@
 import { ABOUT_HITSUGI_SCENARIOS, ABOUT_THIS_WORLD } from "../common/scenarios";
+import { Scenario } from "~/types/exhibition";
 
-export const HITSUGI_SCENARIOS = [
+export const HITSUGI_SCENARIOS: Scenario[] = [
   {
-    action: ["talk_with_hitsugi"],
+    actions: ["talk_with_hitsugi"],
     animations: [["smile"]],
     branches: [
       {
@@ -56,7 +57,7 @@ export const HITSUGI_SCENARIOS = [
   },
 ];
 
-export const NONEME_SCENARIOS = [
+export const NONEME_SCENARIOS: Scenario[] = [
   {
     actions: ["talk_with_noneme"],
     branches: [

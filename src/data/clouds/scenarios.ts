@@ -3,6 +3,7 @@ import { Scenario } from "~/types/exhibition";
 
 export const CALMERY_CHAN_SCENARIOS: Scenario[] = [
   {
+    actions: ["talk_with_calmery_chan"],
     animations: [["wave"], ["idle"]],
     branches: [
       {
@@ -90,6 +91,7 @@ export const HITSUGI_SCENARIOS: Scenario[] = [
 
 export const MAID_SCENARIOS: Scenario[] = [
   {
+    actions: ["talk_with_maid"],
     message: "はじめまして！あの…突然ですがちょっと料理を作りすぎてしまって…",
     name: "メイドさん",
   },

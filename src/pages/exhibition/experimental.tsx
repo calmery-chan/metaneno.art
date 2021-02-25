@@ -11,6 +11,7 @@ import { ExhibitionOkusuriLandNotifications } from "~/components/Exhibition/Okus
 import { useMultiplay } from "~/hooks/exhibition/useMultuplay";
 import { useScreenOrientation } from "~/hooks/exhibition/useScreenOrientation";
 import { GraphicsQuality } from "~/types/exhibition";
+import * as GA from "~/utils/exhibition/google-analytics";
 import { useOkusuriLand } from "~/utils/okusuri.land";
 import { Disease } from "~/utils/okusuri.land/types";
 import * as share from "~/utils/share";
@@ -39,6 +40,7 @@ const Exhibition: NextPage = () => {
   );
 
   const handleComplete2dNight = useCallback((creamsoda: "flower" | "water") => {
+    GA.drink(creamsoda);
     setCreamsoda(creamsoda);
     setLocation("3d");
   }, []);
@@ -65,6 +67,7 @@ const Exhibition: NextPage = () => {
   useEffect(() => {
     if (location === "3d") {
       okusuriLand.examine("METANENO_ART_NUMBER_OF_TRIPS", 1);
+      GA.trip();
 
       const minTime = new Date("2021/02/27 21:00:00").getTime();
       const currentTime = new Date().getTime();

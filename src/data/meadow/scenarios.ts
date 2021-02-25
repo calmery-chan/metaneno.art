@@ -3,6 +3,7 @@ import { Scenario } from "~/types/exhibition";
 
 export const CALMERY_CHAN_SCENARIOS: Scenario[] = [
   {
+    actions: ["talk_with_calmery_chan"],
     name: null,
     message: "かるめりちゃんだ！ブランコを楽しそうに漕いでいる。",
   },

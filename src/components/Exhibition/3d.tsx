@@ -33,6 +33,7 @@ import {
   GraphicsQuality,
 } from "~/types/exhibition";
 import { preload } from "~/utils/exhibition";
+import * as GA from "~/utils/exhibition/google-analytics";
 import { useOkusuriLand } from "~/utils/okusuri.land";
 import { Sentry } from "~/utils/sentry";
 
@@ -93,14 +94,17 @@ export const Exhibition3d: React.FC<{
     switch (currentAreaName) {
       case "cloud":
         examine("METANENO_ART_NUMBER_OF_TRIPS_TO_CLOUD", 1);
+        GA.tripTo("cloud");
         return;
 
       case "meadow":
         examine("METANENO_ART_NUMBER_OF_TRIPS_TO_MEADOW", 1);
+        GA.tripTo("meadow");
         return;
 
       case "sea":
         examine("METANENO_ART_NUMBER_OF_TRIPS_TO_SEA", 1);
+        GA.tripTo("sea");
         return;
     }
   }, [currentAreaName]);
@@ -175,27 +179,41 @@ export const Exhibition3d: React.FC<{
         switch (action) {
           case "open_okusuri_land":
             window.open("https://okusuri.land", "_blank");
+            GA.click("pc_connected_to_okusuri.land");
             return;
 
           case "talk_with_noneme":
+            GA.talk("noneme");
             examine("METANENO_ART_NUMBER_OF_TIMES_TALKED_TO_NONEME", 1);
             return;
 
           case "talk_with_neminko":
+            GA.talk("neminko");
             examine("METANENO_ART_NUMBER_OF_TIMES_TALKED_TO_NEMINKO", 1);
             return;
 
           case "talk_with_hitsugi":
+            GA.talk("hitsugi");
             examine("METANENO_ART_NUMBER_OF_TIMES_TALKED_TO_HITSUGI", 1);
+            return;
+
+          case "talk_with_calmery_chan":
+            GA.talk("calmery_chan");
+            return;
+
+          case "talk_with_maid":
+            GA.talk("maid");
             return;
 
           case "pancake":
             examine("METANENO_ART_PUT_PANCAKE", 1);
+            GA.wear("pancake");
             setPlayerAccessory("pancake");
             return;
 
           case "fried_egg":
             examine("METANENO_ART_PUT_FRIED_EGG", 1);
+            GA.wear("fried_egg");
             setPlayerAccessory("fried_egg");
             return;
 

@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { io } from "socket.io-client";
 import { AreaName } from "~/types/exhibition";
+import * as GA from "~/utils/exhibition/google-analytics";
 
 export type UpdateResponse = UpdatePayload & {
   updatedAt: number;
@@ -29,6 +30,7 @@ const socket = io(
 const join = (payload?: string) => {
   socket.connect();
   socket.emit("join", payload);
+  GA.multiplay("join");
 };
 
 const leave = () => {
@@ -63,6 +65,7 @@ export const useMultiplay = () => {
 
   const handleSocketDisconnect = useCallback(() => {
     setPlayers(null);
+    GA.multiplay("leave");
   }, []);
 
   const handleSocketJoin = useCallback(

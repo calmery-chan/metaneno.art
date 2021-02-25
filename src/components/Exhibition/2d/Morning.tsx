@@ -239,6 +239,7 @@ export const Exhibition2dMorning: React.FC = () => {
   }, []);
 
   const handleWokeUp = useCallback(() => {
+    GA.wakeup("morning");
     setWorkUp(true);
   }, []);
 
@@ -305,6 +306,7 @@ export const Exhibition2dMorning: React.FC = () => {
   }, []);
 
   const handleOnEnter = useCallback(() => {
+    GA.sleep();
     setSleep(true);
 
     setTimeout(() => {

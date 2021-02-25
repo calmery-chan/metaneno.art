@@ -253,6 +253,7 @@ export const Exhibition2dNight: React.FC<{
   }, []);
 
   const handleWakeup = useCallback(() => {
+    GA.wakeup("night");
     setWakeup(true);
   }, []);
 

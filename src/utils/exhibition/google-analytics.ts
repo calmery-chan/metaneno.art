@@ -32,9 +32,10 @@ export const tripTo = (area: AreaName) =>
     label: area,
   });
 
-export const startMultiplay = () => sendExhibitionEvent("start_multiplay", {});
-
-export const stopMultiplay = () => sendExhibitionEvent("stop_multiplay", {});
+export const multiplay = (state: "join" | "leave") =>
+  sendExhibitionEvent("multiplay", {
+    label: state,
+  });
 
 export const view = (workId: string) =>
   sendExhibitionEvent("view", {
@@ -44,4 +45,19 @@ export const view = (workId: string) =>
 export const click = (item: string) =>
   sendExhibitionEvent("click", {
     label: item,
+  });
+
+export const sleep = () =>
+  sendExhibitionEvent("sleep", {
+    label: "2d",
+  });
+
+export const wakeup = (location: "night" | "morning") =>
+  sendExhibitionEvent("wakeup", {
+    label: location,
+  });
+
+export const drink = (creamsoda: "flower" | "water") =>
+  sendExhibitionEvent("drink", {
+    label: creamsoda,
   });

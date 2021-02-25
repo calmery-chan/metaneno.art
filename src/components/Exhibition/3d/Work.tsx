@@ -12,6 +12,7 @@ import { Spacing } from "~/styles/spacing";
 import { Typography } from "~/styles/typography";
 import { AreaWorkObject, GraphicsQuality } from "~/types/exhibition";
 import { getGltf } from "~/utils/exhibition";
+import * as GA from "~/utils/exhibition/google-analytics";
 import { Sentry } from "~/utils/sentry";
 
 // Styles
@@ -76,16 +77,14 @@ const view = css`
 // Main
 
 export const Exhibition3dWork = React.memo<
-  Pick<
-    AreaWorkObject,
-    "characters" | "comment" | "date" | "imageUrl" | "title" | "url"
-  > & { graphicsQuality: GraphicsQuality; onClose: () => void }
+  AreaWorkObject & { graphicsQuality: GraphicsQuality; onClose: () => void }
 >(
   ({
     characters,
     comment,
     date,
     graphicsQuality,
+    id,
     imageUrl,
     onClose,
     title,
@@ -104,6 +103,10 @@ export const Exhibition3dWork = React.memo<
     }, [mode]);
 
     // Side Effects
+
+    useEffect(() => {
+      GA.view(id);
+    }, [id]);
 
     useEffect(() => {
       (async () => {
@@ -136,7 +139,7 @@ export const Exhibition3dWork = React.memo<
           >
             {mode === "2d" && (
               <img
-                className="h-full object-contain w-full"
+                className="object-contain w-full h-full"
                 src={`${
                   (process.env.NODE_ENV === "production"
                     ? "https://assets.metaneno.art"
@@ -158,7 +161,7 @@ export const Exhibition3dWork = React.memo<
             )}
             {scene && (
               <div
-                className="absolute cursor-pointer grid place-items-center"
+                className="absolute grid cursor-pointer place-items-center"
                 css={toggle}
                 onClick={handleClickToggleMode}
               >
