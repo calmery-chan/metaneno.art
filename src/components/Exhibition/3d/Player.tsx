@@ -28,10 +28,10 @@ const useCamera = (
   useEffect(() => {
     const cameraControls = new CameraControls(camera, gl.domElement);
 
-    cameraControls.distance = 3;
-    cameraControls.maxDistance = 4;
-    cameraControls.maxPolarAngle = 50 * (Math.PI / 180);
-    cameraControls.minDistance = 2;
+    cameraControls.distance = 2;
+    cameraControls.maxDistance = 3;
+    cameraControls.maxPolarAngle = 80 * (Math.PI / 180);
+    cameraControls.minDistance = 1;
     cameraControls.minPolarAngle = 50 * (Math.PI / 180);
     cameraControls.polarAngle = 50 * (Math.PI / 180);
 
