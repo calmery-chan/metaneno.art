@@ -75,6 +75,10 @@ export const Exhibition: React.FC = () => {
       if (minTime <= currentTime && currentTime <= maxTime) {
         okusuriLand.examine("METANENO_ART_EARLY_ADOPTER", 1);
       }
+    } else {
+      if (multiplay.players) {
+        multiplay.leave();
+      }
     }
   }, [location]);
 
@@ -115,6 +119,7 @@ export const Exhibition: React.FC = () => {
         )}
         {location === "2d-morning" && <Exhibition2dMorning />}
         <ExhibitionMenu
+          mode={location === "3d" ? "3d" : "2d"}
           multiplay={multiplay}
           okusuriLand={okusuriLand}
           onChangeGraphicsQuality={handleChangeQuality}

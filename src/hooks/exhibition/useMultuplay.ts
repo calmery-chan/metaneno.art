@@ -4,6 +4,7 @@ import { AreaName } from "~/types/exhibition";
 import * as GA from "~/utils/exhibition/google-analytics";
 
 export type UpdateResponse = UpdatePayload & {
+  metaneno: boolean;
   updatedAt: number;
 };
 
@@ -15,32 +16,23 @@ export type UpdatePayload = {
   state: "idle" | "run" | "walk";
 };
 
-const socket = io(
-  process.env.NODE_ENV === "production"
-    ? "https://multiplay.creamsoda.in"
-    : "http://localhost:5000",
-  {
-    autoConnect: false,
-    path: "/a/dream",
-  }
-);
-
 //
 
-const join = (payload?: string) => {
-  socket.connect();
-  socket.emit("join", payload);
-  GA.multiplay("join");
-};
-
-const leave = () => {
-  socket.emit("leave");
-  socket.disconnect();
-};
-
-const update = (payload: UpdatePayload) => {
-  socket.emit("update", payload);
-};
+const createSocket = (token?: string) =>
+  io(
+    process.env.NODE_ENV === "production"
+      ? "https://multiplay.creamsoda.in"
+      : "http://localhost:5000",
+    {
+      autoConnect: false,
+      extraHeaders: token
+        ? {
+            authorization: `Token ${token}`,
+          }
+        : {},
+      path: "/a/dream",
+    }
+  );
 
 //
 
@@ -50,6 +42,44 @@ export const useMultiplay = () => {
     UpdateResponse | null
   > | null>(null);
   const [lastUpdate, setLastUpdate] = useState<UpdatePayload | null>(null);
+  const [socket, setSocket] = useState(createSocket());
+
+  //
+
+  useEffect(() => {
+    const token = localStorage.getItem("_metaneno");
+
+    if (token) {
+      if (socket.connected) {
+        socket.disconnect();
+      }
+
+      setSocket(createSocket(token));
+    }
+  }, []);
+
+  //
+
+  const join = useCallback(
+    (payload?: string) => {
+      socket.connect();
+      socket.emit("join", payload);
+      GA.multiplay("join");
+    },
+    [socket]
+  );
+
+  const leave = useCallback(() => {
+    socket.emit("leave");
+    socket.disconnect();
+  }, [socket]);
+
+  const update = useCallback(
+    (payload: UpdatePayload) => {
+      socket.emit("update", payload);
+    },
+    [socket]
+  );
 
   // Helper
 
@@ -76,7 +106,7 @@ export const useMultiplay = () => {
         update(lastUpdate);
       }
     },
-    [convertPlayerIdsToState, lastUpdate]
+    [convertPlayerIdsToState, lastUpdate, update]
   );
 
   const handleSocketLeave = useCallback(
@@ -118,24 +148,33 @@ export const useMultiplay = () => {
       socket.off("leaved", handleSocketLeave);
       socket.off("updated", handleSocketUpdate);
     };
-  }, [lastUpdate, players]);
+  }, [
+    handleSocketDisconnect,
+    handleSocketJoin,
+    handleSocketLeave,
+    handleSocketUpdate,
+    socket,
+  ]);
 
   // Events
 
   const handleLeave = useCallback(() => {
     leave();
     setPlayers(null);
-  }, []);
+  }, [leave]);
 
-  const handleUpdate = useCallback((payload: UpdatePayload) => {
-    setLastUpdate(payload);
+  const handleUpdate = useCallback(
+    (payload: UpdatePayload) => {
+      setLastUpdate(payload);
 
-    if (!socket.connected) {
-      return;
-    }
+      if (!socket.connected) {
+        return;
+      }
 
-    update(payload);
-  }, []);
+      update(payload);
+    },
+    [socket, update]
+  );
 
   //
 

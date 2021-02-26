@@ -90,10 +90,11 @@ const saveSettings = (
 };
 
 export const ExhibitionMenu: React.FC<{
+  mode: "2d" | "3d";
   multiplay: ReturnType<typeof useMultiplay>;
   okusuriLand: ReturnType<typeof useOkusuriLand>;
   onChangeGraphicsQuality: (quality: GraphicsQuality) => void;
-}> = ({ multiplay, okusuriLand, onChangeGraphicsQuality }) => {
+}> = ({ mode, multiplay, okusuriLand, onChangeGraphicsQuality }) => {
   const [currentAudioVolume, setCurrentAudioVolume] = useState(Howler.volume());
   const [currentGraphicsQuality, setCurrentGraphicsQuality] = useState<
     "high" | "low" | "middle"
@@ -193,15 +194,17 @@ export const ExhibitionMenu: React.FC<{
           ${isOpenOkusuriLand || isOpenSettings ? fadeOut : fadeIn}
         `}
       >
-        <div css={menu}>
-          <img
-            alt="マルチプレイ"
-            onClick={handleClickOpenMultiplay}
-            src={`/exhibition/multiplay-${
-              multiplay.players ? "on" : "off"
-            }.svg`}
-          />
-        </div>
+        {mode === "3d" && (
+          <div css={menu}>
+            <img
+              alt="マルチプレイ"
+              onClick={handleClickOpenMultiplay}
+              src={`/exhibition/multiplay-${
+                multiplay.players ? "on" : "off"
+              }.svg`}
+            />
+          </div>
+        )}
         <div css={menu}>
           <img
             alt="おくすりランド"

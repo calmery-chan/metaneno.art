@@ -187,7 +187,9 @@ export const Exhibition3dPlayers = React.memo<{
                   ),
                 });
               } else {
-                const { scene } = await getGltf("/objects/other_player.glb");
+                const { scene } = await getGltf(
+                  `/objects/${payload.metaneno ? "" : "other_"}player.glb`
+                );
 
                 return Promise.resolve({
                   [playerId]: await applyPlayerTransform(scene as S, payload),
