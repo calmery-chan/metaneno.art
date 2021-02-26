@@ -84,9 +84,9 @@ const area: Area = {
         },
         scenarios: NONEME_SCENARIOS,
         scale: {
-          x: 0.25,
-          y: 0.25,
-          z: 0.25,
+          x: 0.23,
+          y: 0.23,
+          z: 0.23,
         },
         url: "/objects/characters/noneme.glb",
       },
