@@ -98,18 +98,18 @@ export const Fanarts: React.FC<{ onClose: () => void }> = ({ onClose }) => {
         label="#めたねのあーと"
         onClose={onClose}
       >
-        <div className="flex h-full flex-col">
+        <div className="flex flex-col h-full">
           <div className="relative flex-grow w-full" css={portraitView}>
             <img
-              className="h-full object-contain w-full"
+              className="object-contain w-full h-full"
               src={fanart.imageUrl}
             />
           </div>
           <div className="flex" css={portraitInformation}>
             <a href={fanart.user.url} rel="noopener noreferrer" target="_blank">
-              <div className="cursor-pointer flex h-full items-center">
+              <div className="flex items-center h-full cursor-pointer">
                 <img
-                  className="h-full inline"
+                  className="inline h-full"
                   css={portraitInformationIcon}
                   src={fanart.user.iconUrl}
                 />
@@ -123,7 +123,7 @@ export const Fanarts: React.FC<{ onClose: () => void }> = ({ onClose }) => {
               target="_blank"
             >
               <div
-                className="cursor-pointer flex h-full items-center"
+                className="flex items-center h-full cursor-pointer"
                 css={portraitInformationUrl}
               >
                 ツイートを見る
@@ -159,34 +159,40 @@ export const Fanarts: React.FC<{ onClose: () => void }> = ({ onClose }) => {
         <div className="flex flex-col flex-grow h-full">
           <div css={image}>
             <img
-              className="h-full object-contain w-full"
+              className="object-contain w-full h-full"
               src={fanart.imageUrl}
             />
           </div>
           <div className="flex" css={information}>
-            <a href={fanart.user.url} rel="noopener noreferrer" target="_blank">
-              <div className="cursor-pointer flex h-full items-center">
+            <a
+              href={fanart.user.url || undefined}
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <div className="flex items-center h-full cursor-pointer">
                 <img
-                  className="h-full inline"
+                  className="inline h-full"
                   css={informationIcon}
                   src={fanart.user.iconUrl}
                 />
                 {fanart.user.name}
               </div>
             </a>
-            <a
-              className="ml-auto"
-              href={fanart.referenceUrl}
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              <div
-                className="cursor-pointer flex h-full items-center"
-                css={informationUrl}
+            {fanart.referenceUrl && (
+              <a
+                className="ml-auto"
+                href={fanart.referenceUrl}
+                rel="noopener noreferrer"
+                target="_blank"
               >
-                ツイートを見る
-              </div>
-            </a>
+                <div
+                  className="flex items-center h-full cursor-pointer"
+                  css={informationUrl}
+                >
+                  ツイートを見る
+                </div>
+              </a>
+            )}
           </div>
         </div>
         <div className="flex-shrink-0 overflow-scroll" css={thumbnails}>
