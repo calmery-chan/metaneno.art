@@ -1,6 +1,7 @@
+import { NextPage } from "next";
 import React from "react";
 import { Exhibition } from "~/components/Exhibition";
 
-const Experimental: React.FC = () => <Exhibition />;
+const ExhibitionIndex: NextPage = () => <Exhibition />;
 
-export default Experimental;
+export default ExhibitionIndex;

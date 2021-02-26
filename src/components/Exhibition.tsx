@@ -2,6 +2,7 @@ import classnames from "classnames";
 import Head from "next/head";
 import React, { useCallback, useEffect, useState } from "react";
 import { isMobileSafari } from "react-device-detect";
+import { ExhibitionTitleScreen } from "./Exhibition/TitleScreen";
 import { Exhibition2dMorning } from "~/components/Exhibition/2d/Morning";
 import { Exhibition2dNight } from "~/components/Exhibition/2d/Night";
 import { Exhibition3d } from "~/components/Exhibition/3d";
@@ -26,6 +27,7 @@ export const Exhibition: React.FC = () => {
   const [graphicsQuality, setGraphicsQuality] = useState<GraphicsQuality>(
     "high"
   );
+  const [ready, setReady] = useState(false);
 
   // Events
 
@@ -77,6 +79,14 @@ export const Exhibition: React.FC = () => {
   }, [location]);
 
   // Render
+
+  const handleReady = useCallback(() => {
+    setReady(true);
+  }, []);
+
+  if (!ready) {
+    return <ExhibitionTitleScreen onReady={handleReady} />;
+  }
 
   return (
     <>
