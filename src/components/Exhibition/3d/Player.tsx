@@ -257,7 +257,7 @@ export const Exhibition3dPlayer = React.memo<
         const { x, z } = velocity
           .clone()
           .normalize()
-          .multiply(new Vector3(6, 6, 6))
+          .multiply(new Vector3(4, 4, 4))
           .multiply(new Vector3(delta, delta, delta))
           .applyQuaternion(camera.quaternion);
 
