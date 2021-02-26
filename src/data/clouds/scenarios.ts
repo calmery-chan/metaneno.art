@@ -1,4 +1,4 @@
-import { ABOUT_THIS_WORLD } from "../common/scenarios";
+import { CLOUD_ABOUT_THIS_WORLD } from "../common/scenarios";
 import { Scenario } from "~/types/exhibition";
 
 export const CALMERY_CHAN_SCENARIOS: Scenario[] = [
@@ -81,7 +81,7 @@ export const HITSUGI_SCENARIOS: Scenario[] = [
       },
       {
         message: "この世界について",
-        scenarios: ABOUT_THIS_WORLD,
+        scenarios: CLOUD_ABOUT_THIS_WORLD,
       },
     ],
     message: "………ここは甘いにおいがする。",

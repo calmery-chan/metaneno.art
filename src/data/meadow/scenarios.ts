@@ -1,4 +1,7 @@
-import { ABOUT_HITSUGI_SCENARIOS, ABOUT_THIS_WORLD } from "../common/scenarios";
+import {
+  ABOUT_HITSUGI_SCENARIOS,
+  MEADOW_AND_SEA_ABOUT_THIS_WORLD,
+} from "../common/scenarios";
 import { Scenario } from "~/types/exhibition";
 
 export const CALMERY_CHAN_SCENARIOS: Scenario[] = [
@@ -20,7 +23,7 @@ export const HITSUGI_SCENARIOS: Scenario[] = [
       },
       {
         message: "この世界について",
-        scenarios: ABOUT_THIS_WORLD,
+        scenarios: MEADOW_AND_SEA_ABOUT_THIS_WORLD,
       },
     ],
     message: "お日様がぽかぽかして気持ちいいね。",
