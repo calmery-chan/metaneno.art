@@ -106,7 +106,11 @@ export const Fanarts: React.FC<{ onClose: () => void }> = ({ onClose }) => {
             />
           </div>
           <div className="flex" css={portraitInformation}>
-            <a href={fanart.user.url} rel="noopener noreferrer" target="_blank">
+            <a
+              href={fanart.user.url || undefined}
+              rel="noopener noreferrer"
+              target="_blank"
+            >
               <div className="flex items-center h-full cursor-pointer">
                 <img
                   className="inline h-full"
@@ -116,19 +120,21 @@ export const Fanarts: React.FC<{ onClose: () => void }> = ({ onClose }) => {
                 {fanart.user.name}
               </div>
             </a>
-            <a
-              className="ml-auto"
-              href={fanart.referenceUrl}
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              <div
-                className="flex items-center h-full cursor-pointer"
-                css={portraitInformationUrl}
+            {fanart.referenceUrl && (
+              <a
+                className="ml-auto"
+                href={fanart.referenceUrl}
+                rel="noopener noreferrer"
+                target="_blank"
               >
-                ツイートを見る
-              </div>
-            </a>
+                <div
+                  className="flex items-center h-full cursor-pointer"
+                  css={portraitInformationUrl}
+                >
+                  ツイートを見る
+                </div>
+              </a>
+            )}
           </div>
           <div className="flex overflow-scroll" css={portraitThumbnails}>
             {fanarts.map((fanart, index) => (
