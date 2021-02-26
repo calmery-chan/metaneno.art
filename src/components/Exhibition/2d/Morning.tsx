@@ -27,10 +27,19 @@ import {
 } from "~/constants/exhibition";
 import { ChekiScenario } from "~/domains/cheki/models";
 import { useScreenOrientation } from "~/hooks/exhibition/useScreenOrientation";
+import { useAudio } from "~/hooks/useAudio";
 import { useKeydown, useKeyup } from "~/hooks/useKeyboard";
 import { fadeIn } from "~/styles/animations";
+import { Mixin } from "~/styles/mixin";
 import * as GA from "~/utils/exhibition/google-analytics";
 import * as state from "~/utils/exhibition/state";
+
+const trainSoundPath = "/sounds/train.mp3";
+const trainSoundUrl = `${
+  process.env.NODE_ENV === "production"
+    ? "https://assets.metaneno.art"
+    : "http://localhost:8000"
+}${trainSoundPath}`;
 
 const preload = () =>
   Promise.all(
@@ -71,6 +80,7 @@ const preload = () =>
         "/exhibition/2d/pickable/2.png",
         "/exhibition/2d/pickable/3.png",
         "/exhibition/2d/cherry.png",
+        trainSoundUrl,
       ])
       .map((url) => fetch(url))
   );
@@ -154,6 +164,7 @@ const Exhibition2dWakeupCaharcter: React.FC<{ onComplete: () => void }> = ({
 // Main
 
 export const Exhibition2dMorning: React.FC = () => {
+  const { audio } = useAudio(trainSoundPath);
   const { orientation } = useScreenOrientation();
   const { push } = useRouter();
   const [ready, setReady] = useState(false);
@@ -183,6 +194,18 @@ export const Exhibition2dMorning: React.FC = () => {
       }
     })();
   }, []);
+
+  useEffect(() => {
+    if (audio && ready) {
+      setTimeout(() => {
+        audio.play();
+      }, 12000);
+
+      return () => {
+        audio.fade(audio.volume(), 0, Mixin.ANIMATION_DURATION.milliseconds);
+      };
+    }
+  }, [audio, ready]);
 
   const handleKeydown = useCallback(
     ({ key }: KeyboardEvent) => {
