@@ -171,6 +171,7 @@ export const Exhibition2dMorning: React.FC = () => {
   >(null);
   const [wokeUp, setWorkUp] = useState(false);
   const [sleep, setSleep] = useState(false);
+  const isInteracting = !wokeUp || !!scenarios || sleep;
 
   useEffect(() => {
     (async () => {
@@ -182,15 +183,22 @@ export const Exhibition2dMorning: React.FC = () => {
     })();
   }, []);
 
-  const handleKeydown = useCallback(({ key }: KeyboardEvent) => {
-    const isLeft = key === "a" || key === "ArrowLeft";
-    const isRight = key === "d" || key === "ArrowRight";
+  const handleKeydown = useCallback(
+    ({ key }: KeyboardEvent) => {
+      if (isInteracting) {
+        return;
+      }
 
-    if (isLeft) setDirection("left");
-    if (isRight) setDirection("right");
+      const isLeft = key === "a" || key === "ArrowLeft";
+      const isRight = key === "d" || key === "ArrowRight";
 
-    setIsMoving(isLeft || isRight);
-  }, []);
+      if (isLeft) setDirection("left");
+      if (isRight) setDirection("right");
+
+      setIsMoving(isLeft || isRight);
+    },
+    [isInteracting]
+  );
 
   const handleKeyup = useCallback(({ key }: KeyboardEvent) => {
     if (
@@ -204,7 +212,7 @@ export const Exhibition2dMorning: React.FC = () => {
   }, []);
 
   const handleMove = useCallback(() => {
-    if (sleep || !wokeUp) {
+    if (isInteracting) {
       return;
     }
 
@@ -342,8 +350,6 @@ export const Exhibition2dMorning: React.FC = () => {
   }, [isMoving, handleMove]);
 
   // Render
-
-  const isInteracting = !wokeUp || !!scenarios || sleep;
 
   return (
     <div
