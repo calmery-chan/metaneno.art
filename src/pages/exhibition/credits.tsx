@@ -371,6 +371,19 @@ const ExhibitionCredits: NextPage = dynamic(() =>
               </div>
             </div>
           </div>
+
+          <div css={group}>
+            <div css={groupTitle}>SE</div>
+            <div>
+              <div>
+                On-Jin ～音人～ (<Ancher href="https://on-jin.com/" />)
+              </div>
+              <div>
+                効果音ラボ (<Ancher href="https://soundeffect-lab.info/" />)
+              </div>
+            </div>
+          </div>
+
           <div css={buttons}>
             <div css={button} onClick={handleClickTop}>
               トップに戻る
