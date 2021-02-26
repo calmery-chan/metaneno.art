@@ -1,10 +1,11 @@
 import { keyframes, css } from "@emotion/react";
 import styled from "@emotion/styled";
-import React from "react";
+import React, { useCallback } from "react";
 import ShareTitle from "./Title/ShareTitle";
 import { useIntersectionObserver } from "./hooks";
 import { media } from "./variables";
 import * as GA from "~/utils/google-analytics";
+import * as share from "~/utils/share";
 
 const fullTwitterShare = (text: string, url: string) =>
   `https://twitter.com/intent/tweet?text=${text}&url=${url}&via=metanen0x0`;
@@ -21,6 +22,16 @@ export default function Share() {
     tagWrappertRef,
     isTagWrapperIntersected,
   ] = useIntersectionObserver<HTMLDivElement>({});
+
+  const handleClickFacebookShareButton = useCallback(() => {
+    GA.share("facebook");
+    share.set();
+  }, []);
+
+  const handleClickTwitterShareButton = useCallback(() => {
+    GA.share("twitter");
+    share.set();
+  }, []);
 
   return (
     <Wrapper>
@@ -39,7 +50,7 @@ export default function Share() {
           isIntersected={isIconWrapperIntersected}
         >
           <Icon
-            onClick={() => GA.share("twitter")}
+            onClick={handleClickTwitterShareButton}
             src="/lp/share/twitter.svg"
           />
         </Anchor>
@@ -49,7 +60,7 @@ export default function Share() {
           isIntersected={isIconWrapperIntersected}
         >
           <Icon
-            onClick={() => GA.share("facebook")}
+            onClick={handleClickFacebookShareButton}
             src="/lp/share/facebook.svg"
           />
         </Anchor>
