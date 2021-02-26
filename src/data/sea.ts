@@ -504,30 +504,6 @@ const cache: Area = {
         url: "/objects/areas/sea/gear.glb",
       },
       {
-        characters: [],
-        comment: "",
-        date: "2021/02",
-        id: "goldfish",
-        imageUrl: "/images/goldfish.png",
-        position: {
-          x: 1.9,
-          y: 2.25,
-          z: -0.9,
-        },
-        rotation: {
-          x: -11,
-          y: 0,
-          z: 0,
-        },
-        scale: {
-          x: 1,
-          y: 1,
-          z: 1,
-        },
-        title: "金魚を瓶に封じ込めて飾りたい",
-        url: "/objects/areas/sea/goldfish.glb",
-      },
-      {
         characters: ["古明地こいし（東方Project）"],
         comment:
           "※こちらの作品は二次創作作品です。\n\n「花隠れ」をテーマにした同人本に収録した一枚です。\n紫陽花の花手水です。\n水面がゆらゆらと揺れる様子と、こいしちゃんの不安定さを合わせてみました。",
