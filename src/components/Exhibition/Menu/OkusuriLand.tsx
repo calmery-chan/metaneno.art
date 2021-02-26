@@ -60,7 +60,6 @@ const logOutButton = css`
 
 const medicine = css`
   color: ${Colors.black};
-  height: 34px;
   margin-top: ${Spacing.s}px;
 `;
 
@@ -76,15 +75,6 @@ const medicineName = css`
 
 const medicineDescription = css`
   ${Typography.S};
-`;
-
-const myPageButton = css`
-  ${Mixin.clickable};
-  ${Typography.M};
-  border-radius: 2px;
-  color: #fff;
-  padding: ${Spacing.s}px ${Spacing.m}px;
-  margin-right: ${Spacing.s}px;
 `;
 
 const profileIcon = css`
