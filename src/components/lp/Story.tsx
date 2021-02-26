@@ -33,26 +33,32 @@ export default function Story() {
         ref={descriptionRef}
         isIntersected={isDescriptionIntersected}
       >
-        <span>月光が静かに光を射す深夜 24 時、</span>
+        <span>音も静まる深夜24時、</span>
         <br />
-        <span>眠れない少女は怪しげな 2 つのクリームソーダを見つけました。</span>
+        <span>眠れない少女はベッドから身体を起こすと</span>
         <br />
         <br />
-        <span>水の流れるクリームソーダと花香るクリームソーダ。</span>
+        <span>視界の隅に見慣れない光が届きました。</span>
+        <br />
+        <br />
+        <span>その正体は『幻想世界へのチケット』でした――</span>
         <br />
         <br />
         <span>
-          どちらかを選んで飲んでいたら、何だか視界がぐにゃぐにゃふわふわして……
-        </span>
-        <br />
-        <span>気が付いたら目の前に、</span>
-        <br />
-        <span>
-          幻想的なイラストや可愛いキャラクターがいる夢のような世界が広がっていました。
+          チケットを手に取り進んだ先には怪しげな2つのクリームソーダがあり、
         </span>
         <br />
         <br />
-        <span>どうやら少女は幻想世界に飛び込んでしまったようです…！</span>
+        <span>どちらかを選んで飲んでいたら、</span>
+        <br />
+        <span>その先に待ち受けていた世界とは…？</span>
+        <br />
+        <br />
+        <span>イラストレーター、めたねのおくすりが表現する</span>
+        <br />
+        <span>Web上ならではの要素が詰まった</span>
+        <br />
+        <span>イラスト個展の始まりです。</span>
       </Description>
       <div>
         <SubTitle
