@@ -27,15 +27,19 @@ const setAnimation = (
 ) => {
   scene.mixer.stopAllAction();
 
-  const animation = scene.mixer.clipAction(
-    scene.animations.find(
-      (animation) => animation.name.toLowerCase() === (name || payload.state)
-    )!
+  const animation = scene.animations.find(
+    (animation) => animation.name.toLowerCase() === (name || payload.state)
   );
 
-  animation.clampWhenFinished = true;
-  animation.loop = LoopRepeat;
-  animation.play();
+  if (!animation) {
+    return;
+  }
+
+  const action = scene.mixer.clipAction(animation);
+
+  action.clampWhenFinished = true;
+  action.loop = LoopRepeat;
+  action.play();
 
   scene.state = payload.state;
 };
@@ -58,6 +62,8 @@ const applyPlayerTransform = async (scene: S, payload: UpdateResponse) => {
   }
 
   // Animations
+
+  console.log(scene.ready, scene.state, payload.state);
 
   if (!scene.ready) {
     setAnimation(scene, payload);
@@ -95,6 +101,8 @@ const applyPlayerTransform = async (scene: S, payload: UpdateResponse) => {
     payload.position.y,
     payload.position.z
   );
+
+  console.log(scene.nextPosition, currentPosition);
 
   if (
     !scene.nextPosition ||

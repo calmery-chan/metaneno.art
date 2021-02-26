@@ -91,9 +91,7 @@ export const Exhibition3dPlayer = React.memo<
     const [cameraOffset, setCameraOffset] = useState<Vector3>();
     const [colliders, setColliders] = useState<Mesh[]>();
     const [mixer, setMixer] = useState<AnimationMixer>();
-    const [state, setState] = useState<"running" | "standing" | "walking">(
-      "standing"
-    );
+    const [state, setState] = useState<"idle" | "run" | "walk">("idle");
     const [accessory, setAccessory] = useState<Scene | null>(null);
     const [scene, setScene] = useState<Scene>();
     const camera = useCamera(scene?.position, cameraOffset);
@@ -194,14 +192,19 @@ export const Exhibition3dPlayer = React.memo<
         return;
       }
 
-      const animation = mixer.clipAction(
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        animations.find((animation) => animation.name.toLowerCase() === state)!
+      const animation = animations.find(
+        (animation) => animation.name.toLowerCase() === state
       );
 
-      animation.clampWhenFinished = true;
-      animation.loop = THREE.LoopRepeat;
-      animation.play();
+      if (!animation) {
+        return;
+      }
+
+      const action = mixer.clipAction(animation);
+
+      action.clampWhenFinished = true;
+      action.loop = THREE.LoopRepeat;
+      action.play();
 
       return () => {
         mixer.stopAllAction();
@@ -216,11 +219,11 @@ export const Exhibition3dPlayer = React.memo<
       }
 
       if (down || left || right || up) {
-        setState("running");
+        setState("run");
         return;
       }
 
-      setState("standing");
+      setState("idle");
     }, [down, left, operable, handleUpdate, right, up]);
 
     useFrame((_, delta) => {
