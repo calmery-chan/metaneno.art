@@ -361,11 +361,12 @@ const cache: Area = {
     ],
     works: [
       {
-        characters: ["okusuri"],
-        comment: "",
-        date: "2019/11",
-        id: "okusuri",
-        imageUrl: "/images/okusuri.png",
+        characters: [],
+        comment:
+          "もう二度と朝が来ませんように…！！そう思ったことはありませんか！？\nその時の気持ちを表現しようとしましたが、直接表現するととんでもなくなりそうなので雰囲気をふわふわで包んでみました。\nベッドに散らばっているものは何だろう…ラムネかな…。",
+        date: "2021/02",
+        id: "magic",
+        imageUrl: "/images/magic.png",
         position: {
           x: -8.9,
           y: 6.85,
@@ -381,8 +382,8 @@ const cache: Area = {
           y: 1,
           z: 1,
         },
-        url: "/objects/areas/cloud/okusuri.glb",
-        title: "okusuri",
+        url: "/objects/areas/cloud/magic.glb",
+        title: "朝が来ないおまじない",
       },
       {
         characters: ["かるめりちゃん（parent/Calmeryさん）"],
@@ -561,7 +562,8 @@ const cache: Area = {
       },
       {
         characters: ["ノネメちゃん"],
-        comment: "",
+        comment:
+          "シャボン玉とノネメちゃん。\nシャボン玉の中身って吸い込まれそうなくらい綺麗だけど、風に乗ってふわふわと飛んで行っては突然消える…眺める暇なんてありませんよね…。\n珍しく制服姿のノネメちゃんです。\n気分で学校に通って高校生をしているらしいです。たまにしか通学しないけどテストの成績はめちゃめちゃ良い子。",
         date: "2021/02",
         id: "moment",
         imageUrl: "/images/moment.png",

@@ -381,7 +381,8 @@ const cache: Area = {
     works: [
       {
         characters: ["棺（ひつぎ）"],
-        comment: "",
+        comment:
+          "おおきな水槽の前に佇む棺ちゃん。\n水族館のような暗い室内の中で水槽からの青い光を浴びるのって、非現実的で楽しい！\nあのひんやりした空気感が伝わったら嬉しいです。\n水槽の中に水晶があったり、何故か月が見えていて欲張りセットって感じですね。\n棺ちゃんが旅の中で見つけたお気に入りコレクションなのかも…？",
         date: "2021/02",
         id: "aquarium",
         imageUrl: "/images/aquarium.png",
@@ -400,7 +401,7 @@ const cache: Area = {
           y: 1,
           z: 1,
         },
-        title: "私の水槽",
+        title: "見つけた空間",
         url: "/objects/areas/sea/aquarium.glb",
       },
       {
@@ -554,8 +555,9 @@ const cache: Area = {
         url: "/objects/areas/sea/melon_soda.glb",
       },
       {
-        characters: [],
-        comment: "",
+        characters: ["ヒノリちゃん"],
+        comment:
+          "水没している町…？跡地…？のような何かです。\n仮に彼女が過去にここで戦っていたとしたら、水没した跡地を見てどんな思いに浸るのでょうか…？\nちなみにサイボーグなので彼女は半分人間です。\nそして右腕についてるのはマシンガンです。\nサイボーグク〇ちゃん！",
         date: "2021/02",
         id: "submerged",
         imageUrl: "/images/submerged.png",
