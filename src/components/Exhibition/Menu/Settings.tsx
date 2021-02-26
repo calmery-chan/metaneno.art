@@ -109,7 +109,7 @@ export const Settings: React.FC<{
           <div css={value}>{currentAudioVolume * 10}</div>
         </div>
         <div
-          className="cursor-pointer flex items-center"
+          className="flex items-center cursor-pointer"
           onClick={onClickMuteToggle}
         >
           <input type="checkbox" checked={muted} />

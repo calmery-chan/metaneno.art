@@ -23,10 +23,18 @@ import {
   EXHIBITION_2D_ZOOM_ANIMATION_STEP,
 } from "~/constants/exhibition";
 import { useScreenOrientation } from "~/hooks/exhibition/useScreenOrientation";
+import { useAudio } from "~/hooks/useAudio";
 import { useKeydown, useKeyup } from "~/hooks/useKeyboard";
 import { fadeIn, fadeOut } from "~/styles/animations";
 import { Mixin } from "~/styles/mixin";
 import * as GA from "~/utils/exhibition/google-analytics";
+
+const doorSoundPath = "/sounds/door.mp3";
+const doorSoundUrl = `${
+  process.env.NODE_ENV === "production"
+    ? "https://assets.metaneno.art"
+    : "http://localhost:8000"
+}${doorSoundPath}`;
 
 const preload = () =>
   Promise.all(
@@ -74,6 +82,7 @@ const preload = () =>
         "/exhibition/2d/pickable/2.png",
         "/exhibition/2d/pickable/3.png",
         "/exhibition/2d/cherry.png",
+        doorSoundUrl,
       ])
       .map((url) => fetch(url))
   );
@@ -142,6 +151,7 @@ const fadeOutImage = css`
 export const Exhibition2dNight: React.FC<{
   onComplete: (creansoda: "flower" | "water") => void;
 }> = ({ onComplete }) => {
+  const { audio } = useAudio(doorSoundPath);
   const { orientation } = useScreenOrientation();
   const [ready, setReady] = useState(false);
   const [restricted, setRestricted] = useState(true);
@@ -179,8 +189,9 @@ export const Exhibition2dNight: React.FC<{
 
   const handleClickKey = useCallback(() => {
     GA.click("key");
+    audio?.play();
     setRestricted(false);
-  }, []);
+  }, [audio]);
 
   const handleMove = useCallback(() => {
     if (!wakeup || walked || (!restricted && !isReadScenario)) {
