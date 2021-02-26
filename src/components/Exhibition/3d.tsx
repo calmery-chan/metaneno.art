@@ -54,12 +54,21 @@ export const fadeOut = css`
 
 export const Exhibition3d: React.FC<{
   creamsoda: "flower" | "water";
+  defaultArea: AreaName | null;
   examine: ReturnType<typeof useOkusuriLand>["examine"];
   multiplay: ReturnType<typeof useMultiplay>;
   onComplete: () => void;
   settings: { graphicsQuality: GraphicsQuality };
-}> = ({ creamsoda, examine, multiplay, onComplete, settings }) => {
-  const defaultArea = creamsoda === "flower" ? "meadow" : "sea";
+}> = ({
+  creamsoda,
+  defaultArea: _defaultArea,
+  examine,
+  multiplay,
+  onComplete,
+  settings,
+}) => {
+  const defaultArea =
+    _defaultArea || (creamsoda === "flower" ? "meadow" : "sea");
 
   const [currentAreaName, setCurrentAreaName] = useState<AreaName>(defaultArea);
   const [firstUpdate, setFirstUpdate] = useState(true);
@@ -96,6 +105,14 @@ export const Exhibition3d: React.FC<{
     previous: defaultArea,
     next: defaultArea,
   });
+
+  useEffect(() => {
+    const { accessory } = state.get();
+
+    if (accessory === "fried_egg" || accessory === "pancake") {
+      setPlayerAccessory(accessory);
+    }
+  }, []);
 
   useEffect(() => {
     state.set({ area: currentAreaName });

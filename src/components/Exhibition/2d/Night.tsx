@@ -289,6 +289,9 @@ export const Exhibition2dNight: React.FC<{
   }, [onComplete, selectedCreamSoda]);
 
   useEffect(() => {
+    const { hasKey } = state.get();
+    setRestricted(!hasKey);
+
     (async () => {
       try {
         await preload();

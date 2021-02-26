@@ -10,7 +10,7 @@ import { ExhibitionMenu } from "~/components/Exhibition/Menu";
 import { ExhibitionOkusuriLandNotifications } from "~/components/Exhibition/OkusuriLandNotifications";
 import { useMultiplay } from "~/hooks/exhibition/useMultuplay";
 import { useScreenOrientation } from "~/hooks/exhibition/useScreenOrientation";
-import { GraphicsQuality } from "~/types/exhibition";
+import { AreaName, GraphicsQuality } from "~/types/exhibition";
 import * as GA from "~/utils/exhibition/google-analytics";
 import * as state from "~/utils/exhibition/state";
 import { useOkusuriLand } from "~/utils/okusuri.land";
@@ -29,6 +29,37 @@ export const Exhibition: React.FC = () => {
     "high"
   );
   const [ready, setReady] = useState(false);
+  const [defaultArea, setDefaultArea] = useState<AreaName | null>(null);
+
+  useEffect(() => {
+    const { area, creamsoda, location } = state.get();
+    let isCreamsodaExists = false;
+    let isLocationExists = false;
+    let isAreaExists = false;
+
+    if (creamsoda === "flower" || creamsoda === "water") {
+      isCreamsodaExists = true;
+      setCreamsoda(creamsoda);
+    }
+
+    if (
+      location === "2d-morning" ||
+      location === "2d-night" ||
+      location === "3d"
+    ) {
+      isLocationExists = true;
+      setLocation(location);
+    }
+
+    if (area === "cloud" || area === "meadow" || area === "sea") {
+      isAreaExists = true;
+      setDefaultArea(area);
+    }
+
+    if (isCreamsodaExists && isLocationExists && isAreaExists) {
+      setReady(true);
+    }
+  }, []);
 
   // Events
 
@@ -112,6 +143,7 @@ export const Exhibition: React.FC = () => {
         {location === "3d" && creamsoda && (
           <Exhibition3d
             creamsoda={creamsoda}
+            defaultArea={defaultArea}
             examine={okusuriLand.examine}
             multiplay={multiplay}
             onComplete={handleComplete3d}
