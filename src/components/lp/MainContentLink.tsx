@@ -32,12 +32,10 @@ export default function MainContentLink() {
               src="/lp/decoration/triangle.svg"
             />
           </div>
-          <Anchor href="/exhibition">
-            <Button
-              src="/lp/main-content-link/button.svg"
-              isIntersected={isIntersected}
-            />
-          </Anchor>
+          <Button
+            src="/lp/main-content-link/coming-soon.svg"
+            isIntersected={isIntersected}
+          />
         </ButtonWrapper>
       </Inner>
     </Wrapper>
@@ -141,31 +139,13 @@ const popin = keyframes`
 
 const ButtonWrapper = styled.div`
   position: relative;
-  padding: 60px;
-`;
-
-const Anchor = styled.a`
-  display: block;
-  transition: transform 0.16s ease-out;
-
-  &:hover {
-    transform: scale(1.04);
-  }
-
-  &:active {
-    transform: scale(0.96);
-  }
 `;
 
 const Button = styled.img<{ isIntersected: boolean }>`
   position: relative;
   display: block;
-  height: 56px;
+  height: 180px;
   opacity: 0;
-
-  ${media.smallDown} {
-    height: 50px;
-  }
 
   ${({ isIntersected }) =>
     isIntersected &&
