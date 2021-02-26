@@ -30,6 +30,7 @@ import { useScreenOrientation } from "~/hooks/exhibition/useScreenOrientation";
 import { useKeydown, useKeyup } from "~/hooks/useKeyboard";
 import { fadeIn } from "~/styles/animations";
 import * as GA from "~/utils/exhibition/google-analytics";
+import * as state from "~/utils/exhibition/state";
 
 const preload = () =>
   Promise.all(
@@ -318,6 +319,7 @@ export const Exhibition2dMorning: React.FC = () => {
     setSleep(true);
 
     setTimeout(() => {
+      state.reset();
       push("/");
     }, SLEEP_ANIMATION_SPEED);
   }, []);
