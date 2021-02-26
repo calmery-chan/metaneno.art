@@ -12,7 +12,7 @@ export default function Badge() {
   return (
     <Wrapper ref={targetRef} isIntersected={isIntersected}>
       <Bg src="/lp/story/badge-bg.svg" isIntersected={isIntersected} />
-      <Text src="/lp/story/badge-text.svg" />
+      <Text src="/lp/story/badge-text-published.svg" />
     </Wrapper>
   );
 }
@@ -92,6 +92,6 @@ const Text = styled.img`
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 85%;
+  width: 68%;
   transform: translate(-50%, -50%);
 `;
