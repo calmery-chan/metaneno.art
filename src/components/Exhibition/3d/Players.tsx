@@ -63,8 +63,6 @@ const applyPlayerTransform = async (scene: S, payload: UpdateResponse) => {
 
   // Animations
 
-  console.log(scene.ready, scene.state, payload.state);
-
   if (!scene.ready) {
     setAnimation(scene, payload);
   } else if (scene.state !== payload.state) {
@@ -102,8 +100,6 @@ const applyPlayerTransform = async (scene: S, payload: UpdateResponse) => {
     payload.position.z
   );
 
-  console.log(scene.nextPosition, currentPosition);
-
   if (
     !scene.nextPosition ||
     (scene.nextPosition && !scene.nextPosition.equals(currentPosition))
@@ -121,6 +117,10 @@ const applyPlayerTransform = async (scene: S, payload: UpdateResponse) => {
     scene.lerpAlpha = 0;
     scene.lerpTimer = window.setInterval(() => {
       if (scene.lerpAlpha >= 1) {
+        if (scene.lerpTimer) {
+          clearInterval(scene.lerpTimer);
+        }
+
         scene.nextPosition = null;
         setAnimation(scene, payload, "idle");
       }
