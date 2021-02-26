@@ -25,11 +25,9 @@ const Wrapper = styled.div`
 const scaleIn = keyframes`
   from {
     transform: scale(1.09);
-    opacity: 0;
   }
   to {
     transform: scale(1);
-    opacity: 1;
   }
 `;
 
@@ -56,8 +54,7 @@ const Image = styled.div`
     width: 100%;
     height: 100%;
     background: url(/lp/main-illust-min.jpg) center / cover no-repeat;
-    opacity: 0;
-    animation: ${scaleIn} 2s cubic-bezier(0, 0, 0.19, 1.01) 0s both;
+    animation: ${scaleIn} 2s cubic-bezier(0, 0, 0.19, 1.01) 2.4s both;
   }
 `;
 
@@ -74,13 +71,13 @@ const Logo = styled.img`
   position: absolute;
   bottom: 10%;
   left: 10%;
-  width: 42%;
+  width: 38%;
   opacity: 0;
-  animation: ${fadeIn} 2s cubic-bezier(0, 0, 0.19, 1.01) 0.8s both;
+  animation: ${fadeIn} 2s cubic-bezier(0, 0, 0.19, 1.01) 2.8s both;
 
   ${media.smallDown} {
-    bottom: 13%;
+    bottom: 10%;
     left: 4%;
-    width: 54%;
+    width: 50%;
   }
 `;
