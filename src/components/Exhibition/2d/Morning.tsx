@@ -320,7 +320,7 @@ export const Exhibition2dMorning: React.FC = () => {
 
     setTimeout(() => {
       state.reset();
-      push("/");
+      push("/exhibition/credits");
     }, SLEEP_ANIMATION_SPEED);
   }, []);
 
