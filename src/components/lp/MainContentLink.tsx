@@ -3,6 +3,7 @@ import styled from "@emotion/styled";
 import React from "react";
 import { useIntersectionObserver } from "./hooks";
 import { colors, media } from "./variables";
+import * as state from "~/utils/exhibition/state";
 
 export default function MainContentLink() {
   const [targetRef, isIntersected] = useIntersectionObserver<HTMLDivElement>(
@@ -32,7 +33,7 @@ export default function MainContentLink() {
               src="/lp/decoration/triangle.svg"
             />
           </div>
-          <Anchor href="/exhibition">
+          <Anchor href="/exhibition" onClick={() => state.reset()}>
             <Button
               src="/lp/main-content-link/button.svg"
               isIntersected={isIntersected}

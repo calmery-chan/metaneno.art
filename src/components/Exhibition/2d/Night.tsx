@@ -180,7 +180,6 @@ export const Exhibition2dNight: React.FC<{
 
   const handleClickKey = useCallback(() => {
     GA.click("key");
-    state.set({ hasKey: true });
     setRestricted(false);
   }, []);
 
@@ -256,6 +255,7 @@ export const Exhibition2dNight: React.FC<{
 
   const handleWakeup = useCallback(() => {
     GA.wakeup("night");
+    state.set({ wokeUpInNight: true });
     setWakeup(true);
   }, []);
 
@@ -289,9 +289,6 @@ export const Exhibition2dNight: React.FC<{
   }, [onComplete, selectedCreamSoda]);
 
   useEffect(() => {
-    const { hasKey } = state.get();
-    setRestricted(!hasKey);
-
     (async () => {
       try {
         await preload();

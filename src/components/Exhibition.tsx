@@ -32,13 +32,13 @@ export const Exhibition: React.FC = () => {
   const [defaultArea, setDefaultArea] = useState<AreaName | null>(null);
 
   useEffect(() => {
+    if (!state.exists()) {
+      return;
+    }
+
     const { area, creamsoda, location } = state.get();
-    let isCreamsodaExists = false;
-    let isLocationExists = false;
-    let isAreaExists = false;
 
     if (creamsoda === "flower" || creamsoda === "water") {
-      isCreamsodaExists = true;
       setCreamsoda(creamsoda);
     }
 
@@ -47,18 +47,14 @@ export const Exhibition: React.FC = () => {
       location === "2d-night" ||
       location === "3d"
     ) {
-      isLocationExists = true;
       setLocation(location);
     }
 
     if (area === "cloud" || area === "meadow" || area === "sea") {
-      isAreaExists = true;
       setDefaultArea(area);
     }
 
-    if (isCreamsodaExists && isLocationExists && isAreaExists) {
-      setReady(true);
-    }
+    setReady(true);
   }, []);
 
   // Events

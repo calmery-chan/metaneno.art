@@ -4,7 +4,6 @@ const defaultState: ExhibitionState = {
   accessory: null,
   area: null,
   creamsoda: null,
-  hasKey: false,
   location: "2d-night",
 };
 
@@ -12,8 +11,11 @@ type ExhibitionState = {
   accessory: "fried_egg" | "pancake" | null;
   area: "cloud" | "meadow" | "sea" | null;
   creamsoda: "flower" | "water" | null;
-  hasKey: boolean;
   location: "2d-morning" | "2d-night" | "3d";
+};
+
+export const exists = () => {
+  return !!localStorage.getItem(KEY);
 };
 
 export const get = (): ExhibitionState => {
