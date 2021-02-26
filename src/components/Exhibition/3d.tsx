@@ -51,12 +51,6 @@ export const fadeOut = css`
   animation: ${fadeOutKeyframes} 4.8s ease forwards;
 `;
 
-const areas = {
-  cloud,
-  meadow,
-  sea,
-};
-
 export const Exhibition3d: React.FC<{
   creamsoda: "flower" | "water";
   examine: ReturnType<typeof useOkusuriLand>["examine"];
@@ -67,7 +61,19 @@ export const Exhibition3d: React.FC<{
   const defaultArea = creamsoda === "flower" ? "meadow" : "sea";
 
   const [currentAreaName, setCurrentAreaName] = useState<AreaName>(defaultArea);
-  const area = areas[currentAreaName];
+  const [firstUpdate, setFirstUpdate] = useState(true);
+  const area = useMemo(() => {
+    switch (currentAreaName) {
+      case "cloud":
+        return cloud(firstUpdate);
+
+      case "meadow":
+        return meadow(firstUpdate);
+
+      case "sea":
+        return sea(firstUpdate);
+    }
+  }, [currentAreaName, firstUpdate]);
   const [completed, setCompleted] = useState(false);
 
   const { audio } = useAudio(area.sound.url, { loop: true });
@@ -194,6 +200,7 @@ export const Exhibition3d: React.FC<{
 
           case "talk_with_hitsugi":
             GA.talk("hitsugi");
+            setFirstUpdate(false);
             examine("METANENO_ART_NUMBER_OF_TIMES_TALKED_TO_HITSUGI", 1);
             return;
 

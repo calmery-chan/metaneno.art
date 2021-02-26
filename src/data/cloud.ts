@@ -10,7 +10,7 @@ import {
 } from "./clouds/scenarios";
 import { Area } from "~/types/exhibition";
 
-const area: Area = {
+const cache: Area = {
   areas: {},
   background: {
     color: "#FFCFCB",
@@ -760,5 +760,7 @@ const area: Area = {
     url: "/sounds/cloud.mp3",
   },
 };
+
+const area = (_: boolean): Area => cache;
 
 export default area;

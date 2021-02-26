@@ -50,6 +50,7 @@ const _HITSUGI_MEADOW_AND_SEA_FIRST_SCENARIOS: Scenario = {
 
 export const HITSUGI_MEADOW_AND_SEA_FIRST_SCENARIOS: Scenario[] = [
   {
+    actions: ["talk_with_hitsugi"],
     animations: [["rotate"], ["idle"]],
     branches: [
       {

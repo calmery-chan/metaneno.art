@@ -1,4 +1,7 @@
-import { SHEEP_MEADOW_AND_SEA_SCENARIOS } from "./common/scenarios";
+import {
+  HITSUGI_MEADOW_AND_SEA_FIRST_SCENARIOS,
+  SHEEP_MEADOW_AND_SEA_SCENARIOS,
+} from "./common/scenarios";
 import {
   CALMERY_CHAN_SCENARIOS,
   HITSUGI_SCENARIOS,
@@ -7,7 +10,7 @@ import {
 } from "./meadow/scenarios";
 import { Area } from "~/types/exhibition";
 
-const area: Area = {
+const cache: Area = {
   areas: {
     sea: {
       maximumX: -8.5,
@@ -129,7 +132,7 @@ const area: Area = {
           y: -137,
           z: 0,
         },
-        scenarios: HITSUGI_SCENARIOS,
+        scenarios: HITSUGI_MEADOW_AND_SEA_FIRST_SCENARIOS,
         scale: {
           x: 0.5,
           y: 0.5,
@@ -753,6 +756,25 @@ const area: Area = {
   sound: {
     url: "/sounds/meadow.mp3",
   },
+};
+
+const area = (firstUpdate: boolean): Area => {
+  if (firstUpdate) {
+    return cache;
+  }
+
+  cache.objects.characters = cache.objects.characters.map((character) => {
+    if (character.id === "hitsugi") {
+      return {
+        ...character,
+        scenarios: HITSUGI_SCENARIOS,
+      };
+    }
+
+    return character;
+  });
+
+  return cache;
 };
 
 export default area;
