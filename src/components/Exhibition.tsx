@@ -12,6 +12,7 @@ import { useMultiplay } from "~/hooks/exhibition/useMultuplay";
 import { useScreenOrientation } from "~/hooks/exhibition/useScreenOrientation";
 import { GraphicsQuality } from "~/types/exhibition";
 import * as GA from "~/utils/exhibition/google-analytics";
+import * as state from "~/utils/exhibition/state";
 import { useOkusuriLand } from "~/utils/okusuri.land";
 import { Disease } from "~/utils/okusuri.land/types";
 import * as share from "~/utils/share";
@@ -40,6 +41,7 @@ export const Exhibition: React.FC = () => {
 
   const handleComplete2dNight = useCallback((creamsoda: "flower" | "water") => {
     GA.drink(creamsoda);
+    state.set({ creamsoda });
     setCreamsoda(creamsoda);
     setLocation("3d");
   }, []);
@@ -64,6 +66,8 @@ export const Exhibition: React.FC = () => {
   }, []);
 
   useEffect(() => {
+    state.set({ location });
+
     if (location === "3d") {
       okusuriLand.examine("METANENO_ART_NUMBER_OF_TRIPS", 1);
       GA.trip();

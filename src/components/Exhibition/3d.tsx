@@ -34,6 +34,7 @@ import {
 } from "~/types/exhibition";
 import { preload } from "~/utils/exhibition";
 import * as GA from "~/utils/exhibition/google-analytics";
+import * as state from "~/utils/exhibition/state";
 import { useOkusuriLand } from "~/utils/okusuri.land";
 import { Sentry } from "~/utils/sentry";
 
@@ -97,6 +98,8 @@ export const Exhibition3d: React.FC<{
   });
 
   useEffect(() => {
+    state.set({ area: currentAreaName });
+
     switch (currentAreaName) {
       case "cloud":
         examine("METANENO_ART_NUMBER_OF_TRIPS_TO_CLOUD", 1);
@@ -215,12 +218,14 @@ export const Exhibition3d: React.FC<{
           case "pancake":
             examine("METANENO_ART_PUT_PANCAKE", 1);
             GA.wear("pancake");
+            state.set({ accessory: "pancake" });
             setPlayerAccessory("pancake");
             return;
 
           case "fried_egg":
             examine("METANENO_ART_PUT_FRIED_EGG", 1);
             GA.wear("fried_egg");
+            state.set({ accessory: "fried_egg" });
             setPlayerAccessory("fried_egg");
             return;
 

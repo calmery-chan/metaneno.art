@@ -1,26 +1,38 @@
 const KEY = "metaneno.art-state";
 
+const defaultState: ExhibitionState = {
+  accessory: null,
+  area: null,
+  creamsoda: null,
+  hasKey: false,
+  location: "2d-night",
+};
+
 type ExhibitionState = {
   accessory: "fried_egg" | "pancake" | null;
+  area: "cloud" | "meadow" | "sea" | null;
+  creamsoda: "flower" | "water" | null;
+  hasKey: boolean;
+  location: "2d-morning" | "2d-night" | "3d";
 };
 
 export const get = (): ExhibitionState => {
   const string = localStorage.getItem(KEY);
 
   if (!string) {
-    return {};
+    return defaultState;
   }
 
   try {
     return JSON.parse(string);
   } catch (_) {
-    return {};
+    return defaultState;
   }
 };
 
 export const set = (props: Partial<ExhibitionState>) => {
   const state: ExhibitionState = {
-    accessory: null,
+    ...defaultState,
     ...get(),
     ...props,
   };

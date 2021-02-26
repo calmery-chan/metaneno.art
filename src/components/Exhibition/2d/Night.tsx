@@ -27,6 +27,7 @@ import { useKeydown, useKeyup } from "~/hooks/useKeyboard";
 import { fadeIn, fadeOut } from "~/styles/animations";
 import { Mixin } from "~/styles/mixin";
 import * as GA from "~/utils/exhibition/google-analytics";
+import * as state from "~/utils/exhibition/state";
 
 const preload = () =>
   Promise.all(
@@ -179,6 +180,7 @@ export const Exhibition2dNight: React.FC<{
 
   const handleClickKey = useCallback(() => {
     GA.click("key");
+    state.set({ hasKey: true });
     setRestricted(false);
   }, []);
 
