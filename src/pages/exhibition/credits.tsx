@@ -231,7 +231,7 @@ const ExhibitionCredits: NextPage = dynamic(() =>
           </div>
 
           <div css={group}>
-            <div css={groupTitle}>活動を支援者してくださった方々</div>
+            <div css={groupTitle}>活動を支援してくださった方々</div>
             <div>
               <div>LEMLE</div>
               <div>ryuryu</div>
