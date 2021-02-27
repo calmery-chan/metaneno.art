@@ -15,6 +15,7 @@ import { useOkusuriLand } from "~/utils/okusuri.land";
 const menuGroup = css`
   right: ${Spacing.m}px;
   top: ${Spacing.m}px;
+  user-select: none;
   z-index: 10;
 `;
 
