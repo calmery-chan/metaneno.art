@@ -43,7 +43,7 @@ export default function Share() {
       <IconWrapper ref={iconWrapperRef}>
         <Anchor
           href={fullTwitterShare(
-            "めたねのおくすりWeb個展 2021年2月公開予定！ノネメちゃんチェキやARなど遊べるコンテンツもあるよ！",
+            "めたねのおくすりWeb個展公開中！ノネメちゃんチェキやARなど遊べるコンテンツもあるよ！",
             "https://metaneno.art"
           )}
           target="_blank"
