@@ -69,6 +69,13 @@ export const Exhibition: React.FC = () => {
   const handleComplete2dNight = useCallback((creamsoda: "flower" | "water") => {
     GA.drink(creamsoda);
     state.set({ creamsoda });
+    okusuriLand.examine("METANENO_ART_NUMBER_OF_TRIPS", 1);
+    const minTime = new Date("2021/02/27 21:00:00").getTime();
+    const currentTime = new Date().getTime();
+    const maxTime = new Date("2021/02/28 23:59:59").getTime();
+    if (minTime <= currentTime && currentTime <= maxTime) {
+      okusuriLand.examine("METANENO_ART_EARLY_ADOPTER", 1);
+    }
     setCreamsoda(creamsoda);
     setLocation("3d");
   }, []);
@@ -96,20 +103,9 @@ export const Exhibition: React.FC = () => {
     state.set({ location });
 
     if (location === "3d") {
-      okusuriLand.examine("METANENO_ART_NUMBER_OF_TRIPS", 1);
       GA.trip();
-
-      const minTime = new Date("2021/02/27 21:00:00").getTime();
-      const currentTime = new Date().getTime();
-      const maxTime = new Date("2021/02/28 23:59:59").getTime();
-
-      if (minTime <= currentTime && currentTime <= maxTime) {
-        okusuriLand.examine("METANENO_ART_EARLY_ADOPTER", 1);
-      }
-    } else {
-      if (multiplay.players) {
-        multiplay.leave();
-      }
+    } else if (multiplay.players) {
+      multiplay.leave();
     }
   }, [location]);
 
