@@ -1,13 +1,20 @@
+import styled from "@emotion/styled";
 import { NextPage } from "next";
+import React from "react";
+import LoadingIcon from "../components/lp/LoadingIcon";
+import MainVisual from "../components/lp/MainVisual";
 
-const Index: NextPage = () => (
-  <div className="grid w-full h-full place-items-center">
-    <img
-      className="w-full"
-      src="/construction.png"
-      style={{ maxWidth: `512px` }}
-    />
-  </div>
-);
+const Index: NextPage = () => {
+  return (
+    <Wrapper>
+      <MainVisual />
+      <LoadingIcon />
+    </Wrapper>
+  );
+};
+
+const Wrapper = styled.div`
+  overflow: hidden;
+`;
 
 export default Index;
