@@ -15,6 +15,7 @@ import { ControllerKeys } from "./Controller";
 import { useMultiplay } from "~/hooks/exhibition/useMultuplay";
 import { Area, AreaName, AreaObject } from "~/types/exhibition";
 import { getGltf, rewriteMaterials } from "~/utils/exhibition";
+import { getMetanenoToken } from "~/utils/exhibition/metaneno";
 
 CameraControls.install({ THREE });
 
@@ -129,7 +130,7 @@ export const Exhibition3dPlayer = React.memo<
 
         accessory.position.set(
           scene?.position.x || 0,
-          (scene?.position.y || 0) + 0.95,
+          (scene?.position.y || 0) + (getMetanenoToken() ? 1.21 : 0.95),
           scene?.position.z || 0
         );
 
@@ -152,7 +153,9 @@ export const Exhibition3dPlayer = React.memo<
 
     useEffect(() => {
       (async () => {
-        const { animations, scene } = await getGltf(url);
+        const { animations, scene } = await getGltf(
+          getMetanenoToken() ? "/objects/metaneno.glb" : url
+        );
 
         scene.scale.set(0.5, 0.5, 0.5);
 
@@ -284,7 +287,7 @@ export const Exhibition3dPlayer = React.memo<
           if (accessory) {
             accessory.position.set(
               nextPosition.x,
-              nextPosition.y + 0.95,
+              nextPosition.y + (getMetanenoToken() ? 1.21 : 0.95),
               nextPosition.z
             );
             accessory.rotation.y = Math.atan2(rotation.x, rotation.z);

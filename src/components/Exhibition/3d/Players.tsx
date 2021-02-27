@@ -7,7 +7,8 @@ import { getGltf, rewriteMaterials } from "~/utils/exhibition";
 
 type S = Scene & {
   accessory: "fried_egg" | "pancake" | null;
-  hasAccessory: boolean;
+  accessoryScene: Scene | null;
+  metaneno: boolean;
   mixer: AnimationMixer;
   nextPosition: Vector3 | null;
   lerpAlpha: number;
@@ -49,7 +50,6 @@ const applyPlayerTransform = async (scene: S, payload: UpdateResponse) => {
 
   if (!scene.ready) {
     scene.accessory = null;
-    scene.hasAccessory = false;
     scene.mixer = new AnimationMixer(scene);
     scene.nextPosition = null;
     scene.position.set(
@@ -72,10 +72,6 @@ const applyPlayerTransform = async (scene: S, payload: UpdateResponse) => {
   // Accessory
 
   if (scene.accessory !== payload.accessory) {
-    if (scene.hasAccessory) {
-      scene.children = scene.children.slice(0, scene.children.length - 1);
-    }
-
     if (payload.accessory === "pancake" || payload.accessory === "fried_egg") {
       const { scene: accessory } = await getGltf(
         `/objects/accessories/${payload.accessory}.glb`
@@ -83,12 +79,11 @@ const applyPlayerTransform = async (scene: S, payload: UpdateResponse) => {
       rewriteMaterials(accessory);
       accessory.position.set(
         scene.position.x || 0,
-        (scene.position.y || 0) + 0.95,
+        (scene.position.y || 0) + (scene.metaneno ? 1.21 : 0.95),
         scene.position.z || 0
       );
-      scene.children.push(accessory);
+      scene.accessoryScene = accessory;
       scene.accessory = payload.accessory;
-      scene.hasAccessory = true;
     }
   }
 
@@ -128,10 +123,10 @@ const applyPlayerTransform = async (scene: S, payload: UpdateResponse) => {
       const position = scene.position.lerp(nextPosition, scene.lerpAlpha);
       scene.lerpAlpha += ALPFA;
 
-      if (scene.hasAccessory) {
-        scene.children[scene.children.length - 1].position.set(
+      if (scene.accessoryScene) {
+        scene.accessoryScene.position.set(
           position.x,
-          position.y + 0.95,
+          position.y + (scene.metaneno ? 1.21 : 0.95),
           position.z
         );
       }
@@ -188,8 +183,12 @@ export const Exhibition3dPlayers = React.memo<{
                 });
               } else {
                 const { scene } = await getGltf(
-                  `/objects/${payload.metaneno ? "" : "other_"}player.glb`
+                  `/objects/${
+                    payload.metaneno ? "metaneno" : "other_player"
+                  }.glb`
                 );
+
+                (scene as S).metaneno = !!payload.metaneno;
 
                 return Promise.resolve({
                   [playerId]: await applyPlayerTransform(scene as S, payload),
@@ -211,7 +210,10 @@ export const Exhibition3dPlayers = React.memo<{
   return (
     <>
       {Object.values(scenes).map((scene) => (
-        <primitive key={scene.id} object={scene} />
+        <React.Fragment key={scene.id}>
+          <primitive object={scene} />
+          {scene.accessoryScene && <primitive object={scene.accessoryScene} />}
+        </React.Fragment>
       ))}
     </>
   );
