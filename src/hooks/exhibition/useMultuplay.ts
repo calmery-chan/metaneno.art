@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { io } from "socket.io-client";
 import { AreaName } from "~/types/exhibition";
 import * as GA from "~/utils/exhibition/google-analytics";
+import { getMetanenoToken } from "~/utils/exhibition/metaneno";
 
 export type UpdateResponse = UpdatePayload & {
   metaneno: boolean;
@@ -47,7 +48,7 @@ export const useMultiplay = () => {
   //
 
   useEffect(() => {
-    const token = localStorage.getItem("_metaneno");
+    const token = getMetanenoToken();
 
     if (token) {
       if (socket.connected) {
