@@ -38,7 +38,7 @@ export const Multiplay: React.FC<
   ReturnType<typeof useMultiplay> & {
     onClose: () => void;
   }
-> = ({ join, leave, onClose, players }) => {
+> = ({ alreadyJoinRequested, join, leave, onClose, players }) => {
   const [groupId, setGroupId] = useState("");
 
   const handleChangeInput = useCallback(
@@ -49,12 +49,16 @@ export const Multiplay: React.FC<
   );
 
   const handleClickJoinButton = useCallback(() => {
+    if (alreadyJoinRequested) {
+      return;
+    }
+
     join(groupId ? groupId : undefined);
-  }, [groupId, join]);
+  }, [alreadyJoinRequested, groupId, join]);
 
   return (
     <ExhibitionPopup label="みんなでトリップする" onClose={onClose} small>
-      <div className="flex flex-col h-full w-full">
+      <div className="flex flex-col w-full h-full">
         <div css={description}>
           友達と一緒にトリップしたいときは夢番地を入力してトリップしよう！入力せずにトリップするとランダムな夢番地に繋がるよ
         </div>
@@ -70,7 +74,7 @@ export const Multiplay: React.FC<
         />
         {!players && (
           <div
-            className="bg-blue-400 bold cursor-pointer mt-auto text-center"
+            className="mt-auto text-center bg-blue-400 cursor-pointer bold"
             css={connectButton}
             onClick={handleClickJoinButton}
           >
@@ -79,7 +83,7 @@ export const Multiplay: React.FC<
         )}
         {!!players && (
           <div
-            className="bg-red-400 bold cursor-pointer mt-auto text-center"
+            className="mt-auto text-center bg-red-400 cursor-pointer bold"
             css={connectButton}
             onClick={leave}
           >

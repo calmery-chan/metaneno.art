@@ -44,6 +44,7 @@ export const useMultiplay = () => {
   > | null>(null);
   const [lastUpdate, setLastUpdate] = useState<UpdatePayload | null>(null);
   const [socket, setSocket] = useState(createSocket());
+  const [alreadyJoinRequested, setAlreadyJoinRequested] = useState(false);
 
   //
 
@@ -63,6 +64,7 @@ export const useMultiplay = () => {
 
   const join = useCallback(
     (payload?: string) => {
+      setAlreadyJoinRequested(true);
       socket.connect();
       socket.emit("join", payload);
       GA.multiplay("join");
@@ -95,6 +97,7 @@ export const useMultiplay = () => {
   );
 
   const handleSocketDisconnect = useCallback(() => {
+    setAlreadyJoinRequested(false);
     setPlayers(null);
     GA.multiplay("leave");
   }, []);
@@ -180,6 +183,7 @@ export const useMultiplay = () => {
   //
 
   return {
+    alreadyJoinRequested,
     join,
     leave: handleLeave,
     players,
