@@ -38,12 +38,19 @@ const terms = css`
   margin-top: ${Spacing.s}px;
 `;
 
+const warning = css`
+  ${Typography.XS};
+  color: ${Colors.white};
+  margin-top: ${Spacing.s}px;
+`;
+
 // Components
 
 export const ExhibitionTitleScreen = dynamic(() =>
   Promise.resolve(({ onReady }: { onReady: () => void }) => {
     const { orientation } = useScreenOrientation();
     const [agreed, setAgreed] = useState(false);
+    const [agreedFadeOut, setAgreedFadeOut] = useState(false);
     const [ready, setReady] = useState(false);
 
     // Side Effects
@@ -56,10 +63,6 @@ export const ExhibitionTitleScreen = dynamic(() =>
       }
     }, [onReady, ready]);
 
-    useEffect(() => {
-      setAgreed(!!localStorage.getItem("metaneno.art-agreed_to_terms"));
-    }, []);
-
     // Events
 
     const handleClickAgreeToTermsButton = useCallback(() => {
@@ -70,8 +73,14 @@ export const ExhibitionTitleScreen = dynamic(() =>
         );
       }
 
-      setReady(true);
+      setAgreedFadeOut(true);
+
+      setTimeout(() => {
+        setAgreed(true);
+      }, Mixin.ANIMATION_DURATION.milliseconds);
     }, []);
+
+    const handleReady = useCallback(() => setReady(true), []);
 
     // Render
 
@@ -93,43 +102,63 @@ export const ExhibitionTitleScreen = dynamic(() =>
           )}
           css={container}
         >
-          <div
-            className="w-full"
-            css={css`
-              ${contents};
-              ${ready ? fadeOut : fadeIn}
-            `}
-          >
-            <img
-              alt="ロゴ"
-              src="/lp/logo.svg"
-              style={isMobile ? { maxHeight: "192px" } : {}}
-            />
+          {!agreed && (
             <div
-              className="cursor-pointer"
-              css={button}
-              onClick={handleClickAgreeToTermsButton}
-              style={
-                isMobile
-                  ? { maxHeight: "36px", marginTop: `${Spacing.s}px` }
-                  : {}
-              }
+              className="w-full"
+              css={css`
+                ${contents};
+                ${agreedFadeOut ? fadeOut : fadeIn}
+              `}
             >
               <img
-                alt="はじめる"
-                className="mx-auto"
-                src="/lp/main-content-link/button.svg"
+                alt="ロゴ"
+                src="/lp/logo.svg"
+                style={isMobile ? { maxHeight: "192px" } : {}}
               />
+              <div
+                className="cursor-pointer"
+                css={button}
+                onClick={handleClickAgreeToTermsButton}
+                style={
+                  isMobile
+                    ? { maxHeight: "36px", marginTop: `${Spacing.s}px` }
+                    : {}
+                }
+              >
+                <img
+                  alt="はじめる"
+                  className="mx-auto"
+                  src="/lp/main-content-link/button.svg"
+                />
+              </div>
+              <div className="text-center" css={terms}>
+                <a className="underline" href="/terms" target="_blank">
+                  利用規約
+                </a>
+                をご確認の上、{isMobile ? <br /> : ""}
+                ご同意頂ける場合にのみ「Trip」ボタンを
+                {isMobile ? "タップ" : "クリック"}してください
+              </div>
             </div>
-            <div className="text-center" css={terms}>
-              <a className="underline" href="/terms" target="_blank">
-                利用規約
-              </a>
-              をご確認の上、{isMobile ? <br /> : ""}
-              ご同意頂ける場合にのみ「Trip」ボタンを
-              {isMobile ? "タップ" : "クリック"}してください
+          )}
+          {agreed && (
+            <div
+              className="grid w-full h-full text-center cursor-pointer place-items-center"
+              onClick={handleReady}
+            >
+              <div
+                css={css`
+                  ${warning};
+                  ${ready ? fadeOut : fadeIn}
+                `}
+              >
+                ここから先、音声が再生されます。
+                <br />
+                音量を調整の上{isMobile ? "タップ" : "クリック"}
+                してお進みください。
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </>
     );
