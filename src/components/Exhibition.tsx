@@ -11,6 +11,7 @@ import { ExhibitionOkusuriLandNotifications } from "~/components/Exhibition/Okus
 import { useMultiplay } from "~/hooks/exhibition/useMultuplay";
 import { useScreenOrientation } from "~/hooks/exhibition/useScreenOrientation";
 import { AreaName, GraphicsQuality } from "~/types/exhibition";
+import { ping } from "~/utils/exhibition";
 import * as GA from "~/utils/exhibition/google-analytics";
 import * as state from "~/utils/exhibition/state";
 import { useOkusuriLand } from "~/utils/okusuri.land";
@@ -32,6 +33,8 @@ export const Exhibition: React.FC = () => {
   const [defaultArea, setDefaultArea] = useState<AreaName | null>(null);
 
   useEffect(() => {
+    ping();
+
     if (!state.exists()) {
       return;
     }

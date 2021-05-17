@@ -188,6 +188,10 @@ export const getImageSizeByDirection = (direction: ChekiDirection) => ({
       : CHEKI_VERTICAL_IMAGE_WIDTH,
 });
 
+export const ping = async (): Promise<void> => {
+  await fetch(getEndpointUrl(""));
+};
+
 export const upload = async (imageUrl: string): Promise<string> => {
   const dataUrl = convertImageToDataUrl(await convertUrlToImage(imageUrl));
   const formData = new FormData();
