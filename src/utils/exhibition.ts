@@ -98,6 +98,14 @@ export const getScene = async (url: string) => {
   return scene;
 };
 
+export const ping = async (): Promise<void> => {
+  await fetch(
+    process.env.NODE_ENV === "production"
+      ? "https://multiplay.creamsoda.in/a/dream"
+      : "http://localhost:5000"
+  );
+};
+
 export const preload = (url: string) =>
   axios.get(
     `${

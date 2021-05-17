@@ -36,6 +36,7 @@ import {
   getScenarioCacheId,
   getTutorialElementId,
   MouseRelatedEvent,
+  ping,
   TouchRelatedEvent,
 } from "~/utils/cheki";
 import * as GA from "~/utils/cheki/google-analytics";
@@ -672,6 +673,7 @@ export const Index: NextPage = () => {
   // Side Effects
 
   useEffect(() => {
+    ping();
     setTimeout(() => setFire(true), SPLASH_SCREEN_DURATION);
   }, []);
 
@@ -714,7 +716,7 @@ export const Index: NextPage = () => {
 
       {!splashed && (
         <div css={fire ? splashAnimation : undefined}>
-          <div className="bg-white bottom-0 fixed flex h-full items-center justify-center left-0 right-0 top-0 w-full">
+          <div className="fixed top-0 bottom-0 left-0 right-0 flex items-center justify-center w-full h-full bg-white">
             <ChekiLogo size={256} />
             <div className="absolute font-bold" css={splashComment}>
               Made with <img css={splashHeart} src="/cheki/heart.svg" /> by

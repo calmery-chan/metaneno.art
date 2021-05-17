@@ -188,6 +188,14 @@ export const getImageSizeByDirection = (direction: ChekiDirection) => ({
       : CHEKI_VERTICAL_IMAGE_WIDTH,
 });
 
+export const ping = async (): Promise<void> => {
+  await fetch(
+    process.env.NODE_ENV === "production"
+      ? "https://creamsoda.in/a/dream"
+      : "http://localhost:5000"
+  );
+};
+
 export const upload = async (imageUrl: string): Promise<string> => {
   const dataUrl = convertImageToDataUrl(await convertUrlToImage(imageUrl));
   const formData = new FormData();
