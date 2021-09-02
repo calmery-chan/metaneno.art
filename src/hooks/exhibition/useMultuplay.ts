@@ -22,7 +22,7 @@ export type UpdatePayload = {
 const createSocket = (token?: string) =>
   io(
     process.env.NODE_ENV === "production"
-      ? "https://multiplay.creamsoda.in"
+      ? "https://multiplay-creamsoda-in-a-dream.herokuapp.com"
       : "http://localhost:5000",
     {
       autoConnect: false,

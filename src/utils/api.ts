@@ -5,7 +5,7 @@ export type Response<T> = {
 export const get = <T>(path: string, options?: RequestInit): Promise<T> => {
   const baseUrl =
     process.env.NODE_ENV === "production"
-      ? "https://creamsoda.in/a/dream/"
+      ? "https://creamsoda-in-a-dream.herokuapp.com/a/dream/"
       : "http://localhost:5000/";
 
   return fetch(

@@ -54,7 +54,7 @@ const convertUrlToImage = (url: string): Promise<HTMLImageElement> =>
 const getEndpointUrl = (path: string) =>
   url.resolve(
     process.env.NODE_ENV === "production"
-      ? "https://creamsoda.in/a/dream/"
+      ? "https://creamsoda-in-a-dream.herokuapp.com/a/dream/"
       : "http://localhost:5000/",
     path.startsWith("/") ? path.slice(1) : path
   );
@@ -191,7 +191,7 @@ export const getImageSizeByDirection = (direction: ChekiDirection) => ({
 export const ping = async (): Promise<void> => {
   await fetch(
     process.env.NODE_ENV === "production"
-      ? "https://creamsoda.in/a/dream"
+      ? "https://creamsoda-in-a-dream.herokuapp.com/a/dream"
       : "http://localhost:5000"
   );
 };

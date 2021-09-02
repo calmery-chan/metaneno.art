@@ -101,7 +101,7 @@ export const getScene = async (url: string) => {
 export const ping = async (): Promise<void> => {
   await fetch(
     process.env.NODE_ENV === "production"
-      ? "https://multiplay.creamsoda.in/a/dream"
+      ? "https://multiplay-creamsoda-in-a-dream.herokuapp.com/a/dream"
       : "http://localhost:5000"
   );
 };
