@@ -55,7 +55,7 @@
     "@vercel/node": "1.9.0",
     "@zeit/next-source-maps": "0.0.4-canary.1",
     "babel-loader": "8.2.2",
-    "contentful": "8.1.7",
+    "contentful": "10.6.1",
     "css-loader": "5.1.0",
     "dotenv": "8.2.0",
     "eslint": "7.20.0",
